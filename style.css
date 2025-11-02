@@ -12,10 +12,10 @@
     --light-text-color: #fff;
     --accent-color: #FF5733; 
 }
-
 body {
     font-family: 'Arial', sans-serif;
-    background-color: linear-gradient(45deg, #D82B93, #4F35A6); /* <-- Yahan galti hai */
+    /* 👈 background-color ki jagah 'background' ka use karein */
+    background: linear-gradient(45deg, #D82B93, #4F35A6); 
     margin: 0;
     padding: 0; 
     color: var(--text-color);
