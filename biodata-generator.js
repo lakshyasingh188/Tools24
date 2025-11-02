@@ -37,17 +37,20 @@ document.addEventListener('DOMContentLoaded', () => {
             backgroundColorSelect.value = bg;
         }
 
-        if (template === 'hindu-beige') {
+        if (template.startsWith('hindu')) { // Updated to check for 'hindu'
             biodataMantra.textContent = '॥ श्री गणेशाय नमः ॥';
             // Show Hindu fields
             hinduSpecificFields.forEach(field => field.style.display = 'grid'); 
+            document.getElementById('religious').value = 'Hindu';
         } else if (template.startsWith('muslim')) {
             biodataMantra.textContent = 'بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ';
             // Hide Hindu fields
             hinduSpecificFields.forEach(field => field.style.display = 'none'); 
+            document.getElementById('religious').value = 'Muslim';
         } else {
             biodataMantra.textContent = '॥ BIODATA ॥';
             hinduSpecificFields.forEach(field => field.style.display = 'grid');
+            document.getElementById('religious').value = '';
         }
         updateBiodata();
     }
@@ -68,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateBiodata(); 
     });
 
-    applyTemplate(currentTemplate);
+    applyTemplate(currentTemplate); // Initial template application
 
     // --- 1. HANDLE IMAGE UPLOAD ---
     document.getElementById('biodata-image').addEventListener('change', function(event) {
@@ -114,7 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const trimmedValue = (value || '').trim();
             if (trimmedValue && trimmedValue !== 'Select') { 
                 if (label === 'Contact No.') {
-                    return `<div class="detail-row"><span>${label}</span><span>: <a href="tel:${trimmedValue}" style="text-decoration:none; color:inherit;">${trimmedValue}</a></span></div>`;
+                    // Added target="_blank" to ensure the link works
+                    return `<div class="detail-row"><span>${label}</span><span>: <a href="tel:${trimmedValue}" target="_blank" style="text-decoration:none; color:inherit;">${trimmedValue}</a></span></div>`;
                 }
                 return `<div class="detail-row"><span>${label}</span><span>: ${trimmedValue.replace(/\n/g, '<br>')}</span></div>`;
             }
@@ -155,11 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (document.querySelector('.hindu-specific').style.display !== 'none') {
              personalDetailsHTML += `
-                 ${createDetailRow('Rashi', data.rashi)}
-                 ${createDetailRow('Nakshatra', data.nakshatra)}
-                 ${createDetailRow('Manglik', data.manglik)}
-                 ${createDetailRow('Gotra', data.gotra)}
-               `;
+                ${createDetailRow('Rashi', data.rashi)}
+                ${createDetailRow('Nakshatra', data.nakshatra)}
+                ${createDetailRow('Manglik', data.manglik)}
+                ${createDetailRow('Gotra', data.gotra)}
+            `;
         }
 
         personalDetailsHTML += `
@@ -188,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // <=========================================================================>
-    //                  !!! REAL-TIME UPDATE FIX IS HERE !!!
+    // Event listeners for real-time update
     // <=========================================================================>
     const formInputs = form.querySelectorAll('input, select, textarea');
     formInputs.forEach(input => {
@@ -205,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     generateBtn.addEventListener('click', (e) => {
         e.preventDefault(); 
         
-        // Final Update before view change
+        // **CRITICAL FIX:** Ensure the final data is rendered before view change
         updateBiodata(); 
         
         // Hide the input area and show the download option
