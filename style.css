@@ -15,7 +15,7 @@
 body {
     font-family: 'Arial', sans-serif;
     /* 👈 background-color ki jagah 'background' ka use karein */
-    background: var(--secondary-color);
+    background: rgba(128, 128, 128, 0.1);;
     margin: 0;
     padding: 0; 
     color: var(--text-color);
