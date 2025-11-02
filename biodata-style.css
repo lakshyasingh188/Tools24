@@ -26,12 +26,42 @@ body {
     flex-wrap: wrap; 
     gap: 30px; 
     align-items: flex-start; /* Aligns content to the top */
+    position: relative; /* Added for positioning the watermark */
 }
+
+/* --- Watermark for the empty space next to input-area --- */
+/* यह वॉटरमार्क तभी दिखेगा जब input-area और biodata-output दोनों दिख रहे हों */
+.container::after {
+    content: "";
+    position: absolute;
+    top: 30px; /* Adjust to match container padding */
+    bottom: 30px; /* Adjust to match container padding */
+    left: calc(550px + 30px + 15px); /* min-width of input-area + gap + padding-left. Adjust as needed. */
+    right: calc(210mm + 30px + 15px); /* A4 width + gap + padding-right. Adjust as needed. */
+    /* Updated background-image to a lighter, more suitable base64 image */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'><rect x='50' y='50' width='500' height='300' rx='20' ry='20' fill='#f0f0f0' stroke='#cccccc' stroke-width='2'/><rect x='80' y='80' width='440' height='220' fill='#ffffff' stroke='#dddddd' stroke-width='1'/><text x='300' y='190' font-family='Arial, sans-serif' font-size='40' fill='#999999' text-anchor='middle' dominant-baseline='middle'>tools24</text><rect x='250' y='350' width='100' height='10' rx='5' ry='5' fill='#cccccc'/></svg>");
+    background-size: 80%; /* Laptop image size */
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.2; /* Lighter watermark effect */
+    pointer-events: none; /* Allows clicking on elements beneath it */
+    z-index: 0; /* Ensure it stays in the background */
+    display: flex; /* Flexbox to center the content within the available space */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Hide watermark when input-area is hidden (i.e., when biodata-output is centered) */
+.container.biodata-finalized::after {
+    display: none;
+}
+
 
 /* --- Input and Customization Area --- */
 .input-area {
     flex: 1; 
     min-width: 550px; 
+    z-index: 1; /* Ensure input area is above watermark */
 }
 
 .customization-panel {
@@ -154,6 +184,7 @@ body {
 .button-group {
     text-align: center;
     margin-top: 30px;
+    z-index: 1; /* Ensure buttons are above watermark */
 }
 
 .button-group button {
@@ -201,6 +232,7 @@ body {
     display: block; 
     
     margin: 0; /* Important for side-by-side alignment */
+    z-index: 1; /* Ensure output is above watermark */
 }
 
 .top-color-bar {
