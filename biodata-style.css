@@ -97,7 +97,7 @@ body {
 
 /* Form Styles */
 .input-form h1 {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Added primary color for consistency */
     text-align: center;
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
