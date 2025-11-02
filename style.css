@@ -15,7 +15,7 @@
 body {
     font-family: 'Arial', sans-serif;
     /* 👈 background-color ki jagah 'background' ka use karein */
-    background: linear-gradient(45deg, #D82B93, #4F35A6); 
+    background: var(--secondary-color);
     margin: 0;
     padding: 0; 
     color: var(--text-color);
