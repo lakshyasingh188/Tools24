@@ -9,7 +9,7 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: var(--secondary-color);
+    background-color:linear-gradient(45deg, #D82B93, #4F35A6);
     margin: 0;
     padding: 20px;
     color: var(--text-color);
