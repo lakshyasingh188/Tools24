@@ -5,24 +5,34 @@
 */
 :root {
     /* PRIMARY COLOR VARIABLE (Default Maroon) */
-    --primary-color: #A52A2A; 
+    --primary-color: #453adf; 
     
     --secondary-color: #f4f4f9; 
     --text-color: #333;
     --light-text-color: #fff;
     --accent-color: #FF5733; 
+    
+    /* NEW: Custom Colors for Template 2 (Anuj Singh Style - Brown Theme) */
+    --template-2-accent: #8D6E63; 
+    --template-2-sidebar-bg: #F4F2EE; 
+    --template-2-text-dark: #333;
+    
+    /* UPDATED: Custom Colors for Template 4 (Modern Tan/Brown) */
+    --template-4-main-bg: #F4F2EE; /* Light Tan Background - Not strictly used, but kept for context */
+    --template-4-sidebar-color: #BCAAA4; /* Muted Brown/Rose Color for Sidebar */
+    --template-4-accent: #A1887F; /* Darker Accent for lines/text */
 }
 body {
     font-family: 'Arial', sans-serif;
-    /* 👈 background-color ki jagah 'background' ka use karein */
-    background:#007bff;
+    /* Global background is applied to the main wrapper for cleaner layout */
+    background: #f4f4f9; 
     margin: 0;
     padding: 0; 
     color: var(--text-color);
     
-    /* Global Scrolling Fixes */
-    height: 100vh; 
-    overflow: hidden; 
+    /* Global Scrolling Fixes: Allow body to grow, container scrolls */
+    min-height: 100vh;
+    overflow-y: auto; 
     
     display: flex;
     justify-content: center;
@@ -35,7 +45,7 @@ body {
     max-width: 1300px;
     gap: 20px;
     padding: 20px 0; 
-    height: 100%; 
+    min-height: 100vh; /* Stretch container to full viewport height */
     box-sizing: border-box; 
 }
 
@@ -48,11 +58,12 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     
     /* Input Form Scrolling Fixes: This container scrolls independently */
-    height: 100%; 
+    height: fit-content; /* Allow content to define height */
+    max-height: calc(100vh - 40px); /* Restrict height to viewport minus padding */
     overflow-y: auto; 
     
-    position: relative; 
-    top: 0; 
+    position: sticky; /* Sticky sidebar for better UX */
+    top: 20px; 
 }
 
 /* CV Paper Styling (Right Column - Independent Scroll, Dynamic Height Support) */
@@ -60,13 +71,14 @@ body {
     flex: 2;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    width: 794px; /* A4 width */
+    width: 794px; /* A4 width (approx.) */
+    min-height: 297mm; /* Ensure it starts as A4 height */
     height: auto; 
     border-radius: 4px;
     
-    /* max-height given to avoid conflict with Dynamic Height Logic */
+    /* CV itself scrolls if content is long */
     max-height: calc(100vh - 40px); 
-    overflow-y: auto; /* CV itself scrolls if content is long */
+    overflow-y: auto; 
     overflow-x: hidden; 
 }
 
@@ -107,7 +119,7 @@ body {
 }
 
 .input-form button:hover {
-    background-color: #8B0000;
+    background-color: #3b3d94;
 }
 
 .note {
@@ -133,7 +145,8 @@ body {
 .cv-grid {
     display: grid;
     grid-template-columns: 35% 65%; 
-    height: 100%; 
+    height: auto; /* Dynamic height */
+    min-height: 100%; /* Important for stretching */
 }
 
 /* Left Column Styling */
@@ -175,6 +188,7 @@ body {
     flex-shrink: 0; 
 }
 .profile-image img {
+    /* Important for photo to appear correctly in container */
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -194,7 +208,7 @@ body {
 }
 .contact-section i {
     margin-right: 10px;
-    color: var(--accent-color);
+    color: var(--accent-color); /* This should be overridden by template styles */
 }
 
 /* Skills/Languages Output Style */
@@ -286,8 +300,8 @@ body {
     /* Ensure PDF is A4 size and has minimal margin/padding */
     padding: 0;
     margin: 0;
-    width: 210mm; /* A4 width */
-    min-height: 297mm; /* Maintain A4 size even with less content */
+    width: 210mm !important; /* A4 width */
+    min-height: 297mm !important; /* Maintain A4 size even with less content */
     box-shadow: none; 
     /* IMPORTANT FIX for Border to show in PDF */
     border: 3px solid #000 !important; 
@@ -297,8 +311,8 @@ body {
 
 .cv-paper.pdf-downloading .cv-grid {
     /* Stretch grid to full A4 size */
-    height: auto; 
-    min-height: 297mm; 
+    height: auto !important; 
+    min-height: 297mm !important; 
 }
 
 /* Minimise vertical gaps for PDF output */
@@ -320,10 +334,8 @@ body {
     margin-bottom: 5px !important; 
 }
 
-/* FIX FOR SINGLE COLUMN TEMPLATES (Template 2, 3, 5, 7, 10) */
-/* When downloading a single column template, we must ensure ALL content is visible in the right-column context. */
-
-.pdf-downloading.template-style-2 .left-column,
+/* FIX FOR SINGLE COLUMN TEMPLATES (3, 5, 7, 10) */
+/* The JS logic must handle moving content from left to right for these templates */
 .pdf-downloading.template-style-3 .left-column,
 .pdf-downloading.template-style-5 .left-column,
 .pdf-downloading.template-style-7 .left-column,
@@ -335,13 +347,13 @@ body {
 }
 
 /* Ensure the right column takes full width for single column PDFs */
-.pdf-downloading.template-style-2 .cv-grid,
 .pdf-downloading.template-style-3 .cv-grid,
 .pdf-downloading.template-style-5 .cv-grid,
 .pdf-downloading.template-style-7 .cv-grid,
 .pdf-downloading.template-style-10 .cv-grid {
     grid-template-columns: 100% !important;
 }
+
 
 /* Print Media Styling (when user prints from browser) */
 @media print {
@@ -359,12 +371,12 @@ body {
     .cv-paper {
         /* Set A4 size and 10mm margin (to respect standard print margin) */
         width: 210mm !important; 
-        min-height: 297mm !important;
+        min-height: 110mm !important;
         margin: 0 !important;
         padding: 10mm !important; 
         box-shadow: none !important;
         /* Line for the border */
-        border: 3px solid #000 !important; 
+        border: 3px solid #401da0 !important; 
     }
     
     .cv-grid {
@@ -380,14 +392,12 @@ body {
     }
     
     /* Fix for Print Preview (Browser Print) */
-    .template-style-2 .left-column,
     .template-style-3 .left-column,
     .template-style-5 .left-column,
     .template-style-7 .left-column,
     .template-style-10 .left-column {
         display: none !important;
     }
-    .template-style-2 .cv-grid,
     .template-style-3 .cv-grid,
     .template-style-5 .cv-grid,
     .template-style-7 .cv-grid,
@@ -402,6 +412,20 @@ body {
  4. TEMPLATE SELECTION SCREEN STYLES
 ====================================
 */
+
+/* 🔑 FIX: Added scrolling support to the grid container */
+#template-grid-display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+    width: 100%;
+    max-height: 70vh; 
+    overflow-y: auto;
+    padding: 10px;
+}
+
 .template-card {
     width: 200px;
     margin-bottom: 20px;
@@ -414,29 +438,30 @@ body {
 
 .template-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px rgba(2, 119, 90, 0.582);
 }
 
 .template-preview {
     width: 100%;
     height: 250px;
     background-color: #f9f9f9;
-    /* Simulate a preview look - replace with actual small CV rendering if possible */
     font-size: 0.8em;
-    padding: 10px;
     box-sizing: border-box;
     border-bottom: 1px solid #ddd;
+    
+    /* NEW: Flexbox structure for preview content */
     display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-weight: bold;
+    flex-direction: column;
+    overflow: hidden;
+    
+    /* Reset old styles */
+    padding: 0; 
 }
 
 .choose-template-btn {
     width: 100%;
     padding: 10px;
-    background-color: var(--primary-color);
+    background-color: rgb(195, 0, 255);
     color: white;
     border: none;
     cursor: pointer;
@@ -445,62 +470,250 @@ body {
     border-radius: 0 0 8px 8px;
 }
 .choose-template-btn:hover {
-    background-color: #8B0000;
+    background-color: #000e8b;
 }
 
 
 /*
 ====================================
- 5. CV TEMPLATE STYLES (10 DESIGNS)
+ 4.5: UPDATED REALISTIC PREVIEW STYLES (MATCHING REFERENCE IMAGE)
+====================================
+*/
+
+.template-preview {
+    /* Use CSS variable set in HTML onclick for dynamic color */
+    --primary-color-prev: var(--primary-color); 
+    display: flex;
+    flex-direction: row; /* Default two columns */
+    overflow: hidden;
+    padding: 5px; /* Added slight padding to the main preview area */
+    font-size: 0.7em;
+    color: #444;
+    background-color: #fff; /* White background for the card inside preview */
+}
+
+/* Shared column styles for all previews */
+.template-preview .col-left-prev,
+.template-preview .col-right-prev {
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.col-left-prev {
+    flex: 35; /* Sidebar width */
+}
+.col-right-prev {
+    flex: 65; /* Main content width */
+}
+
+
+/* Common Content Block Styles for Previews */
+.template-preview .content-block-main {
+    background-color: #ddd;
+    border-radius: 3px;
+    height: 25px; /* Slightly taller for main title */
+    margin-bottom: 5px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #333; /* Darker text */
+    padding: 3px; /* Added internal padding */
+    font-size: 0.8em;
+}
+.template-preview .content-block-short {
+    background-color: #eee;
+    border-radius: 3px;
+    height: 15px;
+    margin-bottom: 5px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Aligned left for list items */
+    padding-left: 5px;
+    font-size: 0.7em;
+    color: #555;
+}
+.template-preview .content-block {
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    height: 40px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7em;
+    color: #555;
+}
+
+/* --- Template-Specific Previews --- */
+
+/* T1, T6, T8: Colored Sidebar (Left) */
+.template-style-1-prev .col-left-prev,
+.template-style-6-prev .col-left-prev,
+.template-style-8-prev .col-left-prev,
+.template-style-9-prev .col-left-prev {
+    background-color: var(--primary-color-prev);
+}
+.template-style-1-prev .col-left-prev .content-block-short,
+.template-style-6-prev .col-left-prev .content-block-short,
+.template-style-8-prev .col-left-prev .content-block-short,
+.template-style-9-prev .col-left-prev .content-block-short {
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white block */
+    color: white;
+}
+.template-style-1-prev .content-block-main,
+.template-style-6-prev .content-block-main,
+.template-style-8-prev .content-block-main {
+    border-bottom: 2px solid var(--primary-color-prev); /* Name border */
+    background-color: #fff;
+    color: var(--primary-color-prev);
+}
+
+
+/* T4: Colored Sidebar (Right) - Flipped Columns */
+.template-style-4-prev {
+    flex-direction: row-reverse; /* Sidebar on the right */
+}
+.template-style-4-prev .col-left-prev { /* Main content is now on the left */
+    flex: 65; 
+}
+.template-style-4-prev .col-right-prev { /* Sidebar is now on the right */
+    flex: 35; 
+    background-color: var(--primary-color-prev);
+}
+.template-style-4-prev .col-right-prev .content-block-short {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+
+/* T2, T3, T5, T7, T10: Single Column Layout */
+.template-style-2-prev,
+.template-style-3-prev,
+.template-style-5-prev,
+.template-style-7-prev,
+.template-style-10-prev {
+    flex-direction: column;
+    padding: 5px;
+}
+.template-style-2-prev .col-right-prev,
+.template-style-3-prev .col-right-prev,
+.template-style-5-prev .col-right-prev,
+.template-style-7-prev .col-right-prev,
+.template-style-10-prev .col-right-prev {
+    width: 100%;
+    flex: 1;
+    padding: 5px;
+}
+.template-style-2-prev .col-left-prev,
+.template-style-7-prev .col-left-prev {
+    /* Hide the unused left column for single column layouts */
+    display: none;
+}
+
+
+/* T3: Header Bar */
+.template-style-3-prev .content-block-main {
+    background-color: var(--primary-color-prev);
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* T5, T10: Top/Bottom Header Bar */
+.template-style-5-prev .content-block-main,
+.template-style-10-prev .content-block-main {
+    background-color: var(--primary-color-prev);
+    color: white;
+    text-align: center;
+    height: 30px;
+}
+
+/*
+====================================
+ 5. CV TEMPLATE STYLES (10 DESIGNS) - NO CHANGE
 ====================================
 */
 
 /* TEMPLATE 1: Your Current Two-Column Maroon (Existing styles in section 2 handle this) */
 
 
-/* TEMPLATE 2: Minimalist Single-Column */
+/* ====================================
+ NEW TEMPLATE 2: Anuj Singh Style (Tan/Brown Theme to match image)
+ ====================================
+*/
 .template-style-2 .cv-grid {
-    grid-template-columns: 100%; /* Single Column */
-    padding: 30px;
+    grid-template-columns: 35% 65%; 
+    height: auto; 
 }
-.template-style-2 .left-column, .template-style-2 .right-column {
-    background-color: #fff;
-    color: var(--text-color);
-    padding: 0;
-    border-bottom: 1px solid #eee;
-}
+
 .template-style-2 .left-column {
-    order: 2; /* Move contact/skills below summary/work history */
-    margin-top: 20px;
+    background-color: var(--template-2-sidebar-bg); 
+    color: var(--template-2-text-dark); 
+    padding: 30px 20px;
+    border-right: 5px solid var(--template-2-accent); /* Added accent line */
 }
+
 .template-style-2 .right-column {
-    order: 1;
+    padding: 40px;
 }
-.template-style-2 .profile-image, .template-style-2 .profile-section h2 {
-    display: none; /* Hide image/name from left column */
-}
+
 .template-style-2 h2#cv-name {
-    color: var(--primary-color);
-    font-size: 2.5em;
-    text-align: center;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 10px;
+    font-size: 48px; 
+    font-weight: 500;
+    color: #000; 
+    text-align: left;
+    margin-bottom: 30px;
+    /* Name is in the right column by default (Template 1 logic) */
+}
+
+.template-style-2 .profile-image {
+    width: 150px; /* Adjusted size */
+    height: 150px;
+    border-radius: 10px; 
+    margin: 0 auto 30px auto; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    background-color: #fff; 
+    color: transparent; 
+    border: 4px solid var(--template-2-accent); 
+}
+
+.template-style-2 .left-column h3 {
+    color: var(--template-2-text-dark);
+    border-bottom: 2px solid var(--template-2-accent); 
+    padding-bottom: 5px;
+    margin-top: 30px;
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+
+.template-style-2 .contact-section p {
+    font-size: 14px;
+    color: var(--template-2-text-dark);
+    line-height: 1.5;
+}
+
+.template-style-2 .contact-section i {
+    color: var(--template-2-accent); 
+}
+
+.template-style-2 .right-column h3 {
+    color: var(--template-2-text-dark);
+    font-size: 1.6em;
+    border-bottom: 3px solid var(--template-2-accent); 
+    padding-bottom: 5px;
+    margin-top: 40px;
     margin-bottom: 20px;
 }
-.template-style-2 .right-column h3 {
-    border-left: 5px solid var(--primary-color);
-    border-bottom: none;
-    padding-left: 10px;
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    margin-top: 20px;
-}
-.template-style-2 .left-column h3 {
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
-}
-.template-style-2 .contact-section p {
-    justify-content: space-between;
+
+.template-style-2 .edu-title {
+    color: var(--template-2-accent); 
+    font-weight: bold;
+    font-size: 1.05em;
 }
 
 
@@ -512,11 +725,11 @@ body {
     grid-template-columns: 100%;
 }
 .template-style-3 .left-column {
-    order: 1; /* Keep contact/skills at top */
+    order: 1; 
     background-color: #000;
     color: #fff;
     padding: 15px 40px;
-    flex-direction: row; /* Horizontal layout for top section */
+    flex-direction: row; 
     justify-content: space-between;
     align-items: center;
 }
@@ -532,7 +745,7 @@ body {
     font-size: 0.9em;
 }
 .template-style-3 .contact-section h3, .template-style-3 .skills-section, .template-style-3 .extra-section, .template-style-3 .profile-image {
-    display: none; /* Hide these sections from the header strip */
+    display: none; 
 }
 .template-style-3 .right-column {
     order: 2;
@@ -544,29 +757,74 @@ body {
 }
 
 
-/* TEMPLATE 4: Modern Teal (Full Left Color Block) */
+/* ====================================
+ TEMPLATE 4: Modern Tan/Brown (Right Sidebar - Reversed Column)
+ ====================================
+*/
 .template-style-4 {
+    --primary-color: var(--template-4-accent); 
     font-family: 'Verdana', sans-serif;
 }
-.template-style-4 .left-column {
-    background-color: var(--primary-color); /* Teal color */
-    padding: 30px 20px;
+.template-style-4 .cv-grid {
+    grid-template-columns: 65% 35%; /* Main content (left) 65%, Sidebar (right) 35% */
 }
-.template-style-4 .right-column {
+
+/* LEFT COLUMN (MAIN CONTENT) */
+.template-style-4 .left-column { 
+    background-color: #fff; 
+    color: #333;
     padding: 30px;
+    order: 1; /* Left position */
 }
-.template-style-4 .right-column h3 {
-    color: #000;
+.template-style-4 .name-display { /* Name is in the Left (Main) column */
+    color: #333; 
+    text-align: left;
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+.template-style-4 .left-column h3 { 
+    color: var(--template-4-accent);
     font-size: 1.3em;
-    border-bottom: 3px solid var(--primary-color);
+    border-bottom: 3px solid var(--template-4-accent);
     padding-bottom: 2px;
+    margin-top: 30px;
+}
+
+
+/* RIGHT COLUMN (SIDEBAR) */
+.template-style-4 .right-column { 
+    background-color: var(--template-4-sidebar-color); 
+    color: var(--template-4-accent); /* Dark text on sidebar */
+    padding: 30px 20px;
+    order: 2; /* Right position */
+}
+.template-style-4 .profile-image { /* Photo is in the Right (Sidebar) column */
+    width: 120px; /* Slightly smaller */
+    height: 120px;
+    border-radius: 50%; 
+    margin: 0 auto 15px auto; /* Center photo in sidebar */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #fff;
+    color: var(--template-4-accent); 
+    border: 5px solid var(--template-4-accent);
+}
+.template-style-4 .contact-section,
+.template-style-4 .skills-section ul,
+.template-style-4 .extra-section ul {
+    color: var(--template-4-accent);
 }
 .template-style-4 .contact-section i {
-    color: #fff; /* Icons white in Teal bar */
+    color: var(--template-4-accent); 
 }
-.template-style-4 .profile-image {
-    border: 5px solid #fff;
+.template-style-4 .right-column h3 { /* Sidebar Headings */
+    color: #fff;
+    background-color: var(--template-4-accent); 
+    padding: 5px 15px;
+    border-bottom: none;
+    font-size: 1.1em;
+    margin-top: 25px;
 }
+/* IMPORTANT: The JS must ensure contact, skills, languages, and photo are rendered in the right-column for this template. */
 
 
 /* TEMPLATE 5: Creative Purple (Top/Bottom Accent Bars) */
@@ -576,30 +834,40 @@ body {
 .template-style-5 .profile-section {
     order: 1;
     padding: 30px;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding-top: 40px; /* Extra padding for effect */
 }
 .template-style-5 .name-display {
     font-size: 2em;
     text-align: center;
     width: 100%;
-    color: var(--primary-color);
+    color: #fff;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 3px solid var(--primary-color);
+    border-bottom: 3px solid #fff;
 }
 .template-style-5 .profile-image {
     margin: 0 auto 10px auto;
-    border: 3px solid var(--primary-color);
+    border: 3px solid #fff;
 }
-.template-style-5 .left-column {
+.template-style-5 .left-column { /* Contact/Skills in the bottom bar */
     order: 3;
-    background-color: var(--primary-color); /* Purple */
+    background-color: var(--primary-color); 
     color: #fff;
     padding: 15px 30px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
-.template-style-5 .left-column h3 {
-    border-bottom: 2px solid #ccc;
+.template-style-5 .left-column h3, .template-style-5 .skills-section, .template-style-5 .extra-section {
+    display: none; /* Hide headings and sections in the bottom strip */
 }
-.template-style-5 .right-column {
+.template-style-5 .contact-section {
+    display: flex;
+    gap: 15px;
+}
+.template-style-5 .right-column { /* Main Content */
     order: 2;
     padding: 30px;
 }
@@ -613,7 +881,7 @@ body {
 
 /* TEMPLATE 6: Bold Red (Colored Right Column Headers) */
 .template-style-6 .right-column h3 {
-    background-color: var(--primary-color); /* Red accent */
+    background-color: var(--primary-color); 
     color: #fff;
     padding: 5px 10px;
     border-bottom: none;
@@ -625,7 +893,7 @@ body {
     color: #000;
 }
 .template-style-6 .left-column {
-    background-color: #f5f5f5; /* Light grey left column */
+    background-color: #f5f5f5; 
     color: #333;
 }
 .template-style-6 .left-column h3 {
@@ -668,13 +936,13 @@ body {
     justify-content: center;
 }
 .template-style-7 .right-column h3 {
-    border-bottom: 2px solid var(--primary-color); /* Grey accent */
+    border-bottom: 2px solid var(--primary-color); 
     margin-top: 30px;
     font-size: 1.4em;
     color: #000;
 }
 .template-style-7 .left-column h3 {
-    display: none; /* Hide titles on left column */
+    display: none; 
 }
 .template-style-7 .skills-section, .template-style-7 .extra-section {
     padding-bottom: 20px;
@@ -688,7 +956,7 @@ body {
     grid-template-columns: 30% 70%;
 }
 .template-style-8 .left-column {
-    background-color: var(--primary-color); /* Light Blue */
+    background-color: var(--primary-color); 
 }
 .template-style-8 .right-column {
     padding-left: 30px;
@@ -708,8 +976,32 @@ body {
 }
 
 
-/* TEMPLATE 9: Green Tech (Boxed Sections) */
-.template-style-9 .right-column h3 {
+/* TEMPLATE 9: Green Tech (Boxed Sections - Uses T4/Right Sidebar logic in JS) */
+.template-style-9 .cv-grid {
+    grid-template-columns: 65% 35%; /* Main content (left) 65%, Sidebar (right) 35% */
+}
+.template-style-9 .left-column { /* MAIN CONTENT */
+    background-color: #fff;
+    color: #333;
+}
+.template-style-9 .right-column { /* SIDEBAR */
+    background-color: #388E3C; /* Dark Green */
+    color: #fff;
+}
+.template-style-9 .right-column h3 { /* Sidebar headings */
+    color: #fff;
+    background-color: transparent;
+    border-bottom: 2px solid #fff;
+}
+.template-style-9 .right-column .contact-section,
+.template-style-9 .right-column .skills-section ul,
+.template-style-9 .right-column .extra-section ul {
+    color: #fff;
+}
+.template-style-9 .right-column .contact-section i {
+    color: #fff;
+}
+.template-style-9 .left-column h3 { /* Main Content Headings */
     border-bottom: 1px dashed var(--primary-color);
     padding-bottom: 5px;
     margin-bottom: 10px;
@@ -718,17 +1010,11 @@ body {
     padding: 10px;
     border-radius: 5px;
 }
-.template-style-9 .left-column {
-    background-color: #388E3C; /* Dark Green */
-}
 .template-style-9 .edu-item {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-bottom: 15px;
-}
-.template-style-9 .contact-section i {
-    color: #fff;
 }
 
 
@@ -736,25 +1022,29 @@ body {
 .template-style-10 .cv-grid {
     grid-template-columns: 100%;
 }
-.template-style-10 .profile-section {
-    background-color: var(--primary-color); /* Orange */
+.template-style-10 .profile-section { /* Name Strip (Top) */
+    background-color: var(--primary-color); 
     padding: 20px 40px;
     text-align: center;
     color: #fff;
+    order: 1;
 }
 .template-style-10 .name-display {
     font-size: 2.5em;
     color: #fff;
     margin-bottom: 0;
 }
-.template-style-10 .left-column {
-    order: 2; /* Move contact/skills to bottom */
+.template-style-10 .left-column { /* Contact/Skills (Bottom) */
+    order: 3; 
     background-color: #f9f9f9;
     color: #333;
     padding: 20px 40px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
-.template-style-10 .right-column {
-    order: 1;
+.template-style-10 .right-column { /* Main Content */
+    order: 2;
     padding: 20px 40px;
 }
 .template-style-10 .right-column h3 {
@@ -766,71 +1056,12 @@ body {
     border-top: 1px solid #ccc;
     padding-top: 10px;
 }
-.template-style-10 .contact-section h3 {
+.template-style-10 .contact-section h3,
+.template-style-10 .profile-image,
+.template-style-10 .skills-section, 
+.template-style-10 .extra-section {
     display: none;
 }
 .template-style-10 .contact-section i {
     color: var(--primary-color);
-}
-.template-style-10 .left-column h3 {
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
-}
-.template-style-10 .profile-image {
-    display: none;
-}
-
-
-/* --- PREVIEW STYLES (Used only for the small Template Card previews) --- */
-.template-style-1-preview {
-    background-color: #f9f9f9;
-    color: #333;
-    border-left: 30px solid #A52A2A;
-}
-.template-style-2-preview {
-    background-color: #fff;
-    color: #1565C0;
-    border-top: 5px solid #1565C0;
-}
-.template-style-3-preview {
-    background-color: #fff;
-    color: #000;
-    border-top: 30px solid #000;
-}
-.template-style-4-preview {
-    background-color: #f9f9f9;
-    color: #333;
-    border-left: 40px solid #004D40;
-}
-.template-style-5-preview {
-    background-color: #f9f9f9;
-    color: #6A1B9A;
-    border-bottom: 5px solid #6A1B9A;
-    border-top: 5px solid #6A1B9A;
-}
-.template-style-6-preview {
-    background-color: #f5f5f5;
-    color: #D84315;
-    border-top: 5px solid #D84315;
-}
-.template-style-7-preview {
-    background-color: #fff;
-    color: #424242;
-    border: 1px solid #424242;
-}
-.template-style-8-preview {
-    background-color: #f9f9f9;
-    color: #039BE5;
-    border-left: 20px solid #039BE5;
-    border-right: 20px solid #039BE5;
-}
-.template-style-9-preview {
-    background-color: #E8F5E9;
-    color: #388E3C;
-    border: 2px solid #388E3C;
-}
-.template-style-10-preview {
-    background-color: #fff;
-    color: #FF7043;
-    border-top: 50px solid #FF7043;
 }
