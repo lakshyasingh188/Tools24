@@ -33,13 +33,17 @@ function adjustCVHeight() {
     const cvOutput = document.getElementById('cv-output-area');
     
     // Check if the current template is a two-column layout (Template 1, 4, 6, 8, 9)
-    // We check for the presence of the two-column grid style on screen
-    const isTwoColumn = window.getComputedStyle(cvOutput.querySelector('.cv-grid')).gridTemplateColumns.includes('%');
+    // Template 2 is now treated as single-column for height adjustment purposes as per its visual style.
+    // NOTE: Template 4 is now logically reversed, but still two-column.
+    const isTwoColumn = ['template-style-1', 'template-style-4', 'template-style-6', 'template-style-8', 'template-style-9'].some(cls => cvOutput.classList.contains(cls));
 
     if (isTwoColumn) {
         const leftCol = cvOutput.querySelector('.left-column');
         const rightCol = cvOutput.querySelector('.right-column');
         
+        // Ensure elements exist
+        if (!leftCol || !rightCol) return; 
+
         // Measures the height of both columns
         const leftHeight = leftCol.scrollHeight;
         const rightHeight = rightCol.scrollHeight;
@@ -51,7 +55,18 @@ function adjustCVHeight() {
         cvOutput.style.height = `${newHeight + 50}px`; 
         
         // Set Left column's min-height to equal the Right column's height 
-        leftCol.style.minHeight = `${rightHeight}px`; 
+        // This makes the shorter column stretch its background color
+        // For T4, this ensures the main content area matches the sidebar height
+        // For T1, T6, T8, T9, the left (colored) column needs to stretch.
+        
+        // Template 4 Specific Logic (Sidebar is Right, Content is Left)
+        if (cvOutput.classList.contains('template-style-4')) {
+            leftCol.style.minHeight = `${rightHeight}px`; // Main content min-height = Sidebar height
+        } else {
+            // Default 2-column logic (Sidebar is Left)
+            leftCol.style.minHeight = `${rightHeight}px`; // Sidebar min-height = Main content height
+        }
+        
     } else {
         // For single column templates (Template 2, 3, 5, 7, 10), reset styles for normal flow
         cvOutput.style.height = 'auto';
@@ -78,21 +93,29 @@ function updateCV() {
     
     document.getElementById('cv-name').innerText = name;
     
-    // 2. Profile Photo and Contact Details
+    // --- 2. Profile Photo and Contact Details (UPDATED LOGIC) ---
     const photoDisplay = document.getElementById('photo-display');
     const initialsDisplay = document.getElementById('initials-display');
     const photoInput = document.getElementById('photoInput');
 
     let initials = '';
     if (name) {
-        const parts = name.split(' ');
-        initials = parts.slice(0, 2).map(p => p.charAt(0).toUpperCase()).join('');
+        const parts = name.split(/\s+/).filter(p => p.length > 0); // Split by space and filter empty parts
+        
+        if (parts.length >= 2) {
+            // Get the first letter of the first word and the first letter of the second word
+            initials = parts[0].charAt(0).toUpperCase() + parts[1].charAt(0).toUpperCase();
+        } else if (parts.length === 1) {
+            // If only one word, take the first two characters
+            initials = parts[0].substring(0, 2).toUpperCase();
+        }
     }
     initialsDisplay.innerText = initials;
 
     const hasPhoto = photoInput.files && photoInput.files[0];
 
     if (hasPhoto) {
+        // Photo uploaded: Show image, hide initials.
         const reader = new FileReader();
         reader.onload = function(e) {
             photoDisplay.src = e.target.result;
@@ -100,14 +123,20 @@ function updateCV() {
             initialsDisplay.style.display = 'none';
         }
         reader.readAsDataURL(photoInput.files[0]);
-    } else if (name) {
+    } else if (name && initials) {
+        // No photo, but name present: Show initials.
         photoDisplay.style.display = 'none';
-        initialsDisplay.style.display = 'flex';
+        photoDisplay.src = ''; // Clear source to ensure no broken icon
+        initialsDisplay.style.display = 'flex'; 
     } else {
+        // No photo and no name: Hide both.
         photoDisplay.style.display = 'none';
         initialsDisplay.style.display = 'none';
+        photoDisplay.src = '';
     }
+    // --- END UPDATED LOGIC ---
 
+    
     // Update and show/hide contact lines
     const updateContactLine = (input, displayId, lineId) => {
         const value = input.trim();
@@ -281,8 +310,63 @@ function updateCV() {
     // 9. Declaration (Updated Static Content)
     const declarationOutput = document.getElementById('cv-declaration-output');
     if (declarationOutput) {
-           // NEW DECLARATION TEXT
+             // NEW DECLARATION TEXT
         declarationOutput.innerHTML = `<p id="cv-summary-para2">I hereby declare that all the information mentioned above is true and correct to the best of my knowledge and belief. I take full responsibility for the accuracy of the details provided. I assure you that I will carry out my duties with full sincerity, honesty, and commitment if given an opportunity to be a part of your esteemed organization. I am confident that my abilities and enthusiasm will be valuable in contributing to the company’s growth and success.</p>`;
+    }
+
+    // =========================================================================
+    // 10. 🎯 TEMPLATE SPECIFIC CONTENT REORDERING (FOR LIVE VIEW) 🎯
+    // =========================================================================
+    const cvOutput = document.getElementById('cv-output-area');
+    const isTemplate4 = cvOutput.classList.contains('template-style-4');
+    
+    const leftColumn = cvOutput.querySelector('.left-column');
+    const rightColumn = cvOutput.querySelector('.right-column');
+
+    // Define the content sections
+    const leftContent = [
+        cvOutput.querySelector('.profile-section'),
+        cvOutput.querySelector('.contact-section'),
+        cvOutput.querySelector('.skills-section-container'), // Note: this must wrap skills/languages in HTML
+        cvOutput.querySelector('.extra-section-container') // Note: this must wrap languages in HTML
+    ];
+
+    const rightContent = [
+        cvOutput.querySelector('.summary-section'),
+        cvOutput.querySelector('.work-history-section-container'), // Note: this must wrap work history in HTML
+        cvOutput.querySelector('.education-section-container'), // Note: this must wrap education in HTML
+        cvOutput.querySelector('.declaration-section')
+    ];
+    
+    // --- Revert to default structure first (Template 1, 6, 8, 9) ---
+    // Move "Right" content to the Right column, and "Left" content to the Left column
+    rightContent.forEach(el => el && rightColumn.appendChild(el));
+    leftContent.forEach(el => el && leftColumn.appendChild(el));
+    
+    // --- TEMPLATE 4 SWAP LOGIC ---
+    // If Template 4 is active, swap the children
+    if (isTemplate4) {
+        // T4 CSS: Left Col = 65% (Main), Right Col = 35% (Sidebar)
+        
+        // 1. Move Default RIGHT (Main) content to the LEFT (Main) Column
+        rightContent.forEach(el => el && leftColumn.appendChild(el));
+        
+        // 2. Move Default LEFT (Sidebar) content to the RIGHT (Sidebar) Column
+        leftContent.forEach(el => el && rightColumn.appendChild(el));
+        
+        // Special Case: Move Name/Title to Main Content (Left Column) for T4
+        const nameDisplay = cvOutput.querySelector('.name-display');
+        const titleDisplay = cvOutput.querySelector('#cv-title-display'); // Assuming you have a title/job role element
+        
+        if (nameDisplay) leftColumn.prepend(nameDisplay);
+        if (titleDisplay) leftColumn.querySelector('.name-display').after(titleDisplay);
+
+        // Note: The objective/summary is often placed near the name in the main column in this style.
+        // We ensure the summary is the first section after the name/title in the left column.
+        const summarySection = cvOutput.querySelector('.summary-section');
+        if (summarySection && nameDisplay) {
+            nameDisplay.after(summarySection);
+        }
     }
 
 
@@ -308,47 +392,58 @@ function prepareAndDownloadPDF() {
     downloadBtn.disabled = true;
 
     // --- CRITICAL FIX FOR SINGLE COLUMN TEMPLATES (2, 3, 5, 7, 10) ---
-    let leftColumnContent = null;
+    let tempContainer = null;
+    // Template 2 is now considered single-column for PDF generation
     const isSingleColumn = ['template-style-2', 'template-style-3', 'template-style-5', 'template-style-7', 'template-style-10'].some(cls => element.classList.contains(cls));
     
     if (isSingleColumn) {
         const leftColumn = element.querySelector('.left-column');
         const rightColumn = element.querySelector('.right-column');
         
-        // 1. Clone the content of the left column
-        leftColumnContent = leftColumn.cloneNode(true);
-        
-        // 2. Create a temporary container for the left column content
-        const tempContainer = document.createElement('div');
+        // 1. Create a temporary container for the left column content
+        tempContainer = document.createElement('div');
         tempContainer.id = 'temp-left-content';
         
-        // For Template 3 (Executive Strip) and Template 10 (Orange Highlight), the top bar content is already handled/hidden by CSS.
-        // We only move the "Skills" and "Languages" for these templates to keep them visible in the single column body.
+        // Clone the content we need to move (Skills and Languages are always moved)
+        const skillsClone = leftColumn.querySelector('.skills-section-container').cloneNode(true); // FIX: Use container class
+        const languagesClone = leftColumn.querySelector('.extra-section-container').cloneNode(true); // FIX: Use container class
+
+        // For T3 (Executive Strip) and T10 (Orange Highlight), Contact/Profile is usually a header or hidden.
         if (element.classList.contains('template-style-3') || element.classList.contains('template-style-10')) {
-             tempContainer.appendChild(leftColumnContent.querySelector('.skills-section'));
-             tempContainer.appendChild(leftColumnContent.querySelector('.extra-section'));
+             // Move only Skills and Languages
+             tempContainer.appendChild(skillsClone);
+             tempContainer.appendChild(languagesClone);
         } 
-        // For other single column templates (2, 5, 7), move Contact, Skills, and Languages.
+        // For T2, T5, T7, move Contact, Skills, and Languages.
         else {
-            tempContainer.appendChild(leftColumnContent.querySelector('.contact-section'));
-            tempContainer.appendChild(leftColumnContent.querySelector('.skills-section'));
-            tempContainer.appendChild(leftColumnContent.querySelector('.extra-section'));
+            const contactClone = leftColumn.querySelector('.contact-section').cloneNode(true);
+            const profileClone = leftColumn.querySelector('.profile-section').cloneNode(true);
+            
+            // Add Profile (for T2, T5, T7) and Contact (for all)
+            tempContainer.appendChild(profileClone);
+            tempContainer.appendChild(contactClone);
+            tempContainer.appendChild(skillsClone);
+            tempContainer.appendChild(languagesClone);
         }
 
-        // 3. Prepend the temporary content to the right column
+        // 2. Prepend the temporary content to the right column
         rightColumn.prepend(tempContainer);
         
-        // 4. Add a separator line after the contact/skills section for better readability in single column PDF
+        // 3. Add separator line after the temporary section
         tempContainer.style.marginBottom = '20px';
         tempContainer.style.borderBottom = '1px solid #ddd';
         tempContainer.style.paddingBottom = '15px';
         
-        // Also ensure headers are visible by copying h3 styles (only for T2, T5, T7)
+        // 4. Ensure headers are visible/correctly styled for the PDF (especially for T2)
         if (element.classList.contains('template-style-2') || element.classList.contains('template-style-5') || element.classList.contains('template-style-7')) {
              tempContainer.querySelectorAll('h3').forEach(h3 => {
                  h3.style.color = '#000';
                  h3.style.borderBottom = '2px solid var(--primary-color)';
                  h3.style.marginTop = '15px';
+             });
+             // For Template 2 only: Fix contact item display
+             tempContainer.querySelectorAll('.contact-section p').forEach(p => {
+                 p.style.color = '#333';
              });
         }
     }
@@ -361,11 +456,11 @@ function prepareAndDownloadPDF() {
         filename: `${name.replace(/\s/g, '_')}_CV.pdf`, 
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { 
-            scale: 2,     
+            scale: 2,    
             useCORS: true, 
             scrollY: 0,
             allowTaint: true,
-            width: 794,       
+            width: 794,      
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, 
         pagebreak: { mode: 'avoid-all' }
@@ -382,11 +477,8 @@ function prepareAndDownloadPDF() {
         element.classList.remove('pdf-downloading');
         
         // 2. Remove the temporary content if it was added
-        if (isSingleColumn) {
-            const tempContainer = element.querySelector('#temp-left-content');
-            if (tempContainer) {
-                tempContainer.remove();
-            }
+        if (tempContainer) {
+            tempContainer.remove();
         }
         
         // 3. Restore button state
@@ -395,7 +487,8 @@ function prepareAndDownloadPDF() {
         alert('Your CV has been downloaded!');
         
         // 4. Re-run updateCV to ensure screen view is correct after cleanup
-        updateCV();
+        // This is important because cleanup might affect scroll/height AND REORDERING
+        updateCV(); 
     });
 }
 
@@ -426,7 +519,9 @@ function showBuilder() {
     document.getElementById('main-builder-area').style.display = 'flex';
     document.getElementById('back-to-builder-btn').style.display = 'none';
     
-    updateCV();
+    // 🎯 FIX: Remove immediate updateCV call here, it is called after selectTemplate.
+    // If we come from 'back-to-builder-btn', updateCV will run inside that handler or by user input.
+    // updateCV(); 
 }
 
 
@@ -457,18 +552,20 @@ function selectTemplate(templateClass, themeColor) {
     // 4. Switch to the Builder View
     showBuilder(); 
     
-    // 5. Update CV with the new style and color
+    // 5. Update CV with the new style and color (This will now run the reordering logic inside updateCV)
     updateCV();
 }
 
 
 // FIX: Initial DOMContentLoaded logic to ensure the Template Selector screen is shown first.
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize with default template
+    // Initialize with default template (T1) and its color
+    // This ensures that the CV area has a default style applied immediately.
     selectTemplate('template-style-1', '#A52A2A');
     
     // FORCEFULLY SHOW THE TEMPLATE SELECTOR SCREEN ON PAGE LOAD
+    // NOTE: selectTemplate calls showBuilder(), so we call showTemplateSelector() last to override.
     showTemplateSelector(); 
     
-    updateCV();
+    // No need to call updateCV again, as it's called inside selectTemplate
 });
