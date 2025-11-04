@@ -20,56 +20,161 @@
         <div id="template-selector-screen" style="width: 100%; padding: 20px; text-align: center; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; min-height: 80vh;">
             <h1>Choose a Resume Template</h1>
             <p>We'll help you choose the right layout for your CV from 10 available templates.</p>
-            <div id="template-grid-display" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px; width: 100%;">
+            
+            <div id="template-grid-display">
                 
                 <div class="template-card" data-template-id="template-1" onclick="selectTemplate('template-style-1', '#A52A2A')">
-                    <div class="template-preview template-style-1-preview">Template 1 (Maroon Classic)</div>
-                    <button class="choose-template-btn">Choose Template</button>
+                    <div class="template-preview template-style-1-prev" 
+                            style="--primary-color-prev: #A52A2A;">
+                        <div class="col-left-prev">
+                            <div class="content-block-short">Photo & Contact</div>
+                            <div class="content-block-short">Skills</div>
+                            <div class="content-block-short">Languages</div>
+                        </div>
+                        <div class="col-right-prev">
+                            <div class="content-block-main">Name & Title</div>
+                            <div class="content-block-short">Objective</div>
+                            <div class="content-block">Experience/Education</div>
+                            <div class="content-block">Declaration</div>
+                        </div>
+                    </div>
+                    <button class="choose-template-btn">Template 1 (Maroon Classic)</button>
                 </div>
 
-                <div class="template-card" data-template-id="template-2" onclick="selectTemplate('template-style-2', '#1565C0')">
-                    <div class="template-preview template-style-2-preview">Template 2 (Blue Minimal)</div>
-                    <button class="choose-template-btn">Choose Template</button>
+                <div class="template-card" data-template-id="template-2" onclick="selectTemplate('template-style-2', '#007bff')"> 
+                    <div class="template-preview template-style-2-prev" 
+                            style="--primary-color-prev: #007bff;">
+                        <div class="col-right-prev" style="width: 100%;"> 
+                            <div class="content-block-main" style="background: var(--primary-color-prev); color: white; text-align: center; padding: 5px; margin-bottom: 5px; border-radius: 3px;">Name & Contact</div>
+                            <div class="content-block-short">Objective</div>
+                            <div class="content-block">Experience</div>
+                            <div class="content-block">Education</div>
+                        </div>
+                    </div>
+                    <button class="choose-template-btn">Template 2 (Blue Minimal)</button>
                 </div>
                 
                 <div class="template-card" data-template-id="template-3" onclick="selectTemplate('template-style-3', '#000000')">
-                    <div class="template-preview template-style-3-preview">Template 3 (Executive Strip)</div>
-                    <button class="choose-template-btn">Choose Template</button>
+                    <div class="template-preview template-style-3-prev" 
+                            style="--primary-color-prev: #000000;">
+                        <div class="col-right-prev" style="width: 100%;"> 
+                            <div class="content-block-main" style="border-bottom: 2px solid var(--primary-color-prev); margin-bottom: 5px;">Name & Contact</div>
+                            <div class="content-block-short">Objective</div>
+                            <div class="content-block">Experience/Skills</div>
+                            <div class="content-block">Education</div>
+                        </div>
+                    </div>
+                    <button class="choose-template-btn">Template 3 (Executive Strip)</button>
                 </div>
                 
-                <div class="template-card" data-template-id="template-4" onclick="selectTemplate('template-style-4', '#004D40')">
-                    <div class="template-preview template-style-4-preview">Template 4 (Modern Teal)</div>
-                    <button class="choose-template-btn">Choose Template</button>
+                <div class="template-card" data-template-id="template-4" onclick="selectTemplate('template-style-4', '#004D40')"> 
+                    <div class="template-preview template-style-4-prev" 
+                            style="--primary-color-prev: #004D40;">
+                        <div class="col-left-prev"> <div class="content-block-main">Name & Title</div>
+                            <div class="content-block-short">Objective</div>
+                            <div class="content-block">Experience</div>
+                            <div class="content-block">Education</div>
+                        </div>
+                        <div class="col-right-prev"> <div class="content-block-short">Photo & Contact</div>
+                            <div class="content-block-short">Skills</div>
+                            <div class="content-block-short">Languages</div>
+                        </div>
+                    </div>
+                    <button class="choose-template-btn">Template 4 (Modern Teal)</button>
                 </div>
 
                 <div class="template-card" data-template-id="template-5" onclick="selectTemplate('template-style-5', '#6A1B9A')">
-                    <div class="template-preview template-style-5-preview">Template 5 (Creative Bar)</div>
-                    <button class="choose-template-btn">Choose Template</button>
+                    <div class="template-preview template-style-5-prev" 
+                            style="--primary-color-prev: #6A1B9A;">
+                        <div class="col-right-prev" style="width: 100%;"> 
+                            <div class="content-block">Objective</div>
+                            <div class="content-block-short">Skills</div>
+                            <div class="content-block">Experience</div>
+                            <div class="content-block">Education</div>
+                        </div>
+                    </div>
+                    <button class="choose-template-btn">Template 5 (Creative Bar)</button>
                 </div>
                 
                 <div class="template-card" data-template-id="template-6" onclick="selectTemplate('template-style-6', '#D84315')">
-                    <div class="template-preview template-style-6-preview">Template 6 (Bold Red)</div>
-                    <button class="choose-template-btn">Choose Template</button>
+                    <div class="template-preview template-style-6-prev" 
+                            style="--primary-color-prev: #D84315;">
+                        <div class="col-left-prev">
+                            <div class="content-block-short">Photo & Contact</div>
+                            <div class="content-block-short">Skills</div>
+                            <div class="content-block-short">Languages</div>
+                        </div>
+                        <div class="col-right-prev">
+                            <div class="content-block-main">Name & Title</div>
+                            <div class="content-block-short">Objective</div>
+                            <div class="content-block">Experience/Education</div>
+                            <div class="content-block">Declaration</div>
+                        </div>
+                    </div>
+                    <button class="choose-template-btn">Template 6 (Bold Red)</button>
                 </div>
 
                 <div class="template-card" data-template-id="template-7" onclick="selectTemplate('template-style-7', '#424242')">
-                    <div class="template-preview template-style-7-preview">Template 7 (Professional Grey)</div>
-                    <button class="choose-template-btn">Choose Template</button>
+                    <div class="template-preview template-style-7-prev" 
+                            style="--primary-color-prev: #424242;">
+                        <div class="col-right-prev" style="width: 100%;"> 
+                            <div class="content-block-main">Name & Contact</div>
+                            <div class="content-block-short">Objective</div>
+                            <div class="content-block">Experience</div>
+                            <div class="content-block">Education</div>
+                        </div>
+                    </div>
+                    <button class="choose-template-btn">Template 7 (Professional Grey)</button>
                 </div>
 
                 <div class="template-card" data-template-id="template-8" onclick="selectTemplate('template-style-8', '#039BE5')">
-                    <div class="template-preview template-style-8-preview">Template 8 (Clean Light Blue)</div>
-                    <button class="choose-template-btn">Choose Template</button>
+                    <div class="template-preview template-style-8-prev" 
+                            style="--primary-color-prev: #039BE5;">
+                        <div class="col-left-prev">
+                            <div class="content-block-short">Contact</div>
+                            <div class="content-block-short">Skills</div>
+                            <div class="content-block-short">Languages</div>
+                        </div>
+                        <div class="col-right-prev">
+                            <div class="content-block-main">Name & Title</div>
+                            <div class="content-block-short">Objective</div>
+                            <div class="content-block">Experience/Education</div>
+                            <div class="content-block">Declaration</div>
+                        </div>
+                    </div>
+                    <button class="choose-template-btn">Template 8 (Clean Light Blue)</button>
                 </div>
 
                 <div class="template-card" data-template-id="template-9" onclick="selectTemplate('template-style-9', '#388E3C')">
-                    <div class="template-preview template-style-9-preview">Template 9 (Green Tech)</div>
-                    <button class="choose-template-btn">Choose Template</button>
+                    <div class="template-preview template-style-9-prev" 
+                            style="--primary-color-prev: #388E3C;">
+                        <div class="col-left-prev">
+                            <div class="content-block-short">Contact</div>
+                            <div class="content-block-short">Skills</div>
+                            <div class="content-block-short">Languages</div>
+                        </div>
+                        <div class="col-right-prev">
+                            <div class="content-block-main">Name & Title</div>
+                            <div class="content-block-short">Objective</div>
+                            <div class="content-block">Experience/Education</div>
+                            <div class="content-block">Declaration</div>
+                        </div>
+                    </div>
+                    <button class="choose-template-btn">Template 9 (Green Tech)</button>
                 </div>
 
                 <div class="template-card" data-template-id="template-10" onclick="selectTemplate('template-style-10', '#FF7043')">
-                    <div class="template-preview template-style-10-preview">Template 10 (Orange Header)</div>
-                    <button class="choose-template-btn">Choose Template</button>
+                    <div class="template-preview template-style-10-prev" 
+                            style="--primary-color-prev: #FF7043;">
+                        <div class="col-right-prev" style="width: 100%;"> 
+                            <div class="content-block-main" style="background: var(--primary-color-prev); color: white; padding: 5px; margin-bottom: 5px; border-radius: 3px;">Name & Contact</div>
+                            <div class="content-block-short">Objective</div>
+                            <div class="content-block">Experience</div>
+                            <div class="content-block-short">Skills/Languages</div>
+                            <div class="content-block">Education</div>
+                        </div>
+                    </div>
+                    <button class="choose-template-btn">Template 10 (Orange Header)</button>
                 </div>
 
             </div>
@@ -152,68 +257,69 @@
                 <p class="note">Your CV updates live. Click 'Download PDF' to save your final document.</p>
             </div>
     
-            <div id="cv-output-area" class="cv-paper bordered-cv template-style-1">
+            <div id="cv-output-area" class="cv-paper bordered-cv template-style-4"> 
                 <div class="cv-grid">
                     
                     <div class="left-column">
+                        
+                        <h2 class="name-display" id="cv-name"></h2>
+                        
+                        <div class="summary-section">
+                            <h3><i class="fas fa-user-tie"></i> Objective</h3>
+                            <p id="cv-objective-output"></p>
+                            <p id="cv-professional-summary-output"></p>
+                        </div>
+
+                        <div id="work-history-main-container" class="work-history-section-container" style="display:none;">
+                            <h3><i class="fas fa-briefcase"></i> Work History</h3>
+                            <div id="cv-work-history-output">
+                                </div>
+                        </div>
+
+                        <div class="education-section-container">
+                            <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                            <div id="cv-education-output">
+                                </div>
+                        </div>
+                        
+                        <div class="declaration-section">
+                            <h3><i class="fas fa-file-signature"></i> Declaration</h3>
+                            <div id="cv-declaration-output">
+                                </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="right-column">
+                        
                         <div class="profile-section">
                             <div class="profile-image">
                                 <img id="photo-display" src="" alt="Profile Photo" style="display: none;">
                                 <span id="initials-display" style="display: none;"></span>
                             </div>
-                            <h2 class="name-display" id="cv-name"></h2>
                         </div>
-
+                        
                         <div class="contact-section">
-                            <h3>Contact</h3>
+                            <h3><i class="fas fa-id-card"></i> Contact</h3>
                             <p id="cv-address-line" style="display:none;"><i class="fas fa-map-marker-alt"></i> <span id="cv-address"></span></p>
                             <p id="cv-phone-line" style="display:none;"><i class="fas fa-phone"></i> <span id="cv-phone"></span></p>
                             <p id="cv-email-line" style="display:none;"><i class="fas fa-envelope"></i> <span id="cv-email"></span></p>
                         </div>
 
-                        <div class="skills-section">
-                            <h3>Skills</h3>
-                            <ul id="cv-skills-output">
-                                </ul>
+                        <div class="skills-section-container">
+                            <h3><i class="fas fa-wrench"></i> Skills</h3>
+                            <div class="skills-section">
+                                <ul id="cv-skills-output"></ul>
+                            </div>
                         </div>
 
-                        <div class="extra-section">
-                            <h3>Languages</h3>
-                            <ul id="cv-languages-output">
-                                </ul>
-                        </div>
-                    </div>
-
-                    <div class="right-column">
-                        
-                        <div class="summary-section">
-                            <h3>Career Objective</h3>
-                            <p id="cv-objective-output"></p>
+                        <div class="extra-section-container">
+                            <h3><i class="fas fa-language"></i> Languages</h3>
+                            <div class="extra-section">
+                                <ul id="cv-languages-output"></ul>
+                            </div>
                         </div>
                         
-                        <div class="summary-section">
-                            <h3>Professional Summary</h3>
-                            <p id="cv-professional-summary-output"></p>
-                        </div>
-                        
-                        <div id="work-history-main-container" class="work-history-section">
-                            <h3>Work History</h3>
-                            <div id="cv-work-history-output">
-                                </div>
-                        </div>
-
-                        <div class="education-section">
-                            <h3>Education</h3>
-                            <div id="cv-education-output">
-                                </div>
-                        </div>
-                        
-                        <div class="filler-content">
-                            <h3>Declaration</h3>
-                            <div id="cv-declaration-output">
-                                </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
