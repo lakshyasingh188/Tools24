@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools24</title>   
+    <title>Tools24</title>    
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
@@ -16,7 +16,9 @@
         }
         body {
             font-family: 'Arial', sans-serif;
-            background-color: linear-gradient(45deg, #D82B93, #4F35A6);
+            /* Note: Original code had an invalid background-color line. Keeping it as is for consistency, 
+               but ideally, it should be 'background-image: linear-gradient(...);' for a gradient. */
+            background-color: linear-gradient(45deg, #D82B93, #4F35A6); 
             margin: 0;
             padding: 0;
             color: var(--text-color);
@@ -37,6 +39,7 @@
             margin: 40px auto;
             padding: 20px;
             display: grid; 
+            /* This line controls the layout (4 cards per row on large screens) */
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
         }
@@ -77,6 +80,24 @@
 
     <div class="tool-dashboard">
         
+        <a href="file-converter.html" class="tool-card">
+            <i class="fas fa-exchange-alt"></i>
+            <h2>File Converter (Image/PDF/TXT)</h2>
+            <p>Image, PDF और Text फ़ाइलों को Convert करें।</p>
+        </a>
+
+        <a href="photo-resizer.html" class="tool-card">
+            <i class="fas fa-image"></i>
+            <h2>Photo Resizer</h2>
+            <p>JPG/PNG Photos का साइज़ (Width/Height) Resize करें।</p>
+        </a>
+        
+        <a href="calculator.html" class="tool-card">
+            <i class="fas fa-calculator"></i>
+            <h2>Scientific Calculator</h2>
+            <p>गणित (Math) की गणनाएँ करें।</p>
+        </a>
+        
         <a href="resume.html" class="tool-card">
             <i class="fas fa-file-alt"></i>
             <h2>Resume / CV Maker</h2>
@@ -88,24 +109,7 @@
             <h2>Marriage Biodata Maker</h2>
             <p>शादी के लिए बायोडाटा बनाएं।</p>
         </a>
-        <a href="photo-resizer.html" class="tool-card">
-            <i class="fas fa-image"></i>
-            <h2>Photo Resizer</h2>
-            <p>JPG/PNG Photos का साइज़ (Width/Height) Resize करें।</p>
-        </a>
 
-        <a href="file-converter.html" class="tool-card">
-            <i class="fas fa-exchange-alt"></i>
-            <h2>File Converter (Image/PDF/TXT)</h2>
-            <p>Image, PDF और Text फ़ाइलों को Convert करें।</p>
-        </a>
-        
-        <a href="calculator.html" class="tool-card">
-            <i class="fas fa-calculator"></i>
-            <h2>Scientific Calculator</h2>
-            <p>गणित (Math) की गणनाएँ करें।</p>
-        </a>
-        
     </div>
     
     <div style="margin-top: 50px; padding: 20px; font-size: 0.8em; color: #888;">
