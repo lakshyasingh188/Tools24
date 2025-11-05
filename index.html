@@ -3,81 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools24</title>    
+    <title>TOOLS24</title> 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <style>
-        /* Base Styles for Tool Hub Dashboard */
-        :root {
-            --primary-color: blue; /*primary blue */
-            --secondary-color: #f4f4f9; 
-            --text-color: black;
-        }
-        body {
-            font-family: 'Arial', sans-serif;
-            /* Note: Original code had an invalid background-color line. Keeping it as is for consistency, 
-               but ideally, it should be 'background-image: linear-gradient(...);' for a gradient. */
-            background-color: linear-gradient(45deg, #D82B93, #4F35A6); 
-            margin: 0;
-            padding: 0;
-            color: #00FF00;
-            text-align: left;
-        }
-        .header-nav {
-            background-color: blue;
-            color: white;
-            padding: 15px 0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .header-nav h1 {
-            margin: 0;
-            font-size: 2em;
-        }
-        .tool-dashboard {
-            max-width: 1500px;
-            margin: 40px auto;
-            padding: 20px;
-            display: grid; 
-            /* This line controls the layout (4 cards per row on large screens) */
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        .tool-card {
-            background-color: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-decoration: none;
-            color: var(--text-color);
-            border-top: 5px solid var(--primary-color);
-        }
-        .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-        .tool-card i {
-            font-size: 3em;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-        }
-        .tool-card h2 {
-            margin-top: 0;
-            font-size: 1.5em;
-        }
-        .tool-card p {
-            font-size: 0.9em;
-            color: #666;
-        }
-    </style>
+    <link rel="stylesheet" href="main-index.css">
 </head>
 <body>
 
     <div class="header-nav">
-        <h1>🛠️ Tools24</h1> 
+        <h1>🛠️ tools24</h1> 
+        <div class="right-text">
+            TRY TO FREE tools24
+        </div>
     </div>
-
+    
     <div class="tool-dashboard">
         
         <a href="file-converter.html" class="tool-card">
@@ -109,17 +49,14 @@
             <h2>Marriage Biodata Maker</h2>
             <p>शादी के लिए बायोडाटा बनाएं।</p>
         </a>
-
+        
     </div>
     
-    <div style="margin-top: 50px; padding: 20px; font-size: 0.8em; color: #888;">
-        &copy; 2025 Tools24. All Rights Reserved.    
+    <div class="footer">
+        &copy; 2025 TOOLS24. All Rights Reserved.      
     </div>
 
-</body>
-</html>
-        &copy; 2025 Tools24. All Rights Reserved.    
-    </div>
+    <script src="main-index.js"></script>
 
 </body>
 </html>
