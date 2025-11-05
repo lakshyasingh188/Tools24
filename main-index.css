@@ -1,0 +1,144 @@
+/* Base Styles for Tool Hub Dashboard */
+:root {
+    --primary-color: #007bff; /* primary blue (Tools24 border/text/icons) */
+    --secondary-color: #f4f4f9; 
+    --text-color: black;
+    --yellow-green: #44cd32; /* पीला-हरा रंग (Yellow-Green) */
+}
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    text-align: left;
+    min-height: 100vh; 
+    background-color: var(--secondary-color); 
+}
+
+.header-nav {
+    /* चौड़ी नीली पट्टी और तिरछी हरी रेखा */
+    background-color: var(--primary-color); 
+    color: white;
+    padding: 35px 40px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    position: relative; 
+    overflow: hidden; 
+}
+
+.header-nav h1 {
+    margin: 0;
+    font-size: 2.5em; 
+    font-weight: bold;
+    text-align: left; 
+    z-index: 10; 
+}
+
+.header-nav .right-text {
+    font-size: 1.1em;
+    font-weight: 500;
+    opacity: 0.85;
+    z-index: 10;
+}
+
+/* 🟢 स्टाइलिश पीला-हरा तिरछी रेखा */
+.header-nav::before {
+    content: '';
+    position: absolute;
+    top: -50px; 
+    left: 50%;
+    transform: rotate(15deg); 
+    width: 500px; 
+    height: 150px; 
+    background: rgb(7, 247, 7); 
+    opacity: 0.7; 
+    z-index: 5; 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.divider-line {
+     display: none; 
+}
+
+/* --- 🖼️ टूल डैशबोर्ड वॉटरमार्क कंटेनर --- */
+.tool-dashboard {
+    max-width: 1500px;
+    margin: 40px auto;
+    padding: 20px;
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    
+    position: relative; 
+    z-index: 1; 
+}
+
+/* 1. वॉटरमार्क इमेज (लैपटॉप) - इमेज का नाम बदला गया */
+.tool-dashboard::after {
+    content: ""; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    /* 🖼️ अपडेटेड इमेज URL */
+    background-image: url('generated-image (1).png'); 
+    background-size: 80%; 
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    opacity: 0.1; /* हल्का वॉटरमार्क */
+    z-index: 0; 
+    pointer-events: none; 
+}
+
+/* 2. TOOLS24 वॉटरमार्क टेक्स्ट हटा दिया गया है */
+.tool-dashboard::before {
+    content: none; 
+    display: none;
+}
+/* --- 🖼️ टूल डैशबोर्ड वॉटरमार्क कंटेनर समाप्त --- */
+
+
+.tool-card {
+    /* कार्ड्स के लिए हल्का बैकग्राउंड ताकि वॉटरमार्क पर साफ़ दिखें */
+    background-color: rgba(255, 255, 255, 0.95); 
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    color: var(--text-color);
+    border-top: 8px solid var(--primary-color); 
+    opacity: 1; 
+    z-index: 2; 
+    position: relative; 
+}
+.tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.tool-card i {
+    font-size: 3em;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+.tool-card h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+.tool-card p {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.footer {
+    margin-top: 50px; 
+    padding: 20px; 
+    font-size: 0.8em; 
+    color: #888;
+    text-align: center;
+}
