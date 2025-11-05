@@ -59,6 +59,7 @@ function toggleResizeMode(mode) {
     const linkIcon = document.querySelector('.link-icon');
 
     if (mode === 'percent') {
+        // Set up for percentage input
         widthInput.placeholder = '70';
         heightInput.placeholder = '70';
         widthInput.setAttribute('min', '1');
@@ -66,10 +67,7 @@ function toggleResizeMode(mode) {
         heightInput.setAttribute('min', '1');
         heightInput.setAttribute('max', '100');
         linkIcon.style.opacity = '1';
-        // Re-calculate based on percentage
-        widthInput.value = Math.min(100, Math.max(1, parseInt(widthInput.value) || 70));
-        heightInput.value = Math.min(100, Math.max(1, parseInt(heightInput.value) || 70));
-        
+
         // Link height to width input event
         widthInput.oninput = function() {
             heightInput.value = this.value;
@@ -77,20 +75,20 @@ function toggleResizeMode(mode) {
         };
 
     } else if (mode === 'pixel' && originalImage) {
+        // Set up for pixel input
         widthInput.placeholder = originalImage.width;
         heightInput.placeholder = originalImage.height;
         widthInput.removeAttribute('max');
         heightInput.removeAttribute('max');
-        linkIcon.style.opacity = '0.4'; // No automatic linking in pixel mode (user can change aspect ratio)
+        linkIcon.style.opacity = '0.4';
 
-        // Set default values to original dimensions for pixel mode
-        widthInput.value = originalImage.width;
-        heightInput.value = originalImage.height;
-        
         // Unlink height from width input event
         widthInput.oninput = function() {
             updateEstimatedSize();
         };
+        // Reset values to original for clarity
+        widthInput.value = originalImage.width;
+        heightInput.value = originalImage.height;
     }
     updateEstimatedSize();
 }
@@ -112,6 +110,7 @@ function updateEstimatedSize() {
 
         let newWidth, newHeight;
 
+        // Determine new dimensions based on mode
         if (resizeMode === 'percent') {
             if (isNaN(inputWidth) || isNaN(inputHeight) || inputWidth < 1 || inputHeight < 1) {
                  document.getElementById('estimatedSize').textContent = 'Estimated Size: Invalid percentage';
@@ -128,12 +127,13 @@ function updateEstimatedSize() {
             newHeight = inputHeight;
         }
 
-        // Temporary canvas for accurate size estimation
+        // --- Canvas processing for Estimation ---
         const tempCanvas = document.createElement('canvas');
         const tempCtx = tempCanvas.getContext('2d');
         tempCanvas.width = newWidth;
         tempCanvas.height = newHeight;
         
+        // Apply background color
         tempCtx.fillStyle = currentBgColor;
         tempCtx.fillRect(0, 0, newWidth, newHeight);
 
@@ -172,6 +172,7 @@ function resizeImage() {
     const quality = format === 'image/jpeg' ? (qualityPercent / 100) : 1.0; 
     let newWidth, newHeight;
 
+    // Final dimension calculation and validation
     if (resizeMode === 'percent') {
         if (isNaN(inputWidth) || inputWidth < 1) { alert("Width Percentage 1% से कम नहीं हो सकती।"); return; }
         newWidth = Math.floor(originalImage.width * (inputWidth / 100));
@@ -195,6 +196,7 @@ function resizeImage() {
     ctx.fillStyle = currentBgColor;
     ctx.fillRect(0, 0, newWidth, newHeight);
     
+    // Draw the image
     ctx.drawImage(originalImage, 0, 0, newWidth, newHeight);
 
     // 3. Download using Blob
@@ -236,10 +238,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Attach listeners
     fileInput.addEventListener('change', previewImage);
     selectImageBtn.addEventListener('click', () => fileInput.click());
-    resizeSelect.addEventListener('change', (e) => toggleResizeMode(e.target.value));
     
+    // Attach event listeners for percentage mode linking and switching
+    resizeSelect.addEventListener('change', (e) => toggleResizeMode(e.target.value));
+    document.getElementById('widthPercentInput').addEventListener('input', updateEstimatedSize);
+    document.getElementById('heightPercentInput').addEventListener('input', updateEstimatedSize);
+
     // Initial setup on load
     selectBackground('white');
-    // Set default mode and link inputs
     toggleResizeMode('percent'); 
 });
