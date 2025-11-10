@@ -15,17 +15,29 @@ body {
     background-color: var(--secondary-color); 
 }
 
+/* 1. Header Navigation - Original Layout Restored */
 .header-nav {
     /* चौड़ी नीली पट्टी और तिरछी हरी रेखा */
     background-color: var(--primary-color); 
     color: white;
     padding: 35px 40px; 
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: relative; 
+    overflow: hidden; 
+    
+    /* 🟢 नई हरी बॉर्डर लाइन नीचे जोड़ी गई */
+    border-bottom: 3px solid var(--yellow-green); 
+}
+
+/* 🛠️ tools24 और TRY TO FREE tools24 को एक लाइन में रखने के लिए */
+.header-content-main { 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
+    width: 100%;
+    margin-bottom: 10px; /* नेविगेशन से गैप के लिए */
+    z-index: 10;
     position: relative; 
-    overflow: hidden; 
 }
 
 .header-nav h1 {
@@ -43,7 +55,7 @@ body {
     z-index: 10;
 }
 
-/* 🟢 स्टाइलिश पीला-हरा तिरछी रेखा */
+/* 🟢 स्टाइलिश पीला-हरा तिरछी रेखा - Original */
 .header-nav::before {
     content: '';
     position: absolute;
@@ -57,6 +69,74 @@ body {
     z-index: 5; 
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
+
+/* --- 🧭 Top Navigation Links Style (All Center & Highlighted) --- */
+.navbar-top {
+    /* सभी लिंक्स को सेंटर में रखने के लिए */
+    display: flex;
+    justify-content: center; 
+    width: 100%;
+    z-index: 10;
+    position: relative;
+    padding-bottom: 10px; 
+}
+
+.navbar-top a {
+    color: white; /* सभी लिंक्स का रंग सफेद (White) */
+    text-decoration: none;
+    font-size: 1em;
+    /* सभी लिंक्स को हाइलाइट और bold (font-weight: bold) किया गया */
+    font-weight: bold; 
+    margin: 0 15px; /* लिंक्स के बीच की दूरी */
+    padding: 5px 0; 
+    transition: color 0.2s;
+    position: static; 
+}
+
+.navbar-top a:hover {
+    color: #e0f0ff; 
+}
+
+/* Contact पर अलग से style नहीं चाहिए क्योंकि अब 'a' tag में ही bold और white color सेट है */
+.navbar-top .contact-link {
+    /* Contact पर लगाए गए अतिरिक्त styles हटा दिए गए हैं */
+    position: static; 
+    margin: 0 15px; 
+}
+
+.navbar-top .contact-link:hover {
+    color: #e0f0ff; 
+}
+/* --- END UPDATED NAVIGATION STYLE --- */
+
+/* --- About/Privacy Page Specific Styles --- */
+.content-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    line-height: 1.6;
+    color: #333;
+}
+.content-container h2 {
+    font-size: 2.2em;
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--yellow-green);
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+.content-container p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+.highlight {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+/* --- End About/Privacy Page Specific Styles --- */
+
 
 .divider-line {
      display: none; 
