@@ -15,134 +15,101 @@ body {
     background-color: var(--secondary-color); 
 }
 
-/* 1. Header Navigation - Original Layout Restored */
+/* 1. Header Navigation - लेआउट फिक्स (जैसा आपने पसंद किया) */
 .header-nav {
-    /* चौड़ी नीली पट्टी और तिरछी हरी रेखा */
     background-color: var(--primary-color); 
     color: white;
-    padding: 35px 40px; 
+    padding: 15px 40px; 
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     position: relative; 
     overflow: hidden; 
     
-    /* 🟢 नई हरी बॉर्डर लाइन नीचे जोड़ी गई */
-    border-bottom: 3px solid var(--yellow-green); 
-}
-
-/* 🛠️ tools24 और TRY TO FREE tools24 को एक लाइन में रखने के लिए */
-.header-content-main { 
-    display: flex; 
+    display: flex;
     justify-content: space-between; 
     align-items: center; 
-    width: 100%;
-    margin-bottom: 10px; /* नेविगेशन से गैप के लिए */
+}
+
+/* 🛠️ TOOLS24 लोगो (लेफ्ट) और TRY TO FREE (लेफ्ट/मिडिल) */
+.header-content-main { 
+    display: flex;
+    align-items: center; 
     z-index: 10;
     position: relative; 
+    width: auto;
 }
 
 .header-nav h1 {
     margin: 0;
-    font-size: 2.5em; 
+    font-size: 1.8em; 
     font-weight: bold;
     text-align: left; 
     z-index: 10; 
 }
 
+/* 2. TRY TO FREE tools24 (लेफ्ट साइड, लोगो के बगल में) */
 .header-nav .right-text {
-    font-size: 1.1em;
+    font-size: 0.9em; 
     font-weight: 500;
-    opacity: 0.85;
+    opacity: 1; 
     z-index: 10;
+    margin-left: 20px; 
+    padding: 5px 10px; 
+    border: 2px solid white; 
+    border-radius: 5px;
+    background-color: transparent; 
 }
 
-/* 🟢 स्टाइलिश पीला-हरा तिरछी रेखा - Original */
+/* 3. स्टाइलिश पीला-हरा तिरछी रेखा (लेफ्ट साइड में ले जाया गया) */
 .header-nav::before {
     content: '';
     position: absolute;
     top: -50px; 
-    left: 50%;
-    transform: rotate(15deg); 
-    width: 500px; 
-    height: 150px; 
-    background: rgb(7, 247, 7); 
-    opacity: 0.7; 
+    left: -150px; 
+    transform: rotate(-15deg); 
+    width: 400px; 
+    height: 100px; 
+    background: var(--yellow-green); 
+    opacity: 1; 
     z-index: 5; 
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
 }
 
-/* --- 🧭 Top Navigation Links Style (All Center & Highlighted) --- */
+/* --- 🧭 Top Navigation Links Style (राइट साइड) --- */
 .navbar-top {
-    /* सभी लिंक्स को सेंटर में रखने के लिए */
     display: flex;
-    justify-content: center; 
-    width: 100%;
+    justify-content: flex-end; 
+    align-items: center;
     z-index: 10;
     position: relative;
-    padding-bottom: 10px; 
+    width: auto;
 }
 
 .navbar-top a {
-    color: white; /* सभी लिंक्स का रंग सफेद (White) */
+    color: white; 
     text-decoration: none;
     font-size: 1em;
-    /* सभी लिंक्स को हाइलाइट और bold (font-weight: bold) किया गया */
-    font-weight: bold; 
-    margin: 0 15px; /* लिंक्स के बीच की दूरी */
-    padding: 5px 0; 
-    transition: color 0.2s;
-    position: static; 
+    font-weight: normal; 
+    margin: 0 10px; 
+    padding: 8px 12px; 
+    transition: background-color 0.2s;
+    border-bottom: 3px solid transparent; 
+}
+
+/* Home को टैब जैसा लुक देने के लिए */
+.navbar-top a[href="index.html"] {
+    font-weight: bold;
+    background-color: white; 
+    color: var(--primary-color); 
+    border-radius: 5px; 
+    border-bottom: none; 
 }
 
 .navbar-top a:hover {
-    color: #e0f0ff; 
+    background-color: rgba(255, 255, 255, 0.2); 
+    color: white; 
 }
 
-/* Contact पर अलग से style नहीं चाहिए क्योंकि अब 'a' tag में ही bold और white color सेट है */
-.navbar-top .contact-link {
-    /* Contact पर लगाए गए अतिरिक्त styles हटा दिए गए हैं */
-    position: static; 
-    margin: 0 15px; 
-}
-
-.navbar-top .contact-link:hover {
-    color: #e0f0ff; 
-}
-/* --- END UPDATED NAVIGATION STYLE --- */
-
-/* --- About/Privacy Page Specific Styles --- */
-.content-container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    line-height: 1.6;
-    color: #333;
-}
-.content-container h2 {
-    font-size: 2.2em;
-    color: var(--primary-color);
-    border-bottom: 3px solid var(--yellow-green);
-    padding-bottom: 10px;
-    margin-bottom: 25px;
-}
-.content-container p {
-    font-size: 1.1em;
-    margin-bottom: 20px;
-}
-.highlight {
-    font-weight: bold;
-    color: var(--primary-color);
-}
-/* --- End About/Privacy Page Specific Styles --- */
-
-
-.divider-line {
-     display: none; 
-}
-
-/* --- 🖼️ टूल डैशबोर्ड वॉटरमार्क कंटेनर --- */
+/* --- T O O L S  D A S H B O A R D --- */
 .tool-dashboard {
     max-width: 1500px;
     margin: 40px auto;
@@ -155,43 +122,46 @@ body {
     z-index: 1; 
 }
 
-/* 1. वॉटरमार्क इमेज (लैपटॉप) - इमेज का नाम बदला गया */
+/* 1. 🖼️ वॉटरमार्क इमेज फिक्स (हेडर के ठीक नीचे से शुरू करने के लिए) */
 .tool-dashboard::after {
     content: ""; 
-    position: absolute;
-    top: 0;
+    /* फिक्स करने के लिए height और top की वैल्यू बदलें */
+    position: fixed; 
+    
+    /* 🔴 फिक्स: हेडर के नीचे से शुरू करें */
+    top: 90px; /* **header-nav** की ऊँचाई (लगभग 90px) यहाँ सेट करें */
     left: 0;
     right: 0;
     bottom: 0;
     
-    /* 🖼️ अपडेटेड इमेज URL */
-    background-image: url('generated-image (1).png'); 
-    background-size: 80%; 
-    background-repeat: no-repeat;
-    background-position: center;
+    /* height को 100vh से हटा दिया गया, अब यह top/bottom से तय होगा */
+    width: 100vw;
     
-    opacity: 0.1; /* हल्का वॉटरमार्क */
+    /* 🔴 महत्वपूर्ण: यहाँ अपनी इमेज का सही पाथ/URL डालें */
+    background-image: url('image.png.jpg');
+    
+    /* 🟢 पूरी वेबसाइट को भरने के लिए 'cover' का उपयोग */
+    background-size: cover; 
+    background-repeat: no-repeat;
+    /* 🟢 इमेज को केंद्र में रखेगा */
+    background-position: center center; 
+    
+    /* 🟢 गाढ़ा वॉटरमार्क */
+    opacity: 0.6; 
     z-index: 0; 
     pointer-events: none; 
 }
 
-/* 2. TOOLS24 वॉटरमार्क टेक्स्ट हटा दिया गया है */
-.tool-dashboard::before {
-    content: none; 
-    display: none;
-}
-/* --- 🖼️ टूल डैशबोर्ड वॉटरमार्क कंटेनर समाप्त --- */
-
-
 .tool-card {
-    /* कार्ड्स के लिए हल्का बैकग्राउंड ताकि वॉटरमार्क पर साफ़ दिखें */
-    background-color: rgba(255, 255, 255, 0.95); 
+    /* 🟢 कार्ड्स के लिए हल्का पारदर्शी बैकग्राउंड (0.45) */
+    background-color: rgba(255, 255, 255, 0.45); 
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     text-decoration: none;
-    color: var(--text-color);
+    /* 🟢 टेक्स्ट का रंग भी थोड़ा पारदर्शी किया गया */
+    color: rgba(0, 0, 0, 0.8);
     border-top: 8px solid var(--primary-color); 
     opacity: 1; 
     z-index: 2; 
@@ -203,7 +173,8 @@ body {
 }
 .tool-card i {
     font-size: 3em;
-    color: var(--primary-color);
+    /* 🟢 आइकॉन का रंग (अधिक पारदर्शी) */
+    color: rgba(0, 123, 255, 0.6); 
     margin-bottom: 15px;
 }
 .tool-card h2 {
@@ -212,7 +183,8 @@ body {
 }
 .tool-card p {
     font-size: 0.9em;
-    color: #666;
+    /* 🟢 कार्ड टेक्स्ट की पारदर्शिता भी बढ़ाई गई */
+    color: rgba(102, 102, 102, 0.8);
 }
 
 .footer {
