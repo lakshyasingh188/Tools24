@@ -1,9 +1,15 @@
 /* Base Styles for Tool Hub Dashboard */
 :root {
-    --primary-color: #007bff; /* primary blue (Tools24 border/text/icons) */
+    --primary-color: #007bff; /* Upper Bar Blue */
     --secondary-color: #f4f4f9; 
     --text-color: black;
     --yellow-green: #44cd32; /* पीला-हरा रंग (Yellow-Green) */
+    
+    /* Variables for Double Header */
+    --darker-blue: #0056b3; 
+    --nav-bar-height: 40px; 
+    --upper-bar-height: 60px; 
+    --header-total-height: calc(var(--upper-bar-height) + var(--nav-bar-height)); /* 100px */
 }
 body {
     font-family: 'Arial', sans-serif;
@@ -15,27 +21,40 @@ body {
     background-color: var(--secondary-color); 
 }
 
-/* 1. Header Navigation - लेआउट फिक्स (जैसा आपने पसंद किया) */
+/* 1. Header Navigation - डबल-लेयर लेआउट */
 .header-nav {
     background-color: var(--primary-color); 
     color: white;
-    padding: 15px 40px; 
+    padding: 0 40px; 
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     position: relative; 
     overflow: hidden; 
-    
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
+    height: var(--header-total-height); 
+    display: block; 
 }
 
-/* 🛠️ TOOLS24 लोगो (लेफ्ट) और TRY TO FREE (लेफ्ट/मिडिल) */
+/* 🔴 निचली पट्टी (Navigation Bar) - गहरा नीला (::after) */
+.header-nav::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-bar-height); 
+    background-color: var(--darker-blue); 
+    z-index: 8; 
+}
+
+/* 🛠️ TOOLS24 लोगो (ऊपर बाएँ) */
 .header-content-main { 
-    display: flex;
-    align-items: center; 
-    z-index: 10;
-    position: relative; 
+    position: absolute; 
+    top: calc( (var(--upper-bar-height) - 1.8em) / 2 - 5px); 
+    left: 40px; 
     width: auto;
+    
+    display: block; 
+    align-items: center; 
+    z-index: 15; 
 }
 
 .header-nav h1 {
@@ -46,20 +65,14 @@ body {
     z-index: 10; 
 }
 
-/* 2. TRY TO FREE tools24 (लेफ्ट साइड, लोगो के बगल में) */
+/* 🔴🔴🔴 यहाँ बदलाव: TRY TO FREE Text को पूरी तरह से छुपाता है 🔴🔴🔴 */
 .header-nav .right-text {
-    font-size: 0.9em; 
-    font-weight: 500;
-    opacity: 1; 
-    z-index: 10;
-    margin-left: 20px; 
-    padding: 5px 10px; 
-    border: 2px solid white; 
-    border-radius: 5px;
-    background-color: transparent; 
+    display: none !important; 
 }
+/* 🔴🔴🔴 सुनिश्चित करता है कि यह कहीं भी दिखाई न दे 🔴🔴🔴 */
 
-/* 3. स्टाइलिश पीला-हरा तिरछी रेखा (लेफ्ट साइड में ले जाया गया) */
+
+/* 3. स्टाइलिश पीला-हरा तिरछी रेखा (लेफ्ट साइड में) */
 .header-nav::before {
     content: '';
     position: absolute;
@@ -74,13 +87,16 @@ body {
     box-shadow: none;
 }
 
-/* --- 🧭 Top Navigation Links Style (राइट साइड) --- */
+/* --- 🧭 Top Navigation Links Style (निचली, गहरी पट्टी पर, राइट साइड) --- */
 .navbar-top {
     display: flex;
     justify-content: flex-end; 
     align-items: center;
-    z-index: 10;
-    position: relative;
+    z-index: 15; 
+    
+    position: absolute;
+    bottom: 0;
+    right: 40px; 
     width: auto;
 }
 
@@ -122,45 +138,37 @@ body {
     z-index: 1; 
 }
 
-/* 1. 🖼️ वॉटरमार्क इमेज फिक्स (हेडर के ठीक नीचे से शुरू करने के लिए) */
+/* 1. 🖼️ वॉटरमार्क इमेज फिक्स */
 .tool-dashboard::after {
     content: ""; 
-    /* फिक्स करने के लिए height और top की वैल्यू बदलें */
     position: fixed; 
     
-    /* 🔴 फिक्स: हेडर के नीचे से शुरू करें */
-    top: 90px; /* **header-nav** की ऊँचाई (लगभग 90px) यहाँ सेट करें */
+    top: var(--header-total-height); 
     left: 0;
     right: 0;
     bottom: 0;
     
-    /* height को 100vh से हटा दिया गया, अब यह top/bottom से तय होगा */
     width: 100vw;
     
-    /* 🔴 महत्वपूर्ण: यहाँ अपनी इमेज का सही पाथ/URL डालें */
     background-image: url('image.png.png');
     
-    /* 🟢 पूरी वेबसाइट को भरने के लिए 'cover' का उपयोग */
     background-size: cover; 
     background-repeat: no-repeat;
-    /* 🟢 इमेज को केंद्र में रखेगा */
     background-position: center center; 
     
-    /* 🟢 गाढ़ा वॉटरमार्क */
     opacity: 0.6; 
     z-index: 0; 
     pointer-events: none; 
 }
 
+/* बाकी कार्ड और फुटर स्टाइलिंग वही रहेगी */
 .tool-card {
-    /* 🟢 कार्ड्स के लिए हल्का पारदर्शी बैकग्राउंड (0.45) */
     background-color: rgba(255, 255, 255, 0.45); 
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     text-decoration: none;
-    /* 🟢 टेक्स्ट का रंग भी थोड़ा पारदर्शी किया गया */
     color: rgba(0, 0, 0, 0.8);
     border-top: 8px solid var(--primary-color); 
     opacity: 1; 
@@ -173,7 +181,6 @@ body {
 }
 .tool-card i {
     font-size: 3em;
-    /* 🟢 आइकॉन का रंग (अधिक पारदर्शी) */
     color: rgba(0, 123, 255, 0.6); 
     margin-bottom: 15px;
 }
@@ -183,7 +190,6 @@ body {
 }
 .tool-card p {
     font-size: 0.9em;
-    /* 🟢 कार्ड टेक्स्ट की पारदर्शिता भी बढ़ाई गई */
     color: rgba(102, 102, 102, 0.8);
 }
 
