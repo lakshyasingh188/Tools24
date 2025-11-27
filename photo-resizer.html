@@ -1,1 +1,87 @@
-    align-items: right; /* टेक्स्ट को लंबवत केंद्र में रखने के लिए */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tools24 |    Photo Resizer & Compressor - Percentage Based</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="photoresize.css"> 
+</head>
+<body>
+    <h1 class="tool-page-heading">
+        <span class="corner-strip"></span> <span class="site-name">tools24</span> 
+        <span class="tool-name">....Photo Resizer</span>
+    </h1>
+
+    <div class="tool-container">
+        
+        <div id="dropzone" class="dropzone">
+            <input type="file" id="fileInput" accept="image/jpeg, image/png">
+            <div id="imagePlaceholder">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drop your images here or **browse**.</p>
+                <button id="selectImageBtn">Select Image</button>
+            </div>
+            <p id="originalDetails">Original Size: -- x -- px (-- KB/MB)</p>
+        </div>
+        
+        <h2 class="control-group-title">Choose new size and format</h2>
+
+        <div class="input-row">
+            <span class="input-label">Width</span>
+            <div class="input-field-container">
+                <input type="number" id="widthPercentInput" value="70" min="1" max="100" oninput="updateEstimatedSize()">
+                <i class="fas fa-link link-icon"></i>
+                <select id="resizeSelect" onchange="toggleResizeMode(this.value)">
+                    <option value="percent">Percent</option>
+                    <option value="pixel">Pixels</option>
+                </select>
+            </div>
+        </div>
+        <div class="input-row">
+            <span class="input-label">Height</span>
+            <div class="input-field-container">
+                <input type="number" id="heightPercentInput" value="70" min="1" max="100" oninput="updateEstimatedSize()">
+            </div>
+        </div>
+
+        <div class="input-row">
+            <span class="input-label">Resolution</span>
+            <div class="input-field-container">
+                <input type="number" id="dpiInput" value="72" min="10">
+                <span style="margin-left: 5px; color: #555;">DPI</span>
+            </div>
+        </div>
+        
+        <div class="format-group">
+            <div>
+                <label for="formatSelect">Format</label>
+                <select id="formatSelect" onchange="updateEstimatedSize()">
+                    <option value="image/jpeg">JPG</option>
+                    <option value="image/png">PNG</option>
+                </select>
+            </div>
+            <div>
+                <label for="qualityInput">Quality</label>
+                <input type="number" id="qualityInput" value="90" min="10" max="100" oninput="updateEstimatedSize()">
+                <span style="font-size: 0.9em; margin-top: 5px;">%</span>
+            </div>
+            <div>
+                <label>Background</label>
+                <div class="color-options">
+                    <div class="color-option selected" id="whiteBg" data-color="white" onclick="selectBackground('white')"></div>
+                    <div class="color-option" id="blackBg" data-color="black" onclick="selectBackground('black')"></div>
+                </div>
+            </div>
+        </div>
+        
+        <p id="estimatedSize">Estimated Size: N/A (Image not loaded)</p>
+        
+        <button id="resizeBtn" onclick="resizeImage()">Resize Image</button>
+        
+        <canvas id="imageCanvas" style="display:none;"></canvas>
+    </div>
+
+    <script src="resizer.js"></script>
+</body>
+</html>
