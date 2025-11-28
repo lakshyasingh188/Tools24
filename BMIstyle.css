@@ -1,0 +1,139 @@
+/* ======================================= */
+/* 1. BMI CALCULATOR PAGE SPECIFIC STYLES  */
+/* ======================================= */
+
+/* BMI Calculator Main Container */
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+/* Form Input Styling */
+.bmi-form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #333;
+}
+
+.bmi-form input {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Button Styling */
+.bmi-form button {
+    background-color: #007bff; /* नीला रंग */
+    color: white;
+    padding: 12px 25px;
+    margin: 15px 0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.bmi-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Result Area Styling */
+#result {
+    margin-top: 25px;
+    padding: 0;
+}
+
+#result div {
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+#result h2 {
+    margin: 5px 0 10px 0;
+    font-size: 1.5em;
+}
+
+#result p {
+    margin: 5px 0;
+    font-size: 1.1em;
+}
+
+
+/* ======================================= */
+/* 2. CUSTOM HEADER & LOGO STYLING         */
+/* ======================================= */
+
+/* नीला हेडर (Blue Header) */
+.tool-dashboard-header {
+    background-color: #007bff; /* नीला रंग */
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* हेडिंग को बीच में लाने के लिए */
+    position: relative; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.tool-dashboard-header h2 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+/* बैक-लिंक कंटेनर (तीर और लोगो का कंटेनर) */
+.back-link {
+    position: absolute;
+    left: 0; 
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    /* हाईलाइटेड बैकग्राउंड */
+    background-color: rgba(255, 255, 255, 0.1); 
+    padding: 0 20px;
+    padding-right: 35px; /* तिरछे डिज़ाइन के लिए अतिरिक्त पैडिंग */
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    z-index: 10; 
+}
+
+.back-link:hover {
+    background-color: rgba(255, 255, 255, 0.2); 
+}
+
+/* हरा तिरछा डिज़ाइन (Slanted Green Design) */
+.header-green-slant {
+    width: 30px; 
+    height: 100%; 
+    background-color: #00b894; /* आपका हरा रंग */
+    /* तिरछापन */
+    transform: skewX(-20deg); 
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1; 
+    transform-origin: top left; 
+}
+
+/* सफेद तीर का आइकॉन (White Arrow Icon) */
+.back-arrow-icon {
+    position: relative;
+    color: white; /* सफेद रंग */
+    font-size: 1.8em; 
+    z-index: 2; /* हरे तिरछे डिज़ाइन के ऊपर */
+    margin-left: 5px; 
+}
