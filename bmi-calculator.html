@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator - tools24</title>
+    
+    <link rel="stylesheet" href="main-index.css"> 
+    <link rel="stylesheet" href="BMIStyle.css"> 
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/css/all.min.css">
+</head>
+<body>
+
+    <div class="tool-dashboard-header"> 
+        <a href="index.html" class="back-arrow"><i class="fas fa-arrow-left"></i></a>
+        <h2>tools24 BMI Calculator</h2>
+    </div>
+
+    <div class="container">
+        <h1>Calculate Your Body Mass Index</h1>
+
+        <div class="bmi-form">
+            <label for="height">Height (in cm):</label>
+            <input type="number" id="height" placeholder="Enter height in cm" value="">
+
+            <label for="weight">Weight (in kg):</label>
+            <input type="number" id="weight" placeholder="Enter weight in kg" value="">
+
+            <button onclick="calculateBMI()">Calculate BMI</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <div class="footer">
+        &copy; 2025 tools24. All Rights Reserved.
+    </div>
+
+    <script src="bmi-calculator.js"></script>
+</body>
+</html>
