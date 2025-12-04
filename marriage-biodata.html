@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marriage Biodata Maker</title>
     <link rel="stylesheet" href="biodata-style.css">
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
 </head>
 <body>
 
@@ -20,42 +19,54 @@
                 
                 <div class="template-section">
                     <label>टेम्पलेट चुनें:</label>
+
                     <div class="template-preview-container">
                         
-                        <div class="template-card hindu hindu-beige selected" data-template="hindu-beige" data-accent="#d8572a" data-bg="#fff8e1">
+                        <div class="template-card hindu-beige selected" 
+                            data-template="hindu-beige" 
+                            data-accent="#d8572a"  
+                            data-bg="#fff8e1">
                             <div class="preview-box"></div>
                             <span>Hindu</span>
                         </div>
-                        
-                        <div class="template-card muslim muslim-green" data-template="muslim-green" data-accent="#004D40" data-bg="#e8f5e9">
+
+                        <div class="template-card muslim-green" 
+                            data-template="muslim-green" 
+                            data-accent="#004D40" 
+                            data-bg="#e8f5e9">
                             <div class="preview-box"></div>
                             <span>Muslim (Green)</span>
                         </div>
-                        
-                        <div class="template-card muslim muslim-blue" data-template="muslim-blue" data-accent="#1565C0" data-bg="#e3f2fd">
+
+                        <div class="template-card muslim-blue" 
+                            data-template="muslim-blue" 
+                            data-accent="#1565C0" 
+                            data-bg="#e3f2fd">
                             <div class="preview-box"></div>
                             <span>Muslim (Blue)</span>
                         </div>
+
                     </div>
                 </div>
 
                 <div class="color-selectors">
                     <div class="form-group-inline">
-                        <label for="accent-color-select">Accent रंग (Border/Text):</label>
+                        <label>Accent रंग:</label>
                         <select id="accent-color-select">
-                            <option value="#d8572a">Saffron/Orange (Default)</option>
+                            <option value="#d8572a">Saffron/Orange</option>
                             <option value="#004D40">Deep Green</option>
                             <option value="#1565C0">Dark Blue</option>
                             <option value="#880e4f">Maroon/Purple</option>
                         </select>
                     </div>
+
                     <div class="form-group-inline">
-                        <label for="background-color-select">पृष्ठभूमि रंग चुनें:</label>
+                        <label>पृष्ठभूमि रंग:</label>
                         <select id="background-color-select">
-                            <option value="#fff8e1">Light Beige (Default)</option>
+                            <option value="#fff8e1">Light Beige</option>
                             <option value="#e8f5e9">Light Green</option>
                             <option value="#e3f2fd">Light Blue</option>
-                            <option value="#ffffff">Pure White</option>
+                            <option value="#ffffff">White</option>
                         </select>
                     </div>
                 </div>
@@ -64,46 +75,49 @@
             <form id="biodata-form" class="input-form">
                 <h1>*** मैरिज बायोडाटा जानकारी ***</h1>
 
+                <!-- PERSONAL DETAILS -->
                 <section>
-                    <h2>व्यक्तिगत विवरण (Personal Details)</h2>
+                    <h2>व्यक्तिगत विवरण</h2>
+
                     <div class="form-section">
                         <div class="form-group">
-                            <label for="full-name">पूरा नाम (Full Name)</label>
-                            <input type="text" id="full-name" placeholder="Name">
+                            <label>पूरा नाम</label>
+                            <input type="text" id="full-name">
                         </div>
                         <div class="form-group">
-                            <label for="dob">जन्म तिथि और समय (Date of Birth & Time)</label>
+                            <label>जन्म तिथि व समय</label>
                             <input type="datetime-local" id="dob">
                         </div>
                         <div class="form-group">
-                            <label for="height">कद (Height) (e.g., 160 cm / 5' 3")</label>
-                            <input type="text" id="height" placeholder="e.g., 5' 8''">
+                            <label>कद</label>
+                            <input type="text" id="height">
                         </div>
                         <div class="form-group">
-                            <label for="place-of-birth">जन्म स्थान (Place of Birth)</label>
-                            <input type="text" id="place-of-birth" placeholder="City/Village">
+                            <label>जन्म स्थान</label>
+                            <input type="text" id="place-of-birth">
                         </div>
                         <div class="form-group">
-                            <label for="religious">धर्म (Religious)</label>
+                            <label>धर्म</label>
                             <input type="text" id="religious" value="Hindu">
                         </div>
                         <div class="form-group">
-                            <label for="caste">जाति/समुदाय (Caste/Community)</label>
-                            <input type="text" id="caste" placeholder="Caste Name">
+                            <label>जाति</label>
+                            <input type="text" id="caste">
                         </div>
                     </div>
 
+                    <!-- HINDU EXTRA FIELDS -->
                     <div class="form-section hindu-specific">
                         <div class="form-group">
-                            <label for="rashi">राशि (Rashi)</label>
-                            <input type="text" id="rashi" placeholder="e.g., Mesh, Kanya">
+                            <label>राशि</label>
+                            <input type="text" id="rashi">
                         </div>
                         <div class="form-group">
-                            <label for="nakshatra">नक्षत्र (Nakshatra)</label>
-                            <input type="text" id="nakshatra" placeholder="e.g., Ashwini">
+                            <label>नक्षत्र</label>
+                            <input type="text" id="nakshatra">
                         </div>
                         <div class="form-group">
-                            <label for="manglik">मांगलिक (Manglik)</label>
+                            <label>मांगलिक</label>
                             <select id="manglik">
                                 <option>Select</option>
                                 <option>Yes</option>
@@ -112,79 +126,80 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="gotra">गोत्र (Gotra)</label>
-                            <input type="text" id="gotra" placeholder="Gotra Name">
+                            <label>गोत्र</label>
+                            <input type="text" id="gotra">
                         </div>
                     </div>
 
                     <div class="form-section">
                         <div class="form-group">
-                            <label for="complexion">रंग (Complexion)</label>
-                            <input type="text" id="complexion" placeholder="e.g., Fair, Wheatish">
+                            <label>रंग</label>
+                            <input type="text" id="complexion">
                         </div>
                         <div class="form-group">
-                            <label for="blood-group">रक्त ग्रुप (Blood Group)</label>
-                            <input type="text" id="blood-group" placeholder="e.g., O+">
+                            <label>रक्त समूह</label>
+                            <input type="text" id="blood-group">
                         </div>
                         <div class="form-group">
-                            <label for="education">उच्च शिक्षा (Higher Education)</label>
-                            <input type="text" id="education" placeholder="e.g., B.Tech, M.A.">
+                            <label>उच्च शिक्षा</label>
+                            <input type="text" id="education">
                         </div>
                         <div class="form-group">
-                            <label for="job">व्यवसाय/काम (Job/Occupation)</label>
-                            <input type="text" id="job" placeholder="e.g., Software Engineer, Teacher">
+                            <label>व्यवसाय</label>
+                            <input type="text" id="job">
                         </div>
                         <div class="form-group full-width">
-                            <label for="biodata-image">प्रोफ़ाइल फोटो अपलोड करें</label>
+                            <label>प्रोफ़ाइल फोटो</label>
                             <input type="file" id="biodata-image" accept="image/*">
                         </div>
                     </div>
                 </section>
 
+                <!-- FAMILY DETAILS -->
                 <section>
-                    <h2>पारिवारिक विवरण (Family Details)</h2>
+                    <h2>पारिवारिक विवरण</h2>
+
                     <div class="form-section">
                         <div class="form-group">
-                            <label for="father-name">पिता का नाम (Father's Name)</label>
-                            <input type="text" id="father-name" placeholder="Father's Name">
+                            <label>पिता का नाम</label>
+                            <input type="text" id="father-name">
                         </div>
+
                         <div class="form-group">
-                            <label for="mother-name">माता का नाम (Mother's Name)</label>
-                            <input type="text" id="mother-name" placeholder="Mother's Name">
+                            <label>माता का नाम</label>
+                            <input type="text" id="mother-name">
                         </div>
                     </div>
+
                     <div class="form-section full-width">
-                        <div class="form-group">
-                            <label for="siblings">भाई-बहन (Siblings) (e.g., 1 Brother, 2 Married Sisters)</label>
-                            <textarea id="siblings" rows="2" placeholder="Mention status and number"></textarea>
-                        </div>
+                        <label>भाई–बहन</label>
+                        <textarea id="siblings" rows="2"></textarea>
                     </div>
                 </section>
 
+                <!-- CONTACT DETAILS -->
                 <section>
-                    <h2>संपर्क और पता (Contact & Address)</h2>
+                    <h2>संपर्क व पता</h2>
+
                     <div class="form-section full-width">
-                        <div class="form-group">
-                            <label for="address">वर्तमान पता (Current Address)</label>
-                            <textarea id="address" rows="3" placeholder="Full Address"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-no">संपर्क नंबर (Contact No.)</label>
-                            <input type="text" id="contact-no" placeholder="Mobile Number">
-                        </div>
+                        <label>पता</label>
+                        <textarea id="address" rows="3"></textarea>
+
+                        <label>संपर्क नंबर</label>
+                        <input type="text" id="contact-no">
                     </div>
                 </section>
-                
+
                 <div class="button-group">
-                    <button type="submit" id="generate-btn">बायोडाटा जनरेट करें (Finalize View)</button>
+                    <button type="button" id="generate-btn">बायोडाटा जनरेट करें</button>
                     <button type="button" id="download-btn">⬇️ PDF डाउनलोड करें</button>
                 </div>
             </form>
         </div>
 
-        <div class="watermark-gap">
-            </div>
+        <div class="watermark-gap"></div>
 
+        <!-- OUTPUT A4 -->
         <div id="biodata-output">
             <div class="top-color-bar"></div>
 
@@ -194,31 +209,28 @@
             </header>
 
             <div class="biodata-content">
-                
                 <div class="details-section">
-                    
-                    <h3>व्यक्तिगत विवरण (Personal Details)</h3>
-                    <div id="personal-details-output">
-                        </div>
 
-                    <h3>पारिवारिक विवरण (Family Details)</h3>
-                    <div id="family-details-output">
-                        </div>
+                    <h3>व्यक्तिगत विवरण</h3>
+                    <div id="personal-details-output"></div>
 
-                    <h3>संपर्क और अन्य विवरण (Contact & Other Details)</h3>
-                    <div id="contact-details-output">
-                        </div>
+                    <h3>पारिवारिक विवरण</h3>
+                    <div id="family-details-output"></div>
+
+                    <h3>संपर्क व अन्य विवरण</h3>
+                    <div id="contact-details-output"></div>
+
                 </div>
 
                 <div class="photo-section">
                     <img id="biodata-photo" src="" alt="Profile Photo">
                 </div>
             </div>
-            
         </div>
+
     </div>
-    
-   <script src="biodata-generator.js"></script>
+
+    <script src="biodata-generator.js"></script>
 
 </body>
 </html>
