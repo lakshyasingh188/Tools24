@@ -1,139 +1,136 @@
-/* ======================================= */
-/* 1. BMI CALCULATOR PAGE SPECIFIC STYLES  */
-/* ======================================= */
+/* Custom Font */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    /* Light green/blue gradient background matching the image */
+    background: linear-gradient(135deg, #e0f7fa 0%, #ccffcc 100%); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
 
-/* BMI Calculator Main Container */
-.container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
+/* --- Header Styling --- */
+header {
+    width: 100%;
+    /* Bright blue header color */
+    background-color: #007bff; 
+    color: white;
+    padding: 15px 0;
     text-align: center;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Form Input Styling */
-.bmi-form label {
-    display: block;
-    margin-top: 15px;
+.header-content {
+    font-size: 1.5rem;
     font-weight: 600;
+}
+
+/* --- Footer Styling --- */
+footer {
+    width: 100%;
+    color: #555;
+    font-size: 0.8rem;
+    padding: 15px 0;
+    text-align: center;
+    /* Footer position at the bottom */
+    position: absolute;
+    bottom: 0;
+}
+
+/* --- Calculator Card Styling --- */
+.main-container {
+    flex-grow: 1; /* Pushes footer down */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.calculator-card {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px; /* Card width similar to the image */
+}
+
+h2 {
     color: #333;
+    margin-bottom: 30px;
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 
-.bmi-form input {
-    width: 90%;
-    padding: 10px;
-    margin: 8px 0 15px 0;
+/* --- Input and Label Styling --- */
+label {
+    display: block;
+    text-align: left;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #444;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 4px;
     box-sizing: border-box;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
-/* Button Styling */
-.bmi-form button {
+input[type="number"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* --- Button Styling --- */
+#calculate-btn {
     background-color: #007bff;
     color: white;
     padding: 12px 25px;
-    margin: 15px 0;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.3s;
-    font-weight: bold;
+    margin-top: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    transition: background-color 0.2s, transform 0.1s;
 }
 
-.bmi-form button:hover {
+#calculate-btn:hover {
     background-color: #0056b3;
 }
 
-/* Result Area Styling */
-#result {
+#calculate-btn:active {
+    transform: translateY(1px);
+}
+
+/* --- Results Styling --- */
+.result-display {
     margin-top: 25px;
-    padding: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #333;
+    min-height: 25px; /* To prevent layout jump */
 }
 
-#result div {
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 10px;
+.category-display {
+    margin-top: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    min-height: 20px; /* To prevent layout jump */
 }
 
-#result h2 {
-    margin: 5px 0 10px 0;
-    font-size: 1.5em;
-}
-
-#result p {
-    margin: 5px 0;
-    font-size: 1.1em;
-}
-
-
-/* ======================================= */
-/* 2. CUSTOM HEADER & LOGO STYLING         */
-/* ======================================= */
-
-/* नीला हेडर (Blue Header) */
-.tool-dashboard-header {
-    background-color: #007bff; 
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-    position: relative; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.tool-dashboard-header h2 {
-    margin: 0;
-    font-size: 1.8em;
-}
-
-/* बैक-लिंक कंटेनर (तीर और लोगो का कंटेनर) */
-.back-link {
-    position: absolute;
-    left: 0; 
-    top: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    /* हाईलाइटेड बैकग्राउंड */
-    background-color: rgba(255, 255, 255, 0.1); 
-    padding: 0 20px;
-    padding-right: 35px; /* तिरछे डिज़ाइन के लिए अतिरिक्त पैडिंग */
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    z-index: 10; 
-}
-
-.back-link:hover {
-    background-color: rgba(255, 255, 255, 0.2); 
-}
-
-/* हरा तिरछा डिज़ाइन (Slanted Green Design) */
-.header-green-slant {
-    width: 30px; 
-    height: 100%; 
-    background-color: #00b894; /* आपका हरा रंग */
-    /* तिरछापन */
-    transform: skewX(-20deg); 
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1; 
-    transform-origin: top left; 
-}
-
-/* सफेद तीर का आइकॉन (White Arrow Icon) */
-.back-arrow-icon {
-    position: relative;
-    color: white; /* सफेद रंग */
-    font-size: 1.8em; 
-    z-index: 2; /* हरे तिरछे डिज़ाइन के ऊपर */
-    margin-left: 5px; 
-}
+/* Category Colors for visual feedback */
+.underweight { color: #ff9800; } /* Orange */
+.normal { color: #4CAF50; }     /* Green */
+.overweight { color: #ff5722; }  /* Deep Orange/Red */
+.obese { color: #F44336; }       /* Red */
