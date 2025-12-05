@@ -3,45 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMI Calculator - tools24</title>
-    
-    <link rel="stylesheet" href="main-index.css"> 
-    <link rel="stylesheet" href="bmistyle.css"> 
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Tools24 BMI Calculator</title>
+    <link rel="stylesheet" href="bmistyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <header>
+        <div class="header-content">
+            Tools24 BMI Calculator
+        </div>
+    </header>
 
-    <div class="tool-dashboard-header"> 
-        
-        <a href="index.html" class="back-link">
-            <div class="header-green-slant"></div> 
-            <i class="fas fa-arrow-left back-arrow-icon"></i>
-        </a>
-        
-        <h2>tools24 BMI Calculator</h2>
-    </div>
+    <div class="main-container">
+        <div class="calculator-card">
+            <h2>Calculate Your Body Mass Index</h2>
 
-    <div class="container">
-        <h1>Calculate Your Body Mass Index</h1>
-
-        <div class="bmi-form">
             <label for="height">Height (in cm):</label>
-            <input type="number" id="height" placeholder="Enter height in cm" value="">
+            <input type="number" id="height" placeholder="Enter height in cm">
 
             <label for="weight">Weight (in kg):</label>
-            <input type="number" id="weight" placeholder="Enter weight in kg" value="">
+            <input type="number" id="weight" placeholder="Enter weight in kg">
 
-            <button onclick="calculateBMI()">Calculate BMI</button>
+            <button id="calculate-btn">Calculate BMI</button>
+
+            <div id="result" class="result-display"></div>
+            <div id="category" class="category-display"></div>
         </div>
-
-        <div id="result"></div>
     </div>
-
-    <div class="footer">
-        &copy; 2025 tools24. All Rights Reserved.
-    </div>
-
+    
+    <footer>
+        © 2025 TOOL24. All Rights Reserved.
+    </footer>
+    
     <script src="bmi-calculator.js"></script>
 </body>
 </html>
