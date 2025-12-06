@@ -14,7 +14,8 @@
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
-    padding: 0;
+    /* 🔴 बदलाव 1: स्क्रॉलिंग ठीक करने के लिए padding-top जोड़ा गया */
+    padding-top: var(--header-total-height); 
     color: var(--text-color);
     text-align: left;
     min-height: 100vh; 
@@ -26,8 +27,13 @@ body {
     background-color: var(--primary-color); 
     color: white;
     padding: 0 40px; 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    position: relative; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    /* 🔴 बदलाव 2: हेडर को स्थिर (Fixed) किया गया ताकि स्क्रोलिंग पर न हिले */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; 
     overflow: hidden; 
     height: var(--header-total-height); 
     display: block; 
@@ -125,7 +131,7 @@ body {
     color: white; 
 }
 
-/* --- T O O L S  D A S H B O A R D --- */
+/* --- T O O L S  D A S H B O A R D --- */
 .tool-dashboard {
     max-width: 1500px;
     margin: 40px auto;
@@ -138,38 +144,41 @@ body {
     z-index: 1; 
 }
 
-/* 1. 🖼️ वॉटरमार्क इमेज फिक्स */
+/* 1. 🖼️ वॉटरमार्क इमेज फिक्स (स्क्रोलिंग और कटी हुई इमेज को ठीक किया गया) */
 .tool-dashboard::after {
     content: ""; 
     position: fixed; 
     
+    /* 🔴 बदलाव 3: इमेज कटने की समस्या ठीक की गई (हेडर की ऊंचाई के नीचे से शुरू) */
     top: var(--header-total-height); 
     left: 0;
     right: 0;
-    bottom: 0;
     
     width: 100vw;
+    /* 🔴 बदलाव 4: हेडर की ऊंचाई घटाकर, बाकी स्क्रीन को कवर करें */
+    height: calc(110vh - var(--header-total-height)); 
     
-    background-image: url('laptop image.png');
+    background-image: url('mainpageimage.png'); 
     
     background-size: cover; 
     background-repeat: no-repeat;
-    background-position: center center; 
-    
-    opacity: 0.6; 
+    background-position: center 30% ; 
+    background-attachment: fixed; /* स्क्रोलिंग ठीक करने के लिए यह ज़रूरी है */
+    opacity: 2; /* क्लियर और डार्क दिखने के लिए */
     z-index: 0; 
     pointer-events: none; 
 }
 
-/* बाकी कार्ड और फुटर स्टाइलिंग वही रहेगी */
+/* बाकी कार्ड और फुटर स्टाइलिंग */
 .tool-card {
-    background-color: rgba(255, 255, 255, 0.45); 
+    /* 🔴 बदलाव 5: कार्ड को अपारदर्शी (0.95) किया गया ताकि ट्रांसपेरेंट न रहे */
+    background-color: rgba(255, 255, 255, 0.95); 
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     text-decoration: none;
-    color: rgba(0, 0, 0, 0.8);
+    color: rgba(0, 0, 0, 0.9); /* टेक्स्ट को गहरा किया गया */
     border-top: 8px solid var(--primary-color); 
     opacity: 1; 
     z-index: 2; 
@@ -199,4 +208,6 @@ body {
     font-size: 0.8em; 
     color: #888;
     text-align: center;
+    position: relative; 
+    z-index: 3;
 }
