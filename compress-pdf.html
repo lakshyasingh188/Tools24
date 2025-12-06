@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tools24 Compress Pdf</title>
+    <link rel="stylesheet" href="compress-pdf.css">
+</head>
+<body>
+
+<!-- SAME HEADING AS MERGE PAGE -->
+<div class="top-bar">
+    <span class="back-arrow" onclick="window.location.href='index.html'">&#8592;</span>
+    <h1 class="heading">Tools24 Compress Pdf</h1>
+</div>
+
+<!-- SAME GREEN SLANTED LINE -->
+<div class="green-line"></div>
+
+<div class="container">
+
+    <div class="file-group">
+        <label for="pdfFile" class="file-label">Select PDF to Compress</label>
+        <input type="file" id="pdfFile" accept="application/pdf">
+    </div>
+
+    <!-- OPTIONS: DPI, QUALITY, COLOR -->
+    <div class="options-row">
+        <div class="option">
+            <label for="dpiSelect">DPI</label>
+            <select id="dpiSelect">
+                <option value="150">150 DPI (Strong Compress)</option>
+                <option value="200" selected>200 DPI (Balanced)</option>
+                <option value="300">300 DPI (High Quality)</option>
+            </select>
+        </div>
+
+        <div class="option">
+            <label for="qualitySelect">Image Quality</label>
+            <select id="qualitySelect">
+                <option value="high" selected>High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+        </div>
+
+        <div class="option">
+            <label for="colorSelect">Color Mode</label>
+            <select id="colorSelect">
+                <option value="color" selected>Color</option>
+                <option value="grayscale">Black & White</option>
+            </select>
+        </div>
+    </div>
+
+    <button id="compressBtn">Compress PDF</button>
+    <p id="statusText" class="status-text"></p>
+
+</div>
+
+<!-- LIBRARIES -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<!-- AAPKI ALAG JS FILE -->
+<script src="compress-pdf.js"></script>
+
+</body>
+</html>
