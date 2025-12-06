@@ -21,7 +21,11 @@
                     <div class="upload-sub">240 x 240 px • Max 1 MB</div>
                 </div>
             </label>
-            <div class="logo-preview" id="logoPreview"></div>
+
+            <!-- logo preview (form side) -->
+            <div class="logo-preview">
+                <img id="logoPreviewImg" alt="Company Logo Preview">
+            </div>
         </div>
 
         <div class="company-details">
@@ -162,91 +166,97 @@
 
     <!-- PREVIEW / PRINT AREA -->
     <section id="payslipPreview" class="payslip-preview hidden">
-        <div class="preview-inner">
-            <div class="preview-header">
-                <div class="preview-logo" id="previewLogo"></div>
-                <div class="preview-company">
-                    <h2 id="previewCompanyName"></h2>
-                    <p id="previewCompanyAddress"></p>
-                </div>
-                <div class="preview-meta">
-                    <div class="small-label">Payslip For</div>
-                    <div id="previewPayPeriodTop" class="bold"></div>
-                </div>
-            </div>
-
-            <div class="preview-section">
-                <h3>Employee Pay Summary</h3>
-                <div class="preview-grid">
-                    <p><strong>Employee Name:</strong> <span id="pEmpName"></span></p>
-                    <p><strong>Employee ID:</strong> <span id="pEmpId"></span></p>
-                    <p><strong>Pay Period:</strong> <span id="pPayPeriod"></span></p>
-                    <p><strong>Paid Days:</strong> <span id="pPaidDays"></span></p>
-                    <p><strong>Loss of Pay Days:</strong> <span id="pLopDays"></span></p>
-                    <p><strong>Pay Date:</strong> <span id="pPayDate"></span></p>
-                </div>
-            </div>
-
-            <div class="preview-section">
-                <div class="tables-container">
-                    <div class="table-card">
-                        <h4>Earnings</h4>
-                        <table class="data-table small-table">
-                            <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Amount (₹)</th>
-                            </tr>
-                            </thead>
-                            <tbody id="pEarningsBody"></tbody>
-                            <tfoot>
-                            <tr>
-                                <td class="total-label">Gross Earnings</td>
-                                <td class="total-value" id="pGrossEarnings"></td>
-                            </tr>
-                            </tfoot>
-                        </table>
+        <!-- ये पूरा भाग border के अंदर होगा -->
+        <div class="preview-page">
+            <div class="preview-inner">
+                <div class="preview-header">
+                    <div class="preview-logo">
+                        <img id="previewLogoImg" alt="Company Logo">
                     </div>
-
-                    <div class="table-card">
-                        <h4>Deductions</h4>
-                        <table class="data-table small-table">
-                            <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Amount (₹)</th>
-                            </tr>
-                            </thead>
-                            <tbody id="pDeductionsBody"></tbody>
-                            <tfoot>
-                            <tr>
-                                <td class="total-label">Total Deductions</td>
-                                <td class="total-value" id="pTotalDeductions"></td>
-                            </tr>
-                            </tfoot>
-                        </table>
+                    <div class="preview-company">
+                        <h2 id="previewCompanyName"></h2>
+                        <p id="previewCompanyAddress"></p>
+                    </div>
+                    <div class="preview-meta">
+                        <div class="small-label">Payslip For</div>
+                        <div id="previewPayPeriodTop" class="bold"></div>
                     </div>
                 </div>
-            </div>
 
-            <div class="preview-section">
-                <div class="net-card">
-                    <div>
-                        <div class="net-title">Total Net Payable</div>
-                        <div class="net-sub">Amount in words: <span id="pAmountWords"></span></div>
+                <div class="preview-section">
+                    <h3>Employee Pay Summary</h3>
+                    <div class="preview-grid">
+                        <p><strong>Employee Name:</strong> <span id="pEmpName"></span></p>
+                        <p><strong>Employee ID:</strong> <span id="pEmpId"></span></p>
+                        <p><strong>Pay Period:</strong> <span id="pPayPeriod"></span></p>
+                        <p><strong>Paid Days:</strong> <span id="pPaidDays"></span></p>
+                        <p><strong>Loss of Pay Days:</strong> <span id="pLopDays"></span></p>
+                        <p><strong>Pay Date:</strong> <span id="pPayDate"></span></p>
                     </div>
-                    <div class="net-amount">₹<span id="pNetPayable"></span></div>
                 </div>
-            </div>
 
-            <div class="preview-footer">
-                <div>Employee Signature</div>
-                <div>Authorised Signatory</div>
-            </div>
+                <div class="preview-section">
+                    <div class="tables-container">
+                        <div class="table-card">
+                            <h4>Earnings</h4>
+                            <table class="data-table small-table">
+                                <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Amount (₹)</th>
+                                </tr>
+                                </thead>
+                                <tbody id="pEarningsBody"></tbody>
+                                <tfoot>
+                                <tr>
+                                    <td class="total-label">Gross Earnings</td>
+                                    <td class="total-value" id="pGrossEarnings"></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
 
-            <div class="preview-actions no-print">
-                <button type="button" id="printBtn" class="primary-btn">Print / Save as PDF</button>
-                <button type="button" id="closePreviewBtn" class="secondary-btn">Close</button>
+                        <div class="table-card">
+                            <h4>Deductions</h4>
+                            <table class="data-table small-table">
+                                <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Amount (₹)</th>
+                                </tr>
+                                </thead>
+                                <tbody id="pDeductionsBody"></tbody>
+                                <tfoot>
+                                <tr>
+                                    <td class="total-label">Total Deductions</td>
+                                    <td class="total-value" id="pTotalDeductions"></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-section">
+                    <div class="net-card">
+                        <div>
+                            <div class="net-title">Total Net Payable</div>
+                            <div class="net-sub">Amount in words: <span id="pAmountWords"></span></div>
+                        </div>
+                        <div class="net-amount">₹<span id="pNetPayable"></span></div>
+                    </div>
+                </div>
+
+                <div class="preview-footer">
+                    <div>Employee Signature</div>
+                    <div>Authorised Signatory</div>
+                </div>
+
+                <!-- ये buttons print में नहीं दिखेंगे -->
+                <div class="preview-actions no-print">
+                    <button type="button" id="printBtn" class="primary-btn">Print / Save as PDF</button>
+                    <button type="button" id="closePreviewBtn" class="secondary-btn">Close</button>
+                </div>
             </div>
         </div>
     </section>
