@@ -14,7 +14,6 @@
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
-    /* 🔴 बदलाव 1: स्क्रॉलिंग ठीक करने के लिए padding-top जोड़ा गया */
     padding-top: var(--header-total-height); 
     color: var(--text-color);
     text-align: left;
@@ -28,7 +27,6 @@ body {
     color: white;
     padding: 0 40px; 
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    /* 🔴 बदलाव 2: हेडर को स्थिर (Fixed) किया गया ताकि स्क्रोलिंग पर न हिले */
     position: fixed; 
     top: 0;
     left: 0;
@@ -39,7 +37,6 @@ body {
     display: block; 
 }
 
-/* 🔴 निचली पट्टी (Navigation Bar) - गहरा नीला (::after) */
 .header-nav::after {
     content: '';
     position: absolute;
@@ -57,7 +54,6 @@ body {
     top: calc( (var(--upper-bar-height) - 1.8em) / 2 - 5px); 
     left: 40px; 
     width: auto;
-    
     display: block; 
     align-items: center; 
     z-index: 15; 
@@ -71,14 +67,10 @@ body {
     z-index: 10; 
 }
 
-/* 🔴🔴🔴 यहाँ बदलाव: TRY TO FREE Text को पूरी तरह से छुपाता है 🔴🔴🔴 */
 .header-nav .right-text {
     display: none !important; 
 }
-/* 🔴🔴🔴 सुनिश्चित करता है कि यह कहीं भी दिखाई न दे 🔴🔴🔴 */
 
-
-/* 3. स्टाइलिश पीला-हरा तिरछी रेखा (लेफ्ट साइड में) */
 .header-nav::before {
     content: '';
     position: absolute;
@@ -90,16 +82,13 @@ body {
     background: var(--yellow-green); 
     opacity: 1; 
     z-index: 5; 
-    box-shadow: none;
 }
 
-/* --- 🧭 Top Navigation Links Style (निचली, गहरी पट्टी पर, राइट साइड) --- */
 .navbar-top {
     display: flex;
     justify-content: flex-end; 
     align-items: center;
     z-index: 15; 
-    
     position: absolute;
     bottom: 0;
     right: 40px; 
@@ -117,7 +106,6 @@ body {
     border-bottom: 3px solid transparent; 
 }
 
-/* Home को टैब जैसा लुक देने के लिए */
 .navbar-top a[href="index.html"] {
     font-weight: bold;
     background-color: white; 
@@ -131,7 +119,7 @@ body {
     color: white; 
 }
 
-/* --- T O O L S  D A S H B O A R D --- */
+/* Tool Dashboard */
 .tool-dashboard {
     max-width: 1500px;
     margin: 40px auto;
@@ -139,46 +127,36 @@ body {
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
-    
     position: relative; 
     z-index: 1; 
 }
 
-/* 1. 🖼️ वॉटरमार्क इमेज फिक्स (स्क्रोलिंग और कटी हुई इमेज को ठीक किया गया) */
 .tool-dashboard::after {
     content: ""; 
     position: fixed; 
-    
-    /* 🔴 बदलाव 3: इमेज कटने की समस्या ठीक की गई (हेडर की ऊंचाई के नीचे से शुरू) */
     top: var(--header-total-height); 
     left: 0;
     right: 0;
-    
     width: 100vw;
-    /* 🔴 बदलाव 4: हेडर की ऊंचाई घटाकर, बाकी स्क्रीन को कवर करें */
     height: calc(110vh - var(--header-total-height)); 
-    
     background-image: url('mainpageimage.png'); 
-    
     background-size: cover; 
     background-repeat: no-repeat;
     background-position: center 50% ; 
-    background-attachment: fixed; /* स्क्रोलिंग ठीक करने के लिए यह ज़रूरी है */
-    opacity: 2; /* क्लियर और डार्क दिखने के लिए */
+    background-attachment: fixed;
+    opacity: 2; 
     z-index: 0; 
     pointer-events: none; 
 }
 
-/* बाकी कार्ड और फुटर स्टाइलिंग */
 .tool-card {
-    /* 🔴 बदलाव 5: कार्ड को अपारदर्शी (0.95) किया गया ताकि ट्रांसपेरेंट न रहे */
     background-color: rgba(255, 255, 255, 0.95); 
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     text-decoration: none;
-    color: rgba(0, 0, 0, 0.9); /* टेक्स्ट को गहरा किया गया */
+    color: rgba(0, 0, 0, 0.9); 
     border-top: 8px solid var(--primary-color); 
     opacity: 1; 
     z-index: 2; 
@@ -188,15 +166,18 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
+
 .tool-card i {
     font-size: 3em;
     color: rgba(0, 123, 255, 0.6); 
     margin-bottom: 15px;
 }
+
 .tool-card h2 {
     margin-top: 0;
     font-size: 1.5em;
 }
+
 .tool-card p {
     font-size: 0.9em;
     color: rgba(102, 102, 102, 0.8);
@@ -210,4 +191,72 @@ body {
     text-align: center;
     position: relative; 
     z-index: 3;
+/* Fully Transparent Information Section */
+}
+.info-section {
+    padding: 60px 20px;
+    background: transparent;  /* पूरा section transparent */
+    margin-top: 40px;
+    position: relative;
+    z-index: 3;
+    border-radius: 0;
+}
+
+.info-container {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    text-align: center;
+}
+
+.info-box {
+    padding: 20px;
+    background: transparent;   /* box भी transparent */
+}
+
+.info-box .icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.info-box h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white ;
+}
+
+.info-box p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: white;
+}
+.seo-section {
+    padding: 60px 20px;
+    margin-top: 40px;
+    background: rgba(255, 255, 255, 0.20); /* same transparency like info-section */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 12px;
+    text-align: center;
+    color: #ffffff; /* white text */
+    position: relative;
+    z-index: 3;
+}
+
+.seo-section h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.seo-section p {
+    max-width: 900px;
+    margin: auto;
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #ffffff;
 }
