@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tools24 Merge Pdf</title>
+    <link rel="stylesheet" href="merge-pdf.css">
+</head>
+<body>
+
+<!-- HEADING + BACK ARROW -->
+<div class="top-bar">
+    <span class="back-arrow" onclick="window.location.href='index.html'">&#8592;</span>
+    <h1 class="heading">Tools24 Merge Pdf</h1>
+</div>
+
+<!-- GREEN SLANTED LINE -->
+<div class="green-line"></div>
+
+<div class="container">
+    <div class="file-group">
+        <label for="pdfFile1" class="file-label">Select First PDF</label>
+        <input type="file" id="pdfFile1" accept="application/pdf">
+    </div>
+
+    <div class="file-group">
+        <label for="pdfFile2" class="file-label">Select Second PDF</label>
+        <input type="file" id="pdfFile2" accept="application/pdf">
+    </div>
+
+    <button id="mergeBtn">Merge PDFs</button>
+</div>
+
+<!-- PDF LIBRARY -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+<!-- MERGE SCRIPT -->
+<script>
+const pdfInput1 = document.getElementById("pdfFile1");
+const pdfInput2 = document.getElementById("pdfFile2");
+const mergeBtn = document.getElementById("mergeBtn");
+
+mergeBtn.addEventListener("click", async () => {
+    const file1 = pdfInput1.files[0];
+    const file2 = pdfInput2.files[0];
+
+    if (!file1 || !file2) {
+        alert("Please select both First PDF and Second PDF.");
+        return;
+    }
+
+    try {
+        const mergedPdf = await PDFLib.PDFDocument.create();
+
+        const addPdfToMerged = async (file) => {
+            const pdfBytes = await file.arrayBuffer();
+            const pdf = await PDFLib.PDFDocument.load(pdfBytes);
+            const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+            copiedPages.forEach((page) => mergedPdf.addPage(page));
+        };
+
+        await addPdfToMerged(file1);
+        await addPdfToMerged(file2);
+
+        const finalPdfBytes = await mergedPdf.save();
+        const blob = new Blob([finalPdfBytes], { type: "application/pdf" });
+        const link = document.createElement("a");
+
+        link.href = URL.createObjectURL(blob);
+        link.download = "merged.pdf";
+        link.click();
+    } catch (err) {
+        console.error(err);
+        alert("Something went wrong while merging the PDFs.");
+    }
+});
+</script>
+
+</body>
+</html>
