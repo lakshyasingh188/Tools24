@@ -162,7 +162,7 @@ body {
     
     background-size: cover; 
     background-repeat: no-repeat;
-    background-position: center 30% ; 
+    background-position: center 50% ; 
     background-attachment: fixed; /* स्क्रोलिंग ठीक करने के लिए यह ज़रूरी है */
     opacity: 2; /* क्लियर और डार्क दिखने के लिए */
     z-index: 0; 
