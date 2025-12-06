@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const addDeductionBtn = document.getElementById("addDeductionBtn");
 
     const logoInput = document.getElementById("companyLogo");
-    const logoPreview = document.getElementById("logoPreview");
+    const logoPreviewImg = document.getElementById("logoPreviewImg");
+    const previewLogoImg = document.getElementById("previewLogoImg");
     let logoDataURL = "";
 
     // ------- logo upload + preview -------
@@ -28,10 +29,11 @@ document.addEventListener("DOMContentLoaded", function () {
     logoInput.addEventListener("change", function () {
         const file = this.files[0];
         if (!file) return;
+
         const reader = new FileReader();
         reader.onload = function (e) {
             logoDataURL = e.target.result;
-            logoPreview.style.backgroundImage = `url(${logoDataURL})`;
+            logoPreviewImg.src = logoDataURL;
         };
         reader.readAsDataURL(file);
     });
@@ -79,14 +81,17 @@ document.addEventListener("DOMContentLoaded", function () {
         grossEarningsEl.textContent = gross.toFixed(2);
         totalDeductionsEl.textContent = deductions.toFixed(2);
         netPayableEl.textContent = net.toFixed(2);
-        amountInWordsEl.textContent = numberToWordsIndian(Math.round(net)) + " Rupees Only";
+        amountInWordsEl.textContent =
+            numberToWordsIndian(Math.round(net)) + " Rupees Only";
     }
 
     function attachAmountListeners() {
-        document.querySelectorAll(".earning-amount, .deduction-amount").forEach(input => {
-            input.removeEventListener("input", calculateTotals);
-            input.addEventListener("input", calculateTotals);
-        });
+        document
+            .querySelectorAll(".earning-amount, .deduction-amount")
+            .forEach(input => {
+                input.removeEventListener("input", calculateTotals);
+                input.addEventListener("input", calculateTotals);
+            });
     }
 
     attachAmountListeners();
@@ -102,55 +107,72 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("previewCompanyAddress").textContent =
             combineCompanyAddress();
 
-        const payPeriodTop = document.getElementById("payPeriod").value ||
+        const payPeriodTop =
+            document.getElementById("payPeriod").value ||
             formatMonthInput(document.getElementById("payMonth").value);
+
         document.getElementById("previewPayPeriodTop").textContent = payPeriodTop;
 
         // logo in preview
-        const previewLogo = document.getElementById("previewLogo");
         if (logoDataURL) {
-            previewLogo.style.backgroundImage = `url(${logoDataURL})`;
+            previewLogoImg.src = logoDataURL;
+        } else {
+            previewLogoImg.removeAttribute("src");
         }
 
         // employee summary
-        document.getElementById("pEmpName").textContent = document.getElementById("empName").value;
-        document.getElementById("pEmpId").textContent = document.getElementById("empId").value;
+        document.getElementById("pEmpName").textContent =
+            document.getElementById("empName").value;
+        document.getElementById("pEmpId").textContent =
+            document.getElementById("empId").value;
         document.getElementById("pPayPeriod").textContent = payPeriodTop;
-        document.getElementById("pPaidDays").textContent = document.getElementById("paidDays").value;
-        document.getElementById("pLopDays").textContent = document.getElementById("lopDays").value;
-        document.getElementById("pPayDate").textContent = formatDate(document.getElementById("payDate").value);
+        document.getElementById("pPaidDays").textContent =
+            document.getElementById("paidDays").value;
+        document.getElementById("pLopDays").textContent =
+            document.getElementById("lopDays").value;
+        document.getElementById("pPayDate").textContent = formatDate(
+            document.getElementById("payDate").value
+        );
 
         // earnings table
         const pEarningsBody = document.getElementById("pEarningsBody");
         pEarningsBody.innerHTML = "";
         earningsBody.querySelectorAll("tr").forEach(row => {
             const desc = row.querySelector("td:nth-child(1) input").value;
-            const amt = parseAmount(row.querySelector("td:nth-child(2) input").value).toFixed(2);
+            const amt = parseAmount(
+                row.querySelector("td:nth-child(2) input").value
+            ).toFixed(2);
             if (desc || amt !== "0.00") {
                 const tr = document.createElement("tr");
                 tr.innerHTML = `<td>${desc}</td><td>${amt}</td>`;
                 pEarningsBody.appendChild(tr);
             }
         });
-        document.getElementById("pGrossEarnings").textContent = grossEarningsEl.textContent;
+        document.getElementById("pGrossEarnings").textContent =
+            grossEarningsEl.textContent;
 
         // deductions table
         const pDeductionsBody = document.getElementById("pDeductionsBody");
         pDeductionsBody.innerHTML = "";
         deductionsBody.querySelectorAll("tr").forEach(row => {
             const desc = row.querySelector("td:nth-child(1) input").value;
-            const amt = parseAmount(row.querySelector("td:nth-child(2) input").value).toFixed(2);
+            const amt = parseAmount(
+                row.querySelector("td:nth-child(2) input").value
+            ).toFixed(2);
             if (desc || amt !== "0.00") {
                 const tr = document.createElement("tr");
                 tr.innerHTML = `<td>${desc}</td><td>${amt}</td>`;
                 pDeductionsBody.appendChild(tr);
             }
         });
-        document.getElementById("pTotalDeductions").textContent = totalDeductionsEl.textContent;
+        document.getElementById("pTotalDeductions").textContent =
+            totalDeductionsEl.textContent;
 
         // net
-        document.getElementById("pNetPayable").textContent = netPayableEl.textContent;
-        document.getElementById("pAmountWords").textContent = amountInWordsEl.textContent;
+        document.getElementById("pNetPayable").textContent =
+            netPayableEl.textContent;
+        document.getElementById("pAmountWords").textContent =
+            amountInWordsEl.textContent;
 
         payslipPreview.classList.remove("hidden");
         payslipPreview.scrollIntoView({ behavior: "smooth" });
@@ -191,17 +213,40 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ---- number to words (Indian system) ----
-
     const ones = [
-        "", "One", "Two", "Three", "Four", "Five", "Six",
-        "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
-        "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
-        "Eighteen", "Nineteen"
+        "",
+        "One",
+        "Two",
+        "Three",
+        "Four",
+        "Five",
+        "Six",
+        "Seven",
+        "Eight",
+        "Nine",
+        "Ten",
+        "Eleven",
+        "Twelve",
+        "Thirteen",
+        "Fourteen",
+        "Fifteen",
+        "Sixteen",
+        "Seventeen",
+        "Eighteen",
+        "Nineteen"
     ];
 
     const tens = [
-        "", "", "Twenty", "Thirty", "Forty", "Fifty",
-        "Sixty", "Seventy", "Eighty", "Ninety"
+        "",
+        "",
+        "Twenty",
+        "Thirty",
+        "Forty",
+        "Fifty",
+        "Sixty",
+        "Seventy",
+        "Eighty",
+        "Ninety"
     ];
 
     function numberToWordsUnder100(num) {
