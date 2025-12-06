@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tools24 PDF Editor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ===== CSS ===== -->
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            padding-top: 80px; /* space for top bar */
+            background-color: #f4f7f6;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Top blue bar */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: #007bff; /* nile blue */
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .top-title {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        /* Green tilted ribbon with arrow */
+        .back-ribbon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 90px;
+            background: #16a34a; /* green */
+            clip-path: polygon(0 0, 70% 0, 100% 50%, 70% 100%, 0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .back-ribbon span {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+            user-select: none;
+        }
+
+        .editor-container {
+            width: 100%;
+            max-width: 1100px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 20px 30px 40px;
+            box-sizing: border-box;
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        /* All buttons blue (nile) */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: 1px solid #007bff;
+            background: #007bff;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: #005ec4;
+            border-color: #005ec4;
+        }
+
+        .btn-primary {
+            background: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-primary:hover {
+            background: #00408a;
+            border-color: #00408a;
+        }
+
+        .status-text {
+            font-size: 13px;
+            color: #666;
+            margin-left: auto;
+        }
+
+        .canvas-wrapper {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .canvas-container {
+            position: relative;
+            background: #eaeaea;
+            padding: 10px;
+            border-radius: 4px;
+            overflow: auto;
+            max-height: 80vh;
+        }
+
+        #pdf-canvas,
+        #draw-canvas {
+            display: block;
+            margin: 0 auto;
+        }
+
+        #draw-canvas {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            pointer-events: auto;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 80px;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .editor-container {
+                padding: 15px;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .status-text {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top header bar -->
+    <div class="top-bar">
+        <div class="back-ribbon" id="back-btn">
+            <span>&larr;</span>
+        </div>
+        <h1 class="top-title">Tools24 PDF Editor</h1>
+    </div>
+
+    <div class="editor-container">
+        <section class="toolbar">
+            <input type="file" id="pdf-file" accept="application/pdf" hidden />
+            <input type="file" id="img-file" accept="image/*" hidden />
+
+            <button id="open-btn" class="btn">Open PDF</button>
+            <button id="add-text-btn" class="btn">Add Text</button>
+            <button id="add-image-btn" class="btn">Add Image</button>
+            <button id="img-smaller-btn" class="btn">Image -</button>
+            <button id="img-bigger-btn" class="btn">Image +</button>
+            <button id="clear-annotations-btn" class="btn">Clear Annotations</button>
+            <button id="download-btn" class="btn btn-primary">Download Edited PDF</button>
+            <span id="status" class="status-text"></span>
+        </section>
+
+        <section class="canvas-wrapper">
+            <div class="canvas-container">
+                <canvas id="pdf-canvas"></canvas>
+                <canvas id="draw-canvas"></canvas>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== Libraries ===== -->
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- ===== JS ===== -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("PDF Editor JS loaded");
+
+            // Back arrow click -> previous page
+            const backBtn = document.getElementById("back-btn");
+            backBtn.addEventListener("click", () => {
+                // yaha chahe to apni main site ka URL de sakte ho:
+                // window.location.href = "https://yourmainwebsite.com";
+                window.history.back();
+            });
+
+            const fileInput = document.getElementById("pdf-file");
+            const imgInput = document.getElementById("img-file");
+            const openBtn = document.getElementById("open-btn");
+            const addTextBtn = document.getElementById("add-text-btn");
+            const addImageBtn = document.getElementById("add-image-btn");
+            const imgSmallerBtn = document.getElementById("img-smaller-btn");
+            const imgBiggerBtn = document.getElementById("img-bigger-btn");
+            const clearBtn = document.getElementById("clear-annotations-btn");
+            const downloadBtn = document.getElementById("download-btn");
+            const statusSpan = document.getElementById("status");
+
+            const pdfCanvas = document.getElementById("pdf-canvas");
+            const drawCanvas = document.getElementById("draw-canvas");
+            const pdfCtx = pdfCanvas.getContext("2d");
+            const drawCtx = drawCanvas.getContext("2d");
+
+            const { jsPDF } = window.jspdf;
+            const pdfjsLib = window["pdfjsLib"];
+
+            if (!pdfjsLib) {
+                alert("PDF.js load nahi hua. Internet connection / script URL check karo.");
+                return;
+            }
+
+            pdfjsLib.GlobalWorkerOptions.workerSrc =
+                "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
+
+            let pdfWidth = 0;
+            let pdfHeight = 0;
+            let pdfLoaded = false;
+
+            let annotations = []; // {type:'text'|'image', text?, img?, x,y,w,h}
+            let dragging = false;
+            let dragIndex = -1;
+            let dragOffsetX = 0;
+            let dragOffsetY = 0;
+            let selectedIndex = -1; // resize ke liye selected
+
+            function setStatus(msg) {
+                statusSpan.textContent = msg || "";
+            }
+
+            function redrawAnnotations() {
+                drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+                annotations.forEach(a => {
+                    if (a.type === "text") {
+                        drawCtx.font = "16px Arial";
+                        drawCtx.fillStyle = "#000000";
+                        drawCtx.fillText(a.text, a.x, a.y);
+                    } else if (a.type === "image" && a.img) {
+                        drawCtx.drawImage(a.img, a.x, a.y, a.w, a.h);
+                    }
+                });
+            }
+
+            /* --------- Open PDF ---------- */
+            openBtn.addEventListener("click", () => {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                if (file.type !== "application/pdf") {
+                    alert("Please select a PDF file.");
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const arrayBuffer = event.target.result;
+                    const typedArray = new Uint8Array(arrayBuffer);
+                    loadPdf(typedArray);
+                };
+                reader.readAsArrayBuffer(file);
+            });
+
+            async function loadPdf(typedArray) {
+                try {
+                    setStatus("Loading PDF...");
+                    const loadingTask = pdfjsLib.getDocument(typedArray);
+                    const pdf = await loadingTask.promise;
+
+                    const page = await pdf.getPage(1);
+                    const viewport = page.getViewport({ scale: 1.3 });
+
+                    pdfWidth = viewport.width;
+                    pdfHeight = viewport.height;
+
+                    pdfCanvas.width = pdfWidth;
+                    pdfCanvas.height = pdfHeight;
+                    drawCanvas.width = pdfWidth;
+                    drawCanvas.height = pdfHeight;
+
+                    const renderContext = {
+                        canvasContext: pdfCtx,
+                        viewport: viewport,
+                    };
+
+                    await page.render(renderContext).promise;
+
+                    annotations = [];
+                    selectedIndex = -1;
+                    redrawAnnotations();
+
+                    pdfLoaded = true;
+                    setStatus("PDF loaded. Add text/image, drag to move, resize images with Image +/-.");
+                } catch (error) {
+                    console.error("Error loading PDF:", error);
+                    setStatus("Failed to load PDF.");
+                }
+            }
+
+            /* --------- Add Text (instant) ---------- */
+            addTextBtn.addEventListener("click", () => {
+                if (!pdfLoaded) {
+                    alert("Please open a PDF first.");
+                    return;
+                }
+                const text = prompt("Enter text:");
+                if (!text) return;
+
+                drawCtx.font = "16px Arial";
+                const w = drawCtx.measureText(text).width;
+                const h = 18;
+
+                const x = (pdfWidth - w) / 2;
+                const y = 50;
+
+                const ann = {
+                    type: "text",
+                    text,
+                    x,
+                    y,
+                    w,
+                    h
+                };
+                annotations.push(ann);
+                selectedIndex = annotations.length - 1;
+                redrawAnnotations();
+                setStatus("Text added. Drag to move.");
+            });
+
+            /* --------- Add Image ---------- */
+            addImageBtn.addEventListener("click", () => {
+                if (!pdfLoaded) {
+                    alert("Please open a PDF first.");
+                    return;
+                }
+                imgInput.click();
+            });
+
+            imgInput.addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const img = new Image();
+                    img.onload = () => {
+                        const maxWidth = pdfWidth / 3;
+                        const scale = Math.min(maxWidth / img.width, 1);
+                        const w = img.width * scale;
+                        const h = img.height * scale;
+
+                        const ann = {
+                            type: "image",
+                            img,
+                            x: (pdfWidth - w) / 2,
+                            y: (pdfHeight - h) / 2,
+                            w,
+                            h
+                        };
+                        annotations.push(ann);
+                        selectedIndex = annotations.length - 1;
+                        redrawAnnotations();
+                        setStatus("Image added. Drag to move, use Image +/- to resize.");
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+
+            /* --------- Clear ---------- */
+            clearBtn.addEventListener("click", () => {
+                if (!pdfLoaded) return;
+                annotations = [];
+                selectedIndex = -1;
+                redrawAnnotations();
+                setStatus("Annotations cleared.");
+            });
+
+            /* --------- Hit-test for drag ---------- */
+            function hitTest(x, y) {
+                for (let i = annotations.length - 1; i >= 0; i--) {
+                    const a = annotations[i];
+                    if (a.type === "text") {
+                        const w = a.w || drawCtx.measureText(a.text).width;
+                        const h = a.h || 18;
+                        if (x >= a.x && x <= a.x + w && y >= a.y - h && y <= a.y) {
+                            return i;
+                        }
+                    } else if (a.type === "image") {
+                        if (x >= a.x && x <= a.x + a.w && y >= a.y && y <= a.y + a.h) {
+                            return i;
+                        }
+                    }
+                }
+                return -1;
+            }
+
+            function getCanvasXY(e) {
+                const rect = drawCanvas.getBoundingClientRect();
+                return {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+            }
+
+            drawCanvas.addEventListener("mousedown", (e) => {
+                if (!pdfLoaded) return;
+                const { x, y } = getCanvasXY(e);
+
+                const hitIndex = hitTest(x, y);
+                if (hitIndex !== -1) {
+                    dragging = true;
+                    dragIndex = hitIndex;
+                    selectedIndex = hitIndex;
+                    const a = annotations[hitIndex];
+                    dragOffsetX = x - a.x;
+                    dragOffsetY = y - a.y;
+                    setStatus("Dragging... release mouse to drop.");
+                }
+            });
+
+            drawCanvas.addEventListener("mousemove", (e) => {
+                if (!dragging || dragIndex === -1) return;
+                const { x, y } = getCanvasXY(e);
+                const a = annotations[dragIndex];
+                a.x = x - dragOffsetX;
+                a.y = y - dragOffsetY;
+                redrawAnnotations();
+            });
+
+            function stopDragging() {
+                if (dragging) {
+                    dragging = false;
+                    dragIndex = -1;
+                    setStatus("Position set. You can move again or resize image.");
+                }
+            }
+
+            drawCanvas.addEventListener("mouseup", stopDragging);
+            drawCanvas.addEventListener("mouseleave", stopDragging);
+
+            /* --------- Image Resize Buttons ---------- */
+            function resizeSelectedImage(factor) {
+                if (selectedIndex === -1) {
+                    alert("Pehle canvas par kisi image par click karke select karein.");
+                    return;
+                }
+                const a = annotations[selectedIndex];
+                if (a.type !== "image") {
+                    alert("Selected item image nahi hai. Image par click karke select karein.");
+                    return;
+                }
+                let newW = a.w * factor;
+                let newH = a.h * factor;
+
+                const minSize = 20;
+                if (newW < minSize || newH < minSize) {
+                    newW = Math.max(minSize, newW);
+                    newH = Math.max(minSize, newH);
+                }
+
+                a.w = newW;
+                a.h = newH;
+                redrawAnnotations();
+                setStatus("Image resized. Drag to reposition if needed.");
+            }
+
+            imgBiggerBtn.addEventListener("click", () => {
+                if (!pdfLoaded) {
+                    alert("Open a PDF first.");
+                    return;
+                }
+                resizeSelectedImage(1.1);
+            });
+
+            imgSmallerBtn.addEventListener("click", () => {
+                if (!pdfLoaded) {
+                    alert("Open a PDF first.");
+                    return;
+                }
+                resizeSelectedImage(0.9);
+            });
+
+            /* --------- Download Edited PDF ---------- */
+            downloadBtn.addEventListener("click", () => {
+                if (!pdfLoaded) {
+                    alert("Please open and edit a PDF first.");
+                    return;
+                }
+
+                const merged = document.createElement("canvas");
+                merged.width = pdfWidth;
+                merged.height = pdfHeight;
+                const mctx = merged.getContext("2d");
+
+                mctx.drawImage(pdfCanvas, 0, 0);
+                mctx.drawImage(drawCanvas, 0, 0);
+
+                const imgData = merged.toDataURL("image/png");
+
+                const orientation = pdfWidth > pdfHeight ? "l" : "p";
+                const pdfDoc = new jsPDF({
+                    orientation: orientation,
+                    unit: "pt",
+                    format: [pdfWidth, pdfHeight],
+                });
+
+                pdfDoc.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+                pdfDoc.save("edited.pdf");
+
+                setStatus("Edited PDF downloaded.");
+            });
+        });
+    </script>
+</body>
+</html>
