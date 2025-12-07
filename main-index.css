@@ -3,12 +3,12 @@
     --primary-color: #007bff; /* Upper Bar Blue */
     --secondary-color: #f4f4f9; 
     --text-color: black;
-    --yellow-green: #44cd32; /* पीला-हरा रंग (Yellow-Green) */
+    --yellow-green: #2af70e; /* पीला-हरा रंग (Yellow-Green) */
     
     /* Variables for Double Header */
-    --darker-blue: #0056b3; 
+    --darker-blue: #120afc; 
     --nav-bar-height: 40px; 
-    --upper-bar-height: 60px; 
+    --upper-bar-height: 140px; 
     --header-total-height: calc(var(--upper-bar-height) + var(--nav-bar-height)); /* 100px */
 }
 body {
@@ -51,8 +51,8 @@ body {
 /* 🛠️ TOOLS24 लोगो (ऊपर बाएँ) */
 .header-content-main { 
     position: absolute; 
-    top: calc( (var(--upper-bar-height) - 1.8em) / 2 - 5px); 
-    left: 40px; 
+    top: calc( (var(--upper-bar-height) - 7.3em) / 2 - 9px); 
+    left: 30px; 
     width: auto;
     display: block; 
     align-items: center; 
