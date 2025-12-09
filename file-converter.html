@@ -5,108 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tools24 | Universal File Converter</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for back arrow icon -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="file-converter.css">
+
+    <!-- jsPDF (for PDF generation) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-    <style>
-        /* Top blue header like Merge PDF */
-        .top-header {
-            width: 100%;
-            background-color: #1565C0; /* blue */
-            color: #ffffff;
-            padding: 15px 20px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: 700;
-            position: relative;
-            box-sizing: border-box;
-        }
-
-        .top-header .back-arrow {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 20px;
-            color: #ffffff;
-            text-decoration: none;
-        }
-
-        .top-header .back-arrow i {
-            margin-right: 4px;
-        }
-
-        /* Green line under header */
-        .green-strip {
-            width: 100%;
-            height: 10px;
-            background-color: #0cf00f;
-        }
-
-        /* General Styles for Tool */
-        body { 
-            background-color: #f4f4f9; 
-            font-family: Arial, sans-serif; 
-            margin: 0;
-        }
-
-        .tool-container { 
-            padding: 30px; 
-            max-width: 600px; 
-            margin: 40px auto; 
-            background: white; 
-            border-radius: 8px; 
-            box-shadow: 0 0 15px rgba(0,0,0,0.1); 
-            text-align: center;
-        }
-
-        .tool-container h2 { 
-            color: #004D40; 
-            margin-bottom: 20px; 
-        }
-
-        .input-group { 
-            margin-bottom: 15px; 
-            text-align: left; 
-        }
-
-        .input-group label { 
-            display: block; 
-            margin-bottom: 5px; 
-            font-weight: bold; 
-        }
-
-        .input-group select, 
-        .input-group input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        #convertBtn {
-            padding: 12px 25px;
-            background-color: #1565C0; /* Blue */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.1em;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-
-        #convertBtn:hover { 
-            background-color: #0d47a1; 
-        }
-    </style>
 </head>
 <body>
 
-    <!-- Top blue header with back arrow and heading -->
+    <!-- TOP HEADER (same style as other tools) -->
     <div class="top-header">
         <a href="index.html" class="back-arrow">
             <i class="fas fa-arrow-left"></i>
@@ -115,29 +26,33 @@
     </div>
     <div class="green-strip"></div>
 
-    <!-- Main tool box -->
+    <!-- MAIN CARD -->
     <div class="tool-container">
-        <h2>Tools24 Universal File Converter</h2>
-        <p>Image (JPG, PNG) और Text (TXT) फ़ाइलों को PDF में, या Image को दूसरे Image फ़ॉर्मेट में Convert करें।</p>
-        
+        <h2 class="tool-title">Tools24 Universal File Converter</h2>
+        <p class="tool-desc">
+            Image (JPG, PNG) और Text (TXT) फ़ाइलों को PDF में, या Image को दूसरे Image फ़ॉर्मेट में Convert करें।
+        </p>
+
         <div class="input-group">
             <label for="fileInput">1. File अपलोड करें (कोई भी फ़ाइल प्रकार चुनें):</label>
-            <input type="file" id="fileInput"> 
+            <input type="file" id="fileInput"
+                   accept=".jpg,.jpeg,.png,.txt,image/jpeg,image/png,text/plain">
         </div>
 
         <div class="input-group">
             <label for="formatSelect">2. Convert इस फॉर्मेट में करें:</label>
             <select id="formatSelect">
                 <option value="PDF">PDF (Recommended)</option>
-                <option value="JPG">JPG</option>
-                <option value="PNG">PNG</option>
-                <option value="TXT">TXT (Text)</option>
+                <option value="JPG">JPG (Image only)</option>
+                <option value="PNG">PNG (Image only)</option>
+                <option value="TXT">TXT (Text only)</option>
             </select>
         </div>
         
-        <button id="convertBtn" onclick="universalConvert()">Convert & Download</button>
+        <button id="convertBtn">Convert & Download</button>
     </div>
 
+    <!-- PAGE JS -->
     <script src="converter.js"></script>
 </body>
 </html>
