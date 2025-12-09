@@ -1,58 +1,178 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools24 | Universal File Converter</title>
+// converter.js – Universal File Converter logic
+// Supports:
+//  - Image (JPG/PNG)  -> PDF / JPG / PNG
+//  - Text  (TXT)      -> PDF / TXT
 
-    <!-- Font Awesome for back arrow icon -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+document.addEventListener("DOMContentLoaded", () => {
+    const fileInput     = document.getElementById("fileInput");
+    const formatSelect  = document.getElementById("formatSelect");
+    const convertBtn    = document.getElementById("convertBtn");
 
-    <!-- Page CSS -->
-    <link rel="stylesheet" href="file-converter.css">
+    convertBtn.addEventListener("click", async () => {
+        const file = fileInput.files[0];
+        const targetFormat = formatSelect.value;
 
-    <!-- jsPDF (for PDF generation) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-</head>
-<body>
+        if (!file) {
+            alert("कृपया पहले कोई फ़ाइल चुनें।");
+            return;
+        }
 
-    <!-- TOP HEADER (same style as other tools) -->
-    <div class="top-header">
-        <a href="index.html" class="back-arrow">
-            <i class="fas fa-arrow-left"></i>
-        </a>
-        Tools24 Universal File Converter
-    </div>
-    <div class="green-strip"></div>
+        const mime = file.type; // e.g. "image/jpeg", "text/plain"
+        const isImage = mime.startsWith("image/");
+        const isText  = mime === "text/plain";
 
-    <!-- MAIN CARD -->
-    <div class="tool-container">
-        <h2 class="tool-title">Tools24 Universal File Converter</h2>
-        <p class="tool-desc">
-            Image (JPG, PNG) और Text (TXT) फ़ाइलों को PDF में, या Image को दूसरे Image फ़ॉर्मेट में Convert करें।
-        </p>
+        // PDF target
+        if (targetFormat === "PDF") {
+            if (isImage) {
+                await imageToPDF(file);
+            } else if (isText) {
+                await textToPDF(file);
+            } else {
+                alert("सिर्फ JPG, PNG या TXT फ़ाइलों को PDF में बदला जा सकता है।");
+            }
+            return;
+        }
 
-        <div class="input-group">
-            <label for="fileInput">1. File अपलोड करें (कोई भी फ़ाइल प्रकार चुनें):</label>
-            <input type="file" id="fileInput"
-                   accept=".jpg,.jpeg,.png,.txt,image/jpeg,image/png,text/plain">
-        </div>
+        // TXT target
+        if (targetFormat === "TXT") {
+            if (isText) {
+                // Text as-is download again (basically copy)
+                downloadBlob(file, changeExtension(file.name, "txt"));
+            } else {
+                alert("TXT में केवल टेक्स्ट (TXT) फ़ाइलें convert की जा सकती हैं।");
+            }
+            return;
+        }
 
-        <div class="input-group">
-            <label for="formatSelect">2. Convert इस फॉर्मेट में करें:</label>
-            <select id="formatSelect">
-                <option value="PDF">PDF (Recommended)</option>
-                <option value="JPG">JPG (Image only)</option>
-                <option value="PNG">PNG (Image only)</option>
-                <option value="TXT">TXT (Text only)</option>
-            </select>
-        </div>
-        
-        <button id="convertBtn">Convert & Download</button>
-    </div>
+        // JPG / PNG target (image only)
+        if (targetFormat === "JPG" || targetFormat === "PNG") {
+            if (!isImage) {
+                alert("JPG/PNG में केवल Image (JPG/PNG) फ़ाइलें convert की जा सकती हैं।");
+                return;
+            }
+            const targetMime = targetFormat === "JPG" ? "image/jpeg" : "image/png";
+            await imageToImage(file, targetMime, targetFormat.toLowerCase());
+            return;
+        }
 
-    <!-- PAGE JS -->
-    <script src="converter.js"></script>
-</body>
-</html>
+        alert("Unknown format selected.");
+    });
+});
+
+// ---------- Helpers ----------
+
+// Change file extension while keeping base name
+function changeExtension(filename, newExt) {
+    const dotIndex = filename.lastIndexOf(".");
+    const base = dotIndex !== -1 ? filename.substring(0, dotIndex) : filename;
+    return `${base}.${newExt}`;
+}
+
+// Generic blob downloader
+function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a   = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// ---------- Converters ----------
+
+// 1) IMAGE -> PDF
+async function imageToPDF(file) {
+    const { jsPDF } = window.jspdf;
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+            // A4 size (pt) – portrait
+            const pdf = new jsPDF("p", "pt", "a4");
+            const pageWidth  = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+
+            // Fit image proportionally inside page
+            let imgWidth = img.width;
+            let imgHeight = img.height;
+
+            const ratio = Math.min(pageWidth / imgWidth, pageHeight / imgHeight);
+            imgWidth  *= ratio;
+            imgHeight *= ratio;
+
+            const x = (pageWidth - imgWidth) / 2;
+            const y = (pageHeight - imgHeight) / 2;
+
+            pdf.addImage(img, "JPEG", x, y, imgWidth, imgHeight);
+            const pdfBlob = pdf.output("blob");
+            downloadBlob(pdfBlob, changeExtension(file.name, "pdf"));
+        };
+        img.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+}
+
+// 2) TEXT -> PDF
+async function textToPDF(file) {
+    const { jsPDF } = window.jspdf;
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        const text = e.target.result;
+
+        const pdf = new jsPDF("p", "pt", "a4");
+        const margin = 40;
+        const maxWidth = pdf.internal.pageSize.getWidth() - margin * 2;
+
+        const lines = pdf.splitTextToSize(text, maxWidth);
+        let y = margin;
+
+        const lineHeight = 14;
+        lines.forEach((line, index) => {
+            if (y > pdf.internal.pageSize.getHeight() - margin) {
+                pdf.addPage();
+                y = margin;
+            }
+            pdf.text(line, margin, y);
+            y += lineHeight;
+        });
+
+        const pdfBlob = pdf.output("blob");
+        downloadBlob(pdfBlob, changeExtension(file.name, "pdf"));
+    };
+
+    reader.readAsText(file, "utf-8");
+}
+
+// 3) IMAGE -> IMAGE (JPG/PNG)
+async function imageToImage(file, targetMime, ext) {
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            ctx.drawImage(img, 0, 0);
+
+            canvas.toBlob(function(blob) {
+                if (!blob) {
+                    alert("Image convert करने में कोई दिक्कत आ गई।");
+                    return;
+                }
+                downloadBlob(blob, changeExtension(file.name, ext));
+            }, targetMime, 0.9); // quality 0.9 for JPEG
+        };
+        img.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+}
