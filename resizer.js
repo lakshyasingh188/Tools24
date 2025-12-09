@@ -16,8 +16,22 @@ function formatFileSize(bytes) {
 // Function to handle background color selection
 function selectBackground(color) {
     currentBgColor = color;
+
+    // circle ui
     document.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected'));
     document.getElementById(color + 'Bg').classList.add('selected');
+
+    // PREVIEW / DROPZONE background bhi change karo
+    const dz = document.getElementById('dropzone');
+    if (color === 'white') {
+        dz.style.backgroundColor = '#e8f0fe';
+        dz.style.color = '#000';
+        dz.style.borderColor = '#1a73e8';
+    } else {
+        dz.style.backgroundColor = '#222';
+        dz.style.color = '#fff';
+        dz.style.borderColor = '#fff';
+    }
 }
 
 // Function to load and display image details
@@ -29,18 +43,16 @@ function previewImage(event) {
             originalImage = new Image();
             originalImage.file = file;
             originalImage.onload = function() {
-                // Display original dimensions and size
                 const originalFileSize = formatFileSize(originalImage.file.size);
-                document.getElementById('originalDetails').textContent = 
+                document.getElementById('originalDetails').textContent =
                     `${originalImage.width} x ${originalImage.height} px (${originalFileSize})`;
                     
-                // Set default values (matching the reference site)
+                // defaults
                 document.getElementById('widthPercentInput').value = 70;
                 document.getElementById('heightPercentInput').value = 70;
                 document.getElementById('qualityInput').value = 90; 
                 document.getElementById('dpiInput').value = 72; 
 
-                // Ensure the inputs are updated to reflect percentage mode by default
                 document.getElementById('resizeSelect').value = 'percent';
                 toggleResizeMode('percent');
 
@@ -59,7 +71,6 @@ function toggleResizeMode(mode) {
     const linkIcon = document.querySelector('.link-icon');
 
     if (mode === 'percent') {
-        // Set up for percentage input
         widthInput.placeholder = '70';
         heightInput.placeholder = '70';
         widthInput.setAttribute('min', '1');
@@ -68,37 +79,36 @@ function toggleResizeMode(mode) {
         heightInput.setAttribute('max', '100');
         linkIcon.style.opacity = '1';
 
-        // Link height to width input event
         widthInput.oninput = function() {
             heightInput.value = this.value;
             updateEstimatedSize();
         };
 
     } else if (mode === 'pixel' && originalImage) {
-        // Set up for pixel input
         widthInput.placeholder = originalImage.width;
         heightInput.placeholder = originalImage.height;
         widthInput.removeAttribute('max');
         heightInput.removeAttribute('max');
         linkIcon.style.opacity = '0.4';
 
-        // Unlink height from width input event
         widthInput.oninput = function() {
             updateEstimatedSize();
         };
-        // Reset values to original for clarity
+
         widthInput.value = originalImage.width;
         heightInput.value = originalImage.height;
     }
+
     updateEstimatedSize();
 }
 
-// Debounced function to update estimated size (Called by oninput)
+// Debounced function to update estimated size
 function updateEstimatedSize() {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
         if (!originalImage) {
-            document.getElementById('estimatedSize').textContent = 'Estimated Size: N/A (Image not loaded)';
+            document.getElementById('estimatedSize').textContent =
+                'Estimated Size: N/A (Image not loaded)';
             return;
         }
 
@@ -110,50 +120,50 @@ function updateEstimatedSize() {
 
         let newWidth, newHeight;
 
-        // Determine new dimensions based on mode
         if (resizeMode === 'percent') {
             if (isNaN(inputWidth) || isNaN(inputHeight) || inputWidth < 1 || inputHeight < 1) {
-                 document.getElementById('estimatedSize').textContent = 'Estimated Size: Invalid percentage';
+                 document.getElementById('estimatedSize').textContent =
+                     'Estimated Size: Invalid percentage';
                  return;
             }
             newWidth = Math.floor(originalImage.width * (inputWidth / 100));
             newHeight = Math.floor(originalImage.height * (inputHeight / 100));
-        } else { // 'pixel' mode
+        } else {
             if (isNaN(inputWidth) || isNaN(inputHeight) || inputWidth < 1 || inputHeight < 1) {
-                 document.getElementById('estimatedSize').textContent = 'Estimated Size: Invalid dimensions (pixels)';
+                 document.getElementById('estimatedSize').textContent =
+                     'Estimated Size: Invalid dimensions (pixels)';
                  return;
             }
             newWidth = inputWidth;
             newHeight = inputHeight;
         }
 
-        // --- Canvas processing for Estimation ---
         const tempCanvas = document.createElement('canvas');
         const tempCtx = tempCanvas.getContext('2d');
         tempCanvas.width = newWidth;
         tempCanvas.height = newHeight;
         
-        // Apply background color
         tempCtx.fillStyle = currentBgColor;
         tempCtx.fillRect(0, 0, newWidth, newHeight);
-
         tempCtx.drawImage(originalImage, 0, 0, newWidth, newHeight);
 
         if (format === 'image/png') {
-            document.getElementById('estimatedSize').textContent = 'Estimated Size: PNG (Lossless, size depends on content)';
+            document.getElementById('estimatedSize').textContent =
+                'Estimated Size: PNG (Lossless, size depends on content)';
             return;
         }
 
         tempCanvas.toBlob(function(blob) {
             if (blob) {
-                document.getElementById('estimatedSize').textContent = `Estimated Size: ${formatFileSize(blob.size)}`;
+                document.getElementById('estimatedSize').textContent =
+                    `Estimated Size: ${formatFileSize(blob.size)}`;
             } else {
-                document.getElementById('estimatedSize').textContent = 'Estimated Size: Error calculating';
+                document.getElementById('estimatedSize').textContent =
+                    'Estimated Size: Error calculating';
             }
         }, format, qualityPercent / 100);
     }, 300); 
 }
-
 
 // Main function to resize and download the image
 function resizeImage() {
@@ -172,12 +182,14 @@ function resizeImage() {
     const quality = format === 'image/jpeg' ? (qualityPercent / 100) : 1.0; 
     let newWidth, newHeight;
 
-    // Final dimension calculation and validation
     if (resizeMode === 'percent') {
-        if (isNaN(inputWidth) || inputWidth < 1) { alert("Width Percentage 1% से कम नहीं हो सकती।"); return; }
+        if (isNaN(inputWidth) || inputWidth < 1) {
+            alert("Width Percentage 1% से कम नहीं हो सकती।");
+            return;
+        }
         newWidth = Math.floor(originalImage.width * (inputWidth / 100));
         newHeight = Math.floor(originalImage.height * (inputHeight / 100));
-    } else { // 'pixel' mode
+    } else {
         if (isNaN(inputWidth) || inputWidth < 1 || isNaN(inputHeight) || inputHeight < 1) { 
             alert("Width और Height के सही मान (pixels) भरें (न्यूनतम 1px)।"); 
             return; 
@@ -192,14 +204,10 @@ function resizeImage() {
     canvas.width = newWidth;
     canvas.height = newHeight;
     
-    // Draw background color first
     ctx.fillStyle = currentBgColor;
     ctx.fillRect(0, 0, newWidth, newHeight);
-    
-    // Draw the image
     ctx.drawImage(originalImage, 0, 0, newWidth, newHeight);
 
-    // 3. Download using Blob
     canvas.toBlob(function(blob) {
         if (!blob) {
             alert("Image बनाने में कोई समस्या आई। फ़ाइल टाइप जाँचें।");
@@ -211,20 +219,25 @@ function resizeImage() {
         const extension = format === 'image/jpeg' ? 'jpg' : 'png';
         
         a.href = url;
-        const namePart = (resizeMode === 'percent') ? `${inputWidth}p` : `${newWidth}x${newHeight}`;
-        a.download = `resized_${namePart}_q${qualityPercent}.${extension}`; 
+        const namePart = (resizeMode === 'percent')
+            ? `${inputWidth}p`
+            : `${newWidth}x${newHeight}`;
+        a.download = `resized_${namePart}_q${qualityPercent}.${extension}`;
         
-        // Trigger download
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        // Show final size alert
         const originalFileSize = formatFileSize(originalImage.file.size);
         const finalFileSize = formatFileSize(blob.size);
         
-        alert(`✅ Image successfully resized/compressed.\nFinal Size: ${finalFileSize}\n(Old Size: ${originalFileSize})\nDPI: ${dpi} will be used for printing.`);
+        alert(
+            `✅ Image successfully resized/compressed.\n` +
+            `Final Size: ${finalFileSize}\n` +
+            `(Old Size: ${originalFileSize})\n` +
+            `DPI: ${dpi} will be used for printing.`
+        );
         
     }, format, quality); 
 }
@@ -234,17 +247,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('fileInput');
     const selectImageBtn = document.getElementById('selectImageBtn');
     const resizeSelect = document.getElementById('resizeSelect');
+    const dropzone = document.getElementById('dropzone');
 
-    // Attach listeners
     fileInput.addEventListener('change', previewImage);
     selectImageBtn.addEventListener('click', () => fileInput.click());
-    
-    // Attach event listeners for percentage mode linking and switching
+
+    // click anywhere in dropzone -> open file select
+    dropzone.addEventListener('click', (e) => {
+        if (e.target.id === 'selectImageBtn') return;
+        fileInput.click();
+    });
+
     resizeSelect.addEventListener('change', (e) => toggleResizeMode(e.target.value));
     document.getElementById('widthPercentInput').addEventListener('input', updateEstimatedSize);
     document.getElementById('heightPercentInput').addEventListener('input', updateEstimatedSize);
 
-    // Initial setup on load
+    // initial state
     selectBackground('white');
     toggleResizeMode('percent'); 
 });
