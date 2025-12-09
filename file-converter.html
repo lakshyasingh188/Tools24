@@ -17,7 +17,7 @@
 </head>
 <body>
 
-    <!-- TOP HEADER (same style as other tools) -->
+    <!-- TOP HEADER -->
     <div class="top-header">
         <a href="index.html" class="back-arrow">
             <i class="fas fa-arrow-left"></i>
@@ -49,10 +49,11 @@
             </select>
         </div>
         
-        <button id="convertBtn">Convert & Download</button>
+        <!-- ✅ DIRECT onclick -->
+        <button id="convertBtn" onclick="handleConvertClick()">Convert & Download</button>
     </div>
 
-    <!-- PAGE JS -->
+    <!-- PAGE JS – last line in body -->
     <script src="converter.js"></script>
 </body>
 </html>
