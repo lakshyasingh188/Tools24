@@ -3,75 +3,73 @@
 //  - Image (JPG/PNG)  -> PDF / JPG / PNG
 //  - Text  (TXT)      -> PDF / TXT
 
-document.addEventListener("DOMContentLoaded", () => {
-    const fileInput     = document.getElementById("fileInput");
-    const formatSelect  = document.getElementById("formatSelect");
-    const convertBtn    = document.getElementById("convertBtn");
+// ✅ Button se yahi function call hoga
+function handleConvertClick() {
+    var fileInput    = document.getElementById("fileInput");
+    var formatSelect = document.getElementById("formatSelect");
 
-    convertBtn.addEventListener("click", async () => {
-        const file = fileInput.files[0];
-        const targetFormat = formatSelect.value;
+    var file = fileInput.files[0];
+    var targetFormat = formatSelect.value;
 
-        if (!file) {
-            alert("कृपया पहले कोई फ़ाइल चुनें।");
+    if (!file) {
+        alert("कृपया पहले कोई फ़ाइल चुनें।");
+        return;
+    }
+
+    var mime = file.type;      // e.g. "image/jpeg", "text/plain"
+    var isImage = mime.indexOf("image/") === 0;
+    var isText  = mime === "text/plain";
+
+    // ---- PDF target ----
+    if (targetFormat === "PDF") {
+        if (isImage) {
+            imageToPDF(file);
+        } else if (isText) {
+            textToPDF(file);
+        } else {
+            alert("सिर्फ JPG, PNG या TXT फ़ाइलों को PDF में बदला जा सकता है।");
+        }
+        return;
+    }
+
+    // ---- TXT target ----
+    if (targetFormat === "TXT") {
+        if (isText) {
+            // Same file dubara download (basically copy)
+            downloadBlob(file, changeExtension(file.name, "txt"));
+        } else {
+            alert("TXT में केवल टेक्स्ट (TXT) फ़ाइलें convert की जा सकती हैं।");
+        }
+        return;
+    }
+
+    // ---- JPG / PNG target (image only) ----
+    if (targetFormat === "JPG" || targetFormat === "PNG") {
+        if (!isImage) {
+            alert("JPG/PNG में केवल Image (JPG/PNG) फ़ाइलें convert की जा सकती हैं।");
             return;
         }
+        var targetMime = (targetFormat === "JPG") ? "image/jpeg" : "image/png";
+        imageToImage(file, targetMime, targetFormat.toLowerCase());
+        return;
+    }
 
-        const mime = file.type; // e.g. "image/jpeg", "text/plain"
-        const isImage = mime.startsWith("image/");
-        const isText  = mime === "text/plain";
-
-        // PDF target
-        if (targetFormat === "PDF") {
-            if (isImage) {
-                await imageToPDF(file);
-            } else if (isText) {
-                await textToPDF(file);
-            } else {
-                alert("सिर्फ JPG, PNG या TXT फ़ाइलों को PDF में बदला जा सकता है।");
-            }
-            return;
-        }
-
-        // TXT target
-        if (targetFormat === "TXT") {
-            if (isText) {
-                // Text as-is download again (basically copy)
-                downloadBlob(file, changeExtension(file.name, "txt"));
-            } else {
-                alert("TXT में केवल टेक्स्ट (TXT) फ़ाइलें convert की जा सकती हैं।");
-            }
-            return;
-        }
-
-        // JPG / PNG target (image only)
-        if (targetFormat === "JPG" || targetFormat === "PNG") {
-            if (!isImage) {
-                alert("JPG/PNG में केवल Image (JPG/PNG) फ़ाइलें convert की जा सकती हैं।");
-                return;
-            }
-            const targetMime = targetFormat === "JPG" ? "image/jpeg" : "image/png";
-            await imageToImage(file, targetMime, targetFormat.toLowerCase());
-            return;
-        }
-
-        alert("Unknown format selected.");
-    });
-});
+    alert("Unknown format selected.");
+}
 
 // ---------- Helpers ----------
 
 // Change file extension while keeping base name
 function changeExtension(filename, newExt) {
-    const dotIndex = filename.lastIndexOf(".");
-    const base = dotIndex !== -1 ? filename.substring(0, dotIndex) : filename;
-    return `${base}.${newExt}`;
+    var dotIndex = filename.lastIndexOf(".");
+    var base = (dotIndex !== -1) ? filename.substring(0, dotIndex) : filename;
+    return base + "." + newExt;
 }
 
 // Generic blob downloader
 function downloadBlob(blob, filename) {
-    const url = URL.createObjectURL(blob);
-    const a   = document.createElement("a");
+    var url = URL.createObjectURL(blob);
+    var a   = document.createElement("a");
     a.href = url;
     a.download = filename;
     document.body.appendChild(a);
@@ -83,31 +81,35 @@ function downloadBlob(blob, filename) {
 // ---------- Converters ----------
 
 // 1) IMAGE -> PDF
-async function imageToPDF(file) {
-    const { jsPDF } = window.jspdf;
-    const reader = new FileReader();
+function imageToPDF(file) {
+    var jsPDFLib = window.jspdf;
+    if (!jsPDFLib) {
+        alert("PDF लाइब्रेरी लोड नहीं हुई (jsPDF)।");
+        return;
+    }
+
+    var jsPDF = jsPDFLib.jsPDF;
+    var reader = new FileReader();
 
     reader.onload = function(e) {
-        const img = new Image();
+        var img = new Image();
         img.onload = function() {
-            // A4 size (pt) – portrait
-            const pdf = new jsPDF("p", "pt", "a4");
-            const pageWidth  = pdf.internal.pageSize.getWidth();
-            const pageHeight = pdf.internal.pageSize.getHeight();
+            var pdf = new jsPDF("p", "pt", "a4");
+            var pageWidth  = pdf.internal.pageSize.getWidth();
+            var pageHeight = pdf.internal.pageSize.getHeight();
 
-            // Fit image proportionally inside page
-            let imgWidth = img.width;
-            let imgHeight = img.height;
+            var imgWidth = img.width;
+            var imgHeight = img.height;
 
-            const ratio = Math.min(pageWidth / imgWidth, pageHeight / imgHeight);
-            imgWidth  *= ratio;
-            imgHeight *= ratio;
+            var ratio = Math.min(pageWidth / imgWidth, pageHeight / imgHeight);
+            imgWidth  = imgWidth * ratio;
+            imgHeight = imgHeight * ratio;
 
-            const x = (pageWidth - imgWidth) / 2;
-            const y = (pageHeight - imgHeight) / 2;
+            var x = (pageWidth - imgWidth) / 2;
+            var y = (pageHeight - imgHeight) / 2;
 
             pdf.addImage(img, "JPEG", x, y, imgWidth, imgHeight);
-            const pdfBlob = pdf.output("blob");
+            var pdfBlob = pdf.output("blob");
             downloadBlob(pdfBlob, changeExtension(file.name, "pdf"));
         };
         img.src = e.target.result;
@@ -117,31 +119,37 @@ async function imageToPDF(file) {
 }
 
 // 2) TEXT -> PDF
-async function textToPDF(file) {
-    const { jsPDF } = window.jspdf;
-    const reader = new FileReader();
+function textToPDF(file) {
+    var jsPDFLib = window.jspdf;
+    if (!jsPDFLib) {
+        alert("PDF लाइब्रेरी लोड नहीं हुई (jsPDF)।");
+        return;
+    }
+
+    var jsPDF = jsPDFLib.jsPDF;
+    var reader = new FileReader();
 
     reader.onload = function(e) {
-        const text = e.target.result;
+        var text = e.target.result;
 
-        const pdf = new jsPDF("p", "pt", "a4");
-        const margin = 40;
-        const maxWidth = pdf.internal.pageSize.getWidth() - margin * 2;
+        var pdf = new jsPDF("p", "pt", "a4");
+        var margin = 40;
+        var maxWidth = pdf.internal.pageSize.getWidth() - margin * 2;
 
-        const lines = pdf.splitTextToSize(text, maxWidth);
-        let y = margin;
+        var lines = pdf.splitTextToSize(text, maxWidth);
+        var y = margin;
+        var lineHeight = 14;
 
-        const lineHeight = 14;
-        lines.forEach((line, index) => {
+        for (var i = 0; i < lines.length; i++) {
             if (y > pdf.internal.pageSize.getHeight() - margin) {
                 pdf.addPage();
                 y = margin;
             }
-            pdf.text(line, margin, y);
+            pdf.text(lines[i], margin, y);
             y += lineHeight;
-        });
+        }
 
-        const pdfBlob = pdf.output("blob");
+        var pdfBlob = pdf.output("blob");
         downloadBlob(pdfBlob, changeExtension(file.name, "pdf"));
     };
 
@@ -149,14 +157,14 @@ async function textToPDF(file) {
 }
 
 // 3) IMAGE -> IMAGE (JPG/PNG)
-async function imageToImage(file, targetMime, ext) {
-    const reader = new FileReader();
+function imageToImage(file, targetMime, ext) {
+    var reader = new FileReader();
 
     reader.onload = function(e) {
-        const img = new Image();
+        var img = new Image();
         img.onload = function() {
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
 
             canvas.width = img.width;
             canvas.height = img.height;
