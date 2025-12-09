@@ -1,0 +1,113 @@
+/* Reset / base */
+body {
+    background-color: #f4f4f9;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* GitHub ya global CSS me agar body flex ho, use override karne ke liye */
+    display: block !important;
+}
+
+/* Top blue header */
+.top-header {
+    width: 100%;
+    background-color: #1565C0; /* blue */
+    color: #ffffff;
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.top-header .back-arrow {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.top-header .back-arrow i {
+    margin-right: 4px;
+}
+
+/* Green line under header */
+.green-strip {
+    width: 100%;
+    height: 6px;
+    background-color: #00C853;
+}
+
+/* Main card */
+.tool-container {
+    padding: 30px;
+    max-width: 600px;
+    width: 90%;
+    margin: 40px auto 20px auto;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.tool-title {
+    color: #004D40;
+    margin-bottom: 10px;
+}
+
+.tool-desc {
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 25px;
+}
+
+/* Input groups */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #333;
+}
+
+.input-group input[type="file"],
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 0.95rem;
+}
+
+/* Button */
+#convertBtn {
+    padding: 12px 25px;
+    background-color: #1565C0;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+#convertBtn:hover {
+    background-color: #0d47a1;
+}
+
+/* Small helper text if needed later */
+.info-text {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 8px;
+}
