@@ -1,62 +1,58 @@
-/* --- NEW HEADING STYLES FOR BLUE BACKGROUND & WHITE TEXT --- */
-.tool-page-heading {
-    background-color: #1a73e8; /* नीला बैकग्राउंड */
+/* ==== TOP HEADER (SAME AS MERGE PDF / FILE CONVERTER) ==== */
+body {
+    background-color: #f4f4f9;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.top-header {
+    width: 100%;
+    background-color: #1565C0; /* blue */
+    color: #ffffff;
     padding: 15px 20px;
-    width: 90%; 
-    max-width: 650px; 
-    margin: 0 auto; /* सेंटर में रखने के लिए */
-    text-align: left;
-    font-size: 1.8em;
-    color: white; /* हेडिंग टेक्स्ट को सफ़ेद करने के लिए */
-    border-radius: 10px 10px 0 0; /* ऊपर के कोने गोल */
-    position: relative; /* Corner strip को position देने के लिए */
-    overflow: hidden; /* कोने की पट्टी हेडिंग के अंदर रहे */
-    display: flex; /* टेक्स्ट को कंट्रोल करने के लिए */
-    align-items: center; /* टेक्स्ट को लंबवत केंद्र में रखने के लिए */
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    position: relative;
+    box-sizing: border-box;
 }
 
-/* --- GREEN CORNER STRIP STYLES --- */
-.corner-strip {
+.top-header .back-arrow {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 30px; /* पट्टी की चौड़ाई */
-    height: 150%; /* पूरी ऊंचाई */
-    background-color: #13d61a; /* हरा रंग */
-    border-radius: 10px 0 0 0; /* ऊपर बाएँ कोने को गोल रखना */
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #ffffff;
+    text-decoration: none;
 }
 
-/* --- ORIGINAL CSS (Only slight modification to site-name for positioning) --- */
-
-.site-name {
-    margin-left: 10px; /* पट्टी के लिए जगह बनाने के लिए टेक्स्ट को दाईं ओर शिफ्ट करें */
+.top-header .back-arrow i {
+    margin-right: 4px;
 }
 
-/* बाकी सभी ORIGINAL CSS Styles समान हैं */
-
-body { 
-    background-color: #f4f4f9; 
-    font-family: Arial, sans-serif; 
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
+/* Green strip under the header */
+.green-strip {
+    width: 100%;
+    height: 10px;
+    background-color: #12f20e;
 }
-.tool-container { 
+
+/* ==== TOOL CARD ==== */
+.tool-container {
     padding: 30px;
-    max-width: 650px; 
+    max-width: 650px;
     width: 90%;
-    margin: 0 auto 20px auto; 
-    background: white; 
-    border-radius: 0 0 10px 10px; 
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1); 
+    margin: 40px auto 20px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     text-align: center;
 }
-.tool-container h1 { 
+
+.tool-title {
     color: #1a73e8;
-    margin-bottom: 30px;
-    font-size: 2em;
+    margin-bottom: 25px;
 }
 
 /* Dropzone Styling */
@@ -67,9 +63,17 @@ body {
     margin-bottom: 30px;
     background-color: #e8f0fe;
     cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
-.dropzone i { font-size: 3em; color: #1a73e8; margin-bottom: 10px; }
-.dropzone p { color: #555; margin-bottom: 15px; }
+.dropzone i {
+    font-size: 3em;
+    color: #1a73e8;
+    margin-bottom: 10px;
+}
+.dropzone p {
+    color: #555;
+    margin-bottom: 15px;
+}
 #selectImageBtn {
     padding: 10px 30px;
     background-color: #1a73e8;
@@ -82,8 +86,8 @@ body {
 
 /* Image Details Display */
 #originalDetails {
-    font-size: 0.9em; 
-    color: #1a73e8; 
+    font-size: 0.9em;
+    color: #1a73e8;
     margin-top: 15px;
 }
 
@@ -110,9 +114,10 @@ body {
     display: flex;
     align-items: center;
     flex-grow: 1;
-    justify-content: flex-end; /* Align inputs to the right */
+    justify-content: flex-end;
 }
-.input-field-container input, .input-field-container select {
+.input-field-container input,
+.input-field-container select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -126,8 +131,14 @@ body {
     margin: 0 10px;
     color: #666;
 }
-#resizeSelect { width: 100px; }
-#dpiInput { width: 70px; margin-right: 10px; text-align: center;}
+#resizeSelect {
+    width: 100px;
+}
+#dpiInput {
+    width: 70px;
+    margin-right: 10px;
+    text-align: center;
+}
 
 /* Format/Quality/Background Group */
 .format-group {
@@ -135,16 +146,20 @@ body {
     justify-content: center;
     gap: 20px;
     margin-top: 30px;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 .format-group > div {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 100px; 
+    min-width: 100px;
 }
-.format-group label { margin-bottom: 5px; font-weight: bold; }
-.format-group select, .format-group input[type="number"] {
+.format-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.format-group select,
+.format-group input[type="number"] {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -163,19 +178,23 @@ body {
     border-radius: 50%;
     border: 2px solid #ccc;
     cursor: pointer;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 .color-option.selected {
     border-color: #1a73e8;
     box-shadow: 0 0 0 3px #1a73e830;
 }
-#whiteBg { background-color: white; }
-#blackBg { background-color: black; }
+#whiteBg {
+    background-color: white;
+}
+#blackBg {
+    background-color: black;
+}
 
 /* Button and Details */
 #resizeBtn {
     padding: 12px 40px;
-    background-color: #4CAF50; 
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
@@ -184,14 +203,18 @@ body {
     margin-top: 30px;
     transition: background-color 0.3s;
 }
-#resizeBtn:hover { background-color: #45a049; }
+#resizeBtn:hover {
+    background-color: #45a049;
+}
 
-#estimatedSize { 
-    font-size: 1em; 
+#estimatedSize {
+    font-size: 1em;
     color: #1a73e8;
-    margin-top: 20px; 
+    margin-top: 20px;
     font-weight: bold;
 }
 
-/* Hidden elements for functionality */
-#fileInput { display: none; }
+/* Hidden input */
+#fileInput {
+    display: none;
+}
