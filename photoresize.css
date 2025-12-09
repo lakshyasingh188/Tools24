@@ -1,13 +1,21 @@
-/* ==== TOP HEADER (SAME AS MERGE PDF / FILE CONVERTER) ==== */
+/* BODY + WALLPAPER (same image as merge pdf) */
 body {
-    background-color: #f4f4f9;
-    font-family: Arial, sans-serif;
     margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+
+    background-color: #000;
+    background-image: url('mainpageimage.png'); /* apni wallpaper ka path */
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
+/* Top header same style as file converter */
 .top-header {
     width: 100%;
-    background-color: #1565C0; /* blue */
+    background-color: #1565C0;
     color: #ffffff;
     padding: 15px 20px;
     text-align: center;
@@ -31,22 +39,21 @@ body {
     margin-right: 4px;
 }
 
-/* Green strip under the header */
 .green-strip {
     width: 100%;
     height: 10px;
-    background-color: #12f20e;
+    background-color: #0dfc21;
 }
 
-/* ==== TOOL CARD ==== */
-.tool-container {
+/* Main white card */
+.tool-container { 
     padding: 30px;
-    max-width: 650px;
+    max-width: 650px; 
     width: 90%;
-    margin: 40px auto 20px auto;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    margin: 40px auto 20px auto; 
+    background: white; 
+    border-radius: 10px; 
+    box-shadow: 0 6px 25px rgba(0,0,0,0.5); 
     text-align: center;
 }
 
@@ -65,14 +72,14 @@ body {
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
-.dropzone i {
-    font-size: 3em;
-    color: #1a73e8;
-    margin-bottom: 10px;
+.dropzone i { 
+    font-size: 3em; 
+    color: #1a73e8; 
+    margin-bottom: 10px; 
 }
-.dropzone p {
-    color: #555;
-    margin-bottom: 15px;
+.dropzone p { 
+    color: #555; 
+    margin-bottom: 15px; 
 }
 #selectImageBtn {
     padding: 10px 30px;
@@ -84,14 +91,14 @@ body {
     font-size: 1em;
 }
 
-/* Image Details Display */
+/* Image Details */
 #originalDetails {
-    font-size: 0.9em;
-    color: #1a73e8;
+    font-size: 0.9em; 
+    color: #1a73e8; 
     margin-top: 15px;
 }
 
-/* Input Control Group */
+/* Control group */
 .control-group-title {
     font-size: 1.5em;
     color: #333;
@@ -131,14 +138,8 @@ body {
     margin: 0 10px;
     color: #666;
 }
-#resizeSelect {
-    width: 100px;
-}
-#dpiInput {
-    width: 70px;
-    margin-right: 10px;
-    text-align: center;
-}
+#resizeSelect { width: 100px; }
+#dpiInput { width: 70px; margin-right: 10px; text-align: center;}
 
 /* Format/Quality/Background Group */
 .format-group {
@@ -146,18 +147,15 @@ body {
     justify-content: center;
     gap: 20px;
     margin-top: 30px;
-    flex-wrap: wrap;
+    flex-wrap: wrap; 
 }
 .format-group > div {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 100px;
+    min-width: 100px; 
 }
-.format-group label {
-    margin-bottom: 5px;
-    font-weight: bold;
-}
+.format-group label { margin-bottom: 5px; font-weight: bold; }
 .format-group select,
 .format-group input[type="number"] {
     padding: 8px;
@@ -184,17 +182,13 @@ body {
     border-color: #1a73e8;
     box-shadow: 0 0 0 3px #1a73e830;
 }
-#whiteBg {
-    background-color: white;
-}
-#blackBg {
-    background-color: black;
-}
+#whiteBg { background-color: white; }
+#blackBg { background-color: black; }
 
-/* Button and Details */
+/* Button + info */
 #resizeBtn {
     padding: 12px 40px;
-    background-color: #4CAF50;
+    background-color: #4CAF50; 
     color: white;
     border: none;
     border-radius: 5px;
@@ -203,18 +197,14 @@ body {
     margin-top: 30px;
     transition: background-color 0.3s;
 }
-#resizeBtn:hover {
-    background-color: #45a049;
-}
+#resizeBtn:hover { background-color: #45a049; }
 
-#estimatedSize {
-    font-size: 1em;
+#estimatedSize { 
+    font-size: 1em; 
     color: #1a73e8;
-    margin-top: 20px;
+    margin-top: 20px; 
     font-weight: bold;
 }
 
 /* Hidden input */
-#fileInput {
-    display: none;
-}
+#fileInput { display: none; }
