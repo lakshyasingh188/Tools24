@@ -1,59 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools24 | Universal File Converter</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tools24 | Universal File Converter</title>
 
-    <!-- Font Awesome for back arrow icon -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Page CSS -->
-    <link rel="stylesheet" href="file-converter.css">
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="file-converter.css">
 
-    <!-- jsPDF (for PDF generation) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- jsPDF (for generating PDFs) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- pdf.js (for reading/rendering PDF pages) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.min.js"></script>
 </head>
 <body>
+  <div class="top-header">
+      <a href="index.html" class="back-arrow"><i class="fas fa-arrow-left"></i></a>
+      Tools24 Universal File Converter
+  </div>
+  <div class="green-strip"></div>
 
-    <!-- TOP HEADER -->
-    <div class="top-header">
-        <a href="index.html" class="back-arrow">
-            <i class="fas fa-arrow-left"></i>
-        </a>
-        Tools24 Universal File Converter
-    </div>
-    <div class="green-strip"></div>
+  <div class="tool-container">
+      <h2 class="tool-title">Tools24 Universal File Converter</h2>
+      <p class="tool-desc">
+        JPG, PNG, PDF, TXT — aapas mein convert karein. (Image→Text ke liye OCR jaruri hota hai; neeche note dekhein.)
+      </p>
 
-    <!-- MAIN CARD -->
-    <div class="tool-container">
-        <h2 class="tool-title">Tools24 Universal File Converter</h2>
-        <p class="tool-desc">
-            Image (JPG, PNG) और Text (TXT) फ़ाइलों को PDF में, या Image को दूसरे Image फ़ॉर्मेट में Convert करें।
-        </p>
+      <div class="input-group">
+          <label for="fileInput">1. File अपलोड करें:</label>
+          <input type="file" id="fileInput"
+                 accept=".pdf,.jpg,.jpeg,.png,.txt,image/*,application/pdf,text/plain">
+      </div>
 
-        <div class="input-group">
-            <label for="fileInput">1. File अपलोड करें (कोई भी फ़ाइल प्रकार चुनें):</label>
-            <input type="file" id="fileInput"
-                   accept=".jpg,.jpeg,.png,.txt,image/jpeg,image/png,text/plain">
-        </div>
+      <div class="input-group">
+          <label for="formatSelect">2. Convert इस फॉर्मेट में करें:</label>
+          <select id="formatSelect">
+              <option value="PDF">PDF (Recommended)</option>
+              <option value="JPG">JPG (Image only)</option>
+              <option value="PNG">PNG (Image only)</option>
+              <option value="TXT">TXT (Text only)</option>
+          </select>
+      </div>
 
-        <div class="input-group">
-            <label for="formatSelect">2. Convert इस फॉर्मेट में करें:</label>
-            <select id="formatSelect">
-                <option value="PDF">PDF (Recommended)</option>
-                <option value="JPG">JPG (Image only)</option>
-                <option value="PNG">PNG (Image only)</option>
-                <option value="TXT">TXT (Text only)</option>
-            </select>
-        </div>
-        
-        <!-- ✅ DIRECT onclick -->
-        <button id="convertBtn" onclick="handleConvertClick()">Convert & Download</button>
-    </div>
+      <button id="convertBtn">Convert & Download</button>
 
-    <!-- PAGE JS – last line in body -->
-    <script src="converter.js"></script>
+      <div id="status" class="status"></div>
+
+      <div class="note">
+        <strong>Note:</strong> Image → Text (OCR) requires extra library (Tesseract.js). Agar aap OCR chahte ho toh batao, main add karke de dunga.
+      </div>
+  </div>
+
+  <script src="converter.js"></script>
 </body>
 </html>
