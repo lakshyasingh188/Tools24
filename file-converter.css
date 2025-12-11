@@ -1,16 +1,24 @@
-/* Reset / base */
+/* BODY + WALLPAPER BACKGROUND (Merge PDF style) */
 body {
-    background-color: #f4f4f9;
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    display: block !important; /* GitHub/global flex ko override karne ke liye */
+    font-family: Arial, sans-serif;
+
+    /* Wallpaper */
+    background-color: #000; /* fallback */
+    background-image: url('mainpageimage.png'); /* <- yaha apni image ka path do */
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+
+    display: block !important; /* kisi global flex ko override karne ke liye */
 }
 
 /* Top blue header */
 .top-header {
     width: 100%;
-    background-color: #1565C0; /* blue */
+    background-color: #1565C0;
     color: #ffffff;
     padding: 15px 20px;
     text-align: center;
@@ -34,14 +42,14 @@ body {
     margin-right: 4px;
 }
 
-/* Green line under header */
+/* Green line */
 .green-strip {
     width: 100%;
     height: 10px;
-    background-color: #0af539;
+    background-color: #14ff3f;
 }
 
-/* Main card */
+/* Main white card on top of wallpaper */
 .tool-container {
     padding: 30px;
     max-width: 600px;
@@ -49,7 +57,7 @@ body {
     margin: 40px auto 20px auto;
     background: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0,0,0,0.45); /* thoda zyada shadow so wallpaper pe pop out */
     text-align: center;
 }
 
