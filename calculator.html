@@ -3,106 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools24 | Scientific Calculatar</title>
-    
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Specific Styles */
-        body { background-color: #f4f4f9; font-family: Arial, sans-serif; }
-        .tool-container { 
-            padding: 20px; 
-            max-width: 400px; 
-            margin: 40px auto; 
-            background: white; 
-            border-radius: 8px; 
-            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
-        }
-        .tool-container h1 { color: #004D40; text-align: center; }
-        .back-link { display: block; padding: 10px; background: #004D40; color: white; text-align: center; text-decoration: none; }
-        
-        /* Calculator Grid/Display styles */
-        #display { 
-            width: 100%; 
-            height: 60px; 
-            font-size: 2.2em; 
-            text-align: right; 
-            margin-bottom: 10px; 
-            padding: 5px; 
-            box-sizing: border-box; 
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            background-color: #eee;
-        }
-        #buttons { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
-        #buttons button { 
-            padding: 15px; 
-            font-size: 1.1em; 
-            border: none; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            background: #eee;
-            transition: background-color 0.2s;
-        }
-        #buttons button:active { transform: scale(0.98); }
-        #buttons button:hover { background-color: #ddd; }
-        #buttons button.function { background-color: #ddd; }
-        #buttons button.operator { background-color: #004D40; color: white; }
-        #buttons button.operator:hover { background-color: #00382e; }
-        #buttons button.equals { 
-            background-color: #A52A2A; /* Maroon */
-            grid-column: span 3; 
-            color: white; 
-            font-weight: bold;
-        }
-        #buttons button.equals:hover { background-color: #800000; }
-    </style>
+    <title>Tools24 Scientific Calculator</title>
+    <link rel="stylesheet" href="calculator.css">
 </head>
 <body>
-    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Tools24</a>
 
-    <div class="tool-container">
-        <h1>Tools24 Scientific Calculator</h1>
+<!-- TOP HEADER (Same style as Merge PDF) -->
+<div class="top-header">
+    <a href="index.html" class="back-btn">←</a>
+    <h2>Tools24 Scientific Calculator</h2>
+</div>
+<div class="green-line"></div>
+
+<!-- Calculator Box -->
+<div class="calculator-container">
+    <input type="text" id="display" value="0" disabled>
+
+    <div class="buttons">
+        <button onclick="allClear()">AC</button>
+        <button onclick="clearLast()">C</button>
+        <button onclick="addFunction('sin(')">sin</button>
+        <button onclick="addFunction('cos(')">cos</button>
+        <button onclick="addFunction('tan(')">tan</button>
+
+        <button onclick="addFunction('log(')">log</button>
+        <button onclick="addFunction('sqrt(')">√</button>
+        <button onclick="appendValue('(')">(</button>
+        <button onclick="appendValue(')')">)</button>
+        <button class="op" onclick="appendValue('/')">/</button>
+
+        <button onclick="appendValue('7')">7</button>
+        <button onclick="appendValue('8')">8</button>
+        <button onclick="appendValue('9')">9</button>
+        <button onclick="appendValue('π')">π</button>
+        <button class="op" onclick="appendValue('*')">×</button>
+
+        <button onclick="appendValue('4')">4</button>
+        <button onclick="appendValue('5')">5</button>
+        <button onclick="appendValue('6')">6</button>
+        <button onclick="addFunction('^2')">x²</button>
+        <button class="op" onclick="appendValue('-')">-</button>
+
+        <button onclick="appendValue('1')">1</button>
+        <button onclick="appendValue('2')">2</button>
+        <button onclick="appendValue('3')">3</button>
+        <button onclick="appendValue('e')">e</button>
+        <button class="op" onclick="appendValue('+')">+</button>
+
+        <button onclick="appendValue('0')">0</button>
+        <button onclick="appendValue('.')">.</button>
         
-        <input type="text" id="display" disabled value="0">
-        <div id="buttons">
-            <button class="function" onclick="clearDisplay()">AC</button>
-            <button class="function" onclick="backspace()">C</button>
-            <button class="function" onclick="calculate('sin(')">sin</button>
-            <button class="function" onclick="calculate('cos(')">cos</button>
-            <button class="function" onclick="calculate('tan(')">tan</button>
-            
-            <button class="function" onclick="calculate('log(')">log</button>
-            <button class="function" onclick="calculate('sqrt(')">√</button>
-            <button class="function" onclick="calculate('(')">(</button>
-            <button class="function" onclick="calculate(')')">)</button>
-            <button class="operator" onclick="calculate('/')">/</button>
-
-            <button onclick="calculate('7')">7</button>
-            <button onclick="calculate('8')">8</button>
-            <button onclick="calculate('9')">9</button>
-            <button class="function" onclick="calculate('Math.PI')">π</button>
-            <button class="operator" onclick="calculate('*')">x</button>
-            
-            <button onclick="calculate('4')">4</button>
-            <button onclick="calculate('5')">5</button>
-            <button onclick="calculate('6')">6</button>
-            <button class="function" onclick="calculate('**')">x²</button>
-            <button class="operator" onclick="calculate('-')">-</button>
-
-            <button onclick="calculate('1')">1</button>
-            <button onclick="calculate('2')">2</button>
-            <button onclick="calculate('3')">3</button>
-            <button class="function" onclick="calculate('Math.E')">e</button>
-            <button class="operator" onclick="calculate('+')">+</button>
-
-            <button onclick="calculate('0')">0</button>
-            <button onclick="calculate('.')">.</button>
-            <button class="equals" onclick="evaluateExpression()">=</button>
-        </div>
+        <button class="equal" onclick="calculate()">=</button>
     </div>
+</div>
 
-    <script src="calculator.js"></script>
+<script src="calculator.js"></script>
 </body>
 </html>
