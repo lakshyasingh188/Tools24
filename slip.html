@@ -8,6 +8,18 @@
     <script src="slip.js" defer></script>
 </head>
 <body>
+
+<!-- Tools24 Style Topbar -->
+<header class="topbar">
+    <div class="topbar-inner">
+        <button class="back-btn" onclick="history.back()">←</button>
+        <div class="topbar-title">Tools24 Payslip Generator</div>
+        <div class="topbar-space"></div>
+    </div>
+    <div class="topbar-accent"></div>
+</header>
+
+
 <div class="page-container">
 
     <!-- HEADER -->
@@ -22,7 +34,6 @@
                 </div>
             </label>
 
-            <!-- logo preview (form side) -->
             <div class="logo-preview">
                 <img id="logoPreviewImg" alt="Company Logo Preview">
             </div>
@@ -37,76 +48,81 @@
 
         <div class="payslip-month">
             <div class="payslip-label">Payslip For the Month</div>
-            <div>
-                <input type="month" id="payMonth" class="month-input">
-            </div>
+            <input type="month" id="payMonth" class="month-input">
         </div>
     </header>
 
-    <!-- FORM -->
+
+
+    <!-- FORM AREA -->
     <form id="slipForm" class="card">
 
-        <h2 class="section-title">Employee Pay Summary <span class="required">*</span></h2>
+        <h2 class="section-title">Employee Pay Summary</h2>
 
         <div class="grid-2">
             <div class="field">
                 <label>Employee Name</label>
-                <input type="text" id="empName" class="input" placeholder="Eg: Meera Krishnan">
+                <input type="text" id="empName" class="input">
             </div>
+
             <div class="field">
                 <label>Employee ID</label>
-                <input type="text" id="empId" class="input" placeholder="Eg: 1234">
+                <input type="text" id="empId" class="input">
             </div>
 
             <div class="field">
                 <label>Pay Period</label>
-                <input type="text" id="payPeriod" class="input" placeholder="Eg: December 2025">
+                <input type="text" id="payPeriod" class="input">
             </div>
+
             <div class="field">
                 <label>Paid Days</label>
-                <input type="number" id="paidDays" class="input" placeholder="Eg: 22">
+                <input type="number" id="paidDays" class="input">
             </div>
 
             <div class="field">
                 <label>Loss of Pay Days</label>
                 <input type="number" id="lopDays" class="input" value="0">
             </div>
+
             <div class="field">
                 <label>Pay Date</label>
                 <input type="date" id="payDate" class="input">
             </div>
         </div>
 
-        <h2 class="section-title">Income Details <span class="required">*</span></h2>
+
+        <h2 class="section-title">Income Details</h2>
 
         <div class="tables-container">
+
             <!-- Earnings -->
             <div class="table-card">
                 <div class="table-header">
                     <span>Earnings</span>
                     <button type="button" class="link-btn" id="addEarningBtn">+ Add Earnings</button>
                 </div>
+
                 <table class="data-table">
                     <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Amount (₹)</th>
-                    </tr>
+                    <tr><th>Description</th><th>Amount (₹)</th></tr>
                     </thead>
+
                     <tbody id="earningsBody">
-                    <tr>
-                        <td><input type="text" class="input" value="Basic"></td>
-                        <td><input type="number" class="input earning-amount" value="0"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" class="input" value="House Rent Allowance"></td>
-                        <td><input type="number" class="input earning-amount" value="0"></td>
-                    </tr>
+                        <tr>
+                            <td><input type="text" class="input" value="Basic"></td>
+                            <td><input type="number" class="input earning-amount" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="input" value="House Rent Allowance"></td>
+                            <td><input type="number" class="input earning-amount" value="0"></td>
+                        </tr>
                     </tbody>
+
                     <tfoot>
                     <tr>
                         <td class="total-label">Gross Earnings</td>
-                        <td class="total-value"><span id="grossEarnings">0</span></td>
+                        <td><span id="grossEarnings">0</span></td>
                     </tr>
                     </tfoot>
                 </table>
@@ -118,68 +134,73 @@
                     <span>Deductions</span>
                     <button type="button" class="link-btn" id="addDeductionBtn">+ Add Deductions</button>
                 </div>
+
                 <table class="data-table">
-                    <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Amount (₹)</th>
-                    </tr>
-                    </thead>
+                    <thead><tr><th>Description</th><th>Amount (₹)</th></tr></thead>
+
                     <tbody id="deductionsBody">
-                    <tr>
-                        <td><input type="text" class="input" value="Income Tax"></td>
-                        <td><input type="number" class="input deduction-amount" value="0"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" class="input" value="Provident Fund"></td>
-                        <td><input type="number" class="input deduction-amount" value="0"></td>
-                    </tr>
+                        <tr>
+                            <td><input type="text" class="input" value="Income Tax"></td>
+                            <td><input type="number" class="input deduction-amount" value="0"></td>
+                        </tr>
+
+                        <tr>
+                            <td><input type="text" class="input" value="Provident Fund"></td>
+                            <td><input type="number" class="input deduction-amount" value="0"></td>
+                        </tr>
                     </tbody>
+
                     <tfoot>
                     <tr>
                         <td class="total-label">Total Deductions</td>
-                        <td class="total-value"><span id="totalDeductions">0</span></td>
+                        <td><span id="totalDeductions">0</span></td>
                     </tr>
                     </tfoot>
                 </table>
             </div>
         </div>
 
-        <!-- NET & BUTTONS -->
+        <!-- NET AMOUNT -->
         <div class="net-card">
             <div>
                 <div class="net-title">Total Net Payable</div>
                 <div class="net-sub">Gross Earnings – Total Deductions</div>
             </div>
+
             <div class="net-amount">₹<span id="netPayable">0</span></div>
         </div>
 
         <div class="amount-words">
-            Amount in words : <span id="amountInWords">Zero Rupees Only</span>
+            Amount in words: <span id="amountInWords">Zero Rupees Only</span>
         </div>
 
         <div class="actions">
             <button type="button" id="generateBtn" class="primary-btn">Generate Payslip</button>
             <button type="reset" class="secondary-btn">Reset</button>
         </div>
+
     </form>
 
-    <!-- PREVIEW / PRINT AREA -->
+
+
+    <!-- PRINT PREVIEW -->
     <section id="payslipPreview" class="payslip-preview hidden">
-        <!-- ये पूरा भाग border के अंदर होगा -->
         <div class="preview-page">
             <div class="preview-inner">
+
                 <div class="preview-header">
                     <div class="preview-logo">
-                        <img id="previewLogoImg" alt="Company Logo">
+                        <img id="previewLogoImg">
                     </div>
+
                     <div class="preview-company">
                         <h2 id="previewCompanyName"></h2>
                         <p id="previewCompanyAddress"></p>
                     </div>
+
                     <div class="preview-meta">
                         <div class="small-label">Payslip For</div>
-                        <div id="previewPayPeriodTop" class="bold"></div>
+                        <div id="previewPayPeriodTop"></div>
                     </div>
                 </div>
 
@@ -197,20 +218,15 @@
 
                 <div class="preview-section">
                     <div class="tables-container">
+
                         <div class="table-card">
                             <h4>Earnings</h4>
                             <table class="data-table small-table">
-                                <thead>
-                                <tr>
-                                    <th>Description</th>
-                                    <th>Amount (₹)</th>
-                                </tr>
-                                </thead>
                                 <tbody id="pEarningsBody"></tbody>
                                 <tfoot>
                                 <tr>
                                     <td class="total-label">Gross Earnings</td>
-                                    <td class="total-value" id="pGrossEarnings"></td>
+                                    <td id="pGrossEarnings"></td>
                                 </tr>
                                 </tfoot>
                             </table>
@@ -219,21 +235,16 @@
                         <div class="table-card">
                             <h4>Deductions</h4>
                             <table class="data-table small-table">
-                                <thead>
-                                <tr>
-                                    <th>Description</th>
-                                    <th>Amount (₹)</th>
-                                </tr>
-                                </thead>
                                 <tbody id="pDeductionsBody"></tbody>
                                 <tfoot>
                                 <tr>
                                     <td class="total-label">Total Deductions</td>
-                                    <td class="total-value" id="pTotalDeductions"></td>
+                                    <td id="pTotalDeductions"></td>
                                 </tr>
                                 </tfoot>
                             </table>
                         </div>
+
                     </div>
                 </div>
 
@@ -252,15 +263,15 @@
                     <div>Authorised Signatory</div>
                 </div>
 
-                <!-- ये buttons print में नहीं दिखेंगे -->
                 <div class="preview-actions no-print">
-                    <button type="button" id="printBtn" class="primary-btn">Print / Save as PDF</button>
-                    <button type="button" id="closePreviewBtn" class="secondary-btn">Close</button>
+                    <button id="printBtn" class="primary-btn">Print / Save</button>
+                    <button id="closePreviewBtn" class="secondary-btn">Close</button>
                 </div>
+
             </div>
         </div>
     </section>
- tools24 
+
 </div>
 </body>
 </html>
