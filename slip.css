@@ -1,3 +1,5 @@
+/* your provided CSS - copy exactly as you supplied */
+
 *,
 *::before,
 *::after {
@@ -443,4 +445,12 @@ body {
     .payslip-month {
         text-align: left;
     }
+}
+
+/* additional small print-safe logo size */
+#previewLogoImg {
+    max-width: 140px;
+    max-height: 120px;
+    object-fit: contain;
+    display: block;
 }
