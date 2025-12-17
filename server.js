@@ -1,32 +1,57 @@
-// simple backend – later we will add PDF tools here
-
 const express = require("express");
+const axios = require("axios");
+const multer = require("multer");
 const cors = require("cors");
+require("dotenv").config();
+
 const app = express();
+const upload = multer({ storage: multer.memoryStorage() });
 
-// yaha par baad me apna actual domain lagana:
-// origin: "https://agitools24.com"
-app.use(cors({ origin: "*" }));
+app.use(cors());
 
-app.use(express.json());
+/* ===== PDF → WORD ===== */
+app.post("/pdf-to-word", upload.single("file"), async (req, res) => {
+  try {
+    const pdfBase64 = req.file.buffer.toString("base64");
 
-// test route – backend check karne ke liye
-app.get("/", (req, res) => {
-  res.json({
-    status: "ok",
-    message: "Tools24 backend is running. PDF tools will be added soon."
-  });
+    const response = await axios.post(
+      "https://api.pdf.co/v1/pdf/convert/to/doc",
+      { file: pdfBase64 },
+      {
+        headers: {
+          "x-api-key": process.env.PDFCO_API_KEY
+        }
+      }
+    );
+
+    res.json({ url: response.data.url });
+
+  } catch (err) {
+    res.status(500).json({ error: "Conversion failed" });
+  }
 });
 
-// future ke liye dummy route (abhi kuch nahi karta)
-app.post("/api/pdf-locker", (req, res) => {
-  res.json({
-    success: true,
-    message: "PDF locker endpoint placeholder. Real logic coming soon."
-  });
+/* ===== PDF → EXCEL ===== */
+app.post("/pdf-to-excel", upload.single("file"), async (req, res) => {
+  try {
+    const pdfBase64 = req.file.buffer.toString("base64");
+
+    const response = await axios.post(
+      "https://api.pdf.co/v1/pdf/convert/to/xlsx",
+      { file: pdfBase64 },
+      {
+        headers: {
+          "x-api-key": process.env.PDFCO_API_KEY
+        }
+      }
+    );
+
+    res.json({ url: response.data.url });
+
+  } catch (err) {
+    res.status(500).json({ error: "Conversion failed" });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log("Server running on", PORT));
