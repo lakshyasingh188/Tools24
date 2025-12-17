@@ -1,41 +1,59 @@
-const pdfInput1 = document.getElementById("pdfFile1");
-const pdfInput2 = document.getElementById("pdfFile2");
-const mergeBtn = document.getElementById("mergeBtn");
+document.addEventListener("DOMContentLoaded", () => {
 
-mergeBtn.addEventListener("click", async () => {
-    const file1 = pdfInput1.files[0];
-    const file2 = pdfInput2.files[0];
+    // STATUS INDICATOR
+    for (let i = 1; i <= 10; i++) {
+        const input = document.getElementById(`pdf${i}`);
+        const status = document.getElementById(`status-pdf${i}`);
+        const label = document.querySelector(`label[for="pdf${i}"]`);
 
-    if (!file1 || !file2) {
-        alert("Please select both First PDF and Second PDF.");
-        return;
+        input.addEventListener("change", () => {
+            if (input.files.length > 0) {
+                status.textContent = "✓ Selected";
+                status.classList.add("selected");
+                label.classList.add("selected");
+            } else {
+                status.textContent = "Not Selected";
+                status.classList.remove("selected");
+                label.classList.remove("selected");
+            }
+        });
     }
 
-    try {
-        const mergedPdf = await PDFLib.PDFDocument.create();
+    // MERGE LOGIC
+    document.getElementById("mergeBtn").addEventListener("click", async () => {
+        try {
+            const mergedPdf = await PDFLib.PDFDocument.create();
+            let count = 0;
 
-        // Helper: add pages from a file
-        const addPdfToMerged = async (file) => {
-            const pdfBytes = await file.arrayBuffer();
-            const pdf = await PDFLib.PDFDocument.load(pdfBytes);
-            const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-            copiedPages.forEach((page) => mergedPdf.addPage(page));
-        };
+            for (let i = 1; i <= 10; i++) {
+                const input = document.getElementById(`pdf${i}`);
+                if (input.files.length > 0) {
+                    count++;
+                    const bytes = await input.files[0].arrayBuffer();
+                    const pdf = await PDFLib.PDFDocument.load(bytes);
+                    const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                    pages.forEach(p => mergedPdf.addPage(p));
+                }
+            }
 
-        // Order: First then Second
-        await addPdfToMerged(file1);
-        await addPdfToMerged(file2);
+            if (count === 0) {
+                alert("Please select at least one PDF");
+                return;
+            }
 
-        const finalPdfBytes = await mergedPdf.save();
-        const blob = new Blob([finalPdfBytes], { type: "application/pdf" });
-        const link = document.createElement("a");
+            const finalBytes = await mergedPdf.save();
+            const blob = new Blob([finalBytes], { type: "application/pdf" });
 
-        link.href = URL.createObjectURL(blob);
-        link.download = "merged.pdf";
-        link.click();
-    } catch (err) {
-        console.error(err);
-        alert("Something went wrong while merging the PDFs.");
-    }
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "Tools24_Merged.pdf";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+        } catch (err) {
+            alert("Merge failed");
+            console.error(err);
+        }
+    });
 });
-
