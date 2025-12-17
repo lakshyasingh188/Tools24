@@ -1,13 +1,14 @@
 {
-  "name": "tools24-backend",
+  "name": "tools24-pdf-api",
   "version": "1.0.0",
-  "description": "Dummy backend for Tools24. Will add PDF tools later.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
+    "axios": "^1.6.0",
     "cors": "^2.8.5",
-    "express": "^4.18.0"
+    "express": "^4.18.2",
+    "multer": "^1.4.5"
   }
 }
