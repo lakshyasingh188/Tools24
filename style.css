@@ -1,1139 +1,212 @@
-/*
-====================================
- 1. Base Styles and Layout (Scrolling and Layout Fixes)
-====================================
-*/
-:root {
-    /* PRIMARY COLOR VARIABLE (Default Maroon) */
-    --primary-color: #453adf; 
-    
-    --secondary-color: #f4f4f9; 
-    --text-color: #333;
-    --light-text-color: #fff;
-    --accent-color: #FF5733; 
-    
-    /* NEW: Custom Colors for Template 2 (Anuj Singh Style - Brown Theme) */
-    --template-2-accent: #8D6E63; 
-    --template-2-sidebar-bg: #F4F2EE; 
-    --template-2-text-dark: #333;
-    
-    /* UPDATED: Custom Colors for Template 4 (Modern Tan/Brown) */
-    --template-4-main-bg: #F4F2EE; /* Light Tan Background - Not strictly used, but kept for context */
-    --template-4-sidebar-color: #BCAAA4; /* Muted Brown/Rose Color for Sidebar */
-    --template-4-accent: #A1887F; /* Darker Accent for lines/text */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, sans-serif;
 }
+
 body {
-    font-family: 'Arial', sans-serif;
-    /* Global background is applied to the main wrapper for cleaner layout */
-    background: #f4f4f9; 
-    margin: 0;
-    padding: 0; 
-    color: var(--text-color);
-    
-    /* Global Scrolling Fixes: Allow body to grow, container scrolls */
-    min-height: 100vh;
-    overflow-y: auto; 
-    
+    background: #f4f6fb;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.container {
-    display: flex;
-    width: 95%;
-    max-width: 1300px;
-    gap: 20px;
-    padding: 20px 0; 
-    min-height: 100vh; /* Stretch container to full viewport height */
-    box-sizing: border-box; 
-}
-
-/* Input Form Styling (Left Column - Independent Scroll) */
-.input-form {
-    flex: 1;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    
-    /* Input Form Scrolling Fixes: This container scrolls independently */
-    height: fit-content; /* Allow content to define height */
-    max-height: calc(100vh - 40px); /* Restrict height to viewport minus padding */
-    overflow-y: auto; 
-    
-    position: sticky; /* Sticky sidebar for better UX */
-    top: 20px; 
-}
-
-/* CV Paper Styling (Right Column - Independent Scroll, Dynamic Height Support) */
-.cv-paper {
-    flex: 2;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    width: 794px; /* A4 width (approx.) */
-    min-height: 297mm; /* Ensure it starts as A4 height */
-    height: auto; 
-    border-radius: 4px;
-    
-    /* CV itself scrolls if content is long */
-    max-height: calc(100vh - 40px); 
-    overflow-y: auto; 
-    overflow-x: hidden; 
-}
-
-
-.input-form h1, .input-form h2 {
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 5px;
-    margin-top: 20px;
-}
-
-.input-form input, .input-form textarea, .input-form select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-.input-form p {
-    margin: 10px 0 5px 0;
-    font-size: 0.9em;
-    font-weight: bold;
-}
-
-.input-form button {
-    width: 100%;
-    padding: 15px;
-    background-color: var(--primary-color);
-    color: var(--light-text-color);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 15px;
-    transition: background-color 0.3s;
-}
-
-.input-form button:hover {
-    background-color: #3b3d94;
-}
-
-.note {
-    font-size: 12px;
-    color: #888;
-    margin-top: 10px;
-    text-align: center;
-}
-
-/*
-====================================
- 2. CV Layout and Styling (Default Template 1 & Shared)
-====================================
-*/
-
-/* CV Border Style */
-.bordered-cv {
-    /* Main CV border for screen view */
-    border: 3px solid var(--primary-color); 
-    box-shadow: none; 
-}
-
-.cv-grid {
-    display: grid;
-    grid-template-columns: 35% 65%; 
-    height: auto; /* Dynamic height */
-    min-height: 100%; /* Important for stretching */
-}
-
-/* Left Column Styling (Default T1) */
-.left-column {
-    background-color: var(--primary-color); 
-    color: var(--light-text-color);
-    padding: 20px;
-    display: flex;
-    flex-direction: column; 
-    /* Ensures the sidebar content doesn't break across a page in two-column layouts */
-    page-break-inside: avoid;
-}
-
-/* Languages section (extra-section) */
-.extra-section {
-    padding-bottom: 10px;
-}
-
-
-.left-column h3 {
-    border-bottom: 2px solid var(--light-text-color);
-    padding-bottom: 5px;
-    margin-top: 25px;
-    font-size: 1.1em;
-}
-
-/* Profile Image */
-.profile-image {
-    width: 100px;
-    height: 100px;
-    background-color: #fff;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3em;
-    color: var(--primary-color); 
-    font-weight: bold;
-    flex-shrink: 0; 
-}
-.profile-image img {
-    /* Important for photo to appear correctly in container */
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.name-display {
-    font-size: 1.8em;
-    margin: 0 0 5px 0;
-    color: #fff;
-}
-
-.contact-section p {
-    margin: 5px 0;
-    font-size: 0.9em;
-    display: flex; 
-    align-items: center;
-}
-.contact-section i {
-    margin-right: 10px;
-    color: var(--accent-color); /* This should be overridden by template styles */
-}
-
-/* Skills/Languages Output Style */
-.skills-section ul, .extra-section ul {
-    list-style: none;
-    padding: 0;
-}
-.skills-section li, .extra-section li {
-    margin: 5px 0;
-    font-size: 0.9em;
-    word-break: break-word; 
-}
-
-
-/* Right Column Styling (Default T1) */
-.right-column {
-    padding: 40px;
-    word-wrap: break-word; 
-    overflow-wrap: break-word; 
-}
-
-.right-column h3 {
-    color: var(--primary-color); 
-    font-size: 1.5em;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 5px;
-    margin-top: 0;
-    margin-bottom: 15px;
-}
-
-/* Work History */
-.job-tasks {
-    list-style: disc;
-    padding-left: 20px;
-    margin-top: 5px;
-    font-size: 0.9em;
-}
-
-/* Education and Declaration Section (Long Text Fixes) */
-.edu-item {
-    margin-bottom: 20px;
-    padding-bottom: 5px;
-    border-bottom: 1px dashed #eee;
-}
-.edu-item:last-child {
-    border-bottom: none;
-}
-
-.edu-title {
-    font-size: 1.1em;
-    color: var(--primary-color); 
-    margin: 5px 0;
-    
-    /* FIX: Long degree name wraps */
-    word-break: break-word; 
-    line-height: 1.3;
-}
-.edu-status {
-    font-size: 0.8em;
-    font-weight: normal;
-    color: #555; 
-    word-break: break-word; 
-}
-
-.edu-line {
-    font-size: 0.9em;
-    margin: 5px 0;
-    line-height: 1.4; 
-    
-    /* FIX: Long university or college name wraps */
-    word-break: break-word; 
-}
-
-/* --- OBJECTIVE/SUMMARY FIX (Universal) --- */
-
-.summary-section p {
-    font-size: 0.95em;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    word-break: break-word; 
-}
-
-/* CLASS: placeholder-active must be applied by JS when input is empty. */
-.summary-section.placeholder-active p {
-    /* Hide the content of the <p> element itself if JS confirms it's empty */
-    display: none; 
-}
-/* Show default text using ::after */
-.summary-section.placeholder-active::after {
-    content: "A highly motivated and results-driven professional seeking a challenging role in a dynamic organization where I can utilize my skills and experience to contribute to the company's success and grow professionally.";
-    display: block;
-    font-style: italic;
-    color: #777; 
-    font-size: 0.95em;
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-.filler-content p {
-    font-size: 0.95em;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    word-break: break-word; 
-}
-
-/*
-====================================
- 3. PDF Print Styles (FIXED FOR BORDER & CUTTING) - UNIVERSAL FIXES
-====================================
-*/
-
-/* Styles applied during PDF generation (used by html2pdf - when .pdf-downloading class is present) */
-.cv-paper.pdf-downloading {
-    /* Standard A4 settings */
-    padding: 0;
-    margin: 0;
-    width: 210mm !important; 
-    min-height: 297mm !important; 
-    box-shadow: none; 
-    border: 3px solid #000 !important; 
-    overflow: hidden !important; 
-}
-
-.cv-paper.pdf-downloading .cv-grid {
-    height: auto !important; 
-    min-height: 297mm !important; 
-}
-
-/* 🔑 UNIVERSAL FIX: Ensure all major content blocks avoid page breaks */
-.cv-paper.pdf-downloading .job-item,
-.cv-paper.pdf-downloading .edu-item,
-.cv-paper.pdf-downloading .summary-section,
-.cv-paper.pdf-downloading .work-history-section,
-.cv-paper.pdf-downloading .education-section,
-.cv-paper.pdf-downloading .skills-section,
-.cv-paper.pdf-downloading .extra-section {
-    page-break-inside: avoid !important;
-}
-
-/* 🔑 FIX for Two-Column Layouts (T1, T4, T6, T8, T9) - Prevents column halves from cutting */
-.pdf-downloading:not(.template-style-2):not(.template-style-3):not(.template-style-5):not(.template-style-7):not(.template-style-10) .left-column,
-.pdf-downloading:not(.template-style-2):not(.template-style-3):not(.template-style-5):not(.template-style-7):not(.template-style-10) .right-column {
-    page-break-inside: avoid;
-}
-
-
-/* Minimise vertical gaps for PDF output */
-.cv-paper.pdf-downloading .right-column {
-    padding-top: 5mm; 
-    padding-bottom: 5mm;
-    padding-left: 5mm; 
-    padding-right: 5mm;
-}
-.cv-paper.pdf-downloading .left-column {
-    padding-top: 5mm; 
-    padding-bottom: 5mm;
-    /* Two-column sidebars need horizontal padding to remain */
-    padding-left: 5mm; 
-    padding-right: 5mm;
-}
-
-
-/* 🔑 FIX FOR SINGLE COLUMN TEMPLATES (2, 3, 5, 7, 10) */
-/* Ensures 100% width and hides the original left column */
-.pdf-downloading.template-style-2 .cv-grid,
-.pdf-downloading.template-style-3 .cv-grid,
-.pdf-downloading.template-style-5 .cv-grid,
-.pdf-downloading.template-style-7 .cv-grid,
-.pdf-downloading.template-style-10 .cv-grid {
-    grid-template-columns: 100% !important;
-}
-
-.pdf-downloading.template-style-2 .left-column,
-.pdf-downloading.template-style-3 .left-column,
-.pdf-downloading.template-style-5 .left-column,
-.pdf-downloading.template-style-7 .left-column,
-.pdf-downloading.template-style-10 .left-column {
-    display: none !important;
-    height: 0 !important; 
-    overflow: hidden !important; 
-}
-
-
-/* Print Media Styling (when user prints from browser) */
-@media print {
-    body {
-        padding: 0;
-        margin: 0;
-        background: none;
-        display: block;
-    }
-
-    .container, .input-form {
-        display: none; /* Hide input form */
-    }
-    
-    .cv-paper {
-        width: 210mm !important; 
-        min-height: 110mm !important;
-        margin: 0 !important;
-        padding: 10mm !important; 
-        box-shadow: none !important;
-        border: 3px solid #401da0 !important; 
-    }
-    
-    .cv-grid {
-        page-break-inside: avoid;
-        height: auto !important; 
-        align-items: stretch;
-    }
-    
-    /* Ensure all sections avoid page breaks for browser printing */
-    .summary-section, .work-history-section, .education-section, .filler-content,
-    .job-item, .edu-item, .skills-section, .extra-section,
-    .left-column, .right-column {
-        page-break-inside: avoid !important;
-    }
-    
-    /* Fix for Print Preview (Browser Print - Single Column) */
-    .template-style-2 .left-column,
-    .template-style-3 .left-column,
-    .template-style-5 .left-column,
-    .template-style-7 .left-column,
-    .template-style-10 .left-column {
-        display: none !important;
-    }
-    .template-style-2 .cv-grid,
-    .template-style-3 .cv-grid,
-    .template-style-5 .cv-grid,
-    .template-style-7 .cv-grid,
-    .template-style-10 .cv-grid {
-        grid-template-columns: 100% !important;
-    }
-}
-
-
-/*
-====================================
- 4. TEMPLATE SELECTION SCREEN STYLES
-====================================
-*/
-
-/* 🔑 FIX: Added scrolling support to the grid container */
-#template-grid-display {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
-    width: 100%;
-    max-height: 70vh; 
-    overflow-y: auto;
-    padding: 10px;
-}
-
-.template-card {
-    width: 200px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.template-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(2, 119, 90, 0.582);
-}
-
-.template-preview {
-    /* Use CSS variable set in HTML onclick for dynamic color */
-    --primary-color-prev: var(--primary-color); 
-    display: flex;
-    flex-direction: row; /* Default two columns */
-    overflow: hidden;
-    padding: 5px; /* Added slight padding to the main preview area */
-    font-size: 0.7em;
-    color: #444;
-    background-color: #fff; /* White background for the card inside preview */
-}
-
-/* Shared column styles for all previews */
-.template-preview .col-left-prev,
-.template-preview .col-right-prev {
-    padding: 5px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-.col-left-prev {
-    flex: 35; /* Sidebar width */
-}
-.col-right-prev {
-    flex: 65; /* Main content width */
-}
-
-
-/* Common Content Block Styles for Previews */
-.template-preview .content-block-main {
-    background-color: #ddd;
-    border-radius: 3px;
-    height: 25px; /* Slightly taller for main title */
-    margin-bottom: 5px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: #333; /* Darker text */
-    padding: 3px; /* Added internal padding */
-    font-size: 0.8em;
-}
-.template-preview .content-block-short {
-    background-color: #eee;
-    border-radius: 3px;
-    height: 15px;
-    margin-bottom: 5px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Aligned left for list items */
-    padding-left: 5px;
-    font-size: 0.7em;
-    color: #555;
-}
-.template-preview .content-block {
-    background-color: #e0e0e0;
-    border-radius: 3px;
-    height: 40px;
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7em;
-    color: #555;
-}
-
-/* --- Template-Specific Previews --- */
-
-/* T1, T6, T8: Colored Sidebar (Left) */
-.template-style-1-prev .col-left-prev,
-.template-style-6-prev .col-left-prev,
-.template-style-8-prev .col-left-prev,
-.template-style-9-prev .col-left-prev {
-    background-color: var(--primary-color-prev);
-}
-.template-style-1-prev .col-left-prev .content-block-short,
-.template-style-6-prev .col-left-prev .content-block-short,
-.template-style-8-prev .col-left-prev .content-block-short,
-.template-style-9-prev .col-left-prev .content-block-short {
-    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white block */
-    color: white;
-}
-.template-style-1-prev .content-block-main,
-.template-style-6-prev .content-block-main,
-.template-style-8-prev .content-block-main {
-    border-bottom: 2px solid var(--primary-color-prev); /* Name border */
-    background-color: #fff;
-    color: var(--primary-color-prev);
-}
-
-
-/* T4: Colored Sidebar (Right) - Flipped Columns */
-.template-style-4-prev {
-    flex-direction: row-reverse; /* Sidebar on the right */
-}
-.template-style-4-prev .col-left-prev { /* Main content is now on the left */
-    flex: 65; 
-}
-.template-style-4-prev .col-right-prev { /* Sidebar is now on the right */
-    flex: 35; 
-    background-color: var(--primary-color-prev);
-}
-.template-style-4-prev .col-right-prev .content-block-short {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-}
-
-
-/* T2, T3, T5, T7, T10: Single Column Layout */
-.template-style-2-prev,
-.template-style-3-prev,
-.template-style-5-prev,
-.template-style-7-prev,
-.template-style-10-prev {
-    flex-direction: column;
-    padding: 5px;
-}
-.template-style-2-prev .col-right-prev,
-.template-style-3-prev .col-right-prev,
-.template-style-5-prev .col-right-prev,
-.template-style-7-prev .col-right-prev,
-.template-style-10-prev .col-right-prev {
-    width: 100%;
-    flex: 1;
-    padding: 5px;
-}
-.template-style-2-prev .col-left-prev,
-.template-style-7-prev .col-left-prev {
-    /* Hide the unused left column for single column layouts */
-    display: none;
-}
-
-
-/* T3: Header Bar */
-.template-style-3-prev .content-block-main {
-    background-color: var(--primary-color-prev);
-    color: white;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-/* T5, T10: Top/Bottom Header Bar */
-.template-style-5-prev .content-block-main,
-.template-style-10-prev .content-block-main {
-    background-color: var(--primary-color-prev);
-    color: white;
-    text-align: center;
-    height: 30px;
-}
-
-/*
-====================================
- 5. CV TEMPLATE STYLES (10 DESIGNS)
-====================================
-*/
-
-/* TEMPLATE 1: Your Current Two-Column Maroon (Existing styles in section 2 handle this) */
-
-
-/* ====================================
- NEW TEMPLATE 2: Anuj Singh Style (Tan/Brown Theme)
- ====================================
-*/
-.template-style-2 .cv-grid {
-    grid-template-columns: 35% 65%; 
-    height: auto; 
-}
-
-.template-style-2 .left-column {
-    background-color: var(--template-2-sidebar-bg); 
-    color: var(--template-2-text-dark); 
-    padding: 30px 20px;
-    border-right: 5px solid var(--template-2-accent); /* Added accent line */
-}
-
-.template-style-2 .right-column {
-    padding: 40px;
-}
-
-.template-style-2 h2#cv-name { /* Name is typically a large h2 outside the right-column h3 */
-    font-size: 48px; 
-    font-weight: 500;
-    color: #000; 
-    text-align: left;
-    margin-bottom: 30px;
-}
-
-.template-style-2 .profile-image {
-    width: 150px; /* Adjusted size */
-    height: 150px;
-    border-radius: 10px; 
-    margin: 0 auto 30px auto; 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    background-color: #fff; 
-    color: transparent; 
-    border: 4px solid var(--template-2-accent); 
-}
-
-.template-style-2 .left-column h3 {
-    color: var(--template-2-text-dark);
-    border-bottom: 2px solid var(--template-2-accent); 
-    padding-bottom: 5px;
-    margin-top: 30px;
-    font-size: 1.2em;
-    text-transform: uppercase;
-}
-
-.template-style-2 .contact-section p {
-    font-size: 14px;
-    color: var(--template-2-text-dark);
-    line-height: 1.5;
-}
-
-.template-style-2 .contact-section i {
-    color: var(--template-2-accent); 
-}
-
-.template-style-2 .right-column h3 {
-    color: var(--template-2-text-dark);
-    font-size: 1.6em;
-    border-bottom: 3px solid var(--template-2-accent); 
-    padding-bottom: 5px;
-    margin-top: 40px;
-    margin-bottom: 20px;
-}
-
-.template-style-2 .edu-title {
-    color: var(--template-2-accent); 
-    font-weight: bold;
-    font-size: 1.05em;
-}
-
-
-/* ====================================
- TEMPLATE 3: Executive Black (Header Strip)
- ====================================
-*/
-.template-style-3 {
-    border: 5px solid #000;
-}
-.template-style-3 .cv-grid {
-    grid-template-columns: 100%;
-}
-.template-style-3 .left-column {
-    order: 1; 
-    background-color: #000;
-    color: #fff;
-    padding: 15px 40px;
-    flex-direction: row; 
     justify-content: space-between;
     align-items: center;
-}
-.template-style-3 .name-display {
-    font-size: 2em;
-    color: #fff;
-    border-bottom: none;
-    margin: 0;
-}
-.template-style-3 .contact-section {
-    display: flex;
-    gap: 15px;
-    font-size: 0.9em;
-}
-.template-style-3 .contact-section h3, .template-style-3 .skills-section, .template-style-3 .extra-section, .template-style-3 .profile-image {
-    display: none; 
-}
-.template-style-3 .right-column {
-    order: 2;
     padding: 30px 40px;
-}
-.template-style-3 .right-column h3 {
-    color: #000;
-    border-bottom: 2px solid var(--primary-color);
-}
-
-
-/* ====================================
- TEMPLATE 4: Modern Tan/Brown (Right Sidebar - Reversed Column)
- ====================================
-*/
-.template-style-4 {
-    --primary-color: var(--template-4-accent); 
-    font-family: 'Verdana', sans-serif;
-}
-.template-style-4 .cv-grid {
-    grid-template-columns: 65% 35%; /* Main content (left) 65%, Sidebar (right) 35% */
+    background: rgb(255, 255, 255);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* LEFT COLUMN (MAIN CONTENT) */
-.template-style-4 .left-column { 
-    background-color: #fff; 
-    color: #333;
-    padding: 30px;
-    order: 1; /* Left position */
-}
-.template-style-4 .name-display { /* Name is in the Left (Main) column */
-    color: #333; 
-    text-align: left;
-    font-size: 2em;
-    margin-bottom: 5px;
-}
-.template-style-4 .left-column h3 { 
-    color: var(--template-4-accent);
-    font-size: 1.3em;
-    border-bottom: 3px solid var(--template-4-accent);
-    padding-bottom: 2px;
-    margin-top: 30px;
-}
-/* Right column sections must be hidden in the left column for this template */
-.template-style-4 .left-column .contact-section,
-.template-style-4 .left-column .skills-section,
-.template-style-4 .left-column .extra-section,
-.template-style-4 .left-column .profile-image {
-    display: none;
+.logo {
+    font-size: 30px;
+    font-weight: bold;
 }
 
+.logo span {
+    color: black;
+}
 
-/* RIGHT COLUMN (SIDEBAR) */
-.template-style-4 .right-column { 
-    background-color: var(--template-4-sidebar-color); 
-    color: var(--template-4-accent); /* Dark text on sidebar */
-    padding: 30px 20px;
-    order: 2; /* Right position */
-    display: flex; /* IMPORTANT: Treat right column as sidebar in this template */
+.navbar nav a {
+    margin-left: 40px;
+    text-decoration: 50px;
+    padding: 20px ;
+    color: black;
+    font-weight: 1000;
+}
+
+.navbar nav a:hover {
+    color: #224470;
+}
+
+/* ===== HERO ===== */
+.hero {
+    height: 75vh;
+    background-image: url("heroine1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 1s ease-in-out;
+    position: relative;
+}
+
+/* Dark overlay */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to right,
+        rgba(8, 20, 37, 0.85),
+        rgba(10,25,47,0.3)
+    );
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    color: white;
+    height: 80%;
+    display: flex;
     flex-direction: column;
+    justify-content: center;
+    padding-left: 60px;
+    max-width: 600px;
 }
-.template-style-4 .profile-image { /* Photo is in the Right (Sidebar) column */
-    width: 120px; /* Slightly smaller */
-    height: 120px;
-    border-radius: 50%; 
-    margin: 0 auto 15px auto; /* Center photo in sidebar */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: #fff;
-    color: var(--template-4-accent); 
-    border: 5px solid var(--template-4-accent);
+
+.hero-content h1 {
+    font-size: 44px;
 }
-.template-style-4 .contact-section p,
-.template-style-4 .skills-section ul,
-.template-style-4 .extra-section ul {
-    color: #333; /* Ensuring content text is dark and readable */
+
+.hero-content p {
+    margin-top: 12px;
+    font-size: 16px;
+    opacity: 0.9;
 }
-.template-style-4 .contact-section i {
-    color: var(--template-4-accent); 
-}
-.template-style-4 .right-column h3 { /* Sidebar Headings */
-    color: #fff;
-    background-color: var(--template-4-accent); 
-    padding: 5px 15px;
-    border-bottom: none;
-    font-size: 1.1em;
+
+.hero-content button {
     margin-top: 25px;
-}
-/* IMPORTANT: The JS must ensure contact, skills, languages, and photo are rendered in the right-column for this template. */
-
-
-/* ====================================
- TEMPLATE 5: Creative Purple (Top/Bottom Accent Bars)
- ====================================
-*/
-.template-style-5 .cv-grid {
-    grid-template-columns: 100%;
-}
-/* Profile Section must be a single container placed on top by JS */
-.template-style-5 .profile-section {
-    order: 1;
-    padding: 30px;
-    background-color: var(--primary-color);
-    color: #fff;
-    padding-top: 40px; /* Extra padding for effect */
-}
-.template-style-5 .name-display {
-    font-size: 2em;
-    text-align: center;
-    width: 100%;
-    color: #fff;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 3px solid #fff;
-}
-.template-style-5 .profile-image {
-    margin: 0 auto 10px auto;
-    border: 3px solid #fff;
-}
-.template-style-5 .left-column { /* Contact/Skills in the bottom bar (This is the section that takes contact/skills from JS) */
-    order: 3;
-    background-color: var(--primary-color); 
-    color: #fff;
-    padding: 15px 30px;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
-.template-style-5 .left-column h3, .template-style-5 .skills-section, .template-style-5 .extra-section, .template-style-5 .profile-image {
-    display: none; /* Hide headings and sections in the bottom strip, except contact */
-}
-.template-style-5 .contact-section {
-    display: flex;
-    gap: 15px;
-    width: 100%; /* Ensure flex items spread */
-    justify-content: center;
-}
-.template-style-5 .right-column { /* Main Content */
-    order: 2;
-    padding: 30px;
-}
-.template-style-5 .right-column h3 {
-    border-left: 5px solid var(--primary-color);
-    padding-left: 10px;
-    border-bottom: none;
-    font-size: 1.3em;
-    margin-top: 20px;
-}
-.template-style-5 .right-column h3:first-of-type {
-    margin-top: 0;
+    width: fit-content;
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: 5px solid black;
+    background: white;
+    color: black;
+    font-size: 20px;
+    cursor: pointer;
 }
 
-
-/* ====================================
- TEMPLATE 6: Bold Red (Colored Right Column Headers)
- ====================================
-*/
-.template-style-6 .right-column h3 {
-    background-color: var(--primary-color); 
-    color: #fff;
-    padding: 5px 10px;
-    border-bottom: none;
-    margin-bottom: 15px;
-    border-radius: 3px;
-    font-size: 1.4em;
-}
-.template-style-6 .edu-title {
-    color: #000;
-}
-.template-style-6 .left-column {
-    background-color: #f5f5f5; 
-    color: #333;
-}
-.template-style-6 .left-column h3 {
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
-    color: #333; /* Dark text for headings in light sidebar */
-}
-.template-style-6 .name-display {
-    color: var(--primary-color);
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 5px;
-}
-.template-style-6 .contact-section i {
-    color: var(--primary-color);
-}
-.template-style-6 .contact-section p {
-    color: #333;
+.hero-content button:hover {
+    background:   blue ;
 }
 
-
-/* ====================================
- TEMPLATE 7: Professional Grey (Simple Line Separators)
- ====================================
-*/
-.template-style-7 .cv-grid {
-    grid-template-columns: 100%;
-    /* Ensure only the right-column padding is used, as left is hidden in single column */
-    padding: 0; 
-}
-.template-style-7 .left-column {
-    display: none; /* Hidden for single column */
-}
-.template-style-7 .right-column {
-    background-color: #fff;
-    padding: 30px 50px; /* Apply full padding here */
-    color: #333;
-    width: 100%;
-}
-.template-style-7 .profile-section {
-    border-bottom: 3px solid var(--primary-color);
-    padding-bottom: 10px;
-    display: flex; /* For name and contact placement */
-    flex-direction: column;
-}
-.template-style-7 .name-display {
-    font-size: 2.2em;
-    color: #000;
-    text-align: center;
-    padding-bottom: 0;
-    margin-bottom: 5px;
-}
-.template-style-7 .contact-section {
+/* ===== FEATURES ===== */
+.features {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-.template-style-7 .contact-section p {
-    justify-content: center;
-}
-.template-style-7 .right-column h3 {
-    border-bottom: 2px solid var(--primary-color); 
-    margin-top: 30px;
-    font-size: 1.4em;
-    color: #000;
-}
-/* The following sections need to be moved/cloned into the right-column by JS for single column layout */
-.template-style-7 .skills-section, .template-style-7 .extra-section {
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-    margin-top: 10px;
+    gap: 50px;
+    padding: 60px 40px;
 }
 
-
-/* ====================================
- TEMPLATE 8: Clean Light Blue (Icon Bar)
- ====================================
-*/
-.template-style-8 .cv-grid {
-    grid-template-columns: 30% 70%;
-}
-.template-style-8 .left-column {
-    background-color: var(--primary-color); 
-}
-.template-style-8 .right-column {
-    padding-left: 30px;
-}
-.template-style-8 .right-column h3 {
-    border-left: 5px solid var(--primary-color);
-    padding-left: 10px;
-    border-bottom: none;
-    font-size: 1.3em;
-}
-.template-style-8 .contact-section i {
-    color: #fff;
-    font-size: 1.2em;
-}
-.template-style-8 .profile-image {
-    border: 3px solid #fff;
-}
-
-
-/* ====================================
- TEMPLATE 9: Green Tech (Boxed Sections - Right Sidebar)
- ====================================
-*/
-.template-style-9 .cv-grid {
-    grid-template-columns: 65% 35%; /* Main content (left) 65%, Sidebar (right) 35% */
-}
-/* LEFT COLUMN (MAIN CONTENT) */
-.template-style-9 .left-column { 
-    background-color: #fff;
-    color: #333;
-    order: 1;
+.card {
+    width: 260px;
     padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
 }
-.template-style-9 .left-column .contact-section,
-.template-style-9 .left-column .skills-section,
-.template-style-9 .left-column .extra-section,
-.template-style-9 .left-column .profile-image {
-    display: none;
-}
-.template-style-9 .left-column h3 { /* Main Content Headings */
-    border-bottom: 1px dashed var(--primary-color);
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-    color: var(--primary-color);
-    background-color: #E8F5E9; /* Light green background */
-    padding: 10px;
-    border-radius: 5px;
-}
-.template-style-9 .edu-item {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+
+.card i {
+    font-size: 40px;
     margin-bottom: 15px;
 }
-/* RIGHT COLUMN (SIDEBAR) */
-.template-style-9 .right-column { 
-    background-color: #388E3C; /* Dark Green */
-    color: #fff;
-    order: 2;
-    padding: 30px 20px;
-    display: flex; 
-    flex-direction: column;
+
+.card h3 {
+    margin-bottom: 15px;
 }
-.template-style-9 .right-column h3 { /* Sidebar headings */
-    color: #fff;
-    background-color: transparent;
-    border-bottom: 2px solid #fff;
+
+.card button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    background: white;
+}
+
+.blue { background: #1f81f0; }
+.green { background: #34e91f; }
+.orange { background: #f39c12; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+    .hero-content {
+        padding: 30px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    .features {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+.admin-btn {
+    background: black;
+    color: #ffffff !important;
+    padding: 20px 16px;
+    border-radius: 12px;
+    margin-left: 15px;
+    font-weight: 555;
+}
+
+.admin-btn:hover {
+    background: blue;
+}
+/* ===== ABOUT SECTION ===== */
+.about-section {
+    background: #ffffff;
+    padding: 70px 20px;
+}
+
+.info-box {
+    max-width: 1000px;
+    margin: 0 auto 35px;
+    padding: 30px;
+    background: #f8f9fc;
+    border-left: 6px solid #7c5cff;
+    border-radius: 8px;
+}
+
+.info-box h2 {
+    margin-bottom: 12px;
+    color: #1a2b3c;
+}
+
+.info-box p {
+    color: #333;
+    line-height: 1.7;
     margin-bottom: 10px;
 }
-.template-style-9 .right-column .contact-section,
-.template-style-9 .right-column .skills-section ul,
-.template-style-9 .right-column .extra-section ul {
-    color: #fff;
-}
-.template-style-9 .right-column .contact-section i {
-    color: #fff;
-}
-.template-style-9 .profile-image {
-    color: #388E3C;
-    border: 5px solid #fff;
+
+.info-box ul {
+    padding-left: 20px;
 }
 
-
-/* ====================================
- TEMPLATE 10: Orange Highlight (Horizontal Name Strip)
- ====================================
-*/
-.template-style-10 .cv-grid {
-    grid-template-columns: 100%;
-}
-.template-style-10 .profile-section { /* Name Strip (Top) - Assumes JS places name/photo here */
-    background-color: var(--primary-color); 
-    padding: 20px 40px;
-    text-align: center;
-    color: #fff;
-    order: 1;
-}
-.template-style-10 .name-display {
-    font-size: 2.5em;
-    color: #fff;
-    margin-bottom: 0;
-}
-.template-style-10 .left-column { /* Contact/Skills (Bottom) - Assumes JS places contact/skills here */
-    order: 3; 
-    background-color: #f9f9f9;
+.info-box ul li {
+    margin-bottom: 8px;
     color: #333;
-    padding: 20px 40px;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
 }
-.template-style-10 .right-column { /* Main Content */
-    order: 2;
-    padding: 20px 40px;
-}
-.template-style-10 .right-column h3 {
-    border-bottom: 3px double var(--primary-color);
-}
-.template-style-10 .contact-section {
-    display: flex;
-    justify-content: space-around;
-    border-top: 1px solid #ccc;
-    padding-top: 10px;
-    width: 100%;
-    flex-wrap: wrap;
-}
-.template-style-10 .contact-section h3,
-.template-style-10 .profile-image,
-.template-style-10 .skills-section, 
-.template-style-10 .extra-section {
-    display: none;
-}
-.template-style-10 .contact-section i {
-    color: var(--primary-color);
+
+.disclaimer {
+    border-left-color: #e74c3c;
+    background: #fff5f5;
 }
