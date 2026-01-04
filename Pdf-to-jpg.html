@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PDF to JPG – Tools24</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="pdf-to-jpg.css">
+
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+
+<body>
+
+<div class="tool-card">
+  <h1>Tools24 - PDF to JPG</h1>
+  <p>Convert PDF pages into high-quality JPG images instantly</p>
+
+  <div class="badges">
+    <span>✔ Free</span>
+    <span>✔ Online</span>
+    <span>✔ Secure</span>
+    <span>✔ No limits</span>
+  </div>
+
+  <div class="upload-box">
+    <input type="file" id="fileInput" accept="application/pdf">
+
+    <div class="action-row">
+      <label for="fileInput" class="apple-btn">
+        Choose File
+      </label>
+
+      <button id="convertBtn" class="apple-btn convert-btn" disabled>
+        Convert to JPG
+      </button>
+    </div>
+
+    <p id="fileName" class="file-name">
+      or drag & drop file here
+    </p>
+  </div>
+
+  <div class="footer-text">
+    🔒 File protection is active · Files never leave your device
+  </div>
+</div>
+
+<script src="pdf-to-jpg.js"></script>
+</body>
+</html>
