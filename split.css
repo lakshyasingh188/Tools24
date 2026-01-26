@@ -1,0 +1,126 @@
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f5f6f8;
+}
+
+.top-bar {
+  background: #fff;
+  padding: 14px 24px;
+  border-bottom: 1px solid #ddd;
+}
+
+.container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+/* LEFT */
+.preview-panel {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.upload-box {
+  display: block;
+  border: 2px dashed white;
+  border-radius: 14px;
+  padding: 25px;
+  text-align: center ;
+  background: black;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.upload-box span {
+  color: white;
+  font-weight: 1000;
+}
+
+.upload-box input {
+  display:  none;
+  color: white
+}
+
+.pages {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.page {
+  width: 150px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  padding: 10px;
+  transition: 0.2s;
+}
+
+.page.selected {
+  outline: 3px solid #007aff;
+}
+
+.page canvas {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.page p {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+/* RIGHT */
+.control-panel {
+  width: 320px;
+  padding: 22px;
+  background: white;
+  backdrop-filter: blur(14px);
+  border-left: 1px solid black;
+}
+
+.control-panel h3 {
+  margin-bottom: 16px;
+}
+
+label {
+  font-size: 13px;
+  margin-top: 10px;
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid black;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 22px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  background: black;
+  color: white;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: rgb(137, 211, 27);
+}
+
+#status {
+  margin-top: 10px;
+  font-size: 14px;
+}

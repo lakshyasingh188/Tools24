@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Split PDF – Tools24</title>
+<link rel="stylesheet" href="split.css">
+</head>
+<body>
+
+<header class="top-bar">
+  <h2>Split PDF</h2>
+</header>
+
+<div class="container">
+
+  <!-- LEFT -->
+  <div class="preview-panel">
+    <label class="upload-box">
+      <input type="file" id="pdfFile" accept="application/pdf">
+      <span>Upload PDF</span>
+    </label>
+
+    <div id="pages" class="pages"></div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="control-panel">
+    <h3>Range</h3>
+
+    <label>From page</label>
+    <input type="number" id="startPage" value="1" min="1">
+
+    <label>To page</label>
+    <input type="number" id="endPage" value="1" min="1">
+
+    <button id="splitBtn">
+      Split PDF →
+    </button>
+
+    <p id="status"></p>
+  </div>
+
+</div>
+
+<!-- LIBS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+<script src="split.js"></script>
+</body>
+</html>
