@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tools24 PDF to PNG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="pdf-to-png.css">
+</head>
+<body>
+
+<header class="topbar">
+  <span class="back-arrow" onclick="history.back()">←</span>
+  <h1>Tools24 PDF to PNG</h1>
+</header>
+
+<main class="page">
+  <div class="card">
+
+    <!-- CUSTOM UPLOAD BOX (NO LABEL USED) -->
+    <div class="upload-box" id="uploadBox">
+      <div class="upload-icon">📄</div>
+      <h3>Select PDF files 1/10</h3>
+      <p>PDF → PNG Conversion</p>
+    </div>
+
+    <!-- REAL FILE INPUT (HIDDEN) -->
+    <input
+      type="file"
+      id="pdfInput"
+      accept="application/pdf"
+      multiple
+      hidden
+    >
+
+    <button id="convertBtn">Convert to PNG</button>
+    <button id="downloadBtn" style="display:none;">
+      Download PNG (ZIP)
+    </button>
+
+    <div id="progress"></div>
+    <div id="output"></div>
+
+  </div>
+</main>
+
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<!-- Custom JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="pdf-to-png.js"></script>
+
+</body>
+</html>
