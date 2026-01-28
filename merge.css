@@ -1,0 +1,91 @@
+*{
+  font-family:-apple-system,BlinkMacSystemFont;
+  margin:0;
+  padding:0;
+}
+
+body{
+  background:#fff;
+  text-align:center;
+  padding:40px;
+}
+
+.heading{
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:2px;
+  background: rgba(0, 0, 0, 0.805);
+  color: white;
+  padding: 25px;
+  border-radius: 20px;
+  margin: 0px;
+  
+}
+
+.sub{
+  margin:50px;
+  color:black;
+  padding: 10px;
+  font-size: 20px;
+}
+
+/* SELECT */
+.select-box{
+  width:60%;
+  margin:110px auto;
+  padding:40px;
+  border:8px dashed black;
+  border-radius:25px;
+  cursor:pointer;
+}
+
+.select-box input{ display:none; }
+
+/* FILE LIST */
+.file-list{
+  margin:80px auto;
+  width:60%;
+  text-align:left;
+}
+
+.file-item{
+  padding:10px;
+  border-bottom:1px solid white;
+}
+
+/* MERGE BUTTON */
+#mergeBtn{
+  background:black;
+  color:#fff;
+  border:none;
+  padding:16px 40px;
+  font-size:25px;
+  border-radius:30px;
+  cursor:pointer;
+}
+
+/* LOADING */
+.loading{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#fff;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+
+.bar{
+  width:300px;
+  height:10px;
+  background:#ddd;
+  border-radius:10px;
+  overflow:hidden;
+  margin:20px 0;
+}
+
+#progress{
+  height:100%;
+  width:50%;
+  background:black;
+}
