@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TOOLS24 – Merge Files</title>
+<link rel="stylesheet" href="merge.css">
+</head>
+<body>
+
+<h1 class="heading">TOOLS24 MERGE FILES</h1>
+<p class="sub">JPG • PNG • PDF → One PDF</p>
+
+<div class="select-box" onclick="fileInput.click()">
+  <input type="file" id="fileInput" multiple
+   accept="application/pdf,image/jpeg,image/png">
+  <h2>Select Files</h2>
+</div>
+
+<div id="selectedFiles" class="file-list"></div>
+
+<button id="mergeBtn" onclick="mergeFiles()">Merge & Download PDF</button>
+
+<!-- LOADING -->
+<div class="loading" id="loading">
+  <p id="loadingText">Processing...</p>
+  <div class="bar"><div id="progress"></div></div>
+  <h2 id="percent">0%</h2>
+</div>
+
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+<script src="merge.js"></script>
+</body>
+</html>
