@@ -57,7 +57,7 @@
 
 /* NAV BUTTONS */
 .apple-nav a{
-  margin-left:50px;
+  margin-left:30px;
   text-decoration:none;
   font-size:25px;
   font-weight:600;
@@ -502,107 +502,79 @@
 @keyframes spin{
   to { transform: rotate(360deg); }
 }
-/* Default Light Mode */
-body {
-  background-color: #ffffff;
-  color: #000000;
-  transition: all 0.3s ease;
+/* =========================
+   FORCE FULL PAGE DARK MODE
+========================= */
+
+html, body {
+  background: #ffffff;
 }
 
-/* Dark Mode */
+/* BODY */
 body.dark {
-  background-color: #121212;
+  background: #0b1220 !important;
+}
+
+/* MAIN WRAPPER (VERY IMPORTANT) */
+body.dark .main-container,
+body.dark .container,
+body.dark .page,
+body.dark .wrapper {
+  background: #0b1220 !important;
+}
+
+/* HEADER */
+body.dark header {
+  background: linear-gradient(135deg, #020617, #1e293b) !important;
   color: #ffffff;
 }
 
-/* Button Style */
-.theme-btn {
-  position: fixed;
-  top: 3px;
-  right: 2px;
-
-  padding: 25px 30px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  background: #000;
-  color: #fff;
-  font-size: 14px;
-  margin: 15px;
+/* ALL SECTIONS */
+body.dark section,
+body.dark main {
+  background: #0b1220 !important;
 }
 
-/* Dark mode me button */
-body.dark .theme-btn {
-  background: #fff;
-  color: #000;
-}
-/* ======================
-   DARK MODE – FULL PAGE
-====================== */
-
-body.dark {
-  background: #0f172a; /* deep blue-black */
-  color: #e5e7eb;
-}
-
-/* Header */
-body.dark header,
-body.dark .header,
-body.dark .top-bar {
-  background: linear-gradient(135deg, #020617, #020617);
-  color: #ffffff;
-}
-
-/* Logo / heading */
+/* TEXT */
 body.dark h1,
 body.dark h2,
 body.dark h3,
-body.dark h4,
 body.dark p,
+body.dark span,
 body.dark a {
-  color: #e5e7eb;
+  color: #e5e7eb !important;
 }
 
-/* Tool Cards */
+/* TOOL CARDS */
 body.dark .tool-card,
-body.dark .card,
-body.dark .tool-box {
+body.dark .card {
+  background: linear-gradient(135deg, #020617, #1e293b) !important;
+  color: #ffffff;
+}
+
+/* REMOVE WHITE SHADOW */
+body.dark * {
+  box-shadow: none;
+}
+#themeToggle {
+  padding:35px 25px;        /* size bada */
+  font-size: 16px;           /* text bada */
+  border-radius: 30px;       /* smooth pill shape */
+  min-width: 150px;          /* button width fix */
+  height: 52px;              /* height increase */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  background: #000;
+  color: #fff;
+  border: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+/* Dark mode me button thoda glow */
+body.dark #themeToggle {
   background: linear-gradient(135deg, #020617, #1e293b);
-  color: #ffffff;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-  border: 1px solid #1e293b;
-}
-
-/* Card description text */
-body.dark .tool-card p {
-  color: #cbd5f5;
-}
-
-/* Buttons */
-body.dark button,
-body.dark .btn {
-  background: #1e293b;
-  color: #ffffff;
-  border: 1px solid #334155;
-}
-
-/* Navbar links */
-body.dark nav a {
-  color: #ffffff;
-}
-
-body.dark nav a:hover {
-  color: #38bdf8;
-}
-
-/* Page sections */
-body.dark section,
-body.dark .section {
-  background: transparent;
-}
-
-/* Footer */
-body.dark footer {
-  background: #020617;
-  color: #94a3b8;
+  box-shadow: 0 0 18px rgba(56,189,248,0.4);
 }
