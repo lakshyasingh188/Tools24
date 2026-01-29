@@ -34,10 +34,10 @@ if (themeToggleBtn) {
 
     if (document.body.classList.contains("dark")) {
       localStorage.setItem("theme", "dark");
-      themeToggleBtn.innerText = "☀️ Light";
+      themeToggleBtn.innerText = "☀️";
     } else {
       localStorage.setItem("theme", "light");
-      themeToggleBtn.innerText = "🌙 Dark";
+      themeToggleBtn.innerText = "🌙";
     }
   });
 }
