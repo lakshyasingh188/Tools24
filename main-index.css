@@ -557,7 +557,8 @@ body.dark * {
   box-shadow: none;
 }
 #themeToggle {
-  padding:35px 25px;        /* size bada */
+  padding:10px 10px;  
+  margin: 30px;      /* size bada */
   font-size: 16px;           /* text bada */
   border-radius: 30px;       /* smooth pill shape */
   min-width: 150px;          /* button width fix */
