@@ -619,3 +619,26 @@ body.dark #themeToggle {
     display: flex;
   }
 }
+/* =========================
+   MOBILE MENU – DARK MODE FIX
+========================= */
+
+/* menu open hone par */
+#appleNav.active {
+  background: #ffffff;
+}
+
+/* DARK MODE */
+body.dark #appleNav.active {
+  background: #1c1f26 !important;
+}
+
+/* menu links */
+#appleNav a {
+  color: #111111;
+}
+
+/* DARK MODE links */
+body.dark #appleNav a {
+  color: #ffffff !important;
+}
