@@ -1,43 +1,50 @@
 /* =========================
-   HEADER MENU TOGGLE
+   DOM READY
 ========================= */
-function toggleMenu() {
-  document.getElementById("headerMenu").classList.toggle("show");
+document.addEventListener("DOMContentLoaded", function () {
 
-  const overlay = document.getElementById("processingOverlay");
-  if (overlay) {
-    overlay.classList.toggle("active");
+  /* =========================
+     HEADER MENU TOGGLE (Mobile)
+  ========================= */
+  const menuBtn = document.getElementById("mobileMenuBtn");
+  const nav = document.getElementById("appleNav");
+
+  if (menuBtn && nav) {
+    menuBtn.addEventListener("click", function () {
+      nav.classList.toggle("active");
+      console.log("hamburger clicked");
+    });
+  } else {
+    console.warn("Mobile menu button ya nav nahi mila");
   }
-}
 
-/* =========================
-   DARK / LIGHT MODE
-========================= */
-const themeToggleBtn = document.getElementById("themeToggle");
-
-// Page load par saved theme apply ho
-document.addEventListener("DOMContentLoaded", () => {
+  /* =========================
+     DARK / LIGHT MODE
+  ========================= */
+  const themeToggleBtn = document.getElementById("themeToggle");
   const savedTheme = localStorage.getItem("theme");
 
+  // Apply saved theme on load
   if (savedTheme === "dark") {
     document.body.classList.add("dark");
     if (themeToggleBtn) {
-      themeToggleBtn.innerText = "☀️ Light";
+      themeToggleBtn.innerText = "☀️";
     }
   }
+
+  // Toggle theme on click
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", function () {
+      document.body.classList.toggle("dark");
+
+      if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        themeToggleBtn.innerText = "☀️";
+      } else {
+        localStorage.setItem("theme", "light");
+        themeToggleBtn.innerText = "🌙";
+      }
+    });
+  }
+
 });
-
-// Button click par theme change
-if (themeToggleBtn) {
-  themeToggleBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-
-    if (document.body.classList.contains("dark")) {
-      localStorage.setItem("theme", "dark");
-      themeToggleBtn.innerText = "☀️";
-    } else {
-      localStorage.setItem("theme", "light");
-      themeToggleBtn.innerText = "🌙";
-    }
-  });
-}
