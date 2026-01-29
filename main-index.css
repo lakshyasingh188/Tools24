@@ -558,7 +558,7 @@ body.dark * {
 }
 #themeToggle {
   padding:4px 3 px;; 
-  margin: 30px;      /* size bada */
+  margin: 42px;      /* size bada */
   font-size: 15px;           /* text bada */
   border-radius: 30px;       /* smooth pill shape */
   min-width: 60px;          /* button width fix */
@@ -578,4 +578,44 @@ body.dark * {
 body.dark #themeToggle {
   background: linear-gradient(135deg, #020617, #1e293b);
   box-shadow: 0 0 18px rgba(56,189,248,0.4);
+}
+/* Mobile Hamburger Button */
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.mobile-menu-btn span {
+  width: 26px;
+  height: 3px;
+  background: #000;
+  border-radius: 3px;
+}
+
+/* 📱 Mobile View */
+@media (max-width: 768px) {
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .apple-nav {
+    position: absolute;
+    top: 70px;
+    right: 16px;
+    background: #fff;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 999;
+  }
+
+  .apple-nav.active {
+    display: flex;
+  }
 }
