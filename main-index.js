@@ -24,11 +24,23 @@ document.addEventListener("DOMContentLoaded", function () {
   const themeToggleBtn = document.getElementById("themeToggle");
   const savedTheme = localStorage.getItem("theme");
 
+  // 🔹 SEO + mobile browser theme color
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+
   // Apply saved theme on load
   if (savedTheme === "dark") {
     document.body.classList.add("dark");
+
     if (themeToggleBtn) {
       themeToggleBtn.innerText = "☀️";
+    }
+
+    if (metaTheme) {
+      metaTheme.setAttribute("content", "#0b1220");
+    }
+  } else {
+    if (metaTheme) {
+      metaTheme.setAttribute("content", "#ffffff");
     }
   }
 
@@ -40,9 +52,18 @@ document.addEventListener("DOMContentLoaded", function () {
       if (document.body.classList.contains("dark")) {
         localStorage.setItem("theme", "dark");
         themeToggleBtn.innerText = "☀️";
+
+        if (metaTheme) {
+          metaTheme.setAttribute("content", "#0b1220");
+        }
+
       } else {
         localStorage.setItem("theme", "light");
         themeToggleBtn.innerText = "🌙";
+
+        if (metaTheme) {
+          metaTheme.setAttribute("content", "#ffffff");
+        }
       }
     });
   }
