@@ -557,11 +557,11 @@ body.dark * {
   box-shadow: none;
 }
 #themeToggle {
-  padding:10px 10px;  
-  margin: 40px;      /* size bada */
-  font-size: 16px;           /* text bada */
+  padding:4px 3 px;; 
+  margin: 30px;      /* size bada */
+  font-size: 15px;           /* text bada */
   border-radius: 30px;       /* smooth pill shape */
-  min-width: 150px;          /* button width fix */
+  min-width: 60px;          /* button width fix */
   height: 52px;              /* height increase */
   display: flex;
   align-items: center;
