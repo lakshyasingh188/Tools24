@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JPG to PDF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="jpg-to-pdf.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="center-wrapper">
+
+  <div class="tool-container">
+
+    <!-- PAGE 1 -->
+    <div class="page active" id="page1">
+      <h1>Tools24 JPG to PDF</h1>
+
+      <label class="upload-btn">
+        Select JPG Files
+        <input type="file" id="imageInput" accept="image/jpeg,image/jpg" multiple hidden>
+      </label>
+
+      <p class="status" id="statusText"></p>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page" id="page2">
+
+      <h2 class="center-heading">Image to PDF options</h2>
+
+      <!-- PREVIEW -->
+      <div class="preview-box portrait" id="previewBox">
+        <img id="previewImage">
+      </div>
+
+      <!-- ORIENTATION -->
+      <div class="orientation-wrap">
+        <div class="orientation-card active" data-value="portrait">
+          <div class="icon portrait-icon"></div>
+          <span>Portrait</span>
+        </div>
+
+        <div class="orientation-card" data-value="landscape">
+          <div class="icon landscape-icon"></div>
+          <span>Landscape</span>
+        </div>
+      </div>
+
+      <button class="convert-btn" id="convertBtn">
+        Convert to PDF
+      </button>
+
+      <a class="download-btn" id="downloadLink" style="display:none;" download>
+        Download PDF
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="jpg-to-pdf.js"></script>
+</body>
+</html>
