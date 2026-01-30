@@ -11,12 +11,11 @@
 <body>
 
 <div class="center-wrapper">
-
   <div class="tool-container">
 
     <!-- PAGE 1 -->
     <div class="page active" id="page1">
-      <h1>Tools24 JPG to PDF</h1>
+      <h1>JPG to PDF</h1>
 
       <label class="upload-btn">
         Select JPG Files
@@ -28,13 +27,10 @@
 
     <!-- PAGE 2 -->
     <div class="page" id="page2">
+      <h2>PDF Preview</h2>
 
-      <h2 class="center-heading">Image to PDF options</h2>
-
-      <!-- PREVIEW -->
-      <div class="preview-box portrait" id="previewBox">
-        <img id="previewImage">
-      </div>
+      <!-- PREVIEW GRID -->
+      <div class="preview-grid" id="previewGrid"></div>
 
       <!-- ORIENTATION -->
       <div class="orientation-wrap">
@@ -56,11 +52,9 @@
       <a class="download-btn" id="downloadLink" style="display:none;" download>
         Download PDF
       </a>
-
     </div>
 
   </div>
-
 </div>
 
 <script src="jpg-to-pdf.js"></script>
