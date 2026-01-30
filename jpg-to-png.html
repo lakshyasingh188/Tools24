@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JPG to PNG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="jpg-to-png.css">
+</head>
+<body>
+
+<div class="center-wrapper">
+
+  <div class="tool-container">
+
+    <!-- PAGE 1 -->
+    <div class="page active" id="page1">
+      <h1>JPG to PNG</h1>
+
+      <label class="upload-btn">
+        Select JPG Files
+        <input type="file" id="imageInput" accept="image/jpeg,image/jpg" multiple hidden>
+      </label>
+
+      <p class="status" id="statusText"></p>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page" id="page2">
+      <h2>Converted PNG Files</h2>
+
+      <div class="preview-list" id="previewList"></div>
+
+      <button class="download-btn" id="downloadAllBtn">
+        Download All PNG
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="jpg-to-png.js"></script>
+</body>
+</html>
