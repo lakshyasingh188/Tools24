@@ -2,8 +2,7 @@ const imageInput = document.getElementById("imageInput");
 const statusText = document.getElementById("statusText");
 const page1 = document.getElementById("page1");
 const page2 = document.getElementById("page2");
-const previewImage = document.getElementById("previewImage");
-const previewBox = document.getElementById("previewBox");
+const previewGrid = document.getElementById("previewGrid");
 const convertBtn = document.getElementById("convertBtn");
 const downloadLink = document.getElementById("downloadLink");
 const cards = document.querySelectorAll(".orientation-card");
@@ -14,17 +13,37 @@ let orientation = "portrait";
 /* FILE SELECT */
 imageInput.addEventListener("change", () => {
   selectedFiles = [...imageInput.files];
+  if (!selectedFiles.length) return;
 
-  if (selectedFiles.length > 0) {
-    previewImage.src = URL.createObjectURL(selectedFiles[0]);
-    statusText.textContent = `${selectedFiles.length} image select ho gayi`;
+  statusText.textContent = `${selectedFiles.length} image select ho gayi`;
 
-    setTimeout(() => {
-      page1.classList.remove("active");
-      page2.classList.add("active");
-    }, 500);
-  }
+  buildPreview();
+
+  setTimeout(() => {
+    page1.classList.remove("active");
+    page2.classList.add("active");
+  }, 500);
 });
+
+/* BUILD PREVIEW GRID */
+function buildPreview() {
+  previewGrid.innerHTML = "";
+
+  selectedFiles.forEach(file => {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+
+    const box = document.createElement("div");
+    box.className = `preview-box ${orientation}`;
+    box.appendChild(img);
+
+    const item = document.createElement("div");
+    item.className = "preview-item";
+    item.appendChild(box);
+
+    previewGrid.appendChild(item);
+  });
+}
 
 /* ORIENTATION CHANGE */
 cards.forEach(card => {
@@ -33,11 +52,11 @@ cards.forEach(card => {
     card.classList.add("active");
 
     orientation = card.dataset.value;
-    previewBox.className = `preview-box ${orientation}`;
+    buildPreview(); // 🔥 re-render preview
   });
 });
 
-/* CONVERT */
+/* CONVERT TO PDF */
 convertBtn.addEventListener("click", async () => {
   const { jsPDF } = window.jspdf;
 
