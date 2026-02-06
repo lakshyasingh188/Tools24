@@ -39,7 +39,7 @@
       <span></span>
       <span></span>
     </div>
-
+    
     <!-- ✅ ID ADD KI -->
     <nav class="apple-nav" id="appleNav">
       <a href="index.html">Home</a>
@@ -48,14 +48,16 @@
       <a href="contact.html">Contact</a>
     </nav>
   </div>
+   <button id="themeToggle" class="theme-btn">
+       🌙
+  </button>
 </header>
       
 <!-- TOOLS SECTION -->
 <section class="tools-page" id="tools">
-  <button id="themeToggle" class="theme-btn">
-       🌙
-  </button>
- 
+
+
+
   <div class="tool-dashboard">
 
     <a href="jpg-to-pdf.html" class="tool-card">
@@ -246,8 +248,28 @@
 </section> <!-- tools-page END -->
 
 <!-- ⭐⭐⭐ FOOTER ⭐⭐⭐ -->
+ <!-- ⭐ RATING FOOTER -->
+<div class="rating-footer">
+
+  <button id="loginBtn">Google se Login karke Rate kare ⭐</button>
+  <button id="logoutBtn" style="display:none;">Logout</button>
+
+  <div id="starsBox" class="stars" style="display:none;">
+    <span class="star" data-val="1">★</span>
+    <span class="star" data-val="2">★</span>
+    <span class="star" data-val="3">★</span>
+    <span class="star" data-val="4">★</span>
+    <span class="star" data-val="5">★</span>
+
+    <div class="user-email" id="userEmail"></div>
+  </div>
+
+</div>
+
+<link rel="stylesheet" href="/assets/rating.css">
+<script type="module" src="/assets/rating.js"></script>
 <div class="footer">
-    &copy; 2025 Tools24. All Rights Reserved.
+    &copy; 2026 Tools24. All Rights Reserved.
 </div>
 
 
