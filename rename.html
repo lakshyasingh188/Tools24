@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Rename Tool</title>
+  <link rel="stylesheet" href="rename.css">
+</head>
+<body>
+
+<div class="container">
+
+  <!-- FIRST SCREEN -->
+  <div id="firstScreen">
+    <h1>Rename File</h1>
+    <label class="btn">
+      Select File
+      <input type="file" id="fileInput" hidden>
+    </label>
+  </div>
+
+  <!-- WORK AREA -->
+  <div id="workArea" class="hidden">
+    <p class="success">✔ File selected</p>
+    <p id="fileName"></p>
+
+    <input type="text" id="newName" placeholder="Enter new file name (without extension)">
+
+    <button id="renameBtn">Rename File</button>
+
+    <!-- LOADING -->
+    <div id="loader" class="hidden">
+      <p>Renaming... <span id="progress">0</span>%</p>
+      <div class="bar">
+        <div class="fill" id="fill"></div>
+      </div>
+    </div>
+
+    <!-- DOWNLOAD -->
+    <div id="downloadArea" class="hidden">
+      <a id="downloadBtn" download>Download Renamed File</a>
+      <p class="tick hidden" id="tick">✔ file has been downloaded successfully</p>
+    </div>
+  </div>
+
+</div>
+
+<script src="rename.js"></script>
+</body>
+</html>
