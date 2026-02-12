@@ -198,3 +198,51 @@ h1, h2 {
   font-weight: 700;
   box-shadow: 0 14px 30px rgba(250,204,21,.45);
 }
+.success-tick{
+  display:none;
+  margin-top:15px;
+  color:#16a34a;
+  font-size:18px;
+  font-weight:bold;
+}
+.jpgpdf-description {
+    padding: 40px 20px;
+    background: #f9f9f9;
+    margin-top: 40px;
+}
+
+.jpgpdf-description h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.jpgpdf-description p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+    text-align: justify;
+    transition: all 0.3s ease;
+}
+
+.limited-text {
+    max-height: 250px;
+    overflow: hidden;
+}
+
+.read-more-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.read-more-btn:hover {
+    background: #0056b3;
+}
