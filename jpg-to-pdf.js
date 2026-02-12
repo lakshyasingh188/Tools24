@@ -117,3 +117,15 @@ downloadBtn.addEventListener("click", () => {
   statusText.textContent = "Download completed successfully";
 
 });
+function toggleText() {
+    const moreText = document.getElementById("moreText");
+    const btn = document.getElementById("toggleBtn");
+
+    if (moreText.style.display === "none") {
+        moreText.style.display = "block";
+        btn.innerText = "Show Less";
+    } else {
+        moreText.style.display = "none";
+        btn.innerText = "Show More";
+    }
+}
