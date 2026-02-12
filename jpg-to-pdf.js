@@ -6,7 +6,7 @@ const previewGrid = document.getElementById("previewGrid");
 const convertBtn = document.getElementById("convertBtn");
 const downloadLink = document.getElementById("downloadLink");
 const cards = document.querySelectorAll(".orientation-card");
-
+const successTick = document.getElementById("successTick");
 let selectedFiles = [];
 let orientation = "portrait";
 
@@ -103,3 +103,17 @@ function loadImage(file) {
     reader.readAsDataURL(file);
   });
 }
+downloadBtn.addEventListener("click", () => {
+
+  // 👉 yaha tumhara actual download logic hoga
+  // downloadLink.click();
+
+  // ✅ SYSTEM MEMORY ME SAVE
+  localStorage.setItem("jpgPdfDownloaded", "true");
+
+  // ✅ UI UPDATE
+  successTick.style.display = "block";
+  downloadBtn.style.display = "none";
+  statusText.textContent = "Download completed successfully";
+
+});
