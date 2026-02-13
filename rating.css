@@ -1,0 +1,67 @@
+/* ===== Section ===== */
+.rating-section {
+  padding: 60px 20px;
+  background: #f4f4f4;
+  text-align: center;
+}
+
+.rating-section h2 {
+  font-size: 28px;
+  margin-bottom: 40px;
+}
+
+/* ===== Star Input ===== */
+.user-rating-box {
+  margin-bottom: 40px;
+}
+
+.star-input span {
+  font-size: 32px;
+  cursor: pointer;
+  color: #ccc;
+  transition: 0.3s;
+  margin: 0 4px;
+}
+
+.star-input span:hover,
+.star-input span.active {
+  color: #f4b400;
+}
+
+/* ===== Cards Layout ===== */
+.rating-container {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.rating-card {
+  background: #ffffff;
+  padding: 25px;
+  width: 280px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
+}
+
+.rating-card:hover {
+  transform: translateY(-5px);
+}
+
+.rating-card .stars {
+  color: #f4b400;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.review-text {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 13px;
+}
