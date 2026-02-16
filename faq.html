@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ - Tools24</title>
+<meta name="description" content="Frequently Asked Questions about Tools24 free online tools platform.">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+}
+
+/* Header */
+header {
+    background: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+/* FAQ Container */
+.faq-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+/* FAQ Item */
+.faq-item {
+    background: white;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+/* Question */
+.faq-question {
+    padding: 18px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    position: relative;
+    transition: 0.3s;
+}
+
+.faq-question:hover {
+    background: #f1f1f1;
+}
+
+/* Plus/Minus */
+.faq-question::after {
+    content: "+";
+    position: absolute;
+    right: 20px;
+    font-size: 22px;
+}
+
+.faq-question.active::after {
+    content: "-";
+}
+
+/* Answer */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding: 0 20px;
+}
+
+.faq-answer p {
+    padding: 15px 0;
+    margin: 0;
+    color: #555;
+}
+
+/* Back Button */
+.back-home {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 20px;
+    background: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.back-home:hover {
+    background: #2980b9;
+}
+
+/* Footer */
+footer {
+    background: #39d61f;
+    color: black;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Tools24 - Frequently Asked Questions</h1>
+</header>
+
+<div class="faq-container">
+
+    <div class="faq-item">
+        <div class="faq-question">1. What is Tools24?</div>
+        <div class="faq-answer">
+            <p>Tools24 is a free online platform providing useful tools like JPG to PDF, PDF to JPG, file converters and many other utilities.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">2. Is Tools24 free to use?</div>
+        <div class="faq-answer">
+            <p>Yes, all tools available on Tools24 are completely free to use with no hidden charges.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">3. Do I need to login?</div>
+        <div class="faq-answer">
+            <p>No login is required. You can use all tools freely without creating an account.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">4. Is my file secure?</div>
+        <div class="faq-answer">
+            <p>Yes, we respect user privacy. Files are processed securely and are not stored permanently.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">5. How can I contact support?</div>
+        <div class="faq-answer">
+            <p>You can contact us through the contact page available on our website.</p>
+        </div>
+    </div>
+
+    <center>
+        <a href="index.html" class="back-home">← Back to Home</a>
+    </center>
+
+</div>
+
+<footer>
+    © 2026 Tools24. All Rights Reserved.
+</footer>
+
+<script>
+const questions = document.querySelectorAll(".faq-question");
+
+questions.forEach(question => {
+    question.addEventListener("click", () => {
+        question.classList.toggle("active");
+
+        const answer = question.nextElementSibling;
+
+        if (answer.style.maxHeight) {
+            answer.style.maxHeight = null;
+        } else {
+            document.querySelectorAll(".faq-answer").forEach(item => {
+                item.style.maxHeight = null;
+            });
+            answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+    });
+});
+</script>
+
+</body>
+</html>
