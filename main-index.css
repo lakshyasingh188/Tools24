@@ -380,17 +380,41 @@
         inset 0 1px 0 rgba(255,255,255,1);
 }
 
-
-/* FOOTER */
-.footer {
-   
+/* Footer */
+.main-footer {
+    background: #39d61f;
+    color: black;
     text-align: center;
     padding: 20px;
-    margin-top: 60px;
-    background: #45e221;
-    color: #000;
     font-weight: bold;
 }
+
+/* FAQ Button Section */
+.faq-button-section {
+    background: #f4f6f9;
+    padding: 40px 0;
+    text-align: center;
+}
+
+/* FAQ Button */
+.faq-btn {
+    display: inline-block;
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    padding: 14px 35px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.faq-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
 /* FEATURE SECTION */
 .feature-section {
     position: relative;
