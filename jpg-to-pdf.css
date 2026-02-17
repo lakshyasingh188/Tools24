@@ -15,107 +15,127 @@ body{
 
 .container{
     background:#0b1120;
-    width:420px;
-    padding:40px;
-    border-radius:20px;
+    width:600px;
+    padding:50px;
+    border-radius:25px;
     text-align:center;
-    box-shadow:0 0 40px rgba(0,0,0,0.6);
+    box-shadow:0 0 60px rgba(0,0,0,0.7);
 }
 
 h1{
     color:white;
-    margin-bottom:25px;
+    margin-bottom:30px;
+    font-size:36px;
+    font-weight:700;
 }
 
+/* BIG BUTTON */
 .upload-btn{
     display:block;
-    padding:15px;
-    border-radius:12px;
+    padding:20px;
+    border-radius:15px;
     background:linear-gradient(90deg,#8b5cf6,#6366f1);
     color:white;
     cursor:pointer;
-}
-
-.file-selected{
-    margin-top:15px;
-    color:#22c55e;
-    display:none;
+    font-size:20px;
     font-weight:600;
 }
 
-/* PREVIEW PAGE STYLE */
+.file-selected{
+    margin-top:20px;
+    color:#22c55e;
+    font-size:18px;
+    display:none;
+}
+
+/* PREVIEW */
 
 .preview-container{
-    margin-top:20px;
-    background:#111827;
-    border-radius:12px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.5);
+    margin-top:30px;
+    height:550px;
+    overflow-y:auto;
     display:none;
-    aspect-ratio: 1 / 1.414; /* default portrait A4 */
+    flex-direction:column;
+    align-items:center;
+    gap:40px;
+    padding:20px;
+}
+
+.preview-page{
+    width:95%;
+    max-width:500px;
+    background:white;
+    border-radius:8px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.6);
     display:flex;
     align-items:center;
     justify-content:center;
-    overflow:hidden;
+    aspect-ratio: 1 / 1.414;
 }
 
-.preview-container img{
-    max-width:100%;
-    max-height:100%;
+.preview-page img{
+    max-width:95%;
+    max-height:95%;
     object-fit:contain;
 }
 
 /* ORIENTATION */
 
 .orientation{
-    margin-top:20px;
+    margin-top:30px;
     display:none;
     justify-content:center;
-    gap:15px;
+    gap:30px;
 }
 
 .option{
-    padding:8px 18px;
-    border-radius:8px;
-    border:1px solid #334155;
+    padding:15px 35px;
+    border-radius:12px;
+    border:2px solid #334155;
     color:white;
     cursor:pointer;
+    font-size:18px;
 }
 
 .option.active{
     background:#2563eb;
 }
 
-/* BUTTONS */
+/* CONVERT BUTTON */
 
 .convert-btn{
-    margin-top:20px;
+    margin-top:30px;
     width:100%;
-    padding:14px;
+    padding:18px;
     border:none;
-    border-radius:10px;
+    border-radius:15px;
     background:linear-gradient(90deg,#22c55e,#16a34a);
     color:white;
+    font-size:20px;
+    font-weight:600;
     cursor:pointer;
     display:none;
 }
 
 .download-btn{
     display:none;
-    margin-top:20px;
-    padding:12px;
+    margin-top:30px;
+    padding:18px;
     background:#3b82f6;
-    border-radius:10px;
+    border-radius:15px;
     color:white;
+    font-size:18px;
     text-decoration:none;
 }
 
 .download-status{
-    margin-top:15px;
+    margin-top:20px;
     color:#22c55e;
+    font-size:18px;
     display:none;
 }
 
-/* FULL PAGE LOADER */
+/* FULL SCREEN LOADER */
 
 .full-loader{
     position:fixed;
@@ -132,31 +152,32 @@ h1{
 }
 
 .loader-box{
-    width:350px;
+    width:450px;
     text-align:center;
 }
 
 .loader-box h2{
     color:white;
-    margin-bottom:20px;
+    margin-bottom:30px;
+    font-size:28px;
 }
 
 .progress-bar{
     width:100%;
-    height:10px;
+    height:15px;
     background:#1e293b;
-    border-radius:10px;
-    margin-top:10px;
+    border-radius:20px;
 }
 
 .progress{
     height:100%;
     width:0%;
     background:#22c55e;
-    border-radius:10px;
+    border-radius:20px;
 }
 
 #progressText{
     color:white;
     font-size:20px;
+    margin-bottom:15px;
 }
