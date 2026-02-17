@@ -1,296 +1,162 @@
-/* =========================
-   GLOBAL RESET
-========================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:system-ui;
 }
 
-/* =========================
-   BODY
-========================= */
-body {
-  background: radial-gradient(circle at top, #020617, #020617);
-  min-height: 100vh;
+body{
+    background:linear-gradient(135deg,#020617,#0f172a);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-/* =========================
-   CENTER FIX
-========================= */
-.center-wrapper {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.container{
+    background:#0b1120;
+    width:420px;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 0 40px rgba(0,0,0,0.6);
 }
 
-/* =========================
-   TOOL CARD
-========================= */
-.tool-container {
-  width: 100%;
-  max-width: 460px;
-  background: #020617;
-  border-radius: 20px;
-  padding: 34px 26px 38px;
-  color: #fff;
-  box-shadow: 0 35px 90px rgba(0,0,0,.75);
+h1{
+    color:white;
+    margin-bottom:25px;
 }
 
-/* =========================
-   PAGE
-========================= */
-.page { display: none; }
-.page.active { display: block; }
-
-h1, h2 {
-  text-align: center;
-  margin-bottom: 22px;
-  font-weight: 700;
-  letter-spacing: .5px;
+.upload-btn{
+    display:block;
+    padding:15px;
+    border-radius:12px;
+    background:linear-gradient(90deg,#8b5cf6,#6366f1);
+    color:white;
+    cursor:pointer;
 }
 
-/* =========================
-   🔥 BIG HIGHLIGHT UPLOAD BUTTON
-========================= */
-.upload-btn {
-  display: block;
-  width: 100%;
-  padding: 22px 18px;              /* 🔥 BIG HEIGHT */
-  font-size: 18px;                 /* 🔥 BIG TEXT */
-  font-weight: 700;
-  text-align: center;
-  color: #020617;
-  border-radius: 20px;
-  cursor: pointer;
-  background: linear-gradient(
-    135deg,
-    #b7ccff,
-    #cdbdff
-  );
-  box-shadow:
-    0 18px 40px rgba(160,180,255,.55),
-    inset 0 1px 0 rgba(255,255,255,.7);
-  position: relative;
-  overflow: hidden;
-  transition: all .25s ease;
+.file-selected{
+    margin-top:15px;
+    color:#22c55e;
+    display:none;
+    font-weight:600;
 }
 
-/* shine effect */
-.upload-btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,.55),
-    rgba(255,255,255,0) 60%
-  );
+/* PREVIEW PAGE STYLE */
+
+.preview-container{
+    margin-top:20px;
+    background:#111827;
+    border-radius:12px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.5);
+    display:none;
+    aspect-ratio: 1 / 1.414; /* default portrait A4 */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
 }
 
-/* hover / focus */
-.upload-btn:hover {
-  transform: translateY(-2px) scale(1.01);
-  box-shadow:
-    0 26px 60px rgba(160,180,255,.75),
-    inset 0 1px 0 rgba(255,255,255,.8);
+.preview-container img{
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
 }
 
-/* =========================
-   STATUS
-========================= */
-.status {
-  text-align: center;
-  margin-top: 16px;
-  font-size: 14px;
-  color: #c7d2fe;
+/* ORIENTATION */
+
+.orientation{
+    margin-top:20px;
+    display:none;
+    justify-content:center;
+    gap:15px;
 }
 
-/* =========================
-   PREVIEW
-========================= */
-.preview-box {
-  margin: 16px auto 20px;
-  background: #020617;
-  border: 2px dashed #334155;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+.option{
+    padding:8px 18px;
+    border-radius:8px;
+    border:1px solid #334155;
+    color:white;
+    cursor:pointer;
 }
 
-.preview-box.portrait {
-  width: 170px;
-  height: 230px;
+.option.active{
+    background:#2563eb;
 }
 
-.preview-box.landscape {
-  width: 230px;
-  height: 170px;
+/* BUTTONS */
+
+.convert-btn{
+    margin-top:20px;
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(90deg,#22c55e,#16a34a);
+    color:white;
+    cursor:pointer;
+    display:none;
 }
 
-.preview-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.download-btn{
+    display:none;
+    margin-top:20px;
+    padding:12px;
+    background:#3b82f6;
+    border-radius:10px;
+    color:white;
+    text-decoration:none;
 }
 
-/* =========================
-   ORIENTATION
-========================= */
-.orientation-wrap {
-  display: flex;
-  gap: 14px;
-  margin-bottom: 22px;
+.download-status{
+    margin-top:15px;
+    color:#22c55e;
+    display:none;
 }
 
-.orientation-card {
-  flex: 1;
-  border: 2px solid #1e293b;
-  border-radius: 16px;
-  padding: 14px;
-  text-align: center;
-  cursor: pointer;
-  transition: .2s;
+/* FULL PAGE LOADER */
+
+.full-loader{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#020617;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    display:none;
 }
 
-.orientation-card.active {
-  border-color: #38bdf8;
-  box-shadow: 0 0 0 2px rgba(56,189,248,.25);
+.loader-box{
+    width:350px;
+    text-align:center;
 }
 
-.icon {
-  margin: 0 auto 8px;
-  border: 2px solid #94a3b8;
+.loader-box h2{
+    color:white;
+    margin-bottom:20px;
 }
 
-.portrait-icon { width: 22px; height: 34px; }
-.landscape-icon { width: 34px; height: 22px; }
-
-/* =========================
-   ACTION BUTTONS
-========================= */
-.convert-btn {
-  width: 100%;
-  background: linear-gradient(135deg,#22c55e,#4ade80);
-  padding: 18px;
-  border-radius: 18px;
-  border: none;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 14px 30px rgba(34,197,94,.45);
+.progress-bar{
+    width:100%;
+    height:10px;
+    background:#1e293b;
+    border-radius:10px;
+    margin-top:10px;
 }
 
-.download-btn {
-  display: block;
-  margin-top: 16px;
-  width: 100%;
-  background: linear-gradient(135deg,#facc15,#fde047);
-  padding: 18px;
-  border-radius: 18px;
-  text-align: center;
-  text-decoration: none;
-  color: #000;
-  font-weight: 700;
-  box-shadow: 0 14px 30px rgba(250,204,21,.45);
-}
-.success-tick{
-  display:none;
-  margin-top:15px;
-  color:#16a34a;
-  font-size:18px;
-  font-weight:bold;
-}
-.jpgpdf-description {
-    padding: 40px 20px;
-    background: #f9f9f9;
-    margin-top: 40px;
+.progress{
+    height:100%;
+    width:0%;
+    background:#22c55e;
+    border-radius:10px;
 }
 
-.jpgpdf-description h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.jpgpdf-description p {
-    font-size: 16px;
-    line-height: 1.8;
-    color: #333;
-    text-align: justify;
-    transition: all 0.3s ease;
-}
-
-.limited-text {
-    max-height: 250px;
-    overflow: hidden;
-}
-
-.read-more-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    background: #007bff;
-    color: white;
-    cursor: pointer;
-    border-radius: 6px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.read-more-btn:hover {
-    background: #0056b3;
-}
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f9;
-    margin: 0;
-    padding: 0;
-}
-
-.tool-description {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.tool-description h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.tool-description p {
-    font-size: 16px;
-    line-height: 1.7;
-    color: #555;
-}
-
-#moreText {
-    display: none;
-}
-
-button {
-    display: block;
-    margin: 20px auto 0;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    background-color: #28a745;
-    color: white;
-    cursor: pointer;
-    font-size: 15px;
-    transition: 0.3s;
-}
-
-button:hover {
-    background-color: #1e7e34;
+#progressText{
+    color:white;
+    font-size:20px;
 }
