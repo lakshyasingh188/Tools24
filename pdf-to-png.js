@@ -1,104 +1,123 @@
-const uploadBox = document.getElementById("uploadBox");
+let selectedFile = null;
+let pdfDoc = null;
+
 const pdfInput = document.getElementById("pdfInput");
+const previewContainer = document.getElementById("previewContainer");
+const fileSelected = document.getElementById("fileSelected");
 const convertBtn = document.getElementById("convertBtn");
-const downloadBtn = document.getElementById("downloadBtn");
-const output = document.getElementById("output");
+const downloadAll = document.getElementById("downloadAll");
+const downloadStatus = document.getElementById("downloadStatus");
+
+const fullLoader = document.getElementById("fullLoader");
 const progress = document.getElementById("progress");
+const progressText = document.getElementById("progressText");
 
-let zipBlob = null;
+pdfInput.addEventListener("change", function(e){
 
-/* File picker */
-uploadBox.addEventListener("click", () => pdfInput.click());
+    selectedFile = e.target.files[0];
+    fileSelected.style.display = "block";
 
-pdfInput.addEventListener("change", () => {
-  if (pdfInput.files.length > 0) {
-    uploadBox.classList.add("active");
-  }
+    const reader = new FileReader();
+
+    reader.onload = function(){
+        const typedarray = new Uint8Array(this.result);
+
+        pdfjsLib.getDocument(typedarray).promise.then(function(pdf){
+            pdfDoc = pdf;
+            showPreview();
+        });
+    };
+
+    reader.readAsArrayBuffer(selectedFile);
 });
 
-/* PDF.js worker */
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+function showPreview(){
 
-const SCALE = 1.3;
+    previewContainer.innerHTML = "";
+    previewContainer.style.display = "block";
+    convertBtn.style.display = "block";
 
-function nextFrame() {
-  return new Promise(r => requestAnimationFrame(r));
+    for(let i=1; i<=pdfDoc.numPages; i++){
+
+        pdfDoc.getPage(i).then(function(page){
+
+            const viewport = page.getViewport({scale:1});
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            page.render({
+                canvasContext: context,
+                viewport: viewport
+            });
+
+            previewContainer.appendChild(canvas);
+        });
+    }
 }
 
-/* Convert */
-convertBtn.addEventListener("click", async () => {
-  const files = pdfInput.files;
+convertBtn.addEventListener("click", function(){
 
-  if (!files.length) {
-    alert("Please select PDF files");
-    return;
-  }
+    fullLoader.style.display = "flex";
 
-  output.innerHTML = "";
-  progress.innerText = "Converting...";
-  downloadBtn.style.display = "none";
-  zipBlob = null;
+    let count = 0;
 
-  const zip = new JSZip();
+    const interval = setInterval(()=>{
+        count++;
+        progress.style.width = count + "%";
+        progressText.innerText = count + "%";
 
-  try {
-    for (const file of files) {
-      const buffer = await file.arrayBuffer();
-      const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
-
-      for (let i = 1; i <= pdf.numPages; i++) {
-        progress.innerText = `Converting ${file.name} (Page ${i}/${pdf.numPages})`;
-
-        const page = await pdf.getPage(i);
-        const viewport = page.getViewport({ scale: SCALE });
-
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-
-        await page.render({ canvasContext: ctx, viewport }).promise;
-
-        const imgData = canvas.toDataURL("image/png");
-
-        // preview
-        const img = document.createElement("img");
-        img.src = imgData;
-        output.appendChild(img);
-
-        // zip
-        zip.file(
-          `${file.name.replace(".pdf", "")}-page-${i}.png`,
-          imgData.split(",")[1],
-          { base64: true }
-        );
-
-        await nextFrame();
-      }
-    }
-
-    progress.innerText = "Preparing download…";
-    zipBlob = await zip.generateAsync({ type: "blob" });
-
-    progress.innerText = "✅ Conversion completed";
-    downloadBtn.style.display = "block";
-
-  } catch (e) {
-    console.error(e);
-    progress.innerText = "❌ Conversion failed";
-    alert("Conversion failed. Try smaller PDF.");
-  }
+        if(count >= 100){
+            clearInterval(interval);
+            convertAllPages();
+        }
+    },200);
 });
 
-/* USER-CLICK DOWNLOAD (IMPORTANT) */
-downloadBtn.addEventListener("click", () => {
-  if (!zipBlob) return;
+function convertAllPages(){
 
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(zipBlob);
-  link.download = "tools24-pdf-to-png.zip";
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
+    const zip = new JSZip();
+    let completed = 0;
+
+    for(let i=1; i<=pdfDoc.numPages; i++){
+
+        pdfDoc.getPage(i).then(function(page){
+
+            const viewport = page.getViewport({scale:2});
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            page.render({
+                canvasContext: context,
+                viewport: viewport
+            }).promise.then(function(){
+
+                const imgData = canvas.toDataURL("image/png").split(',')[1];
+                zip.file("page-" + i + ".png", imgData, {base64:true});
+
+                completed++;
+
+                if(completed === pdfDoc.numPages){
+
+                    zip.generateAsync({type:"blob"}).then(function(content){
+
+                        fullLoader.style.display = "none";
+
+                        downloadAll.href = URL.createObjectURL(content);
+                        downloadAll.download = "converted-pages.zip";
+                        downloadAll.style.display = "block";
+                    });
+                }
+            });
+        });
+    }
+}
+
+downloadAll.addEventListener("click", function(){
+    downloadStatus.style.display = "block";
 });
