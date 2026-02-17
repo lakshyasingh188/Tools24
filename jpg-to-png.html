@@ -1,70 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>JPG to PNG</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="jpg-to-png.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JPG to PNG - Tools24</title>
+<link rel="stylesheet" href="jpg-to-png.css">
 </head>
+
 <body>
 
-<div class="center-wrapper">
+<div class="container">
 
-  <div class="tool-container">
+    <h1>JPG to PNG</h1>
 
-    <!-- PAGE 1 -->
-    <div class="page active" id="page1">
-      <h1>JPG to PNG</h1>
-
-      <label class="upload-btn">
+    <label for="imageInput" class="upload-btn">
         Select JPG Files
-        <input type="file" id="imageInput" accept="image/jpeg,image/jpg" multiple hidden>
-      </label>
+    </label>
+    <input type="file" id="imageInput" accept="image/jpeg" multiple hidden>
 
-      <p class="status" id="statusText"></p>
+    <div id="fileSelected" class="file-selected">
+        ✔ Images Selected
     </div>
 
-    <!-- PAGE 2 -->
-    <div class="page" id="page2">
-      <h2>Converted PNG Files</h2>
+    <div id="previewContainer" class="preview-container"></div>
 
-      <div class="preview-list" id="previewList"></div>
+    <button id="convertBtn" class="convert-btn">
+        Convert to PNG
+    </button>
 
-      <button class="download-btn" id="downloadAllBtn">
-        Download All PNG
-      </button>
+    <a id="downloadBtn" class="download-btn">
+        Download PNG (ZIP)
+    </a>
+
+    <div id="downloadStatus" class="download-status">
+        ✔ Downloaded Successfully
     </div>
-
-  </div>
 
 </div>
-<section class="tool-description">
-    <h2>About Tools24 JPG to PNG Converter</h2>
 
-    <p id="shortText">
-        Tools24 JPG to PNG is a powerful and easy-to-use JPG to PNG converter designed for fast and high-quality image conversion. 
-        With Tools24 JPG to PNG, users can quickly convert JPG to PNG without losing image clarity. 
-        Our JPG to PNG tool is completely free and works directly in your browser. 
-        Tools24 JPG to PNG ensures secure and smooth JPG to PNG conversion for all users.
-    </p>
+<!-- FULL SCREEN LOADER -->
+<div id="fullLoader" class="full-loader">
+    <div class="loader-box">
+        <h2>Converting to PNG...</h2>
+        <div id="progressText">0%</div>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
+</div>
 
-    <p id="moreText">
-        Tools24 JPG to PNG provides a simple solution for anyone looking to convert JPG to PNG instantly. 
-        Whether you are a student, designer, or professional, Tools24 JPG to PNG makes JPG to PNG conversion effortless. 
-        The JPG to PNG tool on Tools24 supports fast processing and maintains transparency where needed. 
-        With Tools24 JPG to PNG, you do not need any software installation for JPG to PNG conversion. 
-        This JPG to PNG converter is optimized for performance, SEO, and user experience. 
-        Many users trust Tools24 JPG to PNG because it delivers accurate JPG to PNG results every time. 
-        If you are searching for the best JPG to PNG solution online, Tools24 JPG to PNG is the perfect choice. 
-        Convert JPG to PNG multiple times without limitations using Tools24 JPG to PNG. 
-        Our JPG to PNG system is secure, reliable, and user-friendly. 
-        Tools24 JPG to PNG continues to improve the JPG to PNG experience for everyone.
-    </p>
-
-    <button onclick="toggleText()" id="toggleBtn">Show More</button>
-</section>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
 <script src="jpg-to-png.js"></script>
+
 </body>
 </html>
