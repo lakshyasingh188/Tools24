@@ -1,79 +1,105 @@
+let selectedImages = [];
+
 const imageInput = document.getElementById("imageInput");
-const statusText = document.getElementById("statusText");
-const page1 = document.getElementById("page1");
-const page2 = document.getElementById("page2");
-const previewList = document.getElementById("previewList");
-const downloadAllBtn = document.getElementById("downloadAllBtn");
+const previewContainer = document.getElementById("previewContainer");
+const fileSelected = document.getElementById("fileSelected");
+const convertBtn = document.getElementById("convertBtn");
+const downloadBtn = document.getElementById("downloadBtn");
+const downloadStatus = document.getElementById("downloadStatus");
 
-let pngFiles = [];
+const fullLoader = document.getElementById("fullLoader");
+const progress = document.getElementById("progress");
+const progressText = document.getElementById("progressText");
 
-/* FILE SELECT */
-imageInput.addEventListener("change", () => {
-  const files = [...imageInput.files];
-  if (!files.length) return;
+previewContainer.style.display = "none";
+convertBtn.style.display = "none";
 
-  statusText.textContent = `${files.length} image select ho gayi`;
+imageInput.addEventListener("change", function(e){
 
-  setTimeout(() => {
-    page1.classList.remove("active");
-    page2.classList.add("active");
-    convertImages(files);
-  }, 500);
+    selectedImages = Array.from(e.target.files);
+    if(selectedImages.length === 0) return;
+
+    fileSelected.style.display = "block";
+    previewContainer.style.display = "flex";
+    convertBtn.style.display = "block";
+
+    previewContainer.innerHTML = "";
+
+    selectedImages.forEach(file=>{
+        const pageDiv = document.createElement("div");
+        pageDiv.className = "preview-page";
+
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+
+        pageDiv.appendChild(img);
+        previewContainer.appendChild(pageDiv);
+    });
 });
 
-/* CONVERT JPG → PNG */
-function convertImages(files) {
-  previewList.innerHTML = "";
-  pngFiles = [];
+convertBtn.addEventListener("click", function(){
 
-  files.forEach((file, index) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
+    fullLoader.style.display = "flex";
 
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
+    let duration = 20000;
+    let intervalTime = 100;
+    let steps = duration / intervalTime;
+    let count = 0;
 
-        canvas.toBlob(blob => {
-          const url = URL.createObjectURL(blob);
-          pngFiles.push({ url, name: file.name.replace(/\.(jpg|jpeg)$/i,".png") });
+    const interval = setInterval(()=>{
 
-          const div = document.createElement("div");
-          div.className = "preview-item";
-          div.innerHTML = `<img src="${url}">`;
-          previewList.appendChild(div);
-        }, "image/png");
-      };
-      img.src = reader.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
+        count++;
+        let percent = Math.round((count / steps) * 100);
 
-/* DOWNLOAD ALL */
-downloadAllBtn.addEventListener("click", () => {
-  pngFiles.forEach((file, i) => {
-    const a = document.createElement("a");
-    a.href = file.url;
-    a.download = file.name;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  });
+        progress.style.width = percent + "%";
+        progressText.innerText = percent + "%";
+
+        if(percent >= 100){
+            clearInterval(interval);
+            convertToPNG();
+        }
+
+    }, intervalTime);
 });
-function toggleText() {
-    const moreText = document.getElementById("moreText");
-    const btn = document.getElementById("toggleBtn");
 
-    if (moreText.style.display === "none") {
-        moreText.style.display = "block";
-        btn.innerText = "Show Less";
-    } else {
-        moreText.style.display = "none";
-        btn.innerText = "Show More";
-    }
+function convertToPNG(){
+
+    const zip = new JSZip();
+
+    selectedImages.forEach((file, index)=>{
+
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+
+        img.onload = function(){
+
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            ctx.drawImage(img, 0, 0);
+
+            const pngData = canvas.toDataURL("image/png").split(',')[1];
+
+            zip.file("image-" + (index+1) + ".png", pngData, {base64:true});
+
+            if(index === selectedImages.length - 1){
+
+                zip.generateAsync({type:"blob"}).then(function(content){
+
+                    fullLoader.style.display = "none";
+
+                    downloadBtn.href = URL.createObjectURL(content);
+                    downloadBtn.download = "converted-images.zip";
+                    downloadBtn.style.display = "block";
+                });
+            }
+        };
+    });
 }
+
+downloadBtn.addEventListener("click", function(){
+    downloadStatus.style.display = "block";
+});
