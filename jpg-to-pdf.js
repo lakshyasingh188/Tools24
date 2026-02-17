@@ -1,131 +1,142 @@
+let selectedImages = [];
+let selectedOrientation = "portrait";
+
 const imageInput = document.getElementById("imageInput");
-const statusText = document.getElementById("statusText");
-const page1 = document.getElementById("page1");
-const page2 = document.getElementById("page2");
-const previewGrid = document.getElementById("previewGrid");
+const previewContainer = document.getElementById("previewContainer");
+const fileSelected = document.getElementById("fileSelected");
 const convertBtn = document.getElementById("convertBtn");
-const downloadLink = document.getElementById("downloadLink");
-const cards = document.querySelectorAll(".orientation-card");
-const successTick = document.getElementById("successTick");
-let selectedFiles = [];
-let orientation = "portrait";
+const downloadBtn = document.getElementById("downloadBtn");
+const downloadStatus = document.getElementById("downloadStatus");
+const orientationBox = document.getElementById("orientationBox");
 
-/* FILE SELECT */
-imageInput.addEventListener("change", () => {
-  selectedFiles = [...imageInput.files];
-  if (!selectedFiles.length) return;
+const fullLoader = document.getElementById("fullLoader");
+const progress = document.getElementById("progress");
+const progressText = document.getElementById("progressText");
 
-  statusText.textContent = `${selectedFiles.length} image select ho gayi`;
+/* FIRST PAGE CLEAN */
+previewContainer.style.display = "none";
+orientationBox.style.display = "none";
+convertBtn.style.display = "none";
 
-  buildPreview();
+imageInput.addEventListener("change", function(e){
 
-  setTimeout(() => {
-    page1.classList.remove("active");
-    page2.classList.add("active");
-  }, 500);
-});
+    selectedImages = Array.from(e.target.files);
 
-/* BUILD PREVIEW GRID */
-function buildPreview() {
-  previewGrid.innerHTML = "";
+    if(selectedImages.length === 0) return;
 
-  selectedFiles.forEach(file => {
+    fileSelected.style.display = "block";
+    previewContainer.style.display = "flex";
+    orientationBox.style.display = "flex";
+    convertBtn.style.display = "block";
+
+    previewContainer.innerHTML = "";
+
     const img = document.createElement("img");
-    img.src = URL.createObjectURL(file);
+    img.src = URL.createObjectURL(selectedImages[0]);
+    previewContainer.appendChild(img);
 
-    const box = document.createElement("div");
-    box.className = `preview-box ${orientation}`;
-    box.appendChild(img);
-
-    const item = document.createElement("div");
-    item.className = "preview-item";
-    item.appendChild(box);
-
-    previewGrid.appendChild(item);
-  });
-}
+    updatePreviewLayout();
+});
 
 /* ORIENTATION CHANGE */
-cards.forEach(card => {
-  card.addEventListener("click", () => {
-    cards.forEach(c => c.classList.remove("active"));
-    card.classList.add("active");
 
-    orientation = card.dataset.value;
-    buildPreview(); // 🔥 re-render preview
-  });
+document.querySelectorAll(".option").forEach(option=>{
+    option.addEventListener("click", function(){
+
+        document.querySelectorAll(".option").forEach(o=>o.classList.remove("active"));
+        this.classList.add("active");
+
+        selectedOrientation = this.dataset.type;
+        updatePreviewLayout();
+    });
 });
 
-/* CONVERT TO PDF */
-convertBtn.addEventListener("click", async () => {
-  const { jsPDF } = window.jspdf;
+/* UPDATE PREVIEW RATIO */
 
-  const pdf = new jsPDF({
-    orientation,
-    unit: "mm",
-    format: "a4"
-  });
+function updatePreviewLayout(){
 
-  for (let i = 0; i < selectedFiles.length; i++) {
-    const img = await loadImage(selectedFiles[i]);
-    const pw = pdf.internal.pageSize.getWidth();
-    const ph = pdf.internal.pageSize.getHeight();
-
-    let iw = pw;
-    let ih = (img.height * iw) / img.width;
-
-    if (ih > ph) {
-      ih = ph;
-      iw = (img.width * ih) / img.height;
-    }
-
-    const x = (pw - iw) / 2;
-    const y = (ph - ih) / 2;
-
-    if (i !== 0) pdf.addPage();
-    pdf.addImage(img, "JPEG", x, y, iw, ih);
-  }
-
-  const blob = pdf.output("blob");
-  downloadLink.href = URL.createObjectURL(blob);
-  downloadLink.style.display = "block";
-});
-
-/* IMAGE LOADER */
-function loadImage(file) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.src = reader.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
-downloadBtn.addEventListener("click", () => {
-
-  // 👉 yaha tumhara actual download logic hoga
-  // downloadLink.click();
-
-  // ✅ SYSTEM MEMORY ME SAVE
-  localStorage.setItem("jpgPdfDownloaded", "true");
-
-  // ✅ UI UPDATE
-  successTick.style.display = "block";
-  downloadBtn.style.display = "none";
-  statusText.textContent = "Download completed successfully";
-
-});
-function toggleText() {
-    const moreText = document.getElementById("moreText");
-    const btn = document.getElementById("toggleBtn");
-
-    if (moreText.style.display === "none") {
-        moreText.style.display = "block";
-        btn.innerText = "Show Less";
+    if(selectedOrientation === "portrait"){
+        previewContainer.style.aspectRatio = "1 / 1.414";
     } else {
-        moreText.style.display = "none";
-        btn.innerText = "Show More";
+        previewContainer.style.aspectRatio = "1.414 / 1";
     }
 }
+
+/* CONVERT */
+
+convertBtn.addEventListener("click", function(){
+
+    fullLoader.style.display = "flex";
+
+    let count = 0;
+
+    const interval = setInterval(()=>{
+        count++;
+        progress.style.width = count + "%";
+        progressText.innerText = count + "%";
+
+        if(count >= 100){
+            clearInterval(interval);
+            createPDF();
+        }
+    },200);
+});
+
+function createPDF(){
+
+    const { jsPDF } = window.jspdf;
+
+    const pdf = new jsPDF({
+        orientation: selectedOrientation,
+        unit: "mm",
+        format: "a4"
+    });
+
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+
+    selectedImages.forEach((file, index)=>{
+
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+
+        img.onload = function(){
+
+            if(index > 0){
+                pdf.addPage();
+            }
+
+            const imgRatio = img.width / img.height;
+            const pageRatio = pageWidth / pageHeight;
+
+            let imgWidth, imgHeight;
+
+            if(imgRatio > pageRatio){
+                imgWidth = pageWidth;
+                imgHeight = pageWidth / imgRatio;
+            } else {
+                imgHeight = pageHeight;
+                imgWidth = pageHeight * imgRatio;
+            }
+
+            const x = (pageWidth - imgWidth) / 2;
+            const y = (pageHeight - imgHeight) / 2;
+
+            pdf.addImage(img, "JPEG", x, y, imgWidth, imgHeight);
+
+            if(index === selectedImages.length - 1){
+
+                fullLoader.style.display = "none";
+
+                const pdfBlob = pdf.output("blob");
+                downloadBtn.href = URL.createObjectURL(pdfBlob);
+                downloadBtn.download = "converted.pdf";
+                downloadBtn.style.display = "block";
+            }
+        };
+    });
+}
+
+downloadBtn.addEventListener("click", function(){
+    downloadStatus.style.display = "block";
+});
