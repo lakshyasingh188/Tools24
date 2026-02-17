@@ -1,49 +1,123 @@
-const pdfjsLib = window['pdfjs-dist/build/pdf'];
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+let selectedFile = null;
+let pdfDoc = null;
 
-document.getElementById("convertBtn")
-  .addEventListener("click", convertMultiple);
+const pdfInput = document.getElementById("pdfInput");
+const previewContainer = document.getElementById("previewContainer");
+const fileSelected = document.getElementById("fileSelected");
+const convertBtn = document.getElementById("convertBtn");
+const downloadAll = document.getElementById("downloadAll");
+const downloadStatus = document.getElementById("downloadStatus");
 
-async function convertMultiple(){
-  const files = document.getElementById("pdfFile").files;
-  const status = document.getElementById("status");
+const fullLoader = document.getElementById("fullLoader");
+const progress = document.getElementById("progress");
+const progressText = document.getElementById("progressText");
 
-  if(!files.length){
-    alert("Please choose PDF files");
-    return;
-  }
+pdfInput.addEventListener("change", function(e){
 
-  if(files.length > 10){
-    alert("Maximum 10 files allowed");
-    return;
-  }
+    selectedFile = e.target.files[0];
+    fileSelected.style.display = "block";
 
-  status.innerText = "Converting files...";
+    const reader = new FileReader();
 
-  for(let i=0;i<files.length;i++){
-    const file = files[i];
-    const buffer = await file.arrayBuffer();
+    reader.onload = function(){
+        const typedarray = new Uint8Array(this.result);
 
-    const pdf = await pdfjsLib.getDocument(new Uint8Array(buffer)).promise;
-    const page = await pdf.getPage(1);
+        pdfjsLib.getDocument(typedarray).promise.then(function(pdf){
+            pdfDoc = pdf;
+            showPreview();
+        });
+    };
 
-    const viewport = page.getViewport({ scale: 2.2 });
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+    reader.readAsArrayBuffer(selectedFile);
+});
 
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
+function showPreview(){
 
-    await page.render({canvasContext:ctx,viewport}).promise;
+    previewContainer.innerHTML = "";
+    previewContainer.style.display = "block";
+    convertBtn.style.display = "block";
 
-    const jpg = canvas.toDataURL("image/jpeg",0.95);
+    for(let i=1; i<=pdfDoc.numPages; i++){
 
-    const link = document.createElement("a");
-    link.href = jpg;
-    link.download = file.name.replace(".pdf","") + ".jpg";
-    link.click();
-  }
+        pdfDoc.getPage(i).then(function(page){
 
-  status.innerText = "✅ All JPG files downloaded";
+            const viewport = page.getViewport({scale:1});
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            page.render({
+                canvasContext: context,
+                viewport: viewport
+            });
+
+            previewContainer.appendChild(canvas);
+        });
+    }
 }
+
+convertBtn.addEventListener("click", function(){
+
+    fullLoader.style.display = "flex";
+
+    let count = 0;
+
+    const interval = setInterval(()=>{
+        count++;
+        progress.style.width = count + "%";
+        progressText.innerText = count + "%";
+
+        if(count >= 100){
+            clearInterval(interval);
+            convertAllPages();
+        }
+    },200);
+});
+
+function convertAllPages(){
+
+    const zip = new JSZip();
+    let completed = 0;
+
+    for(let i=1; i<=pdfDoc.numPages; i++){
+
+        pdfDoc.getPage(i).then(function(page){
+
+            const viewport = page.getViewport({scale:2});
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            page.render({
+                canvasContext: context,
+                viewport: viewport
+            }).promise.then(function(){
+
+                const imgData = canvas.toDataURL("image/jpeg").split(',')[1];
+                zip.file("page-" + i + ".jpg", imgData, {base64:true});
+
+                completed++;
+
+                if(completed === pdfDoc.numPages){
+
+                    zip.generateAsync({type:"blob"}).then(function(content){
+
+                        fullLoader.style.display = "none";
+
+                        downloadAll.href = URL.createObjectURL(content);
+                        downloadAll.download = "converted-pages.zip";
+                        downloadAll.style.display = "block";
+                    });
+                }
+            });
+        });
+    }
+}
+
+downloadAll.addEventListener("click", function(){
+    downloadStatus.style.display = "block";
+});
