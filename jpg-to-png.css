@@ -1,138 +1,155 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:system-ui;
 }
 
-body {
-  background: radial-gradient(circle at top, #020617, #020617);
-  min-height: 100vh;
+body{
+    background:linear-gradient(135deg,#020617,#0f172a);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-.center-wrapper {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.container{
+    background:#0b1120;
+    width:600px;
+    padding:50px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 0 60px rgba(0,0,0,0.7);
 }
 
-.tool-container {
-  width: 100%;
-  max-width: 460px;
-  background: #020617;
-  border-radius: 20px;
-  padding: 34px 26px;
-  color: #fff;
-  box-shadow: 0 35px 90px rgba(0,0,0,.75);
+h1{
+    color:white;
+    margin-bottom:30px;
+    font-size:36px;
+    font-weight:700;
 }
 
-.page { display: none; }
-.page.active { display: block; }
-
-h1, h2 {
-  text-align: center;
-  margin-bottom: 22px;
-  font-weight: 700;
+.upload-btn{
+    display:block;
+    padding:20px;
+    border-radius:15px;
+    background:linear-gradient(90deg,#8b5cf6,#6366f1);
+    color:white;
+    cursor:pointer;
+    font-size:20px;
+    font-weight:600;
 }
 
-/* UPLOAD BUTTON */
-.upload-btn {
-  display: block;
-  width: 100%;
-  padding: 22px;
-  font-size: 18px;
-  font-weight: 700;
-  text-align: center;
-  color: #020617;
-  border-radius: 20px;
-  cursor: pointer;
-  background: linear-gradient(135deg,#b7ccff,#cdbdff);
-  box-shadow: 0 18px 40px rgba(160,180,255,.55);
+.file-selected{
+    margin-top:20px;
+    color:#22c55e;
+    font-size:18px;
+    display:none;
 }
 
-/* STATUS */
-.status {
-  text-align: center;
-  margin-top: 16px;
-  color: #c7d2fe;
+.preview-container{
+    margin-top:30px;
+    height:500px;
+    overflow-y:auto;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    gap:40px;
 }
 
-/* PREVIEW LIST */
-.preview-list {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+.preview-page{
+    width:95%;
+    max-width:500px;
+    background:white;
+    border-radius:8px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
 }
 
-.preview-item {
-  background: #020617;
-  border: 2px dashed #334155;
-  border-radius: 12px;
-  padding: 6px;
+.preview-page img{
+    max-width:100%;
+    max-height:400px;
+    object-fit:contain;
 }
 
-.preview-item img {
-  width: 100%;
-  display: block;
+.convert-btn{
+    margin-top:30px;
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:15px;
+    background:linear-gradient(90deg,#22c55e,#16a34a);
+    color:white;
+    font-size:20px;
+    font-weight:600;
+    cursor:pointer;
+    display:none;
 }
 
-/* DOWNLOAD */
-.download-btn {
-  width: 100%;
-  background: linear-gradient(135deg,#22c55e,#4ade80);
-  padding: 18px;
-  border-radius: 18px;
-  border: none;
-  font-weight: 700;
-  cursor: pointer;
-}
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f9;
-    margin: 0;
-    padding: 0;
+.download-btn{
+    display:none;
+    margin-top:30px;
+    padding:18px;
+    background:#3b82f6;
+    border-radius:15px;
+    color:white;
+    font-size:18px;
+    text-decoration:none;
 }
 
-.tool-description {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+.download-status{
+    margin-top:20px;
+    color:#22c55e;
+    font-size:18px;
+    display:none;
 }
 
-.tool-description h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+/* LOADER */
+
+.full-loader{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#020617;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    display:none;
 }
 
-.tool-description p {
-    font-size: 16px;
-    line-height: 1.7;
-    color: #555;
+.loader-box{
+    width:450px;
+    text-align:center;
 }
 
-#moreText {
-    display: none;
+.loader-box h2{
+    color:white;
+    margin-bottom:30px;
+    font-size:28px;
 }
 
-button {
-    display: block;
-    margin: 20px auto 0;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    font-size: 15px;
-    transition: 0.3s;
+.progress-bar{
+    width:100%;
+    height:15px;
+    background:#1e293b;
+    border-radius:20px;
 }
 
-button:hover {
-    background-color: #0056b3;
+.progress{
+    height:100%;
+    width:0%;
+    background:#22c55e;
+    border-radius:20px;
+}
+
+#progressText{
+    color:white;
+    font-size:20px;
+    margin-bottom:15px;
 }
