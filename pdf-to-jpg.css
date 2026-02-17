@@ -1,108 +1,132 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:system-ui;
+}
+
 body{
-  margin:0;
-  min-height:100vh;
-  background:rgba(0, 0, 0, 0.366);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
-  color:black;
+    background:linear-gradient(135deg,#020617,#0f172a);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-/* 🍎 Header */
-.header{
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:22px;
-  background:white;
-  box-shadow:0 8px 30px blue;
+.container{
+    background:#0b1120;
+    width:500px;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 0 40px rgba(0,0,0,0.6);
 }
 
-.header h1{
-  margin:0;
-  font-size:30px;
-  font-weight:800;
-  letter-spacing:1px;
-  text-align:center;
+h1{
+    color:white;
+    margin-bottom:25px;
 }
 
-/* Bold Arrow */
-.back-arrow{
-  position:absolute;
-  left:20px;
-  font-size:26px;
-  font-weight:900;
-  text-decoration:none;
-  color:black;
-  padding:6px 20px;
-  border-radius:10px;
-  background:white;
+.upload-btn{
+    display:block;
+    padding:15px;
+    border-radius:12px;
+    background:linear-gradient(90deg,#8b5cf6,#6366f1);
+    color:white;
+    cursor:pointer;
 }
 
-.back-arrow:hover{
-  background: pink;
+.file-selected{
+    margin-top:15px;
+    color:#22c55e;
+    display:none;
+    font-weight:600;
 }
 
-/* Glass Card */
-.glass{
-  width:600px;
-  margin:60px auto 30px;
-  padding:28px;
-  border-radius:22px;
-  background:white;
-  backdrop-filter:black;
-  box-shadow: white;
-  text-align:center;
+.preview-container{
+    margin-top:20px;
+    max-height:250px;
+    overflow-y:auto;
+    display:none;
 }
 
-.file-box{
-  padding:26px;
-  border-radius:30px;
-  border:2px dashed black;
-  margin-bottom:22px;
+.preview-container canvas{
+    width:100%;
+    margin-bottom:15px;
+    border-radius:10px;
+    border:1px dashed #334155;
 }
 
-input[type=file]{display:none;}
-
-label{
-  display:block;
-  padding:16px;
-  border-radius:16px;
-  background:black;
-  color:white;
-  font-weight:1000;
-  cursor:pointer;
+.convert-btn{
+    margin-top:20px;
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(90deg,#22c55e,#16a34a);
+    color:white;
+    display:none;
+    cursor:pointer;
 }
 
-button{
-  width:100%;
-  padding:16px;
-  border:none;
-  border-radius:16px;
-  background:black;
-  color:white;
-  font-size:16px;
-  font-weight:900;
-  cursor:pointer;
+.download-btn{
+    display:none;
+    margin-top:20px;
+    padding:12px;
+    background:#3b82f6;
+    border-radius:10px;
+    color:white;
+    text-decoration:none;
 }
 
-button:hover{
-  background: black;
+.download-status{
+    margin-top:15px;
+    color:#22c55e;
+    display:none;
 }
 
-#status{
-  margin-top:14px;
-  font-size:30px;
-  opacity:.85;
+/* FULL PAGE LOADER */
+
+.full-loader{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#020617;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    display:none;
 }
 
-/* 📝 Tool Info */
-.tool-info{
-  max-width:700px;
-  margin:0 auto 60px;
-  padding:0 20px;
-  text-align:center;
-  color :black;
-  font-size:15px;
-  line-height:1.7;
-  
+.loader-box{
+    width:350px;
+    text-align:center;
+}
+
+.loader-box h2{
+    color:white;
+    margin-bottom:20px;
+}
+
+.progress-bar{
+    width:100%;
+    height:10px;
+    background:#1e293b;
+    border-radius:10px;
+    margin-top:10px;
+}
+
+.progress{
+    height:100%;
+    width:0%;
+    background:#22c55e;
+    border-radius:10px;
+}
+
+#progressText{
+    color:white;
+    font-size:20px;
 }
