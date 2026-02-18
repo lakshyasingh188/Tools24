@@ -1,149 +1,124 @@
-/* BACKGROUND IMAGE */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    background-image: url("mainpageimage.png");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:-apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* DARK OVERLAY */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    z-index: -1;
+body{
+    background:#f5f5f7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
 }
 
-/* SAME HEADING BAR AS MERGE PAGE */
-.top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 123, 255, 0.95);
-    padding: 15px;
-    position: relative;
+.container{
+    background:white;
+    padding:50px 40px;
+    width:450px;
+    border-radius:25px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.08);
+    text-align:center;
 }
 
-.back-arrow {
-    position: absolute;
-    left: 20px;
-    font-size: 28px;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.2s;
+h1{
+    font-size:32px;
+    margin-bottom:10px;
 }
 
-.back-arrow:hover {
-    color: #d1d1d1;
-    transform: scale(1.15);
+.subtitle{
+    color:#6e6e73;
+    font-size:16px;
+    margin-bottom:30px;
 }
 
-.heading {
-    color: #ffffff;
-    margin: 0;
-    font-size: 30px;
-    font-weight: bold;
+/* Big Buttons */
+.big-btn{
+    width:100%;
+    padding:18px;
+    font-size:18px;
+    font-weight:600;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+    margin-top:20px;
+    transition:0.3s;
+    text-decoration:none;
+    display:block;
 }
 
-/* SAME GREEN TIRCHI LINE */
-.green-line {
-    width: 100%;
-    height: 12px;
-    background: linear-gradient(90deg, #0aff6c, #00c94a);
-    clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%);
-    margin-bottom: 30px;
+.blue{
+    background:#0071e3;
+    color:white;
 }
 
-/* WHITE TOOL BOX */
-.container {
-    background: rgba(255, 255, 255, 0.98);
-    width: 480px;
-    max-width: 95%;
-    margin: 40px auto;
-    padding: 25px 20px 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+.blue:hover{
+    background:#005bb5;
 }
 
-/* FILE INPUT */
-.file-group {
-    margin-bottom: 18px;
+.green{
+    background:#34c759;
+    color:white;
 }
 
-#pdfFile {
-    display: none;
+.green:hover{
+    background:#28a745;
 }
 
-.file-label {
-    display: inline-block;
-    padding: 10px 20px;
-    background: white;
-    border-radius: 6px;
-    border: 1px solid #007bff;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
+/* File Info */
+.file-info{
+    margin-top:15px;
+    font-size:14px;
+    color:#34c759;
+    font-weight:600;
 }
 
-/* OPTIONS LAYOUT */
-.options-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin: 10px 0 5px;
+/* Slider */
+.slider-box{
+    margin-top:30px;
+    text-align:left;
 }
 
-.option {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    font-size: 13px;
+.slider-box label{
+    font-weight:600;
+    display:block;
+    margin-bottom:10px;
 }
 
-.option label {
-    margin-bottom: 3px;
-    font-weight: 600;
+input[type="range"]{
+    width:100%;
 }
 
-.option select {
-    padding: 5px 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 13px;
+/* Loading */
+.loading-box{
+    display:none;
+    margin-top:25px;
 }
 
-/* BUTTON */
-button {
-    margin-top: 15px;
-    padding: 10px 25px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 600;
+.spinner{
+    border:5px solid #f3f3f3;
+    border-top:5px solid #0071e3;
+    border-radius:50%;
+    width:40px;
+    height:40px;
+    margin:0 auto 10px;
+    animation:spin 1s linear infinite;
 }
 
-button:disabled {
-    opacity: 0.7;
-    cursor: default;
+@keyframes spin{
+    100%{transform:rotate(360deg);}
 }
 
-button:hover:not(:disabled) {
-    background: #0056b3;
+/* Download */
+.download-btn{
+    display:none;
+    margin-top:25px;
 }
 
-/* STATUS TEXT */
-.status-text {
-    margin-top: 10px;
-    font-size: 13px;
-    color: #444;
+/* Complete Message */
+.complete-msg{
+    margin-top:15px;
+    font-weight:600;
+    color:#34c759;
 }
