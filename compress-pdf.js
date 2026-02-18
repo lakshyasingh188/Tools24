@@ -1,131 +1,58 @@
-// pdf.js worker setting
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+const pdfInput = document.getElementById("pdfInput");
+const fileInfo = document.getElementById("fileInfo");
+const slider = document.getElementById("compressionSlider");
+const percentValue = document.getElementById("percentValue");
+const loadingBox = document.getElementById("loadingBox");
+const downloadBtn = document.getElementById("downloadBtn");
+const completeMessage = document.getElementById("completeMessage");
 
-const fileInput     = document.getElementById("pdfFile");
-const compressBtn   = document.getElementById("compressBtn");
-const statusText    = document.getElementById("statusText");
-const dpiSelect     = document.getElementById("dpiSelect");
-const qualitySelect = document.getElementById("qualitySelect");
-const colorSelect   = document.getElementById("colorSelect");
+/* Show slider percentage */
+slider.addEventListener("input", () => {
+    percentValue.textContent = slider.value + "%";
+});
 
-// helper: dataURL -> Uint8Array
-function dataURLToUint8Array(dataURL) {
-    const base64 = dataURL.split(",")[1];
-    const raw = atob(base64);
-    const uint8Array = new Uint8Array(raw.length);
-    for (let i = 0; i < raw.length; i++) {
-        uint8Array[i] = raw.charCodeAt(i);
+/* File selected indicator */
+pdfInput.addEventListener("change", () => {
+    if(pdfInput.files.length > 0){
+        fileInfo.innerHTML = "✔ Selected: " + pdfInput.files[0].name;
     }
-    return uint8Array;
-}
+});
 
-// 1 hi canvas reuse – speed + kam memory
-const canvas = document.createElement("canvas");
-const ctx = canvas.getContext("2d");
+async function compressPDF(){
 
-compressBtn.addEventListener("click", async () => {
-    const file = fileInput.files[0];
-    if (!file) {
-        alert("Please select a PDF file");
+    if(!pdfInput.files.length){
+        alert("Please select a PDF first.");
         return;
     }
 
-    // options
-    let dpi = parseInt(dpiSelect.value, 10);      // 150 / 200 / 300
-    const colorMode = colorSelect.value;          // color / grayscale
+    loadingBox.style.display = "block";
+    downloadBtn.style.display = "none";
+    completeMessage.innerHTML = "";
 
-    let jpegQuality = 0.85;
-    if (qualitySelect.value === "medium") jpegQuality = 0.65;
-    if (qualitySelect.value === "low")    jpegQuality = 0.45;
+    const file = pdfInput.files[0];
+    const arrayBuffer = await file.arrayBuffer();
 
-    // 72 default PDF DPI, scale control; limit to bachao lag se
-    let scale = dpi / 72;
-    if (scale > 2) scale = 2;
-    if (scale < 1) scale = 1;
+    const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+    const newPdf = await PDFLib.PDFDocument.create();
+    const pages = await newPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
 
-    compressBtn.disabled = true;
-    statusText.textContent = "Loading PDF...";
+    pages.forEach(page => newPdf.addPage(page));
 
-    let loadingTask = null;
+    const compressedBytes = await newPdf.save({
+        useObjectStreams:true,
+        compress:true
+    });
 
-    try {
-        const arrayBuffer = await file.arrayBuffer();
+    const blob = new Blob([compressedBytes], {type:"application/pdf"});
+    const url = URL.createObjectURL(blob);
 
-        loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
-        const pdf = await loadingTask.promise;
+    setTimeout(() => {
+        loadingBox.style.display = "none";
+        downloadBtn.href = url;
+        downloadBtn.download = "compressed.pdf";
+        downloadBtn.innerHTML = "Download Compressed PDF";
+        downloadBtn.style.display = "block";
 
-        const outPdfDoc = await PDFLib.PDFDocument.create();
-
-        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-            statusText.textContent = `Processing page ${pageNum} of ${pdf.numPages}...`;
-
-            const page = await pdf.getPage(pageNum);
-            const viewport = page.getViewport({ scale });
-
-            canvas.width = viewport.width | 0;
-            canvas.height = viewport.height | 0;
-
-            // UI ko freeze hone se bachane ke liye
-            await new Promise(requestAnimationFrame);
-
-            await page.render({ canvasContext: ctx, viewport }).promise;
-
-            // grayscale mode – sirf jab selected ho
-            if (colorMode === "grayscale") {
-                const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const data = imgData.data;
-                for (let i = 0; i < data.length; i += 4) {
-                    const r = data[i];
-                    const g = data[i + 1];
-                    const b = data[i + 2];
-                    const v = 0.299 * r + 0.587 * g + 0.114 * b;
-                    data[i] = data[i + 1] = data[i + 2] = v;
-                }
-                ctx.putImageData(imgData, 0, 0);
-            }
-
-            const dataUrl = canvas.toDataURL("image/jpeg", jpegQuality);
-            const jpgBytes = dataURLToUint8Array(dataUrl);
-            const jpgImage = await outPdfDoc.embedJpg(jpgBytes);
-
-            const pageWidth = canvas.width;
-            const pageHeight = canvas.height;
-
-            const newPage = outPdfDoc.addPage([pageWidth, pageHeight]);
-            newPage.drawImage(jpgImage, {
-                x: 0,
-                y: 0,
-                width: pageWidth,
-                height: pageHeight
-            });
-        }
-
-        statusText.textContent = "Creating compressed PDF...";
-
-        const compressedBytes = await outPdfDoc.save();
-        const blob = new Blob([compressedBytes], { type: "application/pdf" });
-
-        const link = document.createElement("a");
-        const url = URL.createObjectURL(blob);
-        link.href = url;
-        link.download = "compressed.pdf";
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-
-        // memory free
-        setTimeout(() => URL.revokeObjectURL(url), 2000);
-
-        statusText.textContent = "Done! Compressed PDF downloaded.";
-    } catch (err) {
-        console.error(err);
-        alert("Something went wrong while compressing the PDF.");
-        statusText.textContent = "Error while compressing.";
-    } finally {
-        if (loadingTask && loadingTask.destroy) {
-            loadingTask.destroy();   // worker clean
-        }
-        compressBtn.disabled = false;
-    }
-});
+        completeMessage.innerHTML = "✔ Compression Complete!";
+    }, 2000);
+}
