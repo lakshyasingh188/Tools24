@@ -1,0 +1,107 @@
+:root {
+    --apple-blue: #0071e3;
+    --apple-bg: #f5f5f7;
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --border-color: #d2d2d7;
+    --text-main: #1d1d1f;
+    --text-secondary: #86868b;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+    background-color: blue;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.apple-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 30px;
+    padding: 50px;
+    width: 90%;
+    max-width: 900px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.hidden { display: none !important; }
+
+/* Buttons */
+.primary-btn {
+    width: 100%;
+    background: var(--apple-blue);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.primary-btn.big-btn {
+    padding: 22px;
+    font-size: 1.25rem;
+}
+
+.primary-btn:hover { background: #0077ed; transform: translateY(-2px); }
+
+/* Upload Box */
+.upload-box {
+    border: 2px dashed var(--border-color);
+    border-radius: 25px;
+    padding: 100px 20px;
+    text-align: center;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Settings Layout */
+.settings-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; }
+
+.apple-tabs {
+    background: #e5e5ea;
+    padding: 4px;
+    border-radius: 12px;
+    display: flex;
+    margin-bottom: 25px;
+}
+
+.tab-btn {
+    flex: 1; border: none; padding: 12px; border-radius: 10px; cursor: pointer;
+    background: none; font-weight: 500;
+}
+
+.tab-btn.active { background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+
+.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+.apple-select, input[type="number"] {
+    width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border-color);
+}
+
+/* Preview */
+.preview-card { background: white; border-radius: 24px; padding: 25px; text-align: center; }
+.img-preview {
+    height: 280px; background: #fafafa; border-radius: 15px;
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    margin-bottom: 20px;
+}
+
+/* Loader */
+.loader-content { text-align: center; }
+.progress-container { background: #e5e5ea; height: 12px; border-radius: 10px; overflow: hidden; margin: 30px 0; }
+.progress-bar { background: var(--apple-blue); width: 0%; height: 100%; transition: width 0.2s linear; }
+#progressText { font-size: 40px; font-weight: 800; color: var(--apple-blue); }
+
+/* Download Page */
+.download-content { text-align: center; }
+.success-icon {
+    width: 90px; height: 90px; background: #34c759; color: white;
+    font-size: 45px; line-height: 90px; border-radius: 50%; margin: 0 auto 20px;
+}
+.download-card { background: white; padding: 40px; border-radius: 24px; margin: 30px 0; }
+.secondary-link { background: none; border: none; color: var(--apple-blue); cursor: pointer; margin-top: 20px; font-size: 16px; }
