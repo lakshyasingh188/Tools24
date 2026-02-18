@@ -1,68 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Tools24 Compress Pdf</title>
-    <link rel="stylesheet" href="compress-pdf.css">
+<meta charset="UTF-8">
+<title>Compress PDF - Tools24</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="compress-pdf.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 </head>
+
 <body>
-
-<!-- SAME HEADING AS MERGE PAGE -->
-<div class="top-bar">
-    <span class="back-arrow" onclick="window.location.href='index.html'">&#8592;</span>
-    <h1 class="heading">Tools24 Compress Pdf</h1>
-</div>
-
-<!-- SAME GREEN SLANTED LINE -->
-<div class="green-line"></div>
 
 <div class="container">
 
-    <div class="file-group">
-        <label for="pdfFile" class="file-label">Select PDF to Compress</label>
-        <input type="file" id="pdfFile" accept="application/pdf">
+    <h1>Compress PDF</h1>
+    <p class="subtitle">Reduce PDF file size easily with percentage control</p>
+
+    <!-- Upload Section -->
+    <div class="upload-section">
+        <input type="file" id="pdfInput" accept="application/pdf" hidden>
+        <button class="big-btn blue" onclick="document.getElementById('pdfInput').click()">
+            Select PDF File
+        </button>
+
+        <div id="fileInfo" class="file-info"></div>
     </div>
 
-    <!-- OPTIONS: DPI, QUALITY, COLOR -->
-    <div class="options-row">
-        <div class="option">
-            <label for="dpiSelect">DPI</label>
-            <select id="dpiSelect">
-                <option value="150">150 DPI (Strong Compress)</option>
-                <option value="200" selected>200 DPI (Balanced)</option>
-                <option value="300">300 DPI (High Quality)</option>
-            </select>
-        </div>
-
-        <div class="option">
-            <label for="qualitySelect">Image Quality</label>
-            <select id="qualitySelect">
-                <option value="high" selected>High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-            </select>
-        </div>
-
-        <div class="option">
-            <label for="colorSelect">Color Mode</label>
-            <select id="colorSelect">
-                <option value="color" selected>Color</option>
-                <option value="grayscale">Black & White</option>
-            </select>
-        </div>
+    <!-- Compression Slider -->
+    <div class="slider-box">
+        <label>Compression Level: <span id="percentValue">50%</span></label>
+        <input type="range" min="10" max="90" value="50" id="compressionSlider">
     </div>
 
-    <button id="compressBtn">Compress PDF</button>
-    <p id="statusText" class="status-text"></p>
+    <!-- Compress Button -->
+    <button class="big-btn green" onclick="compressPDF()">
+        Compress Now
+    </button>
+
+    <!-- Loading -->
+    <div id="loadingBox" class="loading-box">
+        <div class="spinner"></div>
+        <p>Compressing your PDF...</p>
+    </div>
+
+    <!-- Download -->
+    <a id="downloadBtn" class="big-btn blue download-btn"></a>
+
+    <div id="completeMessage" class="complete-msg"></div>
 
 </div>
 
-<!-- LIBRARIES -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
-<!-- AAPKI ALAG JS FILE -->
 <script src="compress-pdf.js"></script>
-
 </body>
 </html>
