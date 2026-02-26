@@ -1,0 +1,45 @@
+body { background: #2d1b33; color: white; margin: 0; font-family: 'Georgia', serif; }
+
+/* Selection Grid */
+.header-main { text-align: center; font-size: 24px; font-weight: bold; padding: 30px; }
+.template-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+.tpl-card { background: white; padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; color: #333; }
+.preview-box { width: 160px; height: 220px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 10px; }
+
+/* Solid Border Styles */
+.gold-b { border: 8px double #b08d57; background: #fffcf5; }
+.red-b { border: 8px solid #800000; background: #fff; }
+.green-b { border: 8px solid #1b5e20; border-radius: 10px; background: #f9fff9; }
+
+/* A4 Container Setup */
+.a4-container {
+    width: 210mm; height: 297mm;
+    background: white; color: black;
+    padding: 10mm; box-sizing: border-box;
+    position: relative; overflow: hidden;
+    transform: scale(0.48); transform-origin: top left;
+}
+
+/* Template Specific CSS */
+.tpl-gold .border-layer { border: 20px double goldenrod; height: 100%; padding: 10mm; box-sizing: border-box; }
+.tpl-red .border-layer { border: 15px solid #800000; outline: 20px solid #ffcc00; height: 100%; padding: 15mm; box-sizing: border-box; }
+
+.inner-page { height: 100%; display: flex; flex-direction: column; }
+.top-decoration { text-align: center; margin-bottom: 20px; }
+.rel-img { height: 60px; margin-bottom: 5px; }
+
+.content-flex { display: flex; justify-content: space-between; margin-bottom: 20px; }
+.info-column { flex: 1; }
+.info-row { display: flex; margin-bottom: 6px; font-size: 20px; line-height: 1.4; }
+.info-row strong { width: 170px; display: inline-block; }
+
+.photo-frame { width: 130px; height: 160px; border: 10px solid black; display: flex; align-items: center; justify-content: center; background: white; }
+.photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+.section-title { text-align: center; font-weight: bold; font-size: 18px; margin: 25px 0 10px; color: #b08d57; border-bottom: 2px solid #b08d57; padding-bottom: 5px; text-transform: uppercase; }
+
+/* Editor Panels */
+.wrapper { display: flex; padding: 20px; height: 100vh; }
+.form-panel { width: 380px; background: white; color: #333; padding: 20px; border-radius: 10px; overflow-y: auto; }
+.form-panel input, textarea, select { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
+.dl-btn { background: #27ae60; color: white; width: 100%; padding: 15px; border: none; border-radius: 5px; font-size: 18px; cursor: pointer; margin-top: 15px; }

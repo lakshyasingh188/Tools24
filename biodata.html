@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Marriage Biodata Maker</title>
+    <link rel="stylesheet" href="biodata.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+    <div id="selection-page">
+        <div class="header-main">— Biodata Formats With Photo —</div>
+        <div class="template-grid">
+            <div class="tpl-card" onclick="startEditor('tpl-gold')">
+                <div class="preview-box gold-b">Tools24 Template no - 1</div>
+                <button class="cust-btn">Customize ✎</button>
+            </div>
+            <div class="tpl-card" onclick="startEditor('tpl-red')">
+                <div class="preview-box red-b">Tools24 Template no - 2</div>
+                <button class="cust-btn">Customize ✎</button>
+            </div>
+            <div class="tpl-card" onclick="startEditor('tpl-green')">
+                <div class="preview-box green-b">Tools24 Template no - 3</div>
+                <button class="cust-btn">Customize ✎</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="editor-page" style="display: none;">
+        <div class="wrapper">
+            <div class="form-panel">
+                <button class="back-btn" onclick="location.reload()">← Back</button>
+                
+                <select id="religion" onchange="updateReligion()">
+                    <option value="hindu">Hindu (Shree Ganesha)</option>
+                    <option value="muslim">Muslim (786)</option>
+                </select>
+
+                <h3>Personal Details / व्यक्तिगत विवरण</h3>
+                <input type="file" accept="image/*" onchange="previewPhoto(event)">
+                <input type="text" id="name" placeholder="Name / नाम" oninput="sync()">
+                <input type="text" id="dob" placeholder="DOB / जन्म तिथि" oninput="sync()">
+                <input type="text" id="caste" placeholder="Caste / जाति" oninput="sync()">
+                <input type="text" id="mstatus" placeholder="Marital Status / वैवाहिक स्थिति" oninput="sync()">
+                <input type="text" id="height" placeholder="Height / लंबाई" oninput="sync()">
+                <input type="text" id="bgroup" placeholder="Blood Group / रक्त समूह" oninput="sync()">
+                <input type="text" id="lang" placeholder="Languages / भाषा" oninput="sync()">
+                <input type="text" id="tob" placeholder="Time of Birth / जन्म समय" oninput="sync()">
+                <input type="text" id="pob" placeholder="Place of Birth / जन्म स्थान" oninput="sync()">
+                <input type="text" id="mangal" placeholder="Day / मंगल" oninput="sync()">
+                <input type="text" id="edu" placeholder="Education / शिक्षा" oninput="sync()">
+                <input type="text" id="occ" placeholder="Occupation / व्यवसाय" oninput="sync()">
+                
+                
+                <h3>Family Background</h3>
+                <input type="text" id="fname" placeholder="Father Name / पिता का नाम" oninput="sync()">
+                <input type="text" id="mname" placeholder="Mother Name / माता का नाम" oninput="sync()">
+                <input type="text" id="focc" placeholder="Father Job / पिता का कार्य" oninput="sync()">
+                <input type="text" id="contact" placeholder="Mobile / मोबाइल" oninput="sync()">
+                <textarea id="addr" placeholder="Address / पता" oninput="sync()"></textarea>
+
+                <button class="dl-btn" onclick="downloadPDF()">Download PDF</button>
+            </div>
+
+            <div class="preview-panel">
+                <div id="biodata-canvas" class="a4-container tpl-gold">
+                    <div class="border-layer">
+                        <div class="inner-page">
+                            <div class="top-decoration">
+                                <img src="ganesh1.avif" id="rel-icon" class="rel-img">
+                                <p id="rel-text">|| SHREE GANESHAYA NAMAH ||</p>
+                                <h2 class="main-title">BIODATA</h2>
+                            </div>
+
+                            <div class="content-flex">
+                                <div class="info-column">
+                                    <div class="info-row"><strong>Name / नाम</strong> : <span id="v-name"></span></div>
+                                    <div class="info-row"><strong>DOB / जन्म तिथि</strong> : <span id="v-dob"></span></div>
+                                    <div class="info-row"><strong>Caste / जाति</strong> : <span id="v-caste"></span></div>
+                                    <div class="info-row"><strong>Marital Status</strong> : <span id="v-mstatus"></span></div>
+                                    <div class="info-row"><strong>Height / लंबाई</strong> : <span id="v-height"></span></div>
+                                    <div class="info-row"><strong>Blood Group</strong> : <span id="v-bgroup"></span></div>
+                                    <div class="info-row"><strong>Languages</strong> : <span id="v-lang"></span></div>
+                                    <div class="info-row"><strong>Time of Birth</strong> : <span id="v-tob"></span></div>
+                                    <div class="info-row"><strong>Place of Birth</strong> : <span id="v-pob"></span></div>
+                                    <div class="info-row"><strong>Mangal / मंगल</strong> : <span id="v-mangal"></span></div>
+                                    <div class="info-row"><strong>Education</strong> : <span id="v-edu"></span></div>
+                                    <div class="info-row"><strong>Occupation</strong> : <span id="v-occ"></span></div>
+                                    <div class="info-row"><strong>Income / आय</strong> : <span id="v-income"></span></div>
+                                </div>
+                                <div class="photo-frame">
+                                    <img id="u-photo" src="">
+                                </div>
+                            </div>
+
+                            <div class="section-title">Family Background Details</div>
+                            <div class="info-row"><strong>Father Name</strong> : <span id="v-fname"></span></div>
+                            <div class="info-row"><strong>Mother Name</strong> : <span id="v-mname"></span></div>
+                            <div class="info-row"><strong>Father Job</strong> : <span id="v-focc"></span></div>
+
+                            <div class="section-title">Contact Details</div>
+                            <div class="info-row"><strong>Contact No.</strong> : <span id="v-contact"></span></div>
+                            <div class="info-row"><strong>Address / पता</strong> : <span id="v-addr"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="biodata.js"></script>
+</body>
+</html>
