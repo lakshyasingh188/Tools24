@@ -681,7 +681,7 @@ body.dark #appleNav a {
 .footer-content p {
     color: #ccc;
     margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 10px;
 }
 
 .footer-buttons {
@@ -691,8 +691,8 @@ body.dark #appleNav a {
 }
 
 .footer-btn {
-    padding: 5px 15px;
-    background: #ff9800;
+    padding: 5px 10px;
+    background: black;
     color: white;
     text-decoration: none;
     border-radius: 15px;
@@ -701,10 +701,28 @@ body.dark #appleNav a {
 }
 
 .footer-btn:hover {
-    background: #e68900;
+    background: blue;
     transform: scale(1.1);
 }
 .section-divider {
     height: 130px;
     background: linear-gradient(to bottom, white, transparent);
+}
+.visitor-box {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 6px 6px;
+    border-radius: 4px;
+    width: fit-content;
+}
+
+.visitor-text {
+    color: black;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.visitor-box img {
+    height: 15px;
 }
