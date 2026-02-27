@@ -1,83 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Sign PDF Online – Tools24</title>
-
-<link rel="stylesheet" href="sign.css">
-
-<!-- JS libraries (already working logic) -->
-<script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/signature_pad/dist/signature_pad.umd.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance Sign PDF Tool</title>
+    <link rel="stylesheet" href="sign.css">
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 </head>
-
 <body>
 
-<div class="tools24-wrapper">
+<div class="container">
+    <h1>Advance Sign PDF Tool</h1>
 
-  <!-- 🔹 Tool Header -->
-  <div class="tool-header">
-    <a href="/" class="back-arrow">←</a>
-    <h2 class="tool-heading"></h2>
-  </div>
-
-  <!-- 🔹 Main Tool Card -->
-  <div class="tools24-card">
-
-    <h1 class="tools24-title">Tools24 Sign PDF</h1>
-    <p class="tools24-sub">Fast • Secure • No Upload</p>
-
-    <!-- Upload -->
-    <label class="tools24-upload">
-      Choose PDF
-      <input type="file" id="pdfUpload" accept="application/pdf" hidden>
-    </label>
-
-    <!-- PDF Preview -->
-    <p class="hint">Click on PDF to choose signature position</p>
-    <canvas id="pdfPreview"></canvas>
-
-    <!-- Signature -->
-    <p class="hint">Draw your signature</p>
-    <canvas id="signature"></canvas>
-
-    <!-- Buttons -->
-    <div class="buttons">
-      <button class="btn-outline" onclick="clearSign()">Clear</button>
-
-      <button class="apple-glass-btn" onclick="signPdf()">
-        <span class="btn-icon">∿</span>
-        <span class="btn-text">Sign & Download</span>
-      </button>
+    <div class="step">
+        <label>1. Select PDF File:</label>
+        <input type="file" id="pdfInput" accept="application/pdf">
     </div>
 
-  </div>
+    <div id="preview-container" class="preview-area" style="display:none;">
+        <h3>Click on PDF to place signature</h3>
+        <div class="pdf-wrapper">
+            <canvas id="pdf-render"></canvas>
+            <div id="signature-overlay" class="draggable-sign" style="display:none;"></div>
+        </div>
+    </div>
 
-  <!-- 🔹 Tool Description (Niche Content) -->
-  <div class="tool-description">
+    <div class="step">
+        <label>2. Draw Signature OR Upload Digital Sign:</label>
+        <div class="sign-box">
+            <canvas id="sig-canvas" width="400" height="150"></canvas>
+            <div class="controls">
+                <button id="sig-clearBtn">Clear</button>
+                <input type="file" id="signUpload" accept="image/*" style="display:none;">
+                <button onclick="document.getElementById('signUpload').click()">Upload Image</button>
+            </div>
+        </div>
+    </div>
 
-    <h3>About Tools24 Sign PDF</h3>
-
-    <p>
-      Tools24 Sign PDF is a simple and secure online tool that allows you to add your signature
-      to PDF documents directly in your browser. You can upload your PDF, choose the exact
-      position for your signature, and download the signed file instantly.
-    </p>
-
-    <p>
-      This tool works completely on your device — your files are never uploaded to any server.
-      No account, no registration, and no data storage. Tools24 focuses on privacy, speed,
-      and ease of use, making everyday digital tasks simple for everyone.
-    </p>
-
-    <p>
-      Whether you are signing forms, documents, or agreements, Tools24 Sign PDF helps you
-      complete your work quickly and securely on mobile, tablet, or desktop.
-    </p>
-
-  </div>
-
+    <button id="downloadBtn" class="main-btn">Download Signed PDF</button>
 </div>
 
 <script src="sign.js"></script>
