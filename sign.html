@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advance Sign PDF Tool</title>
+    <title>Professional Multi-Page Sign PDF</title>
     <link rel="stylesheet" href="sign.css">
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
@@ -11,34 +11,38 @@
 <body>
 
 <div class="container">
-    <h1>Advance Sign PDF Tool</h1>
+    <h1>Professional PDF Signer</h1>
 
-    <div class="step">
-        <label>1. Select PDF File:</label>
+    <div class="step-box">
+        <h3>Step 1: Upload Your PDF</h3>
         <input type="file" id="pdfInput" accept="application/pdf">
     </div>
 
-    <div id="preview-container" class="preview-area" style="display:none;">
-        <h3>Click on PDF to place signature</h3>
-        <div class="pdf-wrapper">
-            <canvas id="pdf-render"></canvas>
-            <div id="signature-overlay" class="draggable-sign" style="display:none;"></div>
+    <div class="main-layout">
+        <div id="preview-container" class="preview-area">
+            <div class="instruction">Select a PDF to see pages. Click on any page to place signature.</div>
+            <div class="pdf-wrapper">
+                <div id="signature-overlay" class="draggable-sign" style="display:none;"></div>
+            </div>
         </div>
-    </div>
 
-    <div class="step">
-        <label>2. Draw Signature OR Upload Digital Sign:</label>
-        <div class="sign-box">
-            <canvas id="sig-canvas" width="400" height="150"></canvas>
-            <div class="controls">
-                <button id="sig-clearBtn">Clear</button>
-                <input type="file" id="signUpload" accept="image/*" style="display:none;">
-                <button onclick="document.getElementById('signUpload').click()">Upload Digital Sign</button>
+        <div class="side-panel">
+            <h3>Step 2: Create Signature</h3>
+            <div class="sign-box">
+                <canvas id="sig-canvas" width="300" height="150"></canvas>
+                <div class="controls">
+                    <button id="sig-clearBtn" class="btn-danger">Clear Pad</button>
+                    <input type="file" id="signUpload" accept="image/*" style="display:none;">
+                    <button onclick="document.getElementById('signUpload').click()" class="btn-info">Upload Digital Sign</button>
+                </div>
+            </div>
+            
+            <div class="download-section">
+                <h3>Step 3: Finalize</h3>
+                <button id="downloadBtn" class="main-btn">Download Signed PDF</button>
             </div>
         </div>
     </div>
-
-    <button id="downloadBtn" class="main-btn">Download Signed PDF</button>
 </div>
 
 <script src="sign.js"></script>
