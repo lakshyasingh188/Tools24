@@ -1,141 +1,147 @@
-const pdfCanvas = document.getElementById("pdfPreview");
-const pdfCtx = pdfCanvas.getContext("2d");
+let pdfLibDoc = null;
+let sigX = 0, sigY = 0;
+let signatureImgBase64 = null;
+let pdfScale = 1;
 
-const signCanvas = document.getElementById("signature");
-const signaturePad = new SignaturePad(signCanvas);
+const pdfInput = document.getElementById('pdfInput');
+const signUpload = document.getElementById('signUpload');
+const pdfCanvas = document.getElementById('pdf-render');
+const sigCanvas = document.getElementById('sig-canvas');
+const sigCtx = sigCanvas.getContext('2d');
+const overlay = document.getElementById('signature-overlay');
 
-signCanvas.width = signCanvas.offsetWidth;
-signCanvas.height = signCanvas.offsetHeight;
+// 1. PDF Preview Load & Render
+pdfInput.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-let pdfBytes;
-let pdfImage;
-let signX = 50;
-let signY = 50;
-
-// Load PDF
-document.getElementById("pdfUpload").addEventListener("change", async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  pdfBytes = await file.arrayBuffer();
-
-  const pdf = await pdfjsLib.getDocument({ data: pdfBytes }).promise;
-  const page = await pdf.getPage(1);
-
-  const viewport = page.getViewport({ scale: 1.3 });
-  pdfCanvas.width = viewport.width;
-  pdfCanvas.height = viewport.height;
-
-  await page.render({
-    canvasContext: pdfCtx,
-    viewport
-  }).promise;
-
-  pdfImage = new Image();
-  pdfImage.src = pdfCanvas.toDataURL();
+    const arrayBuffer = await file.arrayBuffer();
+    pdfLibDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+    
+    // PDF.js setup for rendering
+    const pdfData = new Uint8Array(arrayBuffer);
+    const loadingTask = pdfjsLib.getDocument({ data: pdfData });
+    const pdf = await loadingTask.promise;
+    const page = await pdf.getPage(1);
+    
+    const viewport = page.getViewport({ scale: 1.5 }); // High quality preview
+    pdfCanvas.height = viewport.height;
+    pdfCanvas.width = viewport.width;
+    
+    const renderContext = {
+        canvasContext: pdfCanvas.getContext('2d'),
+        viewport: viewport
+    };
+    await page.render(renderContext).promise;
+    
+    document.getElementById('preview-container').style.display = 'block';
 });
 
-// 🔥 PERFECT CLICK POSITION FIX
-pdfCanvas.addEventListener("click", (e) => {
-  if (!pdfImage) return;
-
-  const rect = pdfCanvas.getBoundingClientRect();
-
-  // scale ratio
-  const scaleX = pdfCanvas.width / rect.width;
-  const scaleY = pdfCanvas.height / rect.height;
-
-  const canvasX = (e.clientX - rect.left) * scaleX;
-  const canvasY = (e.clientY - rect.top) * scaleY;
-
-  signX = canvasX;
-  signY = pdfCanvas.height - canvasY;
-
-  // redraw PDF
-  // Load PDF and render with correct aspect ratio
-document.getElementById("pdfUpload").addEventListener("change", async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  pdfBytes = await file.arrayBuffer();
-
-  const pdf = await pdfjsLib.getDocument({ data: pdfBytes }).promise;
-  const page = await pdf.getPage(1);
-
-  // container width ke hisaab se scale
-  const containerWidth = pdfCanvas.parentElement.clientWidth;
-
-  const unscaledViewport = page.getViewport({ scale: 1 });
-  const scale = containerWidth / unscaledViewport.width;
-
-  const viewport = page.getViewport({ scale });
-
-  // canvas exact PDF size ke barabar
-  pdfCanvas.width = viewport.width;
-  pdfCanvas.height = viewport.height;
-
-  await page.render({
-    canvasContext: pdfCtx,
-    viewport
-  }).promise;
-
-  // cache image
-  pdfImage = new Image();
-  pdfImage.src = pdfCanvas.toDataURL();
+// 2. Signature Drawing Logic
+let drawing = false;
+sigCanvas.addEventListener('mousedown', () => drawing = true);
+sigCanvas.addEventListener('mouseup', () => { 
+    drawing = false; 
+    sigCtx.beginPath(); 
+    updateOverlay(); 
+});
+sigCanvas.addEventListener('mousemove', (e) => {
+    if (!drawing) return;
+    const rect = sigCanvas.getBoundingClientRect();
+    sigCtx.lineWidth = 2;
+    sigCtx.lineCap = 'round';
+    sigCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+    sigCtx.stroke();
 });
 
+// 3. Update Preview Overlay
+function updateOverlay() {
+    signatureImgBase64 = sigCanvas.toDataURL('image/png');
+    overlay.style.backgroundImage = `url(${signatureImgBase64})`;
+}
 
-  // selector box EXACT click par
-  const boxW = 160;
-  const boxH = 70;
-
-  pdfCtx.strokeStyle = "#22c55e";
-  pdfCtx.lineWidth = 2;
-  pdfCtx.strokeRect(
-    canvasX - boxW / 2,
-    canvasY - boxH / 2,
-    boxW,
-    boxH
-  );
+// 4. Click on PDF to Position
+pdfCanvas.addEventListener('click', (e) => {
+    const rect = pdfCanvas.getBoundingClientRect();
+    sigX = e.clientX - rect.left;
+    sigY = e.clientY - rect.top;
+    
+    overlay.style.left = (sigX - 75) + 'px'; 
+    overlay.style.top = (sigY - 30) + 'px';
+    overlay.style.display = 'block';
 });
 
-function clearSign() {
-  signaturePad.clear();
-}
+// 5. Digital Sign Upload Fix
+signUpload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+            sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+            sigCtx.drawImage(img, 0, 0, sigCanvas.width, sigCanvas.height);
+            updateOverlay();
+        };
+        img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+});
 
-// Sign PDF
-async function signPdf() {
-  if (!pdfBytes) {
-    alert("Please upload PDF");
-    return;
-  }
-  if (signaturePad.isEmpty()) {
-    alert("Please draw signature");
-    return;
-  }
+// Clear Button
+document.getElementById('sig-clearBtn').addEventListener('click', () => {
+    sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+    overlay.style.display = 'none';
+    signatureImgBase64 = null;
+});
 
-  const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
-  const page = pdfDoc.getPages()[0];
+// 6. FINAL DOWNLOAD LOGIC (Fixed)
+document.getElementById('downloadBtn').addEventListener('click', async () => {
+    try {
+        if (!pdfLibDoc) return alert("Pehle PDF upload karein!");
+        if (!signatureImgBase64) return alert("Signature draw ya upload karein!");
+        if (overlay.style.display === 'none') return alert("PDF par click karke sign ki jagah select karein!");
 
-  const signatureImg = await pdfDoc.embedPng(
-    signaturePad.toDataURL()
-  );
+        const pages = pdfLibDoc.getPages();
+        const firstPage = pages[0];
+        const { width, height } = firstPage.getSize();
 
-  page.drawImage(signatureImg, {
-    x: signX - 80,
-    y: signY - 35,
-    width: 160,
-    height: 70,
-  });
+        // Embed signature image
+        const sigImage = await pdfLibDoc.embedPng(signatureImgBase64);
 
-  const signedPdf = await pdfDoc.save();
-  downloadPdf(signedPdf);
-}
+        // Coordinate Mapping Logic
+        // PDF point system: (0,0) is bottom-left
+        // Canvas pixel system: (0,0) is top-left
+        const xRatio = width / pdfCanvas.width;
+        const yRatio = height / pdfCanvas.height;
 
-function downloadPdf(bytes) {
-  const blob = new Blob([bytes], { type: "application/pdf" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "signed.pdf";
-  link.click();
-}
+        const finalWidth = 150 * xRatio;
+        const finalHeight = 60 * yRatio;
+        const finalX = (sigX - 75) * xRatio;
+        const finalY = height - ((sigY + 30) * yRatio); // Inverting Y axis
+
+        firstPage.drawImage(sigImage, {
+            x: finalX,
+            y: finalY,
+            width: finalWidth,
+            height: finalHeight,
+        });
+
+        // Save and Trigger Download
+        const pdfBytes = await pdfLibDoc.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Signed_Document_${Date.now()}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+    } catch (err) {
+        console.error(err);
+        alert("Download fail ho gaya: " + err.message);
+    }
+});
