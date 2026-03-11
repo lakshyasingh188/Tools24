@@ -1,58 +1,91 @@
-const pdfInput = document.getElementById("pdfInput");
-const fileInfo = document.getElementById("fileInfo");
-const slider = document.getElementById("compressionSlider");
-const percentValue = document.getElementById("percentValue");
-const loadingBox = document.getElementById("loadingBox");
-const downloadBtn = document.getElementById("downloadBtn");
-const completeMessage = document.getElementById("completeMessage");
+const fileInput = document.getElementById('fileInput');
+const actionBtn = document.getElementById('actionBtn');
+const mainText = document.getElementById('mainText');
+const subText = document.getElementById('subText');
+const progressWrapper = document.getElementById('progressWrapper');
+const progressFill = document.getElementById('progressFill');
+const percentText = document.getElementById('percentText');
+const downloadIndicator = document.getElementById('downloadIndicator');
+const statusIcon = document.getElementById('statusIcon');
 
-/* Show slider percentage */
-slider.addEventListener("input", () => {
-    percentValue.textContent = slider.value + "%";
-});
+let pdfFile = null;
 
-/* File selected indicator */
-pdfInput.addEventListener("change", () => {
-    if(pdfInput.files.length > 0){
-        fileInfo.innerHTML = "✔ Selected: " + pdfInput.files[0].name;
+actionBtn.addEventListener('click', () => {
+    if (!pdfFile) {
+        fileInput.click();
+    } else {
+        runCompression();
     }
 });
 
-async function compressPDF(){
-
-    if(!pdfInput.files.length){
-        alert("Please select a PDF first.");
-        return;
+fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length) {
+        pdfFile = e.target.files[0];
+        mainText.textContent = "File Selected";
+        subText.textContent = pdfFile.name;
+        actionBtn.textContent = "Start Compression";
+        
+        // Change icon color to green to indicate selection
+        statusIcon.style.color = "#4CAF50";
     }
+});
 
-    loadingBox.style.display = "block";
-    downloadBtn.style.display = "none";
-    completeMessage.innerHTML = "";
+function runCompression() {
+    // Hide button, show progress
+    actionBtn.style.display = 'none';
+    progressWrapper.style.display = 'block';
+    downloadIndicator.textContent = "Initializing algorithm...";
 
-    const file = pdfInput.files[0];
-    const arrayBuffer = await file.arrayBuffer();
+    let count = 0;
+    const interval = setInterval(() => {
+        count++;
+        progressFill.style.width = count + "%";
+        percentText.textContent = count + "%";
 
-    const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
-    const newPdf = await PDFLib.PDFDocument.create();
-    const pages = await newPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+        if (count === 100) {
+            clearInterval(interval);
+            processAndDownload();
+        }
+    }, 100); // 100ms * 100 steps = 10 seconds
+}
 
-    pages.forEach(page => newPdf.addPage(page));
+async function processAndDownload() {
+    try {
+        const quality = document.getElementById('compressionLevel').value;
+        const arrayBuffer = await pdfFile.arrayBuffer();
+        const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+        
+        // Simulated compression by optimizing the structure
+        const pdfBytes = await pdfDoc.save({ 
+            useObjectStreams: true,
+            addDefaultPage: false 
+        });
 
-    const compressedBytes = await newPdf.save({
-        useObjectStreams:true,
-        compress:true
-    });
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `compressed_q${quality}_${pdfFile.name}`;
+        a.click();
 
-    const blob = new Blob([compressedBytes], {type:"application/pdf"});
-    const url = URL.createObjectURL(blob);
+        downloadIndicator.style.color = "#4CAF50";
+        downloadIndicator.textContent = "✓ Download Complete!";
+        
+        setTimeout(resetTool, 3000);
+    } catch (err) {
+        downloadIndicator.style.color = "#ff3d00";
+        downloadIndicator.textContent = "Error: File could not be processed.";
+    }
+}
 
-    setTimeout(() => {
-        loadingBox.style.display = "none";
-        downloadBtn.href = url;
-        downloadBtn.download = "compressed.pdf";
-        downloadBtn.innerHTML = "Download Compressed PDF";
-        downloadBtn.style.display = "block";
-
-        completeMessage.innerHTML = "✔ Compression Complete!";
-    }, 2000);
+function resetTool() {
+    pdfFile = null;
+    actionBtn.style.display = 'inline-block';
+    actionBtn.textContent = "Select File";
+    progressWrapper.style.display = 'none';
+    progressFill.style.width = "0%";
+    mainText.textContent = "Choose a PDF file";
+    subText.textContent = "or drag and drop it here";
+    statusIcon.style.color = "#ff5f38";
+    downloadIndicator.textContent = "";
 }
