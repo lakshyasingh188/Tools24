@@ -1,54 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Compress PDF - Tools24</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="compress-pdf.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced PDF Compressor</title>
+    <link rel="stylesheet" href="compress-pdf.css">
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
-
 <body>
+    <div class="background-glow"></div>
+    
+    <main class="container">
+        <header>
+            <h1>Compress PDF Files</h1>
+            <p>High-performance compression with glassmorphic UI.</p>
+        </header>
 
-<div class="container">
+        <div class="glass-card">
+            <div class="options-bar">
+                <div class="option-group">
+                    <label>Quality:</label>
+                    <select id="compressionLevel" class="glass-input">
+                        <option value="0.8">High (Minimal Compression)</option>
+                        <option value="0.5" selected>Medium (Recommended)</option>
+                        <option value="0.2">Low (Max Compression)</option>
+                    </select>
+                </div>
+            </div>
 
-    <h1>Compress PDF</h1>
-    <p class="subtitle">Reduce PDF file size easily with percentage control</p>
+            <div class="drop-zone" id="dropZone">
+                <div class="icon-wrapper" id="statusIcon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11 20V7.825L5.425 13.4L4 12L12 4L20 12L18.575 13.4L13 7.825V20H11Z"/>
+                    </svg>
+                </div>
+                <h3 id="mainText">Choose a PDF file</h3>
+                <p id="subText">or drag and drop it here</p>
+                <input type="file" id="fileInput" accept="application/pdf" hidden>
+                <button class="btn-primary" id="actionBtn">Select File</button>
+            </div>
 
-    <!-- Upload Section -->
-    <div class="upload-section">
-        <input type="file" id="pdfInput" accept="application/pdf" hidden>
-        <button class="big-btn blue" onclick="document.getElementById('pdfInput').click()">
-            Select PDF File
-        </button>
+            <div class="progress-wrapper" id="progressWrapper" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-data">
+                    <span id="percentText">0%</span>
+                    <span id="statusLabel">Compressing...</span>
+                </div>
+            </div>
 
-        <div id="fileInfo" class="file-info"></div>
-    </div>
+            <div id="downloadIndicator" class="indicator-msg"></div>
+        </div>
+    </main>
 
-    <!-- Compression Slider -->
-    <div class="slider-box">
-        <label>Compression Level: <span id="percentValue">50%</span></label>
-        <input type="range" min="10" max="90" value="50" id="compressionSlider">
-    </div>
-
-    <!-- Compress Button -->
-    <button class="big-btn green" onclick="compressPDF()">
-        Compress Now
-    </button>
-
-    <!-- Loading -->
-    <div id="loadingBox" class="loading-box">
-        <div class="spinner"></div>
-        <p>Compressing your PDF...</p>
-    </div>
-
-    <!-- Download -->
-    <a id="downloadBtn" class="big-btn blue download-btn"></a>
-
-    <div id="completeMessage" class="complete-msg"></div>
-
-</div>
-
-<script src="compress-pdf.js"></script>
+    <script src="compress-pdf.js"></script>
 </body>
 </html>
