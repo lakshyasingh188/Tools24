@@ -1,45 +1,626 @@
-body { background: #2d1b33; color: white; margin: 0; font-family: 'Georgia', serif; }
-
-/* Selection Grid */
-.header-main { text-align: center; font-size: 24px; font-weight: bold; padding: 30px; }
-.template-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-.tpl-card { background: white; padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; color: #333; }
-.preview-box { width: 160px; height: 220px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 10px; }
-
-/* Solid Border Styles */
-.gold-b { border: 8px double #b08d57; background: #fffcf5; }
-.red-b { border: 8px solid #800000; background: #fff; }
-.green-b { border: 8px solid #1b5e20; border-radius: 10px; background: #f9fff9; }
-
-/* A4 Container Setup */
-.a4-container {
-    width: 210mm; height: 297mm;
-    background: white; color: black;
-    padding: 10mm; box-sizing: border-box;
-    position: relative; overflow: hidden;
-    transform: scale(0.48); transform-origin: top left;
+/* =============== BASE & VARIABLES =============== */
+:root {
+    --bg-main: #f3f4f6;
+    --panel-bg: rgba(255, 255, 255, 0.7);
+    --panel-border: rgba(255, 255, 255, 0.3);
+    
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --text-muted: #9ca3af;
+    
+    --accent: #4f46e5;
+    --accent-hover: #4338ca;
+    
+    --radius-lg: 16px;
+    --radius-md: 8px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
-
-/* Template Specific CSS */
-.tpl-gold .border-layer { border: 20px double goldenrod; height: 100%; padding: 10mm; box-sizing: border-box; }
-.tpl-red .border-layer { border: 15px solid #800000; outline: 20px solid #ffcc00; height: 100%; padding: 15mm; box-sizing: border-box; }
-
-.inner-page { height: 100%; display: flex; flex-direction: column; }
-.top-decoration { text-align: center; margin-bottom: 20px; }
-.rel-img { height: 60px; margin-bottom: 5px; }
-
-.content-flex { display: flex; justify-content: space-between; margin-bottom: 20px; }
-.info-column { flex: 1; }
-.info-row { display: flex; margin-bottom: 6px; font-size: 20px; line-height: 1.4; }
-.info-row strong { width: 170px; display: inline-block; }
-
-.photo-frame { width: 130px; height: 160px; border: 10px solid black; display: flex; align-items: center; justify-content: center; background: white; }
-.photo-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-.section-title { text-align: center; font-weight: bold; font-size: 18px; margin: 25px 0 10px; color: #b08d57; border-bottom: 2px solid #b08d57; padding-bottom: 5px; text-transform: uppercase; }
-
-/* Editor Panels */
-.wrapper { display: flex; padding: 20px; height: 100vh; }
-.form-panel { width: 380px; background: white; color: #333; padding: 20px; border-radius: 10px; overflow-y: auto; }
-.form-panel input, textarea, select { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
-.dl-btn { background: #27ae60; color: white; width: 100%; padding: 15px; border: none; border-radius: 5px; font-size: 18px; cursor: pointer; margin-top: 15px; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    height: 100vh;
+    overflow: hidden; /* App takes full screen, specific areas scroll */
+}
+/* =============== LAYOUT =============== */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+.app-header {
+    background: #ffffff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+}
+.app-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+.app-header p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+.header-actions {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+.template-selector, .color-picker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+select, input[type="color"] {
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: var(--radius-md);
+    background: #f9fafb;
+    outline: none;
+    font-family: inherit;
+    cursor: pointer;
+}
+input[type="color"] {
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+}
+.btn-primary {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+.workspace {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+/* =============== EDITOR PANEL =============== */
+.editor-panel {
+    width: 450px;
+    min-width: 400px;
+    padding: 2rem;
+    overflow-y: auto;
+    background: linear-gradient(135deg, #f6f8fb 0%, #eef2f6 100%);
+    border-right: 1px solid #e5e7eb;
+}
+/* Custom Scrollbar for editor */
+.editor-panel::-webkit-scrollbar { width: 8px; }
+.editor-panel::-webkit-scrollbar-track { background: transparent; }
+.editor-panel::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.editor-panel::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+.glass-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+.section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+}
+.section-title i {
+    color: var(--accent);
+}
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.input-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+.input-grid .input-group {
+    margin-bottom: 0;
+}
+.input-group label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.input-group input, 
+.input-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: var(--radius-md);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    background: #ffffff;
+    transition: all 0.2s;
+}
+.input-group input:focus, 
+.input-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+.input-group textarea {
+    resize: vertical;
+    line-height: 1.5;
+}
+.helper-text {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+/* =============== PREVIEW PANEL =============== */
+.preview-panel {
+    flex: 1;
+    background: #94a3b8; /* Darker background resembling a desk */
+    overflow-y: auto;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.preview-container {
+    width: 210mm; /* A4 width */
+    min-height: 297mm; /* A4 height */
+    background: white;
+    box-shadow: var(--shadow-xl);
+    /* Transform origin top-center for scaling on smaller screens if necessary */
+    transform-origin: top center; 
+}
+/* PDF Document container */
+#resume-document {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    /* CSS variables controlled by JS */
+    --resume-accent: #4f46e5;
+}
+/* =============== TEMPLATE STYLES =============== */
+/* Base resume styles common to all templates */
+#resume-document {
+    color: #333;
+    background: #fff;
+    box-sizing: border-box;
+    overflow: hidden; /* Avoid spilling out of A4 */
+}
+/* Utility to hide empty sections */
+.empty-section { display: none !important; }
+.res-contact span { margin-right: 15px; display: inline-flex; align-items: center; gap: 4px; }
+/* ---------------------------------------------------------
+   TEMPLATE 1: Modern Minimalist (Inter Font, Clean Lines)
+   --------------------------------------------------------- */
+.template-modern-minimal {
+    font-family: 'Inter', sans-serif;
+    padding: 50px;
+    line-height: 1.6;
+}
+.template-modern-minimal header {
+    border-bottom: 2px solid var(--resume-accent);
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+}
+.template-modern-minimal h1.res-name {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 5px;
+    color: #111;
+}
+.template-modern-minimal .res-jobTitle {
+    font-size: 18px;
+    color: var(--resume-accent);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.template-modern-minimal .res-contact {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #666;
+}
+.template-modern-minimal section {
+    margin-bottom: 25px;
+}
+.template-modern-minimal h2.section-heading {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    color: #111;
+}
+.template-modern-minimal .res-summary {
+    font-size: 14px;
+    color: #444;
+}
+.template-modern-minimal .item-block {
+    margin-bottom: 15px;
+}
+.template-modern-minimal .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+}
+.template-modern-minimal .item-title {
+    font-weight: 600;
+    font-size: 15px;
+}
+.template-modern-minimal .item-subtitle {
+    font-style: italic;
+    color: #555;
+    font-size: 14px;
+}
+.template-modern-minimal .item-date {
+    font-size: 13px;
+    color: #777;
+    font-weight: 500;
+}
+.template-modern-minimal .item-desc {
+    font-size: 14px;
+    color: #444;
+    padding-left: 15px;
+}
+.template-modern-minimal .item-desc li { margin-bottom: 4px; }
+.template-modern-minimal .res-skills {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.8;
+}
+/* ---------------------------------------------------------
+   TEMPLATE 2: Professional Elegant (Serif, Traditional)
+   --------------------------------------------------------- */
+.template-professional-elegant {
+    font-family: 'Playfair Display', serif;
+    padding: 60px 50px;
+    line-height: 1.5;
+}
+.template-professional-elegant header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.template-professional-elegant h1.res-name {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--resume-accent);
+}
+.template-professional-elegant .res-jobTitle {
+    font-size: 20px;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 10px;
+}
+.template-professional-elegant .res-contact {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-family: 'Inter', sans-serif; /* Keep details readable */
+    font-size: 12px;
+    color: #666;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+.template-professional-elegant section { margin-bottom: 25px; }
+.template-professional-elegant h2.section-heading {
+    font-size: 20px;
+    font-weight: 700;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    color: #222;
+}
+.template-professional-elegant .res-summary,
+.template-professional-elegant .item-desc,
+.template-professional-elegant .res-skills {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #444;
+}
+.template-professional-elegant .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5px;
+}
+.template-professional-elegant .item-title {
+    font-weight: 700;
+    font-size: 16px;
+}
+.template-professional-elegant .item-subtitle {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--resume-accent);
+}
+.template-professional-elegant .item-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #666;
+}
+.template-professional-elegant .item-desc { padding-left: 20px; margin-top: 5px; }
+.template-professional-elegant .item-desc li { margin-bottom: 4px; }
+/* ---------------------------------------------------------
+   TEMPLATE 3: Creative Accent (Side By Side Header)
+   --------------------------------------------------------- */
+.template-creative-accent {
+    font-family: 'Inter', sans-serif;
+    padding: 0;
+    background: #f8f9fa; /* Slight off white for full page */
+}
+.template-creative-accent header {
+    background-color: var(--resume-accent);
+    color: white;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+}
+.template-creative-accent h1.res-name {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 10px;
+}
+.template-creative-accent .res-jobTitle {
+    font-size: 20px;
+    font-weight: 400;
+    opacity: 0.9;
+}
+.template-creative-accent .main-content {
+    display: flex;
+    padding: 0;
+    min-height: calc(297mm - 200px); /* rough height minus header */
+}
+.template-creative-accent .main-content > div {
+    /* To handle dynamic sections easily without complex Grid logic in JS */
+    display: flex;
+    flex-direction: column;
+}
+/* We will artificially simulate two columns by placing specific sections */
+/* This is styled generically for the top-down flow if we don't strictly enforce 2 cols in JS */
+.template-creative-accent .content-wrapper { padding: 40px 50px; background: #fff;}
+.template-creative-accent h2.section-heading {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--resume-accent);
+    margin-bottom: 15px;
+    position: relative;
+}
+.template-creative-accent h2.section-heading::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 30px;
+    height: 3px;
+    background-color: var(--resume-accent);
+}
+.template-creative-accent section { margin-bottom: 30px; }
+.template-creative-accent .res-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 20px;
+}
+.template-creative-accent .res-contact span i { 
+    margin-right: 8px;
+    font-size: 16px;
+    color: white;
+}
+.template-creative-accent .res-summary,
+.template-creative-accent .item-desc {
+    font-size: 13.5px;
+    color: #555;
+    line-height: 1.6;
+}
+.template-creative-accent .item-block { margin-bottom: 20px; }
+.template-creative-accent .item-header { margin-bottom: 8px; display: flex; flex-direction: column;}
+.template-creative-accent .item-title { font-weight: 700; font-size: 15px; color: #222; }
+.template-creative-accent .item-subtitle { color: #555; font-size: 14px; font-weight: 500; }
+.template-creative-accent .item-date { color: var(--resume-accent); font-size: 13px; font-weight: 600; margin-top: 2px;}
+.template-creative-accent .res-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13.5px;
+    color: #555;
+}
+/* ---------------------------------------------------------
+   TEMPLATE 4: Tech Sleek (Monospace elements, crisp)
+   --------------------------------------------------------- */
+.template-tech-sleek {
+    font-family: 'Inter', sans-serif;
+    padding: 40px;
+    color: #334155;
+}
+.template-tech-sleek header {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+    background: #f8fafc;
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 4px solid var(--resume-accent);
+}
+.template-tech-sleek h1.res-name {
+    font-size: 32px;
+    font-weight: 800;
+    color: #0f172a;
+}
+.template-tech-sleek .res-jobTitle {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    color: var(--resume-accent);
+    margin-top: 5px;
+}
+.template-tech-sleek .res-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    align-items: flex-end;
+    color: #64748b;
+}
+.template-tech-sleek section { margin-bottom: 25px; }
+.template-tech-sleek h2.section-heading {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #0f172a;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+.template-tech-sleek h2.section-heading::before {
+    content: '>';
+    color: var(--resume-accent);
+    margin-right: 8px;
+    font-family: 'Roboto Mono', monospace;
+}
+.template-tech-sleek .res-summary,
+.template-tech-sleek .item-desc {
+    font-size: 14px;
+    line-height: 1.6;
+}
+.template-tech-sleek .item-block {
+    margin-bottom: 20px;
+    position: relative;
+    padding-left: 15px;
+    border-left: 2px solid #e2e8f0;
+}
+.template-tech-sleek .item-title { font-weight: 700; font-size: 16px; color: #1e293b; }
+.template-tech-sleek .item-subtitle { color: #64748b; font-size: 14px; margin-top: 2px;}
+.template-tech-sleek .item-date {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    color: var(--resume-accent);
+    font-weight: 500;
+}
+.template-tech-sleek .item-desc { margin-top: 8px; padding-left: 0; }
+.template-tech-sleek .item-desc li { margin-bottom: 4px; }
+.template-tech-sleek .res-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.template-tech-sleek .res-skills span {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+}
+/* ---------------------------------------------------------
+   TEMPLATE 5: Executive Split (Two Equal-ish Columns)
+   --------------------------------------------------------- */
+.template-executive-split {
+    font-family: 'Inter', sans-serif;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+.template-executive-split header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.template-executive-split h1.res-name {
+    font-size: 38px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.template-executive-split .res-jobTitle {
+    font-size: 16px;
+    color: var(--resume-accent);
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: 5px;
+}
+.template-executive-split .res-contact {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #666;
+    flex-wrap: wrap;
+}
+.template-executive-split .main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+.template-executive-split h2.section-heading {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #333;
+    background: #f4f4f4;
+    padding: 8px 12px;
+    border-left: 3px solid var(--resume-accent);
+    margin-bottom: 15px;
+}
+.template-executive-split section { margin-bottom: 25px; }
+.template-executive-split .res-summary,
+.template-executive-split .item-desc {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+}
+.template-executive-split .item-block { margin-bottom: 15px; }
+.template-executive-split .item-header { margin-bottom: 6px; }
+.template-executive-split .item-title { font-weight: 600; font-size: 14px; color: #111; }
+.template-executive-split .item-subtitle { color: #666; font-size: 13px; }
+.template-executive-split .item-date { color: var(--resume-accent); font-size: 12px; font-weight: 600; }
+.template-executive-split .item-desc { padding-left: 15px; margin-top: 4px; }
+.template-executive-split .item-desc li { margin-bottom: 4px; }
