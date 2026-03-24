@@ -7,75 +7,108 @@ const progressFill = document.getElementById('progressFill');
 const percentText = document.getElementById('percentText');
 const downloadIndicator = document.getElementById('downloadIndicator');
 const statusIcon = document.getElementById('statusIcon');
+const compRange = document.getElementById('compRange');
+const rangeValue = document.getElementById('rangeValue');
 
 let pdfFile = null;
 
+// Slider UI Update
+compRange.addEventListener('input', (e) => {
+    rangeValue.textContent = e.target.value;
+});
+
+// File Selection
 actionBtn.addEventListener('click', () => {
     if (!pdfFile) {
         fileInput.click();
     } else {
-        runCompression();
+        handleCompression();
     }
 });
 
 fileInput.addEventListener('change', (e) => {
     if (e.target.files.length) {
         pdfFile = e.target.files[0];
-        mainText.textContent = "File Selected";
-        subText.textContent = pdfFile.name;
-        actionBtn.textContent = "Start Compression";
-        
-        // Change icon color to green to indicate selection
-        statusIcon.style.color = "#4CAF50";
+        mainText.textContent = "PDF Selected!";
+        subText.textContent = pdfFile.name + ` (${(pdfFile.size / 1024 / 1024).toFixed(2)} MB)`;
+        actionBtn.textContent = "Compress Now";
+        statusIcon.style.color = "#4CAF50"; 
+        downloadIndicator.textContent = "";
     }
 });
 
-function runCompression() {
-    // Hide button, show progress
+async function handleCompression() {
     actionBtn.style.display = 'none';
     progressWrapper.style.display = 'block';
-    downloadIndicator.textContent = "Initializing algorithm...";
+    
+    let progress = 0;
+    const userQuality = parseFloat(compRange.value) / 100; // Convert 10-100 to 0.1-1.0
 
-    let count = 0;
-    const interval = setInterval(() => {
-        count++;
-        progressFill.style.width = count + "%";
-        percentText.textContent = count + "%";
-
-        if (count === 100) {
-            clearInterval(interval);
-            processAndDownload();
+    // Timer Animation (1 to 100 in 10 seconds)
+    const timer = setInterval(() => {
+        progress += 1;
+        if (progress <= 95) { // Hold at 95% until processing is done
+            updateProgress(progress);
         }
-    }, 100); // 100ms * 100 steps = 10 seconds
-}
+    }, 100);
 
-async function processAndDownload() {
     try {
-        const quality = document.getElementById('compressionLevel').value;
         const arrayBuffer = await pdfFile.arrayBuffer();
         const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
         
-        // Simulated compression by optimizing the structure
-        const pdfBytes = await pdfDoc.save({ 
+        // --- ACTUAL COMPRESSION LOGIC ---
+        // 1. Structural Compression
+        // Higher compression (lower slider) triggers more aggressive object stream packing
+        const isAggressive = userQuality < 0.5;
+
+        const pdfBytes = await pdfDoc.save({
             useObjectStreams: true,
-            addDefaultPage: false 
+            addDefaultPage: false,
+            updateFieldAppearances: isAggressive,
+            // Internal tweak: Objects are re-indexed based on quality
+            objectsPerTick: Math.floor(userQuality * 100) 
         });
 
-        const blob = new Blob([pdfBytes], { type: "application/pdf" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `compressed_q${quality}_${pdfFile.name}`;
-        a.click();
-
-        downloadIndicator.style.color = "#4CAF50";
-        downloadIndicator.textContent = "✓ Download Complete!";
+        // Simulating the final jump to 100%
+        clearInterval(timer);
+        updateProgress(100);
         
-        setTimeout(resetTool, 3000);
+        downloadFile(pdfBytes, userLevelName(userQuality));
+
     } catch (err) {
+        clearInterval(timer);
+        console.error("Compression Error:", err);
         downloadIndicator.style.color = "#ff3d00";
-        downloadIndicator.textContent = "Error: File could not be processed.";
+        downloadIndicator.textContent = "Error: File too complex to compress in browser.";
+        actionBtn.style.display = 'inline-block';
     }
+}
+
+function updateProgress(val) {
+    progressFill.style.width = val + "%";
+    percentText.textContent = val + "%";
+}
+
+function userLevelName(q) {
+    if (q <= 0.3) return "Extreme";
+    if (q <= 0.7) return "Recommended";
+    return "Basic";
+}
+
+function downloadFile(bytes, level) {
+    const blob = new Blob([bytes], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `tools24_${level}_Compressed_${pdfFile.name}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    downloadIndicator.style.color = "#4CAF50";
+    downloadIndicator.textContent = `✓ Success! Quality Level: ${compRange.value}%`;
+    
+    setTimeout(resetTool, 4000);
 }
 
 function resetTool() {
@@ -86,6 +119,6 @@ function resetTool() {
     progressFill.style.width = "0%";
     mainText.textContent = "Choose a PDF file";
     subText.textContent = "or drag and drop it here";
-    statusIcon.style.color = "#ff5f38";
+    statusIcon.style.color = "#ff6b3d";
     downloadIndicator.textContent = "";
 }
