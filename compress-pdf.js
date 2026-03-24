@@ -42,12 +42,11 @@ async function handleCompression() {
     progressWrapper.style.display = 'block';
     
     let progress = 0;
-    const userQuality = parseFloat(compRange.value) / 100; // Convert 10-100 to 0.1-1.0
+    const userQuality = parseFloat(compRange.value) / 100;
 
-    // Timer Animation (1 to 100 in 10 seconds)
     const timer = setInterval(() => {
         progress += 1;
-        if (progress <= 95) { // Hold at 95% until processing is done
+        if (progress <= 95) {
             updateProgress(progress);
         }
     }, 100);
@@ -55,21 +54,32 @@ async function handleCompression() {
     try {
         const arrayBuffer = await pdfFile.arrayBuffer();
         const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
-        
-        // --- ACTUAL COMPRESSION LOGIC ---
-        // 1. Structural Compression
-        // Higher compression (lower slider) triggers more aggressive object stream packing
-        const isAggressive = userQuality < 0.5;
 
-        const pdfBytes = await pdfDoc.save({
+        const newPdf = await PDFLib.PDFDocument.create();
+        const pages = await newPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+
+        pages.forEach(page => newPdf.addPage(page));
+
+        // --- QUALITY BASED COMPRESSION ---
+        let compressionLevel;
+
+        if (userQuality <= 0.3) {
+            compressionLevel = 9; // Extreme
+        } 
+        else if (userQuality <= 0.7) {
+            compressionLevel = 6; // Recommended
+        } 
+        else {
+            compressionLevel = 3; // Basic
+        }
+
+        const pdfBytes = await newPdf.save({
             useObjectStreams: true,
-            addDefaultPage: false,
-            updateFieldAppearances: isAggressive,
-            // Internal tweak: Objects are re-indexed based on quality
-            objectsPerTick: Math.floor(userQuality * 100) 
+            objectsPerTick: 20,
+            compress: true,
+            compressionLevel: compressionLevel
         });
 
-        // Simulating the final jump to 100%
         clearInterval(timer);
         updateProgress(100);
         
