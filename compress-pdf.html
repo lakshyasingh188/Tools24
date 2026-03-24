@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced PDF Compressor</title>
+    <title>tools24 | PDF Compressor</title>
     <link rel="stylesheet" href="compress-pdf.css">
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
@@ -13,18 +13,18 @@
     <main class="container">
         <header>
             <h1>Compress PDF Files</h1>
-            <p>High-performance compression with glassmorphic UI.</p>
+            <p>High-performance compression with a modern glassmorphic interface.</p>
         </header>
 
         <div class="glass-card">
             <div class="options-bar">
-                <div class="option-group">
-                    <label>Quality:</label>
-                    <select id="compressionLevel" class="glass-input">
-                        <option value="0.8">High (Minimal Compression)</option>
-                        <option value="0.5" selected>Medium (Recommended)</option>
-                        <option value="0.2">Low (Max Compression)</option>
-                    </select>
+                <div class="slider-group">
+                    <label>Compression Level: <span id="rangeValue">50</span>%</label>
+                    <input type="range" id="compRange" min="10" max="100" value="50" class="glass-slider">
+                    <div class="slider-labels">
+                        <span>High Compression (Small File)</span>
+                        <span>Low Compression (Best Quality)</span>
+                    </div>
                 </div>
             </div>
 
@@ -46,7 +46,7 @@
                 </div>
                 <div class="progress-data">
                     <span id="percentText">0%</span>
-                    <span id="statusLabel">Compressing...</span>
+                    <span id="statusLabel">Optimizing PDF...</span>
                 </div>
             </div>
 
