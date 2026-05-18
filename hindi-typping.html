@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Language Typing Test</title>
+    <link rel="stylesheet" href="hindi-typping.css">
+</head>
+
+<body>
+
+    <div class="typing-container">
+        <h2>Typing Test / टाइपिंग टेस्ट</h2>
+
+        <!-- Language Selection Dropdown -->
+        <div class="language-selector">
+            <label for="language-select">Choose Language / भाषा चुनें: </label>
+            <select id="language-select">
+                <option value="hindi">Hindi (हिंदी)</option>
+                <option value="english" selected>English</option>
+                <option value="spanish">Spanish (Español)</option>
+            </select>
+        </div>
+
+        <!-- Text to be typed -->
+        <div id="text-to-type" class="text-box">
+            The quick brown fox jumps over the lazy dog. Continuous practice is the key to mastering speed and accuracy
+            in touch typing. Keep your eyes on the screen and let your fingers find the keys.
+        </div>
+
+        <!-- Input Area -->
+        <textarea id="typing-input" placeholder="Start typing here..." disabled></textarea>
+
+        <!-- Controls & Stats -->
+        <div class="controls">
+            <button id="start-btn">Start Test</button>
+            <div class="stats">
+                <div>Time: <span id="timer">60</span>s</div>
+                <div>WPM: <span id="wpm">0</span></div>
+                <div>Accuracy: <span id="accuracy">100</span>%</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="hindi-typping.js"></script>
+</body>
+
+</html>
