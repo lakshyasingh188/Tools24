@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <title>
+        Tools24 Medical Report AI
+    </title>
+
+    <script src="
+https://unpkg.com/tesseract.js@5/dist/tesseract.min.js
+">
+</script>
+
+    <style>
+        body {
+
+            font-family: Arial;
+
+            background: #eef2f7;
+
+            padding: 20px;
+
+        }
+
+        .box {
+
+            max-width: 850px;
+
+            margin: auto;
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 16px;
+
+        }
+
+        input {
+
+            width: 100%;
+
+            padding: 10px;
+
+        }
+
+        button {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-top: 10px;
+
+            background: #0066ff;
+
+            color: white;
+
+            border: none;
+
+            cursor: pointer;
+
+        }
+
+        .loader {
+
+            display: none;
+
+            margin-top: 20px;
+
+        }
+
+        .bar {
+
+            height: 10px;
+
+            background: #ddd;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+        }
+
+        .fill {
+
+            height: 100%;
+
+            width: 0%;
+
+            background: #0066ff;
+
+            transition: 1s;
+
+        }
+
+        .result {
+
+            margin-top: 20px;
+
+            padding: 20px;
+
+            background: #f5fff5;
+
+            border-radius: 10px;
+
+        }
+
+        .item {
+
+            padding: 10px;
+
+            margin: 8px 0;
+
+            background: #fff;
+
+            border-radius: 8px;
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="box">
+
+        <h2>
+            🩺 Medical Report Simplifier
+        </h2>
+
+        <input type="file" accept="image/*" id="report">
+
+        <button onclick="scan()">
+
+            Analyze Report
+
+        </button>
+
+        <div class="loader" id="loader">
+
+            <p id="loadingText">
+
+                Reading Report...
+
+            </p>
+
+            <div class="bar">
+
+                <div class="fill" id="fill">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="result" id="result">
+
+        </div>
+
+    </div>
+
+    <script>
+
+        async function scan() {
+
+            let file =
+
+                document
+                    .getElementById(
+                        "report"
+                    )
+                    .files[0];
+
+            if (!file) {
+
+                alert(
+                    "Upload report"
+                );
+
+                return;
+
+            }
+
+            loader
+                .style
+                .display =
+                "block";
+
+            fill
+                .style
+                .width =
+                "10%";
+
+            loadingText
+                .innerHTML =
+                "Scanning...";
+
+            result
+                .innerHTML =
+                "";
+
+            const ocr =
+
+                await Tesseract
+                    .recognize(
+
+                        file,
+
+                        "eng",
+
+                        {
+
+                            logger:
+
+                                m => {
+
+                                    if (
+
+                                        m.progress
+
+                                    ) {
+
+                                        fill
+                                            .style
+                                            .width =
+
+                                            (
+                                                m.progress
+                                                *
+                                                100
+
+                                            )
+
+                                            +
+
+                                            "%";
+
+                                    }
+
+                                }
+
+                        }
+
+                    );
+
+            let text =
+
+                ocr
+                    .data
+                    .text
+                    .toLowerCase();
+
+            loadingText
+                .innerHTML =
+                "Generating Summary";
+
+            let out = [];
+
+            function find(name) {
+
+                let reg =
+
+                    new RegExp(
+
+                        name +
+
+                        ".{0,20}(\\d+\\.?\\d*)"
+
+                    );
+
+                let v =
+
+                    text
+                        .match(
+                            reg
+                        );
+
+                return v ?
+
+                    v[1]
+
+                    :
+
+                    null;
+
+            }
+
+            let hb =
+
+                find(
+                    "hemoglobin"
+                );
+
+            if (hb)
+
+                out.push(
+
+                    `🩸 Hemoglobin : ${hb}`
+
+                );
+
+            let sugar =
+
+                find(
+                    "glucose|blood sugar|fasting"
+                );
+
+            if (sugar)
+
+                out.push(
+
+                    `🍬 Sugar : ${sugar}`
+
+                );
+
+            let chol =
+
+                find(
+                    "cholesterol"
+                );
+
+            if (chol)
+
+                out.push(
+
+                    `❤️ Cholesterol : ${chol}`
+
+                );
+
+            let plate =
+
+                find(
+                    "platelet"
+                );
+
+            if (plate)
+
+                out.push(
+
+                    `🧪 Platelets : ${plate}`
+
+                );
+
+            let rbc =
+
+                find(
+                    "rbc"
+                );
+
+            if (rbc)
+
+                out.push(
+
+                    `🔴 RBC : ${rbc}`
+
+                );
+
+            if (
+                out.length == 0
+            ) {
+
+                out.push(
+
+                    "Medical values detect nahi hui"
+
+                );
+
+            }
+
+            result.innerHTML =
+
+                `
+<h3>
+
+Important Results
+
+</h3>
+
+${out.map(
+
+                    x =>
+
+                        `
+<div
+class=item>
+
+${x}
+
+</div>
+
+`
+
+                ).join("")}
+
+<br>
+
+<b>
+
+Educational only
+
+</b>
+
+`;
+
+            loadingText
+                .innerHTML =
+                "Done";
+
+            fill
+                .style
+                .width =
+                "100%";
+
+        }
+
+    </script>
+
+</body>
+
+</html>
