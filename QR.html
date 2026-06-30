@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator | AgiTools24</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Include QRCode.js library for generating QR codes in browser -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #333333;
+            --accent-color: #2563eb;
+            --accent-hover: #1d4ed8;
+            --bg-light: #f7f7f7;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-muted: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #4caf50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--white);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tool-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .generator-container {
+            background: var(--white);
+            width: 100%;
+            max-width: 900px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 40px;
+            display: flex;
+            gap: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .input-section {
+            flex: 1;
+            text-align: left;
+        }
+
+        .preview-section {
+            flex: 0 0 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--accent-color);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        #qrcode {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        #qrcode img {
+            display: block;
+        }
+
+        .btn-download {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-download:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-download:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Footer Info */
+        .info-section {
+            width: 100%;
+            max-width: 1000px;
+            margin: 60px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .info-card i {
+            color: var(--accent-color);
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .info-card h4 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .info-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .generator-container {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .preview-section {
+                flex: none;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <a href="#" class="logo">AGITools<span>24</span></a>
+        </div>
+    </header>
+
+    <main>
+        <div class="tool-header">
+            <h1>QR Code Generator</h1>
+            <p>Create custom QR codes for links, text, or Wi-Fi instantly.</p>
+        </div>
+
+        <div class="generator-container">
+            <div class="input-section">
+                <div class="form-group">
+                    <label for="qrText">Enter URL or Text</label>
+                    <textarea id="qrText" rows="3" placeholder="https://agitools24.com"></textarea>
+                </div>
+
+                <div class="options-grid">
+                    <div class="form-group">
+                        <label for="qrSize">Size (px)</label>
+                        <select id="qrSize">
+                            <option value="128">128 x 128</option>
+                            <option value="256" selected>256 x 256</option>
+                            <option value="512">512 x 512</option>
+                            <option value="1024">1024 x 1024</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="qrColor">QR Color</label>
+                        <input type="color" id="qrColor" value="#000000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Correction Level</label>
+                    <select id="qrLevel">
+                        <option value="L">Low (7%)</option>
+                        <option value="M" selected>Medium (15%)</option>
+                        <option value="Q">Quartile (25%)</option>
+                        <option value="H">High (30%)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="preview-section">
+                <div id="qrcode"></div>
+                <button id="downloadBtn" class="btn-download">
+                    <i class="fas fa-download"></i> Download PNG
+                </button>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-card">
+                <i class="fas fa-bolt"></i>
+                <h4>Instant Generation</h4>
+                <p>See your QR code change in real-time as you type. No waiting, no processing delays.</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-palette"></i>
+                <h4>Customizable</h4>
+                <p>Adjust the size, color, and error correction levels to fit your specific needs.</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>Universal Scan</h4>
+                <p>Our QR codes are standard-compliant and can be scanned by any smartphone or QR reader.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AgiTools24. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const qrTextInput = document.getElementById('qrText');
+        const qrSizeSelect = document.getElementById('qrSize');
+        const qrColorInput = document.getElementById('qrColor');
+        const qrLevelSelect = document.getElementById('qrLevel');
+        const qrcodeContainer = document.getElementById('qrcode');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let qrcode = null;
+
+        function generateQRCode() {
+            const text = qrTextInput.value.trim() || "https://agitools24.com";
+            const size = parseInt(qrSizeSelect.value);
+            const color = qrColorInput.value;
+            const level = qrLevelSelect.value;
+
+            // Clear previous QR code
+            qrcodeContainer.innerHTML = "";
+
+            // Generate new QR code
+            qrcode = new QRCode(qrcodeContainer, {
+                text: text,
+                width: size,
+                height: size,
+                colorDark: color,
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel[level]
+            });
+
+            // Enable download button
+            downloadBtn.disabled = false;
+        }
+
+        // Initial generation
+        generateQRCode();
+
+        // Update on input change
+        qrTextInput.addEventListener('input', generateQRCode);
+        qrSizeSelect.addEventListener('change', generateQRCode);
+        qrColorInput.addEventListener('change', generateQRCode);
+        qrLevelSelect.addEventListener('change', generateQRCode);
+
+        // Download functionality
+        downloadBtn.addEventListener('click', () => {
+            const img = qrcodeContainer.querySelector('img');
+            if (img) {
+                const link = document.createElement('a');
+                link.href = img.src;
+                link.download = 'qrcode_agitools24.png';
+                link.click();
+            } else {
+                // Fallback for canvas if img is not ready
+                const canvas = qrcodeContainer.querySelector('canvas');
+                if (canvas) {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png');
+                    link.download = 'qrcode_agitools24.png';
+                    link.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
