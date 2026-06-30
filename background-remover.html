@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Background Remover | AgiTools24</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MediaPipe Libraries for AI Processing -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation"></script>
+    
+    <style>
+        :root {
+            --primary-color: #6200ea;
+            --primary-hover: #4500b5;
+            --bg-light: #f7f7f7;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-muted: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #4caf50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--white);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tool-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .converter-container {
+            background: var(--white);
+            width: 100%;
+            max-width: 900px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 60px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone:hover, .drop-zone.drag-over {
+            border-color: var(--primary-color);
+            background-color: rgba(98, 0, 234, 0.02);
+        }
+
+        .drop-zone i {
+            font-size: 64px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .drop-zone h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .btn-select {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+            display: inline-block;
+        }
+
+        .btn-select:hover {
+            background: var(--primary-hover);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* Processing State */
+        .processing-state, .success-state {
+            display: none;
+        }
+
+        .preview-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .preview-box {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            background-image: 
+                linear-gradient(45deg, #ccc 25%, transparent 25%), 
+                linear-gradient(-45deg, #ccc 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #ccc 75%),
+                linear-gradient(-45deg, transparent 75%, #ccc 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        canvas, img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .preview-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 2px 8px;
+            font-size: 12px;
+            border-radius: 4px;
+            z-index: 10;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        .status-text {
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* Success State */
+        .btn-download {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .btn-download:hover {
+            background: #388e3c;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        /* Hidden elements for processing */
+        #tempImage { display: none; }
+
+        @media (max-width: 600px) {
+            .preview-box { width: 100%; height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <a href="#" class="logo">AGITools<span>24</span></a>
+        </div>
+    </header>
+
+    <main>
+        <div class="tool-header">
+            <h1>AI Background Remover</h1>
+            <p>100% Automatic and Free. No data leaves your browser.</p>
+        </div>
+
+        <div class="converter-container" id="mainContainer">
+            <!-- Initial State -->
+            <div class="initial-state" id="initialState">
+                <div class="drop-zone" id="dropZone">
+                    <i class="fas fa-magic"></i>
+                    <h3>Upload an image</h3>
+                    <p>to remove the background</p>
+                    <button class="btn-select" onclick="document.getElementById('fileInput').click()">Select Image</button>
+                    <input type="file" id="fileInput" accept="image/*">
+                </div>
+            </div>
+
+            <!-- Processing State -->
+            <div class="processing-state" id="processingState">
+                <div class="preview-area">
+                    <div class="preview-box">
+                        <span class="preview-label">Processing...</span>
+                        <canvas id="outputCanvas"></canvas>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p class="status-text" id="statusText">AI is removing background...</p>
+            </div>
+
+            <!-- Success State -->
+            <div class="success-state" id="successState">
+                <div class="preview-area">
+                    <div class="preview-box">
+                        <span class="preview-label">Result</span>
+                        <img id="resultImage" src="" alt="Result">
+                    </div>
+                </div>
+                <h2>Background Removed!</h2>
+                <a href="#" class="btn-download" id="downloadBtn">Download PNG</a>
+                <div style="margin-top: 20px;">
+                    <a href="javascript:location.reload()" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">Remove another background</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <img id="tempImage" src="" alt="">
+
+    <footer>
+        <p>&copy; 2026 AgiTools24. Powered by AI Technology.</p>
+    </footer>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const dropZone = document.getElementById('dropZone');
+        const initialState = document.getElementById('initialState');
+        const processingState = document.getElementById('processingState');
+        const successState = document.getElementById('successState');
+        const tempImage = document.getElementById('tempImage');
+        const outputCanvas = document.getElementById('outputCanvas');
+        const resultImage = document.getElementById('resultImage');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const progressBar = document.getElementById('progressBar');
+        const statusText = document.getElementById('statusText');
+
+        const ctx = outputCanvas.getContext('2d');
+        let originalFileName = "image";
+
+        // Initialize MediaPipe Selfie Segmentation
+        const selfieSegmentation = new SelfieSegmentation({
+            locateFile: (file) => {
+                return `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`;
+            }
+        });
+
+        selfieSegmentation.setOptions({
+            modelSelection: 1, // 0 for general, 1 for landscape/full body
+        });
+
+        selfieSegmentation.onResults(onResults);
+
+        // Handle File Selection
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) handleFile(e.target.files[0]);
+        });
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+        });
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please upload an image file.');
+                return;
+            }
+
+            originalFileName = file.name.replace(/\.[^/.]+$/, "");
+            initialState.style.display = 'none';
+            processingState.style.display = 'block';
+            statusText.textContent = 'Loading AI Model...';
+            progressBar.style.width = '30%';
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                tempImage.src = e.target.result;
+                tempImage.onload = () => {
+                    // Set canvas size to match image
+                    outputCanvas.width = tempImage.naturalWidth;
+                    outputCanvas.height = tempImage.naturalHeight;
+                    
+                    statusText.textContent = 'Analyzing Image...';
+                    progressBar.style.width = '60%';
+                    
+                    // Run AI processing
+                    selfieSegmentation.send({image: tempImage});
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function onResults(results) {
+            progressBar.style.width = '90%';
+            statusText.textContent = 'Finalizing...';
+
+            ctx.save();
+            ctx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
+            
+            // Draw the segmentation mask
+            ctx.drawImage(results.segmentationMask, 0, 0, outputCanvas.width, outputCanvas.height);
+
+            // Only keep the original image where the mask is visible (the person)
+            ctx.globalCompositeOperation = 'source-in';
+            ctx.drawImage(results.image, 0, 0, outputCanvas.width, outputCanvas.height);
+            
+            ctx.restore();
+
+            // Convert canvas to image for download
+            setTimeout(() => {
+                const dataUrl = outputCanvas.toDataURL('image/png');
+                resultImage.src = dataUrl;
+                downloadBtn.href = dataUrl;
+                downloadBtn.download = originalFileName + "_no_bg.png";
+                
+                progressBar.style.width = '100%';
+                processingState.style.display = 'none';
+                successState.style.display = 'block';
+            }, 800);
+        }
+    </script>
+</body>
+</html>
