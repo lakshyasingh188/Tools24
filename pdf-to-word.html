@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Word | AgiTools24</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e53935;
+            --primary-hover: #c62828;
+            --bg-light: #f7f7f7;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-muted: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #4caf50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--white);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tool-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .converter-container {
+            background: var(--white);
+            width: 100%;
+            max-width: 800px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 60px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone:hover, .drop-zone.drag-over {
+            border-color: var(--primary-color);
+            background-color: rgba(229, 57, 53, 0.02);
+        }
+
+        .drop-zone i {
+            font-size: 64px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .drop-zone h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .btn-select {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+            display: inline-block;
+        }
+
+        .btn-select:hover {
+            background: var(--primary-hover);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* Processing State */
+        .processing-state, .success-state {
+            display: none;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .file-info i {
+            font-size: 32px;
+            color: var(--primary-color);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        .status-text {
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* Success State */
+        .success-state i.fa-check-circle {
+            font-size: 80px;
+            color: var(--success-color);
+            margin-bottom: 20px;
+        }
+
+        .btn-download {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* Footer Info */
+        .info-section {
+            width: 100%;
+            max-width: 1000px;
+            margin: 60px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .info-card i {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .info-card h4 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .info-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            .tool-header h1 { font-size: 28px; }
+            .converter-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <a href="#" class="logo">AGITools<span>24</span></a>
+        </div>
+    </header>
+
+    <main>
+        <div class="tool-header">
+            <h1>PDF to Word Converter</h1>
+            <p>Convert your PDF to WORD documents with incredible accuracy.</p>
+        </div>
+
+        <div class="converter-container" id="mainContainer">
+            <!-- Initial State -->
+            <div class="initial-state" id="initialState">
+                <div class="drop-zone" id="dropZone">
+                    <i class="fas fa-file-pdf"></i>
+                    <h3>Select PDF file</h3>
+                    <p>or drop PDF here</p>
+                    <button class="btn-select" onclick="document.getElementById('fileInput').click()">Select PDF file</button>
+                    <input type="file" id="fileInput" accept=".pdf">
+                </div>
+            </div>
+
+            <!-- Processing State -->
+            <div class="processing-state" id="processingState">
+                <div class="file-info">
+                    <i class="fas fa-file-pdf"></i>
+                    <span id="fileNameDisplay">document.pdf</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p class="status-text" id="statusText">Converting PDF to Word...</p>
+            </div>
+
+            <!-- Success State -->
+            <div class="success-state" id="successState">
+                <i class="fas fa-check-circle"></i>
+                <h2>PDF has been converted!</h2>
+                <p>Your Word document is ready for download.</p>
+                <a href="#" class="btn-download" id="downloadBtn">Download Word</a>
+                <div style="margin-top: 20px;">
+                    <a href="javascript:location.reload()" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">Convert another file</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- How it works section -->
+        <div class="info-section">
+            <div class="info-card">
+                <i class="fas fa-magic"></i>
+                <h4>Easy to use</h4>
+                <p>Just upload your file and let our AI-powered engine handle the conversion. No technical skills required.</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-shield-alt"></i>
+                <h4>Secure conversion</h4>
+                <p>We use SSL encryption to ensure your documents are handled safely. Files are deleted after 2 hours.</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-star"></i>
+                <h4>Best Quality</h4>
+                <p>Our conversion maintains the original layout, fonts, and images as closely as possible.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AgiTools24. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const initialState = document.getElementById('initialState');
+        const processingState = document.getElementById('processingState');
+        const successState = document.getElementById('successState');
+        const progressBar = document.getElementById('progressBar');
+        const statusText = document.getElementById('statusText');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+        // Drag and drop handlers
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type === 'application/pdf') {
+                handleFileUpload(files[0]);
+            } else {
+                alert('Please upload a valid PDF file.');
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileUpload(e.target.files[0]);
+            }
+        });
+
+        function handleFileUpload(file) {
+            fileNameDisplay.textContent = file.name;
+            initialState.style.display = 'none';
+            processingState.style.display = 'block';
+
+            // Simulate conversion process
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                
+                if (progress < 30) statusText.textContent = 'Uploading file...';
+                else if (progress < 70) statusText.textContent = 'Analyzing document structure...';
+                else if (progress < 95) statusText.textContent = 'Generating Word document...';
+                else statusText.textContent = 'Finalizing...';
+
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        showSuccess();
+                    }, 500);
+                }
+            }, 400);
+        }
+
+        function showSuccess() {
+            processingState.style.display = 'none';
+            successState.style.display = 'block';
+            
+            // In a real app, you would set the download link here
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.addEventListener('click', (e) => {
+                // For demo, just alert
+                // e.preventDefault();
+                // alert('In a real implementation, the converted .docx file would download now.');
+            });
+        }
+    </script>
+</body>
+</html>
