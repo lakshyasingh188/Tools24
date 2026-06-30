@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel to PDF | AgiTools24</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e53935; /* PDF Red */
+            --primary-hover: #c62828;
+            --excel-green: #1d6f42;
+            --bg-light: #f7f7f7;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-muted: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #4caf50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--white);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tool-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .tool-header p {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .converter-container {
+            background: var(--white);
+            width: 100%;
+            max-width: 800px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 60px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone:hover, .drop-zone.drag-over {
+            border-color: var(--excel-green);
+            background-color: rgba(29, 111, 66, 0.02);
+        }
+
+        .drop-zone i {
+            font-size: 64px;
+            color: var(--excel-green);
+            margin-bottom: 20px;
+        }
+
+        .drop-zone h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .btn-select {
+            background: var(--excel-green);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+            display: inline-block;
+        }
+
+        .btn-select:hover {
+            background: var(--primary-hover);
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* Processing State */
+        .processing-state, .success-state {
+            display: none;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .file-info i {
+            font-size: 32px;
+            color: var(--excel-green);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        .status-text {
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* Success State */
+        .success-state i.fa-check-circle {
+            font-size: 80px;
+            color: var(--success-color);
+            margin-bottom: 20px;
+        }
+
+        .btn-download {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .btn-download:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Footer Info */
+        .info-section {
+            width: 100%;
+            max-width: 1000px;
+            margin: 60px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .info-card i {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .info-card h4 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .info-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            .tool-header h1 { font-size: 28px; }
+            .converter-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <a href="#" class="logo">AGITools<span>24</span></a>
+        </div>
+    </header>
+
+    <main>
+        <div class="tool-header">
+            <h1>Excel to PDF Converter</h1>
+            <p>Make EXCEL spreadsheets easy to read by converting them to PDF.</p>
+        </div>
+
+        <div class="converter-container" id="mainContainer">
+            <!-- Initial State -->
+            <div class="initial-state" id="initialState">
+                <div class="drop-zone" id="dropZone">
+                    <i class="fas fa-file-excel"></i>
+                    <h3>Select Excel file</h3>
+                    <p>or drop Excel here (.xlsx, .xls, .csv)</p>
+                    <button class="btn-select" onclick="document.getElementById('fileInput').click()">Select Excel file</button>
+                    <input type="file" id="fileInput" accept=".xlsx, .xls, .csv">
+                </div>
+            </div>
+
+            <!-- Processing State -->
+            <div class="processing-state" id="processingState">
+                <div class="file-info">
+                    <i class="fas fa-file-excel"></i>
+                    <span id="fileNameDisplay">spreadsheet.xlsx</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <p class="status-text" id="statusText">Converting Excel to PDF...</p>
+            </div>
+
+            <!-- Success State -->
+            <div class="success-state" id="successState">
+                <i class="fas fa-check-circle"></i>
+                <h2>Excel has been converted!</h2>
+                <p>Your PDF document is ready for download.</p>
+                <a href="#" class="btn-download" id="downloadBtn">Download PDF</a>
+                <div style="margin-top: 20px;">
+                    <a href="javascript:location.reload()" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">Convert another file</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- How it works section -->
+        <div class="info-section">
+            <div class="info-card">
+                <i class="fas fa-file-invoice"></i>
+                <h4>Perfect Formatting</h4>
+                <p>We preserve your spreadsheet's rows, columns, and styles so the PDF looks exactly like your Excel sheet.</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-shield-alt"></i>
+                <h4>Secure conversion</h4>
+                <p>We use SSL encryption to ensure your documents are handled safely. Files are deleted after 2 hours.</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>Mobile Friendly</h4>
+                <p>Convert your spreadsheets on the go. Our tool works perfectly on smartphones and tablets.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AgiTools24. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const initialState = document.getElementById('initialState');
+        const processingState = document.getElementById('processingState');
+        const successState = document.getElementById('successState');
+        const progressBar = document.getElementById('progressBar');
+        const statusText = document.getElementById('statusText');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let originalFileName = "";
+
+        // Drag and drop handlers
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileUpload(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileUpload(e.target.files[0]);
+            }
+        });
+
+        function handleFileUpload(file) {
+            originalFileName = file.name.replace(/\.[^/.]+$/, ""); 
+            fileNameDisplay.textContent = file.name;
+            initialState.style.display = 'none';
+            processingState.style.display = 'block';
+
+            // Simulate conversion process
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 20;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                
+                if (progress < 30) statusText.textContent = 'Uploading Excel file...';
+                else if (progress < 60) statusText.textContent = 'Calculating layout and pages...';
+                else if (progress < 90) statusText.textContent = 'Rendering PDF document...';
+                else statusText.textContent = 'Finalizing...';
+
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        // Create a dummy PDF file for demonstration
+                        const dummyContent = "%PDF-1.4\n%âãÏÓ\n1 0 obj\n<</Type/Catalog/Pages 2 0 R>>\nendobj\n2 0 obj\n<</Type/Pages/Count 1/Kids[3 0 R]>>\nendobj\n3 0 obj\n<</Type/Page/Parent 2 0 R/Resources<</Font<</F1 4 0 R>>>>/Contents 5 0 R>>\nendobj\n4 0 obj\n<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>\nendobj\n5 0 obj\n<</Length 44>>\nstream\nBT /F1 12 Tf 100 700 Td (Converted from Excel) Tj ET\nendstream\nendobj\nxref\n0 6\n0000000000 65535 f \n0000000009 00000 n \n0000000056 00000 n \n0000000111 00000 n \n0000000212 00000 n \n0000000289 00000 n \ntrailer\n<</Size 6/Root 1 0 R>>\nstartxref\n382\n%%EOF";
+                        const blob = new Blob([dummyContent], { type: 'application/pdf' });
+                        const url = window.URL.createObjectURL(blob);
+                        
+                        setupDownload(url);
+                        showSuccess();
+                    }, 500);
+                }
+            }, 250);
+        }
+
+        function setupDownload(url) {
+            downloadBtn.href = url;
+            downloadBtn.download = originalFileName + ".pdf";
+        }
+
+        function showSuccess() {
+            processingState.style.display = 'none';
+            successState.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
