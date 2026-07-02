@@ -648,6 +648,7 @@ body.dark #themeToggle {
     display: flex;
   }
 }
+
 /* =========================
    MOBILE MENU – DARK MODE FIX
 ========================= */
@@ -671,58 +672,101 @@ body.dark #appleNav.active {
 body.dark #appleNav a {
   color: #ffffff !important;
 }
+
+
+/* Footer */
 .main-footer {
-    background: blueviolet;
-    padding: 30px 0;
-    text-align: center;
-    margin-top: 20px;
+    background: #222;
+    color: var(--white);
+    padding: 60px 0 20px;
 }
 
-.footer-content p {
-    color: blueviolet;
-    margin-bottom: 10px;
-    font-size: 10px;
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
 }
 
-.footer-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 100px;
-}
-
-.footer-btn {
-    padding: 5px 10px;
-    background: blueviolet;
+.footer-col h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
     color: white;
-    text-decoration: none;
-    border-radius: 15px;
-    font-weight: 500;
-    transition: 0.3s;
 }
 
-.footer-btn:hover {
-    background: blue;
-    transform: scale(1.1);
+.footer-col h4 {
+    margin-bottom: 20px;
+    font-size: 18px;
 }
-.section-divider {
-    height: 130px;
-    background: linear-gradient(to bottom, white, transparent);
+
+.footer-col p {
+    color: white;
+    margin-bottom: 20px;
 }
-.visitor-box {
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul a {
+    color: white;
+    transition: var(--transition);
+}
+
+.footer-col ul a:hover {
+    color: var(--white);
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    width: 35px;
+    height: 35px;
+    background: white;
     display: flex;
     align-items: center;
-    background: white;
-    padding: 6px 6px;
-    border-radius: 4px;
-    width: fit-content;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
 }
 
-.visitor-text {
-    color: black;
-    margin-right: 10px;
+.social-links a:hover {
+    background: rgb(78, 78, 243);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid white;
+    color: #888;
     font-size: 14px;
 }
 
-.visitor-box img {
-    height: 15px;
+/* Mobile Responsive */
+@media (max-width: 992px) {
+    .info-row {
+        flex-direction: column;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
 }
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+    .hero h1 {
+        font-size: 32px;
+    }
+    .mobile-menu-toggle {
+        display: block;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
