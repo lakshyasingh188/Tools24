@@ -122,7 +122,7 @@ app.post('/api/create-order', asyncHandler(async (req, res) => {
         const { amount, currency, reportType } = req.body;
 
         // Validate amount
-        const validAmounts = [1200, 9900, 12900, 19900];
+        const validAmounts = [4900, 9900, 12900, 19900];
         if (!validAmounts.includes(amount)) {
             return res.status(400).json({ error: 'Invalid amount' });
         }
