@@ -1,14 +1,25 @@
 {
-  "name": "tools24-pdf-api",
+  "name": "celestial-insights",
   "version": "1.0.0",
+  "description": "Premium AI Astrology Report Generator",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
-    "axios": "^1.6.0",
+    "@google/genai": "^2.14.0",
+    "@supabase/supabase-js": "^2.39.7",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.1",
     "express": "^4.18.2",
-    "multer": "^1.4.5"
+    "openai": "^4.28.0",
+    "razorpay": "^2.9.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
