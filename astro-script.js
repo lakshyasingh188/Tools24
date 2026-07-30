@@ -8,8 +8,7 @@
     /* ═══════════════════════════════════════════════════════════
        CONFIGURATION
        ═══════════════════════════════════════════════════════════ */
-    var API = 'http://localhost:3000';
-
+var API = 'https://tools24-gwxmwafgm-lakshya-singhs-projects-32c53998.vercel.app';
     var REPORT_PRICES = {
         basic: 4900,
         premium: 9900,
