@@ -63,7 +63,9 @@ const LANGUAGE_MAP = {
     Malayalam: 'Malayalam'
 };
 
+
 // ─── Report type descriptions for context ────────────────────────
+
 const REPORT_TYPE_MAP = {
     career:   'Career and Professional Life (focus extra depth on career sections)',
     love:     'Love and Romantic Relationships (focus extra depth on love sections)',
@@ -222,6 +224,16 @@ async function generateAstrologyReport(userData) {
             `generateAstrologyReport: Missing required fields: ${missingFields.join(', ')}`
         );
     }
+
+    const REPORT_TYPE_ALIAS = {
+        basic: "career",
+        premium: "love",
+        deluxe: "marriage",
+        complete: "complete"
+    };
+
+    userData.reportType =
+        REPORT_TYPE_ALIAS[userData.reportType] || userData.reportType;
 
     const validReportTypes = ['career', 'love', 'marriage', 'business', 'finance', 'health', 'complete'];
     if (!validReportTypes.includes(userData.reportType)) {
