@@ -253,7 +253,7 @@ app.post('/api/generate-report', async (req, res) => {
 
 // ===== Fallback: Serve index.html for all non-API routes =====
 app.get('*', (req, res) => {
-    res.sendFile('index.html', { root: 'public' });
+    res.sendFile('astro-index.html', { root: 'public' });
 });
 
 // ===== Error Handler =====
