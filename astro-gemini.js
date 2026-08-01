@@ -655,7 +655,7 @@ function _generateOfflineReport(userData) {
 
     if (lang === 'hi') {
         const title = _getReportTitleHi(userData.reportType);
-        return `# दिव्य ज्योतिषीय अंतर्दृष्टि — ${title} रिपोर्ट\n## ${userData.name} के लिए\n\n` +
+        return `# दिव्य ज्योतिषीय अंतर्दृष्टि — ${title} रिपोर्ट\n## ${userData.name} के लिए\न\n` +
             _buildIntroductionHi(userData, ap, gt) + '\n\n---\n\n' +
             _buildPersonalityHi(userData, ap, gt) + '\n\n---\n\n' +
             _buildCareerHi(userData, ap, gt) + '\n\n---\n\n' +
@@ -720,4 +720,102 @@ async function generateAstrologyReport(userData) {
     };
     userData.reportType = REPORT_TYPE_ALIAS[userData.reportType] || userData.reportType;
 
-    const validReportTypes = ['career', 'love']}
+    const validReportTypes = ['career', 'love', 'marriage', 'business', 'finance', 'health', 'complete'];
+    if (!validReportTypes.includes(userData.reportType)) {
+        throw new Error(
+            `generateAstrologyReport: Invalid reportType "${userData.reportType}". Must be one of: ${validReportTypes.join(', ')}`
+        );
+    }
+
+    // ── Check if Gemini API key is missing ─────────────────────
+    if (!GEMINI_API_KEY || !ai) {
+        console.warn('[astro-gemini.js] GEMINI_API_KEY missing. Generating offline report.');
+        return _generateOfflineReport(userData);
+    }
+
+    // ── Build prompts ─────────────────────────────────────────
+    const targetLanguage = LANGUAGE_MAP[userData.language] || 'English';
+    const systemPrompt = buildSystemPrompt(targetLanguage);
+    const userPrompt = buildUserPrompt(userData);
+
+    // ── Call Gemini API ───────────────────────────────────────
+    const MAX_RETRIES = 3;
+    let lastError = null;
+
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+        try {
+            const response = await ai.models.generateContent({
+                model: MODEL_ID,
+                contents: userPrompt,
+                config: {
+                    systemInstruction: systemPrompt,
+                    temperature: 0.85,
+                    topP: 0.95,
+                    topK: 40,
+                    maxOutputTokens: 8192,
+                    responseMimeType: 'text/plain'
+                }
+            });
+
+            // ── Extract and validate the response text ─────────
+            const reportText = response.text;
+
+            if (!reportText || typeof reportText !== 'string' || reportText.trim().length === 0) {
+                throw new Error('Gemini returned an empty response');
+            }
+
+            // ── Basic quality check: ensure critical sections exist ──
+            const lowerReport = reportText.toLowerCase();
+            const criticalSections = ['introduction', 'personality', 'remedies', 'conclusion'];
+            const missingSections = criticalSections.filter(
+                section => !lowerReport.includes(section)
+            );
+
+            if (missingSections.length === criticalSections.length) {
+                throw new Error(
+                    'Generated report is missing all critical sections. The response may be malformed.'
+                );
+            }
+
+            // ── Return the report ──────────────────────────────
+            return reportText.trim();
+
+        } catch (error) {
+            lastError = error;
+
+            // Classify the error for retry logic
+            const isRetryable =
+                error.message?.includes('429') ||           // Rate limit
+                error.message?.includes('503') ||           // Service unavailable
+                error.message?.includes('500') ||           // Internal server error
+                error.message?.includes('overloaded') ||     // Model overloaded
+                error.message?.includes('timeout') ||        // Timeout
+                error.message?.includes('RESOURCE_EXHAUSTED'); // Quota
+
+            if (!isRetryable || attempt === MAX_RETRIES) {
+                break;
+            }
+
+            // Exponential backoff: 2s, 4s
+            const backoffMs = Math.pow(2, attempt) * 1000;
+            console.warn(
+                `[astro-gemini.js] Attempt ${attempt}/${MAX_RETRIES} failed: "${error.message}". ` +
+                `Retrying in ${backoffMs}ms...`
+            );
+            await new Promise(resolve => setTimeout(resolve, backoffMs));
+        }
+    }
+
+    // ── All retries exhausted, invoke SMART FALLBACK SYSTEM ───
+    console.warn(
+        `[astro-gemini.js] Gemini API failed after ${MAX_RETRIES} attempts. ` +
+        `Last error: ${lastError?.message || 'Unknown error'}. Invoking offline fallback.`
+    );
+    
+    return _generateOfflineReport(userData);
+}
+
+// ─── Export ───────────────────────────────────────────────────────
+module.exports = {
+    generateAstrologyReport
+};
