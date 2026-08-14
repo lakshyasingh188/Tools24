@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>15 August Card & Certificate Maker Online | Tools24</title>
+  
+  <meta name="description" content="Create personal 15 August Independence Day cards and event participation certificates online. Add your name, photo and details and download your design as PNG, JPG or PDF.">
+  <meta name="keywords" content="15 August card maker, Independence Day card maker, 15 August certificate maker, Independence Day certificate maker, 15 August 2026, Independence Day 2026, India Independence Day, Tools24">
+  <meta name="author" content="Tools24">
+  
+  <meta property="og:title" content="15 August Card & Certificate Maker Online | Tools24">
+  <meta property="og:description" content="Create personal 15 August Independence Day cards and event participation certificates online. Download instantly as PNG, JPG or PDF.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Tools24">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    /* ===================================================
+       GLOBAL STYLES & RESET
+       =================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: linear-gradient(135deg, #c9b8f5, #8fc9f4, #f4b4ce);
+      background-attachment: fixed;
+      color: #2d3748;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Glassmorphism Container Utility */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+      border-radius: 20px;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(45deg, #6b46c1, #3182ce);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2d3748;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #6b46c1;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #2d3748;
+    }
+
+    /* Main Section */
+    main {
+      max-width: 1250px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .hero-title {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #1a202c;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+    }
+
+    .hero-title p {
+      font-size: 1.05rem;
+      color: #4a5568;
+      font-weight: 500;
+    }
+
+    /* Tabs Navigation */
+    .tab-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .tab-btn {
+      padding: 0.8rem 1.8rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.6);
+      color: #4a5568;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .tab-btn.active {
+      background: #6b46c1;
+      color: #ffffff;
+      box-shadow: 0 6px 20px rgba(107, 70, 193, 0.3);
+    }
+
+    /* App Workspace Layout */
+    .workspace {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .editor-section, .preview-section {
+      padding: 1.8rem;
+    }
+
+    .section-heading {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: #2d3748;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid rgba(107, 70, 193, 0.15);
+      padding-bottom: 0.5rem;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      color: #2d3748;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+      background: #ffffff;
+      border-color: #6b46c1;
+      box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.15);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Upload Area */
+    .upload-box {
+      border: 2px dashed #9f7aea;
+      border-radius: 14px;
+      padding: 1.2rem;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .upload-box:hover {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: #6b46c1;
+    }
+
+    .upload-box i {
+      font-size: 1.8rem;
+      color: #6b46c1;
+      margin-bottom: 0.4rem;
+    }
+
+    .upload-box p {
+      font-size: 0.85rem;
+      color: #4a5568;
+      font-weight: 500;
+    }
+
+    .photo-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-danger {
+      background: #feb2b2;
+      color: #9b2c2c;
+    }
+
+    .btn-danger:hover {
+      background: #fc8181;
+    }
+
+    /* Template Selector Pills */
+    .template-selector {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .tpl-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      color: #4a5568;
+      transition: all 0.2s ease;
+    }
+
+    .tpl-btn.active {
+      background: #3182ce;
+      color: white;
+      border-color: #3182ce;
+    }
+
+    /* Live Preview Display */
+    .preview-container-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      display: flex;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    /* Design Templates Render Frame */
+    .render-card {
+      width: 380px;
+      height: 540px;
+      position: relative;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.5rem;
+      box-sizing: border-box;
+      transform-origin: top center;
+    }
+
+    .render-cert {
+      width: 650px;
+      height: 460px;
+      position: relative;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2.2rem;
+      box-sizing: border-box;
+      transform-origin: top center;
+    }
+
+    /* Action Buttons Area */
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-action {
+      padding: 0.80rem 1rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .btn-png { background: #3182ce; color: white; }
+    .btn-png:hover { background: #2b6cb0; }
+
+    .btn-jpg { background: #38a169; color: white; }
+    .btn-jpg:hover { background: #2f855a; }
+
+    .btn-pdf { background: #e53e3e; color: white; }
+    .btn-pdf:hover { background: #c53030; }
+
+    .btn-print { background: #4a5568; color: white; }
+    .btn-print:hover { background: #2d3748; }
+
+    .btn-reset {
+      grid-column: span 2;
+      background: rgba(255,255,255,0.7);
+      color: #4a5568;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    .btn-reset:hover { background: #edf2f7; color: #1a202c; }
+
+    /* Loading Overlay */
+    .loading-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 2000;
+      color: white;
+      font-weight: 600;
+    }
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #ffffff;
+      animation: spin 0.8s ease-in-out infinite;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Legal & Privacy Blocks */
+    .privacy-note {
+      font-size: 0.8rem;
+      color: #4a5568;
+      margin-top: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .disclaimer-card {
+      margin: 2.5rem 0 1rem;
+      padding: 1.2rem;
+      border-left: 4px solid #ed8936;
+      background: rgba(255, 255, 255, 0.6);
+      font-size: 0.85rem;
+      color: #4a5568;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 2rem 1.5rem 1rem;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: #4a5568;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 1rem;
+      font-size: 0.82rem;
+      color: #718096;
+    }
+
+    /* ===================================================
+       TEMPLATES STYLING SPECIFIC RULES
+       =================================================== */
+
+    /* Universal Tricolor Wave Line */
+    .tricolor-stripe {
+      height: 5px;
+      width: 100%;
+      background: linear-gradient(to right, #FF9933 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #138808 66.66%);
+      border-radius: 2px;
+    }
+
+    .design-disclaimer {
+      font-size: 0.58rem;
+      color: #718096;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding-top: 4px;
+      border-top: 1px dashed #cbd5e0;
+      margin-top: 4px;
+    }
+
+    /* --- PROFILE CARD TEMPLATES --- */
+
+    /* Card Template 1: Tricolor Glass */
+    .card-tpl-1 {
+      background: linear-gradient(180deg, rgba(255,153,51,0.08) 0%, rgba(255,255,255,1) 40%, rgba(19,136,8,0.08) 100%);
+      border: 2px solid rgba(255, 153, 51, 0.3);
+    }
+    .card-tpl-1 .hdr-badge {
+      background: #FF9933;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: inline-block;
+      align-self: center;
+      letter-spacing: 1px;
+    }
+
+    /* Card Template 2: Freedom Premium */
+    .card-tpl-2 {
+      background: #ffffff;
+      border-top: 8px solid #FF9933;
+      border-bottom: 8px solid #138808;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.03);
+    }
+    .card-tpl-2 .hdr-badge {
+      color: #000080;
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-align: center;
+      letter-spacing: 1.5px;
+    }
+
+    /* Card Template 3: India Celebration */
+    .card-tpl-3 {
+      background: linear-gradient(135deg, #fef3c7 0%, #ffffff 50%, #d1fae5 100%);
+      border: 1px solid #fde68a;
+    }
+    .card-tpl-3 .hdr-badge {
+      background: #000080;
+      color: white;
+      padding: 4px 14px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      align-self: center;
+    }
+
+    /* Common Profile Elements */
+    .profile-photo-wrap {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      margin: 10px auto;
+      overflow: hidden;
+      border: 3px solid #000080;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: #edf2f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-details {
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .card-name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #1a202c;
+      margin-bottom: 2px;
+      line-height: 1.2;
+    }
+
+    .card-role {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #3182ce;
+      margin-bottom: 4px;
+    }
+
+    .card-org {
+      font-size: 0.8rem;
+      color: #4a5568;
+      font-weight: 500;
+    }
+
+    .card-msg {
+      font-size: 0.78rem;
+      font-style: italic;
+      color: #2d3748;
+      margin: 10px 0;
+      padding: 8px 12px;
+      background: rgba(0,0,0,0.03);
+      border-radius: 8px;
+    }
+
+    /* --- CERTIFICATE TEMPLATES --- */
+
+    /* Certificate Template 1: Independence Premium */
+    .cert-tpl-1 {
+      border: 10px solid #ffffff;
+      outline: 2px solid #cbd5e0;
+      background: radial-gradient(circle, #ffffff 60%, #fffaf0 100%);
+    }
+
+    /* Certificate Template 2: Celebration */
+    .cert-tpl-2 {
+      border: 3px double #000080;
+      background: #ffffff;
+      box-shadow: inset 0 0 30px rgba(255, 153, 51, 0.05);
+    }
+
+    /* Certificate Template 3: Tricolor Elegant */
+    .cert-tpl-3 {
+      background: #ffffff;
+      border-left: 12px solid #FF9933;
+      border-right: 12px solid #138808;
+    }
+
+    /* Certificate Inner Content Layout */
+    .cert-header {
+      text-align: center;
+    }
+
+    .cert-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1a202c;
+      letter-spacing: 1px;
+      margin-top: 5px;
+    }
+
+    .cert-subtitle {
+      font-size: 0.85rem;
+      color: #718096;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .cert-body {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .cert-recipient {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem;
+      color: #000080;
+      margin: 5px 0;
+      line-height: 1.1;
+    }
+
+    .cert-desc {
+      font-size: 0.88rem;
+      color: #4a5568;
+      max-width: 90%;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+
+    .cert-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0 10px;
+    }
+
+    .cert-field-box {
+      text-align: center;
+      border-top: 1px solid #cbd5e0;
+      padding-top: 4px;
+      min-width: 130px;
+    }
+
+    .cert-field-val {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #2d3748;
+    }
+
+    .cert-field-lbl {
+      font-size: 0.7rem;
+      color: #a0aec0;
+      text-transform: uppercase;
+    }
+
+    .cert-seal {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px dashed #000080;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000080;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-align: center;
+      transform: rotate(-10deg);
+    }
+
+    /* Responsive Breakdown */
+    @media (max-width: 992px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .preview-container-wrapper {
+        overflow-x: auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .hero-title h1 {
+        font-size: 1.75rem;
+      }
+
+      .tab-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+
+      /* Scale down rendering preview container on mobile */
+      .render-cert {
+        transform: scale(0.85);
+        margin: -35px -45px;
+      }
+
+      .render-card {
+        transform: scale(0.95);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .render-cert {
+        transform: scale(0.52);
+        margin: -110px -155px;
+      }
+
+      .render-card {
+        transform: scale(0.82);
+        margin: -45px -30px;
+      }
+
+      .actions-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-reset {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div id="loadingText">Creating your design...</div>
+  </div>
+
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Tools24
+      </a>
+      <div class="hamburger" id="hamburgerBtn">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero-title">
+      <h1>🇮🇳 15 August Card & Certificate Maker</h1>
+      <p>Create your personal Independence Day design and download it instantly.</p>
+    </div>
+
+    <div class="tab-nav">
+      <button class="tab-btn active" id="tabProfileBtn" onclick="switchMode('profile')">
+        <i class="fa-solid fa-address-card"></i> Profile Card
+      </button>
+      <button class="tab-btn" id="tabCertBtn" onclick="switchMode('certificate')">
+        <i class="fa-solid fa-award"></i> Certificate
+      </button>
+    </div>
+
+    <div class="workspace">
+      
+      <div class="glass-card editor-section">
+        
+        <div id="profileFormBlock">
+          <div class="section-heading">
+            <i class="fa-solid fa-pen-to-square"></i> Card Details
+          </div>
+
+          <div class="template-selector">
+            <button class="tpl-btn active" onclick="setTemplate('card', 1)">Tricolor Glass</button>
+            <button class="tpl-btn" onclick="setTemplate('card', 2)">Freedom Premium</button>
+            <button class="tpl-btn" onclick="setTemplate('card', 3)">India Celebration</button>
+          </div>
+
+          <div class="form-group">
+            <label for="cName">Full Name</label>
+            <input type="text" id="cName" class="form-control" value="Ajay Singh" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label for="cRole">Designation / Role</label>
+            <input type="text" id="cRole" class="form-control" value="Participant" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label for="cOrg">Organization / Institution</label>
+            <input type="text" id="cOrg" class="form-control" value="Tools24" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label for="cCity">City / Location</label>
+            <input type="text" id="cCity" class="form-control" value="India" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label for="cMsg">Short Message</label>
+            <input type="text" id="cMsg" class="form-control" value="Proud to celebrate Independence Day" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label>Upload Photo</label>
+            <div class="upload-box" id="dropZone" onclick="document.getElementById('photoInput').click()">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <p>Drag & drop photo here or tap to upload</p>
+              <input type="file" id="photoInput" accept="image/png, image/jpeg, image/jpg, image/webp" style="display: none;" onchange="handlePhotoUpload(this.files)">
+            </div>
+            <div class="photo-actions" id="photoActions" style="display: none;">
+              <button class="btn-sm btn-danger" onclick="removePhoto()"><i class="fa-solid fa-trash"></i> Remove Photo</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="certFormBlock" style="display: none;">
+          <div class="section-heading">
+            <i class="fa-solid fa-file-pen"></i> Certificate Details
+          </div>
+
+          <div class="template-selector">
+            <button class="tpl-btn active" onclick="setTemplate('cert', 1)">Independence Premium</button>
+            <button class="tpl-btn" onclick="setTemplate('cert', 2)">Celebration</button>
+            <button class="tpl-btn" onclick="setTemplate('cert', 3)">Tricolor Elegant</button>
+          </div>
+
+          <div class="form-group">
+            <label for="rtName">Recipient Name</label>
+            <input type="text" id="rtName" class="form-control" value="Lakshya Singh" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label for="rtEvent">Event / Activity Title</label>
+            <input type="text" id="rtEvent" class="form-control" value="Independence Day Celebration 2026" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label for="rtOrg">Organization Name</label>
+            <input type="text" id="rtOrg" class="form-control" value="Tools24" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label for="rtDesc">Description Text</label>
+            <textarea id="rtDesc" class="form-control" oninput="updatePreview()">This certificate recognizes participation in an Independence Day celebration/event.</textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="rtDate">Date</label>
+            <input type="text" id="rtDate" class="form-control" value="15 August 2026" oninput="updatePreview()">
+          </div>
+
+          <div class="form-group">
+            <label for="rtPresenter">Presented By</label>
+            <input type="text" id="rtPresenter" class="form-control" value="Tools24" oninput="updatePreview()">
+          </div>
+        </div>
+
+        <div class="privacy-note">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Your uploaded photo is processed in your browser and is not uploaded to our server.</span>
+        </div>
+
+      </div>
+
+      <div class="glass-card preview-section">
+        <div class="section-heading">
+          <i class="fa-solid fa-eye"></i> Live Preview
+        </div>
+
+        <div class="preview-container-wrapper">
+          
+          <div id="renderTarget">
+            </div>
+
+        </div>
+
+        <div class="actions-grid">
+          <button class="btn-action btn-png" onclick="exportDesign('png')">
+            <i class="fa-solid fa-file-image"></i> Download PNG
+          </button>
+          <button class="btn-action btn-jpg" onclick="exportDesign('jpeg')">
+            <i class="fa-solid fa-image"></i> Download JPG
+          </button>
+          <button class="btn-action btn-pdf" onclick="exportPDF()">
+            <i class="fa-solid fa-file-pdf"></i> Download PDF
+          </button>
+          <button class="btn-action btn-print" onclick="printDesign()">
+            <i class="fa-solid fa-print"></i> Print
+          </button>
+          <button class="btn-action btn-reset" onclick="resetForm()">
+            <i class="fa-solid fa-rotate-left"></i> Reset Design
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="glass-card disclaimer-card">
+      <strong>Disclaimer:</strong> This tool creates personal, educational, community or event designs for Independence Day. Generated designs are not official Government of India documents, identity cards, certificates, approvals or authorizations.
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div>
+        <a href="#" class="brand-logo" style="font-size: 1.3rem;">Tools24</a>
+        <p style="font-size: 0.85rem; color: #718096; margin-top: 4px;">Free online tools for everyday work.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="copyright">
+      &copy; 2026 Tools24. All Rights Reserved.
+    </div>
+  </footer>
+
+  <script>
+    // App State Configuration
+    const state = {
+      mode: 'profile', // 'profile' | 'certificate'
+      cardTemplate: 1,
+      certTemplate: 1,
+      photoBase64: null
+    };
+
+    // DOM Elements
+    const renderTarget = document.getElementById('renderTarget');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const loadingText = document.getElementById('loadingText');
+
+    // Mobile Navigation Toggle
+    document.getElementById('hamburgerBtn').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('show');
+    });
+
+    // Default Avatar Placeholder (Data SVG)
+    const defaultAvatar = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='%23a0aec0'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>";
+
+    // Initialize App
+    window.addEventListener('DOMContentLoaded', () => {
+      setupDragDrop();
+      updatePreview();
+    });
+
+    // Mode Switcher (Profile Card vs Certificate)
+    function switchMode(mode) {
+      state.mode = mode;
+      
+      document.getElementById('tabProfileBtn').classList.toggle('active', mode === 'profile');
+      document.getElementById('tabCertBtn').classList.toggle('active', mode === 'certificate');
+      
+      document.getElementById('profileFormBlock').style.display = mode === 'profile' ? 'block' : 'none';
+      document.getElementById('certFormBlock').style.display = mode === 'certificate' ? 'block' : 'none';
+      
+      updatePreview();
+    }
+
+    // Template Selection Handler
+    function setTemplate(type, tplId) {
+      if (type === 'card') {
+        state.cardTemplate = tplId;
+      } else {
+        state.certTemplate = tplId;
+      }
+
+      // Toggle Active States on template buttons
+      const container = type === 'card' ? document.getElementById('profileFormBlock') : document.getElementById('certFormBlock');
+      const btns = container.querySelectorAll('.tpl-btn');
+      btns.forEach((btn, idx) => {
+        btn.classList.toggle('active', (idx + 1) === tplId);
+      });
+
+      updatePreview();
+    }
+
+    // Drag & Drop Setup
+    function setupDragDrop() {
+      const dropZone = document.getElementById('dropZone');
+
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults, false);
+      });
+
+      function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      dropZone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handlePhotoUpload(files);
+      });
+    }
+
+    // Image Upload Reader
+    function handlePhotoUpload(files) {
+      if (files && files[0]) {
+        const file = files[0];
+        if (!file.type.match('image.*')) {
+          alert('Please upload a valid image file (JPG, PNG, WEBP).');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          state.photoBase64 = e.target.result;
+          document.getElementById('photoActions').style.display = 'block';
+          updatePreview();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Remove Uploaded Photo
+    function removePhoto() {
+      state.photoBase64 = null;
+      document.getElementById('photoInput').value = '';
+      document.getElementById('photoActions').style.display = 'none';
+      updatePreview();
+    }
+
+    // Master Render Preview Function
+    function updatePreview() {
+      if (state.mode === 'profile') {
+        renderProfileCard();
+      } else {
+        renderCertificate();
+      }
+    }
+
+    // Render Profile Cards
+    function renderProfileCard() {
+      const name = escapeHtml(document.getElementById('cName').value) || 'Your Name';
+      const role = escapeHtml(document.getElementById('cRole').value) || 'Role';
+      const org = escapeHtml(document.getElementById('cOrg').value) || 'Organization';
+      const city = escapeHtml(document.getElementById('cCity').value) || 'India';
+      const msg = escapeHtml(document.getElementById('cMsg').value) || 'Happy Independence Day';
+      const photoSrc = state.photoBase64 || defaultAvatar;
+
+      let tplClass = 'card-tpl-1';
+      if (state.cardTemplate === 2) tplClass = 'card-tpl-2';
+      if (state.cardTemplate === 3) tplClass = 'card-tpl-3';
+
+      const html = `
+        <div class="render-card ${tplClass}" id="exportContainer">
+          <div>
+            <div class="tricolor-stripe" style="margin-bottom: 12px;"></div>
+            <div style="text-align: center;">
+              <span class="hdr-badge">15 AUGUST 2026</span>
+              <div style="font-size: 0.7rem; font-weight: 800; color: #000080; margin-top: 4px; letter-spacing: 1px;">
+                INDEPENDENCE DAY PROFILE CARD
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-photo-wrap">
+            <img src="${photoSrc}" alt="Profile Photo">
+          </div>
+
+          <div class="card-details">
+            <div class="card-name">${name}</div>
+            <div class="card-role">${role}</div>
+            <div class="card-org">${org} • ${city}</div>
+            <div class="card-msg">"${msg}"</div>
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; font-weight: 700; color: #4a5568; margin-bottom: 4px;">
+              <span>Tools24</span>
+              <span>15 AUG 2026</span>
+            </div>
+            <div class="design-disclaimer">
+              Personal/Event Design — Not an Official Government Document
+            </div>
+          </div>
+        </div>
+      `;
+
+      renderTarget.innerHTML = html;
+    }
+
+    // Render Participation Certificates
+    function renderCertificate() {
+      const name = escapeHtml(document.getElementById('rtName').value) || 'Recipient Name';
+      const event = escapeHtml(document.getElementById('rtEvent').value) || 'Event Name';
+      const org = escapeHtml(document.getElementById('rtOrg').value) || 'Organization';
+      const desc = escapeHtml(document.getElementById('rtDesc').value) || 'Description of achievement';
+      const date = escapeHtml(document.getElementById('rtDate').value) || '15 August 2026';
+      const presenter = escapeHtml(document.getElementById('rtPresenter').value) || 'Tools24';
+
+      let tplClass = 'cert-tpl-1';
+      if (state.certTemplate === 2) tplClass = 'cert-tpl-2';
+      if (state.certTemplate === 3) tplClass = 'cert-tpl-3';
+
+      const html = `
+        <div class="render-cert ${tplClass}" id="exportContainer">
+          <div class="cert-header">
+            <div class="tricolor-stripe" style="margin-bottom: 10px;"></div>
+            <div class="cert-subtitle">${org} PRESENTS</div>
+            <div class="cert-title">Independence Day Participation Certificate</div>
+          </div>
+
+          <div class="cert-body">
+            <div style="font-size: 0.85rem; color: #718096; text-transform: uppercase;">This certificate is proudly presented to</div>
+            <div class="cert-recipient">${name}</div>
+            <div class="cert-desc">${desc}</div>
+            <div style="font-weight: 700; font-size: 0.9rem; color: #3182ce; margin-top: 6px;">${event}</div>
+          </div>
+
+          <div>
+            <div class="cert-footer">
+              <div class="cert-field-box">
+                <div class="cert-field-val">${date}</div>
+                <div class="cert-field-lbl">DATE</div>
+              </div>
+
+              <div class="cert-seal">
+                EVENT<br>VERIFIED
+              </div>
+
+              <div class="cert-field-box">
+                <div class="cert-field-val">${presenter}</div>
+                <div class="cert-field-lbl">PRESENTED BY</div>
+              </div>
+            </div>
+
+            <div class="design-disclaimer" style="margin-top: 12px;">
+              Personal/Event Design — Not an Official Government Document
+            </div>
+          </div>
+        </div>
+      `;
+
+      renderTarget.innerHTML = html;
+    }
+
+    // HTML Escaper Helper
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    // Export Design to Image (PNG / JPG)
+    function exportDesign(format) {
+      showLoading("Creating your design...");
+
+      setTimeout(() => {
+        const node = document.getElementById('exportContainer');
+        
+        html2canvas(node, {
+          scale: 3, // High-resolution render
+          useCORS: true,
+          backgroundColor: null
+        }).then(canvas => {
+          const mimeType = format === 'png' ? 'image/png' : 'image/jpeg';
+          const ext = format === 'png' ? 'png' : 'jpg';
+          const image = canvas.toDataURL(mimeType, 0.95);
+
+          const link = document.createElement('a');
+          const filename = state.mode === 'profile' ? `Tools24-15-August-Card.${ext}` : `Tools24-15-August-Certificate.${ext}`;
+          
+          link.download = filename;
+          link.href = image;
+          link.click();
+
+          hideLoading();
+        }).catch(err => {
+          console.error('Export Failed:', err);
+          alert('Failed to generate design image.');
+          hideLoading();
+        });
+      }, 300);
+    }
+
+    // Export Design to PDF
+    function exportPDF() {
+      showLoading("Creating PDF...");
+
+      setTimeout(() => {
+        const node = document.getElementById('exportContainer');
+
+        html2canvas(node, {
+          scale: 3,
+          useCORS: true
+        }).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const { jsPDF } = window.jspdf;
+
+          let pdf;
+          if (state.mode === 'profile') {
+            // Card orientation: Portrait (380x540 aspect)
+            pdf = new jsPDF('p', 'mm', [100, 142]);
+            pdf.addImage(imgData, 'PNG', 0, 0, 100, 142);
+          } else {
+            // Certificate orientation: Landscape (650x460 aspect)
+            pdf = new jsPDF('l', 'mm', [210, 148]); // A5 landscape
+            pdf.addImage(imgData, 'PNG', 0, 0, 210, 148);
+          }
+
+          pdf.save(state.mode === 'profile' ? 'Tools24-15-August-Card.pdf' : 'Tools24-15-August-Certificate.pdf');
+          hideLoading();
+        }).catch(err => {
+          console.error('PDF Export Failed:', err);
+          alert('Failed to generate PDF document.');
+          hideLoading();
+        });
+      }, 300);
+    }
+
+    // Print Design Direct Action
+    function printDesign() {
+      showLoading("Preparing print preview...");
+
+      setTimeout(() => {
+        const node = document.getElementById('exportContainer');
+
+        html2canvas(node, { scale: 2 }).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const printWindow = window.open('', '_blank');
+          
+          printWindow.document.write(`
+            <html>
+              <head>
+                <title>Print - Tools24 Independence Day Design</title>
+                <style>
+                  body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+                  img { max-width: 100%; height: auto; }
+                </style>
+              </head>
+              <body>
+                <img src="${imgData}" onload="window.print();window.close();" />
+              </body>
+            </html>
+          `);
+          printWindow.document.close();
+          hideLoading();
+        });
+      }, 300);
+    }
+
+    // Reset Form to Initial Values
+    function resetForm() {
+      state.cardTemplate = 1;
+      state.certTemplate = 1;
+      state.photoBase64 = null;
+
+      // Reset Card Inputs
+      document.getElementById('cName').value = 'Ajay Singh';
+      document.getElementById('cRole').value = 'Participant';
+      document.getElementById('cOrg').value = 'Tools24';
+      document.getElementById('cCity').value = 'India';
+      document.getElementById('cMsg').value = 'Proud to celebrate Independence Day';
+
+      // Reset Cert Inputs
+      document.getElementById('rtName').value = 'Ajay Singh';
+      document.getElementById('rtEvent').value = 'Independence Day Celebration 2026';
+      document.getElementById('rtOrg').value = 'Tools24';
+      document.getElementById('rtDesc').value = 'This certificate recognizes participation in an Independence Day celebration/event.';
+      document.getElementById('rtDate').value = '15 August 2026';
+      document.getElementById('rtPresenter').value = 'Tools24';
+
+      removePhoto();
+      
+      // Reset active template UI buttons
+      document.querySelectorAll('.template-selector').forEach(sel => {
+        const btns = sel.querySelectorAll('.tpl-btn');
+        btns.forEach((btn, idx) => {
+          btn.classList.toggle('active', idx === 0);
+        });
+      });
+
+      updatePreview();
+    }
+
+    // UI Loading Helpers
+    function showLoading(text) {
+      loadingText.innerText = text || "Creating your design...";
+      loadingOverlay.style.display = "flex";
+    }
+
+    function hideLoading() {
+      loadingOverlay.style.display = "none";
+    }
+  </script>
+</body>
+</html>
