@@ -1,435 +1,3206 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-theme="light">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Report Simplifier Online – Understand Medical Reports Easily | Tools24</title>
+    <meta name="description"
+        content="AGITools24 Medical Report Simplifier helps you understand medical reports, blood test values, reference ranges and medical terms in simple language. Upload a PDF or image and organize the information into an easy-to-read explanation.">
+    <meta name="keywords"
+        content="medical report simplifier, medical report analyzer, medical report explanation, understand medical report, blood test report explanation, CBC report explanation, LFT report explanation, KFT report explanation, thyroid report explanation, lipid profile explanation, Hindi medical report explanation, AGITools24 medical tools, Tools24 report simplifier">
+    <meta name="author" content="AGITools24">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Medical Report Simplifier Online – AGITools24">
+    <meta property="og:description"
+        content="Understand your medical reports in simple language. Upload a PDF or image and get a clear explanation of test results, reference ranges and medical terms.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AGITools24">
+    <link rel="canonical" href="https://agitools24.com/medical-report-simplifier">
 
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AGITools24 Medical Report Simplifier",
+  "url": "https://agitools24.com/medical-report-simplifier",
+  "description": "Tools24 Medical Report Simplifier helps you understand medical reports, blood test values, reference ranges and medical terms in simple language.",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires JavaScript and HTML5",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tools24",
+    "url": "https://agitools24.com"
+  }
+}
+</script>
 
-    <title>
-        Tools24 Medical Report AI
-    </title>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://agitools24.com"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Medical Report Simplifier",
+      "item": "https://agitools24.com/medical-report-simplifier"
+    }
+  ]
+}
+</script>
 
-    <script src="
-https://unpkg.com/tesseract.js@5/dist/tesseract.min.js
-">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What is a medical report simplifier?","acceptedAnswer":{"@type":"Answer","text":"A medical report simplifier is an online tool that reads your medical report and organises the test names, values, units and reference ranges into simpler language so you can understand what the report contains. AGITools24 Medical Report Simplifier is designed for educational use and does not diagnose or treat any condition."}},
+    {"@type":"Question","name":"How does AGITools24 Medical Report Simplifier work?","acceptedAnswer":{"@type":"Answer","text":"Upload a PDF or image of your medical report. The tool attempts to read the text, identify test names, values, units and reference ranges printed on the report, and then present the information in a structured and simple format. You can download, print or copy the simplified summary."}},
+    {"@type":"Question","name":"Can I upload a PDF medical report?","acceptedAnswer":{"@type":"Answer","text":"Yes. AGITools24 Medical Report Simplifier supports PDF files up to 10 MB. Text-based PDFs are read using browser-based text extraction. If the PDF is scanned and no text can be read, the tool will let you know."}},
+    {"@type":"Question","name":"Can I upload a photo of a medical report?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can upload JPG, JPEG, PNG and WEBP images up to 10 MB. The tool attempts to read the image using browser-based OCR. If the image is unclear, the tool will ask you to upload a clearer copy."}},
+    {"@type":"Question","name":"Can I understand a blood test report online?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool attempts to identify blood test values and reference ranges from the report you upload and explains them in simple English, Hindi or Hinglish. It does not replace a doctor's interpretation."}},
+    {"@type":"Question","name":"Can AGITools24 explain CBC reports?","acceptedAnswer":{"@type":"Answer","text":"The tool can help you understand common CBC parameters such as Hemoglobin, RBC, WBC, Platelets, MCV, MCH and MCHC by showing your values alongside the reference range printed on the report and a simple educational explanation."}},
+    {"@type":"Question","name":"Can AGITools24 explain LFT reports?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool can help you read common Liver Function Test values such as SGPT (ALT), SGOT (AST), ALP, Bilirubin, Total Protein and Albumin using the reference ranges printed on your report."}},
+    {"@type":"Question","name":"Can AGITools24 explain KFT reports?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool can help you read common Kidney Function Test values such as Urea, Creatinine and Uric Acid using the reference ranges printed on your report."}},
+    {"@type":"Question","name":"Can I understand a thyroid report?","acceptedAnswer":{"@type":"Answer","text":"The tool can help you read common thyroid test values such as TSH, T3 and T4. It shows your values with the reference ranges from your report and provides simple educational explanations."}},
+    {"@type":"Question","name":"Can I get the explanation in Hindi?","acceptedAnswer":{"@type":"Answer","text":"Yes. AGITools24 Medical Report Simplifier supports Simple English, Simple Hindi and Hinglish. You can choose your preferred language before simplifying the report."}},
+    {"@type":"Question","name":"Can I download my simplified report?","acceptedAnswer":{"@type":"Answer","text":"Yes. After simplification, you can download a PDF copy of the simplified report, print it, or copy the summary text to your clipboard."}},
+    {"@type":"Question","name":"Does the tool diagnose diseases?","acceptedAnswer":{"@type":"Answer","text":"No. AGITools24 Medical Report Simplifier is an educational tool only. It does not diagnose, treat or prescribe medication. Always consult a qualified healthcare professional for medical advice."}},
+    {"@type":"Question","name":"Are medical report reference ranges always the same?","acceptedAnswer":{"@type":"Answer","text":"No. Reference ranges can differ between laboratories, testing methods, age groups, gender and other factors. The tool always prefers the reference range printed on your uploaded report."}},
+    {"@type":"Question","name":"Is my medical report stored?","acceptedAnswer":{"@type":"Answer","text":"AGITools24 does not permanently store your uploaded report file in your browser. The file is processed locally in your browser. If an AI backend is configured, report text may be sent securely for analysis."}},
+    {"@type":"Question","name":"Can this tool replace a doctor?","acceptedAnswer":{"@type":"Answer","text":"No. This tool cannot replace a qualified healthcare professional. It only organises and explains the information already present in your report in simpler language. Always consult your doctor for medical decisions."}}
+  ]
+}
 </script>
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-grad: linear-gradient(135deg, #d8c8ff 0%, #a9d9ff 48%, #f3b9d5 100%);
+            --glass-bg: rgba(255, 255, 255, 0.55);
+            --glass-bg-strong: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.85);
+            --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.12);
+            --text-primary: #2a2148;
+            --text-secondary: #5a5276;
+            --text-muted: #8a82a0;
+            --accent-purple: #7c5cbf;
+            --accent-blue: #4a9fdb;
+            --accent-pink: #e878a8;
+            --accent-lavender: #b8a4e8;
+            --input-bg: rgba(255, 255, 255, 0.6);
+            --input-border: rgba(124, 92, 191, 0.2);
+            --status-normal-bg: rgba(76, 175, 122, 0.12);
+            --status-normal-text: #2d8659;
+            --status-high-bg: rgba(235, 160, 60, 0.12);
+            --status-high-text: #b87333;
+            --status-low-bg: rgba(220, 100, 100, 0.12);
+            --status-low-text: #c44848;
+            --status-unknown-bg: rgba(140, 140, 160, 0.12);
+            --status-unknown-text: #6a6280;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 10px;
+            --radius-xs: 8px;
+        }
+
+        [data-theme="dark"] {
+            --bg-grad: linear-gradient(135deg, #14102a 0%, #162038 48%, #1f1530 100%);
+            --glass-bg: rgba(30, 30, 55, 0.55);
+            --glass-bg-strong: rgba(35, 35, 65, 0.75);
+            --glass-border: rgba(100, 90, 140, 0.3);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+            --text-primary: #e8e4f5;
+            --text-secondary: #b0a8c8;
+            --text-muted: #807898;
+            --accent-purple: #a78bfa;
+            --accent-blue: #60a5fa;
+            --accent-pink: #f472b6;
+            --accent-lavender: #c4b5fd;
+            --input-bg: rgba(40, 40, 70, 0.5);
+            --input-border: rgba(140, 120, 200, 0.3);
+            --status-normal-bg: rgba(76, 175, 122, 0.18);
+            --status-normal-text: #6dd49e;
+            --status-high-bg: rgba(235, 160, 60, 0.18);
+            --status-high-text: #f5b870;
+            --status-low-bg: rgba(220, 100, 100, 0.18);
+            --status-low-text: #f08888;
+            --status-unknown-bg: rgba(140, 140, 160, 0.18);
+            --status-unknown-text: #a0a0b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-
-            font-family: Arial;
-
-            background: #eef2f7;
-
-            padding: 20px;
-
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-grad);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            transition: background 0.4s ease, color 0.3s ease;
+            overflow-x: hidden;
         }
 
-        .box {
-
-            max-width: 850px;
-
-            margin: auto;
-
-            background: white;
-
-            padding: 20px;
-
-            border-radius: 16px;
-
-        }
-
-        input {
-
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-
-            padding: 10px;
-
-        }
-
-        button {
-
-            width: 100%;
-
-            padding: 14px;
-
-            margin-top: 10px;
-
-            background: #0066ff;
-
-            color: white;
-
-            border: none;
-
-            cursor: pointer;
-
-        }
-
-        .loader {
-
-            display: none;
-
-            margin-top: 20px;
-
-        }
-
-        .bar {
-
-            height: 10px;
-
-            background: #ddd;
-
-            border-radius: 20px;
-
-            overflow: hidden;
-
-        }
-
-        .fill {
-
             height: 100%;
-
-            width: 0%;
-
-            background: #0066ff;
-
-            transition: 1s;
-
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
         }
 
-        .result {
-
-            margin-top: 20px;
-
-            padding: 20px;
-
-            background: #f5fff5;
-
-            border-radius: 10px;
-
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            animation: float 20s ease-in-out infinite;
         }
 
-        .item {
+        .shape-1 {
+            width: 450px;
+            height: 450px;
+            background: #c4a8ff;
+            top: -120px;
+            left: -100px;
+        }
 
-            padding: 10px;
+        .shape-2 {
+            width: 380px;
+            height: 380px;
+            background: #8ecaff;
+            top: 25%;
+            right: -120px;
+            animation-delay: -5s;
+        }
 
+        .shape-3 {
+            width: 350px;
+            height: 350px;
+            background: #ffaad0;
+            bottom: -100px;
+            left: 35%;
+            animation-delay: -10s;
+        }
+
+        [data-theme="dark"] .shape {
+            opacity: 0.15;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -40px) scale(1.05);
+            }
+
+            66% {
+                transform: translate(-20px, 30px) scale(0.95);
+            }
+        }
+
+        /* HEADER */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--glass-bg-strong);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 14px 24px;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--glass-bg);
+            color: var(--accent-purple);
+        }
+
+        .theme-toggle {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(124, 92, 191, 0.2);
+        }
+
+        /* MAIN */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 48px 0 32px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--glass-bg-strong);
+            border: 1px solid var(--glass-border);
+            padding: 7px 16px;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--accent-purple);
+            margin-bottom: 20px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-purple);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero .subtitle {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .hero .supporting {
+            font-size: 0.98rem;
+            color: var(--text-secondary);
+            max-width: 620px;
+            margin: 0 auto 24px;
+        }
+
+        .safety-notice {
+            display: inline-flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: rgba(235, 160, 60, 0.1);
+            border: 1px solid rgba(235, 160, 60, 0.25);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            max-width: 640px;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        [data-theme="dark"] .safety-notice {
+            background: rgba(235, 160, 60, 0.12);
+        }
+
+        .safety-icon {
+            flex-shrink: 0;
+            font-size: 1.1rem;
+            margin-top: 1px;
+        }
+
+        /* GLASS CARD */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow);
+            padding: 32px;
+        }
+
+        .card-heading {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        /* UPLOAD */
+        .upload-section {
+            margin-bottom: 28px;
+        }
+
+        .formats-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 0.82rem;
+        }
+
+        .format-tag {
+            background: var(--glass-bg-strong);
+            border: 1px solid var(--glass-border);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .max-size {
+            color: var(--text-muted);
+            align-self: center;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--accent-lavender);
+            border-radius: var(--radius-md);
+            padding: 48px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--glass-bg);
+        }
+
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: var(--accent-purple);
+            background: rgba(124, 92, 191, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .drop-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .drop-zone p {
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .drop-zone .or-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
             margin: 8px 0;
+        }
 
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(124, 92, 191, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 92, 191, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg-strong);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass-bg);
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: rgba(220, 80, 80, 0.12);
+            color: #c44848;
+            border: 1px solid rgba(220, 80, 80, 0.25);
+        }
+
+        [data-theme="dark"] .btn-danger {
+            color: #f08888;
+        }
+
+        .btn-danger:hover {
+            background: rgba(220, 80, 80, 0.2);
+        }
+
+        .btn-large {
+            padding: 16px 36px;
+            font-size: 1.05rem;
+            width: 100%;
+        }
+
+        .btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* FILE INPUT */
+        .file-input {
+            display: none;
+        }
+
+        /* PREVIEW */
+        .preview-section {
+            margin-bottom: 28px;
+        }
+
+        .file-info {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 14px 18px;
+            background: var(--glass-bg-strong);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--glass-border);
+        }
+
+        .file-icon {
+            font-size: 1.5rem;
+        }
+
+        .file-details {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .file-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            word-break: break-all;
+        }
+
+        .file-meta {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .preview-container {
+            margin: 16px 0;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
             background: #fff;
+            text-align: center;
+        }
 
-            border-radius: 8px;
+        .preview-container img,
+        .preview-container canvas {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
 
+        .preview-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* CONTROLS */
+        .controls-section {
+            margin-bottom: 28px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .select-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .select-input:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+        }
+
+        /* PROCESSING */
+        .processing-section {
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .processing-card {
+            padding: 48px 32px;
+        }
+
+        .spinner {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 24px;
+            border: 4px solid rgba(124, 92, 191, 0.15);
+            border-top-color: var(--accent-purple);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .processing-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            transition: opacity 0.3s;
+        }
+
+        .processing-sub {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* RESULTS */
+        .results-section {
+            margin-bottom: 28px;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .results-header h2 {
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+            margin-bottom: 32px;
+        }
+
+        .summary-card {
+            background: var(--glass-bg-strong);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 18px 16px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .summary-icon {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .summary-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .section-block {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title-icon {
+            font-size: 1.4rem;
+        }
+
+        /* TEST CARDS */
+        .test-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .test-card {
+            background: var(--glass-bg-strong);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 18px 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .test-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .test-card-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .test-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .test-value-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-size: 0.88rem;
+        }
+
+        .test-value-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .test-value-label {
+            color: var(--text-muted);
+            font-size: 0.76rem;
+            font-weight: 600;
+        }
+
+        .test-value-data {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .status-normal {
+            background: var(--status-normal-bg);
+            color: var(--status-normal-text);
+        }
+
+        .status-high {
+            background: var(--status-high-bg);
+            color: var(--status-high-text);
+        }
+
+        .status-low {
+            background: var(--status-low-bg);
+            color: var(--status-low-text);
+        }
+
+        .status-unknown {
+            background: var(--status-unknown-bg);
+            color: var(--status-unknown-text);
+        }
+
+        .test-explanation {
+            background: var(--glass-bg);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .test-explanation strong {
+            color: var(--text-primary);
+        }
+
+        /* MEDICAL TERMS */
+        .terms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 14px;
+        }
+
+        .term-card {
+            background: var(--glass-bg-strong);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+        }
+
+        .term-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent-purple);
+            margin-bottom: 8px;
+        }
+
+        .term-info {
+            font-size: 0.86rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            line-height: 1.55;
+        }
+
+        .term-info strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* DOCTOR DISCUSSION */
+        .discussion-card {
+            background: linear-gradient(135deg, rgba(124, 92, 191, 0.08), rgba(232, 120, 168, 0.08));
+            border: 1px solid rgba(124, 92, 191, 0.2);
+            border-radius: var(--radius-md);
+            padding: 20px 22px;
+        }
+
+        [data-theme="dark"] .discussion-card {
+            background: linear-gradient(135deg, rgba(124, 92, 191, 0.12), rgba(232, 120, 168, 0.12));
+        }
+
+        .discussion-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .discussion-list li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .discussion-list li::before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: var(--accent-purple);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* ACTION BUTTONS */
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            padding: 24px 0;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 24px;
+        }
+
+        /* NO TESTS */
+        .no-tests-card {
+            text-align: center;
+            padding: 32px;
+            background: var(--glass-bg-strong);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--glass-border);
+        }
+
+        .no-tests-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .no-tests-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .no-tests-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* ERROR MESSAGE */
+        .error-msg {
+            background: rgba(220, 80, 80, 0.1);
+            border: 1px solid rgba(220, 80, 80, 0.2);
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
+            font-size: 0.88rem;
+            color: var(--status-low-text);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        /* SEO CONTENT */
+        .seo-section {
+            margin-bottom: 28px;
+        }
+
+        .seo-content {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .seo-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            margin-top: 28px;
+            color: var(--text-primary);
+        }
+
+        .seo-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .seo-content h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 18px 0 8px;
+            color: var(--accent-purple);
+        }
+
+        .seo-content p {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .seo-content ul {
+            padding-left: 20px;
+            margin-bottom: 14px;
+        }
+
+        .seo-content li {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            line-height: 1.6;
+        }
+
+        .seo-content strong {
+            color: var(--text-primary);
+        }
+
+        /* FAQ */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: var(--glass-bg-strong);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 16px 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.2s;
+        }
+
+        .faq-question:hover {
+            background: var(--glass-bg);
+        }
+
+        .faq-toggle {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.open .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 400px;
+        }
+
+        .faq-answer-inner {
+            padding: 0 20px 18px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* PRIVACY */
+        .privacy-card {
+            padding: 28px;
+        }
+
+        .privacy-card h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .privacy-card p {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--glass-bg-strong);
+            border-top: 1px solid var(--glass-border);
+            padding: 40px 24px 24px;
+            margin-top: 40px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-tag {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-purple);
+        }
+
+        .footer-disclaimer {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 16px;
+            line-height: 1.6;
+        }
+
+        .footer-copy {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--text-primary);
+            color: var(--bg-grad);
+            padding: 14px 24px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="dark"] .toast {
+            background: #e8e4f5;
+            color: #14102a;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background: var(--glass-bg-strong);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: var(--glass-shadow);
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.show .modal {
+            transform: scale(1);
+        }
+
+        .modal h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .modal p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        /* PRINT */
+        @media print {
+
+            header,
+            .hero,
+            .upload-section,
+            .preview-section,
+            .controls-section,
+            .processing-section,
+            .action-bar,
+            .seo-section,
+            .faq-section,
+            .privacy-section,
+            footer,
+            .bg-shapes,
+            .toast,
+            .modal-overlay,
+            .safety-notice,
+            .badge {
+                display: none !important;
+            }
+
+            body {
+                background: #fff !important;
+                color: #000 !important;
+            }
+
+            .glass-card,
+            .seo-content {
+                background: #fff !important;
+                border: 1px solid #ddd !important;
+                box-shadow: none !important;
+            }
+
+            .results-section {
+                display: block !important;
+            }
+
+            main {
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+
+            .test-card,
+            .summary-card,
+            .term-card {
+                page-break-inside: avoid;
+                border: 1px solid #ddd !important;
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header-inner {
+                padding: 0;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-link {
+                display: none;
+            }
+
+            .hero {
+                padding: 32px 0 24px;
+            }
+
+            .glass-card,
+            .seo-content {
+                padding: 20px;
+            }
+
+            .drop-zone {
+                padding: 32px 16px;
+            }
+
+            .btn-large {
+                padding: 14px 24px;
+                font-size: 1rem;
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .test-value-row {
+                gap: 12px;
+            }
+
+            .action-bar {
+                flex-direction: column;
+            }
+
+            .action-bar .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .badge {
+                font-size: 0.75rem;
+            }
         }
     </style>
-
 </head>
 
 <body>
 
-    <div class="box">
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
 
-        <h2>
-            🩺 Medical Report Simplifier
-        </h2>
-        <p style="
-        color:#666;
-        line-height:1.6;
-        margin-bottom:20px;
-        ">
+    <header>
+        <div class="header-inner">
+            <a href="/" class="logo">Tools24</a>
+            <div class="nav-right">
+                <a href="/" class="nav-link">Home</a>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+            </div>
+        </div>
+    </header>
 
-            यह टूल मेडिकल रिपोर्ट को पढ़कर केवल जरूरी स्वास्थ्य जानकारी जैसे हीमोग्लोबिन, शुगर, कोलेस्ट्रॉल आदि को आसान
-            भाषा में दिखाने के लिए बनाया गया है। 
+    <main>
+        <!-- HERO -->
+        <section class="hero">
+            <div class="badge"><span class="badge-dot"></span> Tools24 Medical Tool</div>
+            <h1>Medical Report Simplifier</h1>
+            <p class="subtitle">Understand your medical reports in simple and easy language.</p>
+            <p class="supporting">Upload a medical report and organize test results, reference ranges and medical terms
+                into a clearer explanation.</p>
+            <div class="safety-notice">
+                <span class="safety-icon">⚠️</span>
+                <span><strong>Educational information only</strong> — this tool does not diagnose or treat medical
+                    conditions. Always consult a qualified healthcare professional.</span>
+            </div>
+        </section>
 
-        </p>
-
-        <input type="file" accept="image/*" id="report">
-
-        <button onclick="scan()">
-
-            Analyze Report
-
-        </button>
-
-        <div class="loader" id="loader">
-
-            <p id="loadingText">
-
-                Reading Report...
-
-            </p>
-
-            <div class="bar">
-
-                <div class="fill" id="fill">
-
+        <!-- UPLOAD -->
+        <section class="upload-section" id="upload-section">
+            <div class="glass-card">
+                <h2 class="card-heading">Upload Your Medical Report</h2>
+                <p class="card-desc">Upload a PDF or image of your medical report to understand the information more
+                    easily.</p>
+                <div class="formats-row">
+                    <span class="format-tag">PDF</span>
+                    <span class="format-tag">JPG</span>
+                    <span class="format-tag">JPEG</span>
+                    <span class="format-tag">PNG</span>
+                    <span class="format-tag">WEBP</span>
+                    <span class="max-size">Maximum: 10 MB</span>
                 </div>
+                <div class="drop-zone" id="drop-zone" tabindex="0" role="button" aria-label="Upload medical report">
+                    <div class="drop-icon">📄</div>
+                    <p>Drop your report here</p>
+                    <p class="or-text">or</p>
+                    <button class="btn btn-primary" type="button" id="browse-btn">Choose Medical Report</button>
+                    <input type="file" id="file-input" class="file-input" accept=".pdf,.jpg,.jpeg,.png,.webp"
+                        aria-label="File input">
+                </div>
+                <div id="upload-error"></div>
+            </div>
+        </section>
 
+        <!-- PREVIEW -->
+        <section class="preview-section" id="preview-section" style="display:none;">
+            <div class="glass-card">
+                <h2 class="card-heading">Uploaded Report</h2>
+                <p class="card-desc">Review your uploaded report before simplification.</p>
+                <div class="file-info">
+                    <span class="file-icon" id="file-icon">📄</span>
+                    <div class="file-details">
+                        <div class="file-name" id="file-name"></div>
+                        <div class="file-meta" id="file-meta"></div>
+                    </div>
+                </div>
+                <div class="preview-container" id="preview-container"></div>
+                <div class="preview-actions">
+                    <button class="btn btn-secondary" id="upload-another-btn">Upload Another</button>
+                    <button class="btn btn-danger" id="remove-btn">Remove Report</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTROLS -->
+        <section class="controls-section" id="controls-section" style="display:none;">
+            <div class="glass-card">
+                <div class="control-group">
+                    <label class="control-label" for="report-type">Report Type</label>
+                    <select class="select-input" id="report-type">
+                        <option value="auto">Auto Detect</option>
+                        <option value="blood">Blood Test</option>
+                        <option value="cbc">CBC (Complete Blood Count)</option>
+                        <option value="lft">LFT (Liver Function Test)</option>
+                        <option value="kft">KFT (Kidney Function Test)</option>
+                        <option value="lipid">Lipid Profile</option>
+                        <option value="thyroid">Thyroid</option>
+                        <option value="sugar">Blood Sugar</option>
+                        <option value="hba1c">HbA1c</option>
+                        <option value="urine">Urine Test</option>
+                        <option value="vitamin">Vitamin Test</option>
+                        <option value="hormone">Hormone Test</option>
+                        <option value="checkup">Health Checkup</option>
+                        <option value="pathology">Pathology</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="language">Explain Report In</label>
+                    <select class="select-input" id="language">
+                        <option value="en">Simple English</option>
+                        <option value="hi">Simple Hindi</option>
+                        <option value="hinglish">Hinglish</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary btn-large" id="simplify-btn">Simplify My Report</button>
+            </div>
+        </section>
+
+        <!-- PROCESSING -->
+        <section class="processing-section" id="processing-section" style="display:none;">
+            <div class="glass-card processing-card">
+                <div class="spinner"></div>
+                <div class="processing-text" id="processing-text">Reading your report...</div>
+                <div class="processing-sub">Please wait while we analyze your medical report.</div>
+            </div>
+        </section>
+
+        <!-- RESULTS -->
+        <section class="results-section" id="results-section" style="display:none;">
+            <div class="results-header">
+                <h2>Your Simplified Medical Report</h2>
+                <p class="card-desc">An educational summary of the information detected in your report.</p>
             </div>
 
+            <div class="summary-grid" id="summary-grid"></div>
+
+            <div class="section-block" id="important-findings-block">
+                <h3 class="section-title"><span class="section-title-icon">📌</span> Important Points From Your Report
+                </h3>
+                <div id="important-findings"></div>
+            </div>
+
+            <div class="section-block">
+                <h3 class="section-title"><span class="section-title-icon">🧪</span> Test Results</h3>
+                <div class="test-list" id="test-list"></div>
+            </div>
+
+            <div class="section-block" id="terms-block">
+                <h3 class="section-title"><span class="section-title-icon">📖</span> Medical Terms Explained Simply</h3>
+                <div class="terms-grid" id="terms-grid"></div>
+            </div>
+
+            <div class="section-block">
+                <h3 class="section-title"><span class="section-title-icon">👨‍⚕️</span> Points You May Want to Discuss
+                    With Your Doctor</h3>
+                <div class="discussion-card" id="discussion-card"></div>
+            </div>
+
+            <div class="action-bar">
+                <button class="btn btn-primary" id="download-btn">📄 Download PDF</button>
+                <button class="btn btn-secondary" id="print-btn">🖨️ Print Report</button>
+                <button class="btn btn-secondary" id="copy-btn">📋 Copy Summary</button>
+                <button class="btn btn-danger" id="clear-btn">🗑️ Clear Report</button>
+            </div>
+        </section>
+
+        <!-- SEO CONTENT -->
+        <section class="seo-section">
+            <div class="seo-content">
+                <h2>What Is a Medical Report Simplifier?</h2>
+                <p>A medical report simplifier is an online tool that reads your medical report and organises the test
+                    names, values, units and reference ranges into clearer, simpler language. Medical reports often
+                    contain abbreviations, numbers and technical terms that can be difficult to understand. AGITools24
+                    Medical Report Simplifier helps you see what is written in your report without changing any medical
+                    values. It is an educational tool, not a diagnostic service, and it does not replace the advice of a
+                    qualified healthcare professional.</p>
+
+                <h2>How Does the AGITools24 Medical Report Simplifier Work?</h2>
+                <p>The AGITools24 Medical Report Simplifier follows a simple five-step process:</p>
+                <ul>
+                    <li><strong>Upload</strong> — You upload a PDF or image of your medical report.</li>
+                    <li><strong>Read</strong> — The tool attempts to read the text from your file using browser-based
+                        text extraction or OCR.</li>
+                    <li><strong>Organise</strong> — It identifies test names, values, units and reference ranges printed
+                        on the report.</li>
+                    <li><strong>Explain</strong> — It presents the information in simple English, Hindi or Hinglish with
+                        educational explanations.</li>
+                    <li><strong>Download</strong> — You can download a PDF, print the summary, or copy the text.</li>
+                </ul>
+                <p>The tool always prefers the reference range printed on your report over any generic range. It does
+                    not invent values or reference ranges.</p>
+
+                <h2>How to Read a Blood Test Report</h2>
+                <p>A blood test report usually contains the following columns:</p>
+                <ul>
+                    <li><strong>Test Name</strong> — The name of the test, such as Hemoglobin or Glucose.</li>
+                    <li><strong>Result</strong> — The numerical value measured in your sample.</li>
+                    <li><strong>Unit</strong> — The unit of measurement, such as g/dL, mg/dL or U/L.</li>
+                    <li><strong>Reference Range</strong> — The range provided by the laboratory for comparison.</li>
+                    <li><strong>Status</strong> — Whether the result is within, above or below the reference range.</li>
+                </ul>
+                <p>AGITools24 helps you read these columns by organising them into a clean, simple format.</p>
+
+                <h2>How to Understand CBC Report</h2>
+                <p>A Complete Blood Count (CBC) is one of the most common blood tests. It may include:</p>
+                <ul>
+                    <li><strong>Hemoglobin (Hb)</strong> — A protein in red blood cells that carries oxygen.</li>
+                    <li><strong>RBC (Red Blood Cell Count)</strong> — The number of red blood cells in your blood.</li>
+                    <li><strong>WBC (White Blood Cell Count)</strong> — Cells that help fight infection.</li>
+                    <li><strong>Platelets</strong> — Cell fragments that help with blood clotting.</li>
+                    <li><strong>Hematocrit (HCT/PCV)</strong> — The proportion of blood made up of red blood cells.</li>
+                    <li><strong>MCV, MCH, MCHC</strong> — Measurements of red blood cell size and hemoglobin content.
+                    </li>
+                </ul>
+
+                <h2>How to Understand LFT Report</h2>
+                <p>A Liver Function Test (LFT) may include:</p>
+                <ul>
+                    <li><strong>SGPT (ALT)</strong> — An enzyme found mainly in the liver.</li>
+                    <li><strong>SGOT (AST)</strong> — An enzyme found in the liver, heart and muscles.</li>
+                    <li><strong>ALP (Alkaline Phosphatase)</strong> — An enzyme related to bile ducts and bones.</li>
+                    <li><strong>Bilirubin</strong> — A byproduct of red blood cell breakdown.</li>
+                    <li><strong>Total Protein, Albumin, Globulin</strong> — Proteins produced by the liver.</li>
+                </ul>
+
+                <h2>How to Understand KFT Report</h2>
+                <p>A Kidney Function Test (KFT) may include:</p>
+                <ul>
+                    <li><strong>Urea</strong> — A waste product filtered by the kidneys.</li>
+                    <li><strong>Creatinine</strong> — A waste product from muscle activity, filtered by kidneys.</li>
+                    <li><strong>Uric Acid</strong> — A waste product from the breakdown of purines.</li>
+                </ul>
+
+                <h2>How to Understand Lipid Profile</h2>
+                <p>A lipid profile measures fats in your blood:</p>
+                <ul>
+                    <li><strong>Total Cholesterol</strong> — The total amount of cholesterol in your blood.</li>
+                    <li><strong>HDL</strong> — Often called "good" cholesterol.</li>
+                    <li><strong>LDL</strong> — Often called "bad" cholesterol.</li>
+                    <li><strong>Triglycerides</strong> — A type of fat stored in the body.</li>
+                    <li><strong>VLDL</strong> — Very low-density lipoprotein.</li>
+                </ul>
+
+                <h2>How to Understand Thyroid Report</h2>
+                <p>A thyroid panel may include:</p>
+                <ul>
+                    <li><strong>TSH</strong> — Thyroid Stimulating Hormone, produced by the pituitary gland.</li>
+                    <li><strong>T3</strong> — Triiodothyronine, an active thyroid hormone.</li>
+                    <li><strong>T4</strong> — Thyroxine, the main hormone produced by the thyroid gland.</li>
+                </ul>
+                <p>These values help understand how the thyroid gland is functioning. Only a doctor can interpret them
+                    in your clinical context.</p>
+
+                <h2>How to Understand Blood Sugar Report</h2>
+                <p>Blood sugar tests may include:</p>
+                <ul>
+                    <li><strong>Fasting Blood Sugar (FBS)</strong> — Measured after not eating for 8–12 hours.</li>
+                    <li><strong>Post-Prandial Blood Sugar (PPBS)</strong> — Measured 2 hours after a meal.</li>
+                    <li><strong>Random Blood Sugar (RBS)</strong> — Measured at any time of day.</li>
+                    <li><strong>HbA1c</strong> — Reflects average blood sugar over the past 2–3 months.</li>
+                </ul>
+
+                <h2>Hindi Medical Report Explanation</h2>
+                <p>AGITools24 Medical Report Simplifier supports Simple Hindi and Hinglish. Many users find it easier to
+                    understand their medical reports in Hindi. The tool provides simple explanations of medical terms in
+                    natural, easy-to-read Hindi without unnecessary technical jargon. You can select "Simple Hindi" or
+                    "Hinglish" before simplifying your report.</p>
+
+                <h2>Why Reference Ranges Matter</h2>
+                <p>Reference ranges are the values that a laboratory considers "normal" for a healthy population.
+                    However, reference ranges can differ between laboratories, testing methods, age groups, gender and
+                    other factors. A value outside the reference range does not always mean there is a problem. Only a
+                    qualified healthcare professional can interpret your results in the context of your symptoms,
+                    medical history and other test results. AGITools24 always prefers the reference range printed on
+                    your uploaded report.</p>
+
+                <h2>Can a Medical Report Simplifier Replace a Doctor?</h2>
+                <p>No. A medical report simplifier cannot replace a doctor. It only organises and explains the
+                    information already present in your report in simpler language. It does not diagnose diseases,
+                    prescribe medication or recommend treatment. Always consult a qualified healthcare professional for
+                    medical advice, diagnosis and treatment. Tools24 and AGITools24 medical tools are designed to
+                    support, not replace, professional medical care.</p>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="seo-section" id="faq-section">
+            <div class="seo-content">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-list" id="faq-list"></div>
+            </div>
+        </section>
+
+        <!-- PRIVACY -->
+        <section class="seo-section" id="privacy-section">
+            <div class="glass-card privacy-card">
+                <h2>🔒 Privacy First</h2>
+                <p>Medical reports may contain sensitive personal information. Upload only information you are
+                    comfortable processing. AGITools24 processes your file locally in your browser and does not
+                    permanently store the uploaded report file in localStorage. If an AI backend is configured, report
+                    text may be sent securely to the configured service for analysis. We do not falsely claim that your
+                    report never leaves your device if a backend service is used. Always exercise caution when uploading
+                    medical documents online.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">Tools24</div>
+            <p class="footer-tag">Free and useful online tools for everyday digital tasks.</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="contact.html">Contact</a>
+                <a href="about.html">About</a>
+            </div>
+            <p class="footer-disclaimer">AGITools24 Medical Report Simplifier is an educational tool. It does not
+                diagnose, treat or prescribe medication. It is not a substitute for professional medical advice. Always
+                consult a qualified healthcare professional regarding medical conditions. Reference ranges shown are
+                those printed on your uploaded report and may vary between laboratories.</p>
+            <p class="footer-copy">© 2024 AGITools24. All rights reserved.</p>
         </div>
+    </footer>
 
-        <div class="result" id="result">
+    <div class="toast" id="toast"></div>
 
+    <div class="modal-overlay" id="confirm-modal">
+        <div class="modal">
+            <h3>Clear Report?</h3>
+            <p>This will remove all uploaded files and extracted data. This action cannot be undone.</p>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" id="modal-cancel">Cancel</button>
+                <button class="btn btn-danger" id="modal-confirm">Yes, Clear Everything</button>
+            </div>
         </div>
-
     </div>
 
     <script>
+        /* ============================================================
+           AGITOOLS24 MEDICAL REPORT SIMPLIFIER
+           ============================================================ */
 
-        async function scan() {
+        const AI_ENDPOINT = "/api/medical-report";
+        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+        const ACCEPTED_TYPES = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
-            let file =
+        // State
+        let currentFile = null;
+        let extractedText = '';
+        let currentResults = null;
+        let selectedLanguage = 'en';
 
-                document
-                    .getElementById(
-                        "report"
-                    )
-                    .files[0];
-
-            if (!file) {
-
-                alert(
-                    "Upload report"
-                );
-
-                return;
-
+        /* ---- THEME ---- */
+        function initTheme() {
+            try {
+                const saved = localStorage.getItem('agitools24-theme') || 'light';
+                document.documentElement.setAttribute('data-theme', saved);
+                updateThemeButton(saved);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
             }
-
-            loader
-                .style
-                .display =
-                "block";
-
-            fill
-                .style
-                .width =
-                "10%";
-
-            loadingText
-                .innerHTML =
-                "Scanning...";
-
-            result
-                .innerHTML =
-                "";
-
-            const ocr =
-
-                await Tesseract
-                    .recognize(
-
-                        file,
-
-                        "eng",
-
-                        {
-
-                            logger:
-
-                                m => {
-
-                                    if (
-
-                                        m.progress
-
-                                    ) {
-
-                                        fill
-                                            .style
-                                            .width =
-
-                                            (
-                                                m.progress
-                                                *
-                                                100
-
-                                            )
-
-                                            +
-
-                                            "%";
-
-                                    }
-
-                                }
-
-                        }
-
-                    );
-
-            let text =
-
-                ocr
-                    .data
-                    .text
-                    .toLowerCase();
-
-            loadingText
-                .innerHTML =
-                "Generating Summary";
-
-            let out = [];
-
-            function find(name) {
-
-                let reg =
-
-                    new RegExp(
-
-                        name +
-
-                        ".{0,20}(\\d+\\.?\\d*)"
-
-                    );
-
-                let v =
-
-                    text
-                        .match(
-                            reg
-                        );
-
-                return v ?
-
-                    v[1]
-
-                    :
-
-                    null;
-
-            }
-
-            let hb =
-
-                find(
-                    "hemoglobin"
-                );
-
-            if (hb)
-
-                out.push(
-
-                    `🩸 Hemoglobin : ${hb}`
-
-                );
-
-            let sugar =
-
-                find(
-                    "glucose|blood sugar|fasting"
-                );
-
-            if (sugar)
-
-                out.push(
-
-                    `🍬 Sugar : ${sugar}`
-
-                );
-
-            let chol =
-
-                find(
-                    "cholesterol"
-                );
-
-            if (chol)
-
-                out.push(
-
-                    `❤️ Cholesterol : ${chol}`
-
-                );
-
-            let plate =
-
-                find(
-                    "platelet"
-                );
-
-            if (plate)
-
-                out.push(
-
-                    `🧪 Platelets : ${plate}`
-
-                );
-
-            let rbc =
-
-                find(
-                    "rbc"
-                );
-
-            if (rbc)
-
-                out.push(
-
-                    `🔴 RBC : ${rbc}`
-
-                );
-
-            if (
-                out.length == 0
-            ) {
-
-                out.push(
-
-                    "Medical values detect nahi hui"
-
-                );
-
-            }
-
-            result.innerHTML =
-
-                `
-<h3>
-
-Important Results
-
-</h3>
-
-${out.map(
-
-                    x =>
-
-                        `
-<div
-class=item>
-
-${x}
-
-</div>
-
-`
-
-                ).join("")}
-
-<br>
-
-<b>
-
-Educational only
-
-</b>
-
-`;
-
-            loadingText
-                .innerHTML =
-                "Done";
-
-            fill
-                .style
-                .width =
-                "100%";
-
         }
 
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            try { localStorage.setItem('agitools24-theme', newTheme); } catch (e) { }
+            updateThemeButton(newTheme);
+        }
+
+        function updateThemeButton(theme) {
+            document.getElementById('theme-toggle').textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        /* ---- TOAST ---- */
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        /* ---- ESCAPE HTML ---- */
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = String(str);
+            return div.innerHTML;
+        }
+
+        /* ---- FILE SIZE FORMAT ---- */
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+        }
+
+        /* ---- FILE VALIDATION ---- */
+        function validateFile(file) {
+            if (!file) return { valid: false, msg: 'Please select a file.' };
+            if (file.size === 0) return { valid: false, msg: 'The selected file appears to be empty. Please choose a valid report.' };
+            if (file.size > MAX_FILE_SIZE) return { valid: false, msg: 'File is too large. Please upload a PDF or image up to 10 MB.' };
+
+            const ext = file.name.split('.').pop().toLowerCase();
+            const validExts = ['pdf', 'jpg', 'jpeg', 'png', 'webp'];
+            if (!validExts.includes(ext)) {
+                return { valid: false, msg: 'Please upload a PDF or supported image file (JPG, JPEG, PNG, WEBP) up to 10 MB.' };
+            }
+            return { valid: true };
+        }
+
+        /* ---- UPLOAD ERROR ---- */
+        function showUploadError(msg) {
+            const container = document.getElementById('upload-error');
+            container.innerHTML = '<div class="error-msg"><span>⚠️</span><span>' + escapeHtml(msg) + '</span></div>';
+        }
+
+        function clearUploadError() {
+            document.getElementById('upload-error').innerHTML = '';
+        }
+
+        /* ---- FILE HANDLING ---- */
+        function handleFile(file) {
+            clearUploadError();
+            const validation = validateFile(file);
+            if (!validation.valid) {
+                showUploadError(validation.msg);
+                return;
+            }
+            currentFile = file;
+            showPreview(file);
+        }
+
+        function showPreview(file) {
+            const previewSection = document.getElementById('preview-section');
+            const controlsSection = document.getElementById('controls-section');
+            const uploadSection = document.getElementById('upload-section');
+
+            document.getElementById('file-name').textContent = file.name;
+            document.getElementById('file-meta').textContent = formatFileSize(file.size) + ' • ' + (file.type || 'Unknown type');
+
+            const icon = file.type === 'application/pdf' ? '📄' : '🖼️';
+            document.getElementById('file-icon').textContent = icon;
+
+            const previewContainer = document.getElementById('preview-container');
+            previewContainer.innerHTML = '';
+
+            if (file.type === 'application/pdf') {
+                renderPDFPreview(file, previewContainer);
+            } else if (file.type.startsWith('image/')) {
+                const img = document.createElement('img');
+                img.alt = 'Report preview';
+                img.onload = () => URL.revokeObjectURL(img.src);
+                img.src = URL.createObjectURL(file);
+                previewContainer.appendChild(img);
+            }
+
+            previewSection.style.display = 'block';
+            controlsSection.style.display = 'block';
+            uploadSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        async function renderPDFPreview(file, container) {
+            try {
+                const pdfjsLib = await loadPDFJS();
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                const page = await pdf.getPage(1);
+                const viewport = page.getViewport({ scale: 1.2 });
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                container.appendChild(canvas);
+            } catch (err) {
+                container.innerHTML = '<div style="padding:40px;color:#888;">📄 PDF preview not available. The file will still be processed.</div>';
+            }
+        }
+
+        function removeFile() {
+            currentFile = null;
+            extractedText = '';
+            currentResults = null;
+            document.getElementById('preview-section').style.display = 'none';
+            document.getElementById('controls-section').style.display = 'none';
+            document.getElementById('results-section').style.display = 'none';
+            document.getElementById('processing-section').style.display = 'none';
+            document.getElementById('file-input').value = '';
+            clearUploadError();
+            document.getElementById('upload-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /* ---- DRAG & DROP ---- */
+        function setupDragDrop() {
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('file-input');
+            const browseBtn = document.getElementById('browse-btn');
+
+            browseBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                fileInput.click();
+            });
+
+            dropZone.addEventListener('click', () => fileInput.click());
+
+            dropZone.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    fileInput.click();
+                }
+            });
+
+            dropZone.addEventListener('dragenter', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('drag-over');
+            });
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                if (e.target === dropZone) dropZone.classList.remove('drag-over');
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('drag-over');
+                const file = e.dataTransfer.files[0];
+                if (file) handleFile(file);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) handleFile(file);
+            });
+        }
+
+        /* ---- PDF.JS LOADER ---- */
+        function loadPDFJS() {
+            return new Promise((resolve, reject) => {
+                if (window.pdfjsLib) {
+                    resolve(window.pdfjsLib);
+                    return;
+                }
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+                script.onload = () => {
+                    if (window.pdfjsLib) {
+                        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                        resolve(window.pdfjsLib);
+                    } else {
+                        reject(new Error('PDF.js failed to load'));
+                    }
+                };
+                script.onerror = () => reject(new Error('PDF.js failed to load'));
+                document.head.appendChild(script);
+            });
+        }
+
+        /* ---- TESSERACT LOADER ---- */
+        function loadTesseract() {
+            return new Promise((resolve, reject) => {
+                if (window.Tesseract) {
+                    resolve(window.Tesseract);
+                    return;
+                }
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+                script.onload = () => {
+                    if (window.Tesseract) resolve(window.Tesseract);
+                    else reject(new Error('Tesseract failed to load'));
+                };
+                script.onerror = () => reject(new Error('Tesseract failed to load'));
+                document.head.appendChild(script);
+            });
+        }
+
+        /* ---- jsPDF LOADER ---- */
+        function loadJsPDF() {
+            return new Promise((resolve, reject) => {
+                if (window.jspdf) {
+                    resolve(window.jspdf);
+                    return;
+                }
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                script.onload = () => {
+                    if (window.jspdf) resolve(window.jspdf);
+                    else reject(new Error('jsPDF failed to load'));
+                };
+                script.onerror = () => reject(new Error('jsPDF failed to load'));
+                document.head.appendChild(script);
+            });
+        }
+
+        /* ---- PDF TEXT EXTRACTION ---- */
+        async function extractPDFText(file) {
+            const pdfjsLib = await loadPDFJS();
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            let fullText = '';
+
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const textContent = await page.getTextContent();
+                const pageText = textContent.items.map(item => item.str).join(' ');
+                fullText += pageText + '\n';
+            }
+
+            return fullText;
+        }
+
+        /* ---- IMAGE OCR ---- */
+        async function extractImageText(file) {
+            const Tesseract = await loadTesseract();
+            const result = await Tesseract.recognize(file, 'eng', {
+                logger: () => { }
+            });
+            return result.data.text;
+        }
+
+        /* ---- PROCESSING UI ---- */
+        function showProcessing() {
+            document.getElementById('processing-section').style.display = 'block';
+            document.getElementById('results-section').style.display = 'none';
+            cycleProcessingMessages();
+        }
+
+        function hideProcessing() {
+            document.getElementById('processing-section').style.display = 'none';
+        }
+
+        let processingInterval = null;
+        function cycleProcessingMessages() {
+            const messages = [
+                'Reading your report...',
+                'Extracting medical information...',
+                'Organizing test results...',
+                'Preparing simple explanations...'
+            ];
+            let idx = 0;
+            const textEl = document.getElementById('processing-text');
+            textEl.textContent = messages[0];
+            processingInterval = setInterval(() => {
+                idx = (idx + 1) % messages.length;
+                textEl.style.opacity = '0';
+                setTimeout(() => {
+                    textEl.textContent = messages[idx];
+                    textEl.style.opacity = '1';
+                }, 200);
+            }, 2000);
+        }
+
+        function stopProcessingCycle() {
+            if (processingInterval) {
+                clearInterval(processingInterval);
+                processingInterval = null;
+            }
+        }
+
+        /* ============================================================
+           MEDICAL DATA EXTRACTION
+           ============================================================ */
+
+        const MEDICAL_TERMS = [
+            {
+                key: 'hemoglobin', aliases: ['hemoglobin', 'haemoglobin', 'hb', 'hgb', 'hemoglobin (hb)'],
+                info: {
+                    en: { what: 'Hemoglobin is a protein in red blood cells that carries oxygen from your lungs to the rest of your body.', why: 'It is measured to check for anemia and other blood-related conditions.' },
+                    hi: { what: 'हीमोग्लोबिन लाल रक्त कोशिकाओं में पाया जाने वाला एक प्रोटीन है जो ऑक्सीजन को फेफड़ों से शरीर के बाकी हिस्सों तक पहुँचाता है।', why: 'इसे एनीमिया और अन्य रक्त संबंधी स्थितियों की जाँच के लिए मापा जाता है।' },
+                    hinglish: { what: 'Hemoglobin red blood cells mein ek protein hai jo oxygen ko lungs se body ke baaki hisson tak pahunchata hai.', why: 'Isse anemia aur blood-related conditions check karne ke liye measure karte hain.' }
+                }
+            },
+            {
+                key: 'rbc', aliases: ['rbc', 'red blood cell', 'red blood count', 'red cell count', 'total rbc'],
+                info: {
+                    en: { what: 'RBC count measures the number of red blood cells in your blood.', why: 'It helps check for anemia, dehydration or other conditions.' },
+                    hi: { what: 'RBC गिनती आपके रक्त में लाल रक्त कोशिकाओं की संख्या को मापती है।', why: 'यह एनीमिया, निर्जलीकरण या अन्य स्थितियों की जाँच में मदद करता है।' },
+                    hinglish: { what: 'RBC count aapke blood mein red blood cells ki sankhya ko measure karta hai.', why: 'Yeh anemia, dehydration ya aur conditions check karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'wbc', aliases: ['wbc', 'white blood cell', 'total count', 'tc', 'total leucocyte', 'tlc'],
+                info: {
+                    en: { what: 'WBC count measures white blood cells that help fight infection.', why: 'It helps detect infections, inflammation or immune system issues.' },
+                    hi: { what: 'WBC गिनती श्वेत रक्त कोशिकाओं को मापती है जो संक्रमण से लड़ने में मदद करती हैं।', why: 'यह संक्रमण, सूजन या प्रतिरक्षा संबंधी समस्याओं का पता लगाने में मदद करता है।' },
+                    hinglish: { what: 'WBC count white blood cells ko measure karta hai jo infection se ladne mein madad karte hain.', why: 'Yeh infections, inflammation ya immune system issues detect karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'platelet', aliases: ['platelet', 'plt', 'platelet count'],
+                info: {
+                    en: { what: 'Platelets are cell fragments that help your blood clot.', why: 'It is checked to assess bleeding risk and clotting disorders.' },
+                    hi: { what: 'प्लेटलेट्स रकत कोशिका के टुकड़े हैं जो रक्त के थक्के बनाने में मदद करते हैं।', why: 'इसकी जाँच रक्तस्राव के जोखिम और थक्के संबंधी विकारों का आकलन करने के लिए की जाती है।' },
+                    hinglish: { what: 'Platelets blood cell ke tukde hote hain jo blood clot banane mein madad karte hain.', why: 'Iski checking bleeding risk aur clotting disorders assess karne ke liye hoti hai.' }
+                }
+            },
+            {
+                key: 'hematocrit', aliases: ['hematocrit', 'hct', 'pcv', 'packed cell volume'],
+                info: {
+                    en: { what: 'Hematocrit measures the percentage of blood made up of red blood cells.', why: 'It helps evaluate anemia and hydration status.' },
+                    hi: { what: 'हेमेटोक्रिट रक्त में लाल रक्त कोशिकाओं के प्रतिशत को मापता है।', why: 'यह एनीमिया और जलयोजन की स्थिति का मूल्यांकन करने में मदद करता है।' },
+                    hinglish: { what: 'Hematocrit blood mein red blood cells ka percentage measure karta hai.', why: 'Yeh anemia aur hydration status evaluate karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'mcv', aliases: ['mcv', 'mean corpuscular volume'],
+                info: {
+                    en: { what: 'MCV measures the average size of your red blood cells.', why: 'It helps classify different types of anemia.' },
+                    hi: { what: 'MCV आपकी लाल रक्त कोशिकाओं के औसत आकार को मापता है।', why: 'यह विभिन्न प्रकार के एनीमिया को वर्गीकृत करने में मदद करता है।' },
+                    hinglish: { what: 'MCV aapki red blood cells ke average size ko measure karta hai.', why: 'Yeh alag-alag types ke anemia ko classify karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'mch', aliases: ['mch', 'mean corpuscular hemoglobin'],
+                info: {
+                    en: { what: 'MCH measures the average amount of hemoglobin in each red blood cell.', why: 'It helps diagnose types of anemia.' },
+                    hi: { what: 'MCH प्रत्येक लाल रक्त कोशिका में हीमोग्लोबिन की औसत मात्रा को मापता है।', why: 'यह एनीमिया के प्रकार का निदान करने में मदद करता है।' },
+                    hinglish: { what: 'MCH har red blood cell mein hemoglobin ki average amount ko measure karta hai.', why: 'Yeh anemia ke types diagnose karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'mchc', aliases: ['mchc', 'mean corpuscular hemoglobin concentration'],
+                info: {
+                    en: { what: 'MCHC measures the concentration of hemoglobin in red blood cells.', why: 'It helps evaluate the severity of anemia.' },
+                    hi: { what: 'MCHC लाल रक्त कोशिकाओं में हीमोग्लोबिन की सांद्रता को मापता है।', why: 'यह एनीमिया की गंभीरता का मूल्यांकन करने में मदद करता है।' },
+                    hinglish: { what: 'MCHC red blood cells mein hemoglobin ki concentration measure karta hai.', why: 'Yeh anemia ki severity evaluate karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'glucose', aliases: ['glucose', 'blood sugar', 'fbs', 'rbs', 'ppbs', 'fasting glucose', 'post prandial', 'blood glucose'],
+                info: {
+                    en: { what: 'Glucose is the main sugar found in your blood and is your body\u2019s primary energy source.', why: 'It is measured to check for diabetes and blood sugar control.' },
+                    hi: { what: 'ग्लूकोज आपके रक्त में पाया जाने वाला मुख्य शर्करा है और शरीर की ऊर्जा का मुख्य स्रोत है।', why: 'इसे मधुमेह और रक्त शर्करा नियंत्रण की जाँच के लिए मापा जाता है।' },
+                    hinglish: { what: 'Glucose blood mein milne wala main sugar hai aur body ki primary energy source hai.', why: 'Isse diabetes aur blood sugar control check karne ke liye measure karte hain.' }
+                }
+            },
+            {
+                key: 'hba1c', aliases: ['hba1c', 'glycosylated', 'glycated', 'a1c'],
+                info: {
+                    en: { what: 'HbA1c reflects your average blood sugar levels over the past 2\u20133 months.', why: 'It is used to monitor long-term blood sugar control.' },
+                    hi: { what: 'HbA1c पिछले 2\u20133 महीनों में आपके औसत रक्त शर्करा स्तर को दर्शाता है।', why: 'इसका उपयोग दीर्घकालिक रक्त शर्करा नियंत्रण की निगरानी के लिए किया जाता है।' },
+                    hinglish: { what: 'HbA1c pichle 2\u20133 mahine mein aapke average blood sugar levels ko dikhata hai.', why: 'Isse long-term blood sugar control monitor karne ke liye use karte hain.' }
+                }
+            },
+            {
+                key: 'urea', aliases: ['urea', 'blood urea', 'bun'],
+                info: {
+                    en: { what: 'Urea is a waste product formed when protein is broken down, filtered by the kidneys.', why: 'It helps check how well your kidneys are working.' },
+                    hi: { what: 'यूरिया प्रोटीन टूटने पर बनने वाला एक अपशिष्ट उत्पाद है, जिसे गुर्दे फ़िल्टर करते हैं।', why: 'यह आपके गुर्दे कितनी अच्छी तरह काम कर रहे हैं, यह जाँचने में मदद करता है।' },
+                    hinglish: { what: 'Urea protein tootne par banna wala waste product hai, jise kidneys filter karte hain.', why: 'Yeh aapke kidneys kitni achhi tarah kaam kar rahe hain, check karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'creatinine', aliases: ['creatinine', 'creat', 'serum creatinine'],
+                info: {
+                    en: { what: 'Creatinine is a waste product from muscle activity, removed by the kidneys.', why: 'It is a key indicator of kidney function.' },
+                    hi: { what: 'क्रिएटिनिन मांसपेशी गतिविधि से उत्पन्न एक अपशिष्ट उत्पाद है, जिसे गुर्दे हटाते हैं।', why: 'यह गुर्दा कार्य का एक मुख्य सूचक है।' },
+                    hinglish: { what: 'Creatinine muscle activity se banna wala waste product hai, jise kidneys hataate hain.', why: 'Yeh kidney function ka ek main indicator hai.' }
+                }
+            },
+            {
+                key: 'uric', aliases: ['uric acid', 'uric'],
+                info: {
+                    en: { what: 'Uric acid is a waste product from the breakdown of purines, found in certain foods.', why: 'High levels may be associated with gout or kidney stones.' },
+                    hi: { what: 'यूरिक एसिड प्यूरीन के टूटने से बनने वाला अपशिष्ट उत्पाद है, जो कुछ खाद्य पदार्थों में पाया जाता है।', why: 'उच्च स्तर गाउट या गुर्दे की पथरी से जुड़े हो सकते हैं।' },
+                    hinglish: { what: 'Uric acid purine ke tootne se banna wala waste product hai, jo kuch foods mein paya jata hai.', why: 'High levels gout ya kidney stones se judhe ho sakte hain.' }
+                }
+            },
+            {
+                key: 'bilirubin', aliases: ['bilirubin', 'total bilirubin', 'direct bilirubin', 'indirect bilirubin', 'tbil', 'dbil'],
+                info: {
+                    en: { what: 'Bilirubin is a yellow substance produced when red blood cells break down.', why: 'It helps check liver function and red blood cell breakdown.' },
+                    hi: { what: 'बिलीरुबिन एक पीला पदार्थ है जो लाल रक्त कोशिकाओं के टूटने पर बनता है।', why: 'यह यकृत कार्य और लाल रक्त कोशिका टूटन की जाँच में मदद करता है।' },
+                    hinglish: { what: 'Bilirubin ek peela substance hai jo red blood cells ke tootne par banta hai.', why: 'Yeh liver function aur red blood cell breakdown check karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'sgpt', aliases: ['sgpt', 'alt', 'alanine', 'alanine aminotransferase'],
+                info: {
+                    en: { what: 'SGPT (ALT) is an enzyme found mainly in the liver.', why: 'It is measured to check for liver cell damage.' },
+                    hi: { what: 'SGPT (ALT) मुख्य रूप से यकृत में पाया जाने वाला एक एंजाइम है।', why: 'इसे यकृत कोशिका क्षति की जाँच के लिए मापा जाता है।' },
+                    hinglish: { what: 'SGPT (ALT) mainly liver mein paya jane wala ek enzyme hai.', why: 'Isse liver cell damage check karne ke liye measure karte hain.' }
+                }
+            },
+            {
+                key: 'sgot', aliases: ['sgot', 'ast', 'aspartate', 'aspartate aminotransferase'],
+                info: {
+                    en: { what: 'SGOT (AST) is an enzyme found in the liver, heart and muscles.', why: 'It helps assess liver damage and other tissue damage.' },
+                    hi: { what: 'SGOT (AST) यकृत, हृदय और मांसपेशियों में पाया जाने वाला एक एंजाइम है।', why: 'यह यकृत क्षति और अन्य ऊतक क्षति का आकलन करने में मदद करता है।' },
+                    hinglish: { what: 'SGOT (AST) liver, heart aur muscles mein paya jane wala ek enzyme hai.', why: 'Yeh liver damage aur aur tissue damage assess karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'alp', aliases: ['alp', 'alkaline phosphatase'],
+                info: {
+                    en: { what: 'ALP is an enzyme found in the liver and bones.', why: 'It helps check liver and bone conditions.' },
+                    hi: { what: 'ALP यकृत और हड्डियों में पाया जाने वाला एक एंजाइम है।', why: 'यह यकृत और हड्डी स्थितियों की जाँच में मदद करता है।' },
+                    hinglish: { what: 'ALP liver aur bones mein paya jane wala ek enzyme hai.', why: 'Yeh liver aur bone conditions check karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'protein', aliases: ['total protein', 'tp', 'serum protein'],
+                info: {
+                    en: { what: 'Total protein measures the total amount of protein in your blood.', why: 'It helps assess nutrition and liver/kidney function.' },
+                    hi: { what: 'टोटल प्रोटीन आपके रक्त में प्रोटीन की कुल मात्रा को मापता है।', why: 'यह पोषण और यकृत/गुर्दा कार्य का आकलन करने में मदद करता है।' },
+                    hinglish: { what: 'Total protein aapke blood mein protein ki kul matra ko measure karta hai.', why: 'Yeh nutrition aur liver/kidney function assess karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'albumin', aliases: ['albumin', 'alb'],
+                info: {
+                    en: { what: 'Albumin is the main protein made by the liver.', why: 'It helps assess liver function and nutrition.' },
+                    hi: { what: 'एल्ब्यूमिन यकृत द्वारा बनाया जाने वाला मुख्य प्रोटीन है।', why: 'यह यकृत कार्य और पोषण का आकलन करने में मदद करता है।' },
+                    hinglish: { what: 'Albumin liver dwara banaya jane wala main protein hai.', why: 'Yeh liver function aur nutrition assess karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'globulin', aliases: ['globulin', 'glob'],
+                info: {
+                    en: { what: 'Globulin is a group of proteins in your blood that help fight infection.', why: 'It helps assess immune function and liver health.' },
+                    hi: { what: 'ग्लोब्युलिन आपके रक्त में प्रोटीन का एक समूह है जो संक्रमण से लड़ने में मदद करता है।', why: 'यह प्रतिरक्षा कार्य और यकृत स्वास्थ्य का आकलन करने में मदद करता है।' },
+                    hinglish: { what: 'Globulin aapke blood mein proteins ka ek group hai jo infection se ladne mein madad karta hai.', why: 'Yeh immune function aur liver health assess karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'sodium', aliases: ['sodium', 'na', 'serum sodium'],
+                info: {
+                    en: { what: 'Sodium is a mineral that helps balance fluids in your body.', why: 'It is checked to assess hydration and electrolyte balance.' },
+                    hi: { what: 'सोडियम एक खनिज है जो आपके शरीर में तरल पदार्थ को संतुलित करने में मदद करता है।', why: 'इसकी जाँच जलयोजन और इलेक्ट्रोलाइट संतुलन का आकलन करने के लिए की जाती है।' },
+                    hinglish: { what: 'Sodium ek mineral hai jo body mein fluids ko balance karne mein madad karta hai.', why: 'Iski checking hydration aur electrolyte balance assess karne ke liye hoti hai.' }
+                }
+            },
+            {
+                key: 'potassium', aliases: ['potassium', 'k', 'serum potassium'],
+                info: {
+                    en: { what: 'Potassium is a mineral important for heart and muscle function.', why: 'It is checked to assess heart and kidney health.' },
+                    hi: { what: 'पोटेशियम एक खनिज है जो हृदय और मांसपेशी कार्य के लिए महत्वपूर्ण है।', why: 'इसकी जाँच हृदय और गुर्दा स्वास्थ्य का आकलन करने के लिए की जाती है।' },
+                    hinglish: { what: 'Potassium ek mineral hai jo heart aur muscle function ke liye zaroori hai.', why: 'Iski checking heart aur kidney health assess karne ke liye hoti hai.' }
+                }
+            },
+            {
+                key: 'calcium', aliases: ['calcium', 'ca', 'serum calcium'],
+                info: {
+                    en: { what: 'Calcium is a mineral essential for bones, teeth and nerve function.', why: 'It is checked to assess bone health and parathyroid function.' },
+                    hi: { what: 'कैल्शियम एक खनिज है जो हड्डियों, दाँतों और तंत्रिका कार्य के लिए आवश्यक है।', why: 'इसकी जाँच हड्डी स्वास्थ्य और पैराथाइरॉइड कार्य का आकलन करने के लिए की जाती है।' },
+                    hinglish: { what: 'Calcium ek mineral hai jo bones, teeth aur nerve function ke liye zaroori hai.', why: 'Iski checking bone health aur parathyroid function assess karne ke liye hoti hai.' }
+                }
+            },
+            {
+                key: 'tsh', aliases: ['tsh', 'thyroid stimulating'],
+                info: {
+                    en: { what: 'TSH is a hormone produced by the pituitary gland that controls the thyroid.', why: 'It helps check how well your thyroid is working.' },
+                    hi: { what: 'TSH पिट्यूटरी ग्रंथि द्वारा उत्पादित एक हार्मोन है जो थायरॉइड को नियंत्रित करता है।', why: 'यह आपका थायरॉइड कितनी अच्छी तरह काम कर रहा है, यह जाँचने में मदद करता है।' },
+                    hinglish: { what: 'TSH pituitary gland dwara produced ek hormone hai jo thyroid ko control karta hai.', why: 'Yeh aapka thyroid kitni achhi tarah kaam kar raha hai check karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 't3', aliases: ['t3', 'triiodothyronine', 'total t3', 'free t3'],
+                info: {
+                    en: { what: 'T3 is an active thyroid hormone that helps regulate metabolism.', why: 'It helps diagnose and monitor thyroid conditions.' },
+                    hi: { what: 'T3 एक सक्रिय थायरॉइड हार्मोन है जो चयापचय को नियंत्रित करने में मदद करता है।', why: 'यह थायरॉइड स्थितियों के निदान और निगरानी में मदद करता है।' },
+                    hinglish: { what: 'T3 ek active thyroid hormone hai jo metabolism regulate karne mein madad karta hai.', why: 'Yeh thyroid conditions diagnose aur monitor karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 't4', aliases: ['t4', 'thyroxine', 'total t4', 'free t4', 'ft4'],
+                info: {
+                    en: { what: 'T4 (thyroxine) is the main hormone produced by the thyroid gland.', why: 'It helps assess thyroid function.' },
+                    hi: { what: 'T4 (थायरोक्सिन) थायरॉइड ग्रंथि द्वारा उत्पादित मुख्य हार्मोन है।', why: 'यह थायरॉइड कार्य का आकलन करने में मदद करता है।' },
+                    hinglish: { what: 'T4 (thyroxine) thyroid gland dwara produced main hormone hai.', why: 'Yeh thyroid function assess karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'cholesterol', aliases: ['cholesterol', 'total cholesterol', 'tc'],
+                info: {
+                    en: { what: 'Total cholesterol measures all cholesterol in your blood.', why: 'It helps assess risk of heart disease.' },
+                    hi: { what: 'टोटल कोलेस्ट्रॉल आपके रक्त में सभी कोलेस्ट्रॉल को मापता है।', why: 'यह हृदय रोग के जोखिम का आकलन करने में मदद करता है।' },
+                    hinglish: { what: 'Total cholesterol aapke blood mein sabhi cholesterol ko measure karta hai.', why: 'Yeh heart disease ke risk assess karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'hdl', aliases: ['hdl', 'hdl cholesterol', 'high density'],
+                info: {
+                    en: { what: 'HDL is often called "good" cholesterol as it helps remove cholesterol from blood.', why: 'Higher HDL is generally considered better for heart health.' },
+                    hi: { what: 'HDL को अक्सर "अच्छा" कोलेस्ट्रॉल कहा जाता है क्योंकि यह रक्त से कोलेस्ट्रॉल हटाने में मदद करता है।', why: 'उच्च HDL आम तौर पर हृदय स्वास्थ्य के लिए बेहतर माना जाता है।' },
+                    hinglish: { what: 'HDL ko aksar "good" cholesterol kaha jata hai kyunki yeh blood se cholesterol hatane mein madad karta hai.', why: 'Higher HDL generally heart health ke liye better mana jata hai.' }
+                }
+            },
+            {
+                key: 'ldl', aliases: ['ldl', 'ldl cholesterol', 'low density'],
+                info: {
+                    en: { what: 'LDL is often called "bad" cholesterol as it can build up in arteries.', why: 'Higher LDL may be associated with increased heart disease risk.' },
+                    hi: { what: 'LDL को अक्सर "खराब" कोलेस्ट्रॉल कहा जाता है क्योंकि यह धमनियों में जम सकता है।', why: 'उच्च LDL हृदय रोग के बढ़े हुए जोखिम से जुड़ा हो सकता है।' },
+                    hinglish: { what: 'LDL ko aksar "bad" cholesterol kaha jata hai kyunki yeh arteries mein jam sakta hai.', why: 'Higher LDL increased heart disease risk se juda ho sakta hai.' }
+                }
+            },
+            {
+                key: 'triglycerides', aliases: ['triglyceride', 'triglycerides', 'tg'],
+                info: {
+                    en: { what: 'Triglycerides are a type of fat stored in your body.', why: 'High levels may be associated with heart disease risk.' },
+                    hi: { what: 'ट्राइग्लिसराइड्स आपके शरीर में संग्रहीत एक प्रकार का वसा हैं।', why: 'उच्च स्तर हृदय रोग जोखिम से जुड़े हो सकते हैं।' },
+                    hinglish: { what: 'Triglycerides aapke body mein stored ek type ka fat hai.', why: 'High levels heart disease risk se judhe ho sakte hain.' }
+                }
+            },
+            {
+                key: 'vldl', aliases: ['vldl', 'very low density'],
+                info: {
+                    en: { what: 'VLDL carries triglycerides through your bloodstream.', why: 'It is part of the lipid profile for heart risk assessment.' },
+                    hi: { what: 'VLDL ट्राइग्लिसराइड्स को आपके रक्तप्रवाह के माध्यम से ले जाता है।', why: 'यह हृदय जोखिम आकलन के लिए लिपिड प्रोफ़ाइल का हिस्सा है।' },
+                    hinglish: { what: 'VLDL triglycerides ko aapke bloodstream ke through le jata hai.', why: 'Yeh heart risk assessment ke liye lipid profile ka hissa hai.' }
+                }
+            },
+            {
+                key: 'esr', aliases: ['esr', 'erythrocyte sedimentation', 'sed rate'],
+                info: {
+                    en: { what: 'ESR measures how quickly red blood cells settle at the bottom of a test tube.', why: 'It helps detect inflammation in the body.' },
+                    hi: { what: 'ESR मापता है कि लाल रक्त कोशिकाएँ कितनी जल्दी टेस्ट ट्यूब के तल पर बैठती हैं।', why: 'यह शरीर में सूजन का पता लगाने में मदद करता है।' },
+                    hinglish: { what: 'ESR measure karta hai ki red blood cells kitni jaldi test tube ke tal pe baithti hain.', why: 'Yeh body mein inflammation detect karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'neutrophils', aliases: ['neutrophil', 'neutrophils'],
+                info: {
+                    en: { what: 'Neutrophils are a type of white blood cell that fights bacterial infections.', why: 'It helps assess infection and inflammation.' },
+                    hi: { what: 'न्यूट्रोफिल एक प्रकार की श्वेत रक्त कोशिका है जो जीवाणु संक्रमण से लड़ती है।', why: 'यह संक्रमण और सूजन का आकलन करने में मदद करता है।' },
+                    hinglish: { what: 'Neutrophils ek type ki white blood cell hai jo bacterial infections se ladti hai.', why: 'Yeh infection aur inflammation assess karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'lymphocytes', aliases: ['lymphocyte', 'lymphocytes', 'lymph'],
+                info: {
+                    en: { what: 'Lymphocytes are white blood cells that fight viral infections.', why: 'It helps assess immune system function.' },
+                    hi: { what: 'लिम्फोसाइट्स श्वेत रक्त कोशिकाएँ हैं जो वायरल संक्रमण से लड़ती हैं।', why: 'यह प्रतिरक्षा प्रणाली कार्य का आकलन करने में मदद करता है।' },
+                    hinglish: { what: 'Lymphocytes white blood cells hain jo viral infections se ladte hain.', why: 'Yeh immune system function assess karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'vitamind', aliases: ['vitamin d', 'vit d', '25-hydroxy', '25 oh'],
+                info: {
+                    en: { what: 'Vitamin D helps your body absorb calcium for strong bones.', why: 'It is checked for bone health and immune function.' },
+                    hi: { what: 'विटामिन डी मजबूत हड्डियों के लिए कैल्शियम अवशोषण में मदद करता है।', why: 'इसकी जाँच हड्डी स्वास्थ्य और प्रतिरक्षा कार्य के लिए की जाती है।' },
+                    hinglish: { what: 'Vitamin D strong bones ke liye calcium absorption mein madad karta hai.', why: 'Iski checking bone health aur immune function ke liye hoti hai.' }
+                }
+            },
+            {
+                key: 'vitaminb12', aliases: ['vitamin b12', 'b12', 'cobalamin'],
+                info: {
+                    en: { what: 'Vitamin B12 is important for nerve function and red blood cell production.', why: 'It is checked for anemia and nerve-related symptoms.' },
+                    hi: { what: 'विटामिन B12 तंत्रिका कार्य और लाल रक्त कोशिका उत्पादन के लिए महत्वपूर्ण है।', why: 'इसकी जाँच एनीमिया और तंत्रिका संबंधी लक्षणों के लिए की जाती है।' },
+                    hinglish: { what: 'Vitamin B12 nerve function aur red blood cell production ke liye zaroori hai.', why: 'Iski checking anemia aur nerve-related symptoms ke liye hoti hai.' }
+                }
+            },
+            {
+                key: 'ferritin', aliases: ['ferritin', 'serum ferritin'],
+                info: {
+                    en: { what: 'Ferritin is a protein that stores iron in your body.', why: 'It helps check iron levels and diagnose anemia.' },
+                    hi: { what: 'फेरिटिन एक प्रोटीन है जो आपके शरीर में लोहा संग्रहीत करता है।', why: 'यह लोहे के स्तर की जाँच और एनीमिया निदान में मदद करता है।' },
+                    hinglish: { what: 'Ferritin ek protein hai jo body mein iron store karta hai.', why: 'Yeh iron levels check karne aur anemia diagnose karne mein madad karta hai.' }
+                }
+            },
+            {
+                key: 'iron', aliases: ['iron', 'serum iron', 'fe'],
+                info: {
+                    en: { what: 'Iron is a mineral needed to make hemoglobin.', why: 'It helps diagnose iron deficiency or overload.' },
+                    hi: { what: 'आयरन हीमोग्लोबिन बनाने के लिए आवश्यक एक खनिज है।', why: 'यह आयरन की कमी या अधिकता का निदान करने में मदद करता है।' },
+                    hinglish: { what: 'Iron hemoglobin banane ke liye zaroori ek mineral hai.', why: 'Yeh iron deficiency ya overload diagnose karne mein madad karta hai.' }
+                }
+            }
+        ];
+
+        function findTermByName(name) {
+            const lower = name.toLowerCase().trim();
+            for (const term of MEDICAL_TERMS) {
+                for (const alias of term.aliases) {
+                    if (lower === alias || lower.includes(alias)) {
+                        return term;
+                    }
+                }
+            }
+            return null;
+        }
+
+        function extractMedicalData(text) {
+            const tests = [];
+            const seen = new Set();
+
+            // Normalize text
+            const normalized = text.replace(/\r\n/g, '\n').replace(/\t/g, '  ');
+            const lines = normalized.split('\n');
+
+            // Patterns to try
+            const patterns = [
+                // Pattern: Name Value Unit (Low - High) or Low-High
+                /([A-Za-z][A-Za-z\s/()'\-\u00b5\u03bc]{2,45}?)\s*[:\.\s]\s*(\d+\.?\d*)\s+([a-zA-Z\u00b5\u03bc/%\u00b2\u00b3]{1,12}(?:\/[a-zA-Z\u00b5\u03bc\u00b2\u00b3dLmL]+)?)\s*[\(\[]?\s*(?:Ref\.?\s*[:\-]?)?\s*(\d+\.?\d*)\s*[\-\u2013\u2014to]+\s*(\d+\.?\d*)/i,
+                // Pattern: Name Value Unit Low - High (no parens)
+                /([A-Za-z][A-Za-z\s/()'\-\u00b5\u03bc]{2,45}?)\s+(\d+\.?\d*)\s+([a-zA-Z\u00b5\u03bc/%\u00b2\u00b3]{1,12}(?:\/[a-zA-Z\u00b5\u03bc\u00b2\u00b3dLmL]+)?)\s+(\d+\.?\d*)\s*[\-\u2013\u2014to]+\s*(\d+\.?\d*)/i,
+                // Pattern: Name: Value Unit (no range)
+                /([A-Za-z][A-Za-z\s/()'\-\u00b5\u03bc]{2,40}?)\s*[:\.\s]\s*(\d+\.?\d*)\s+([a-zA-Z\u00b5\u03bc/%\u00b2\u00b3]{1,12}(?:\/[a-zA-Z\u00b5\u03bc\u00b2\u00b3dLmL]+)?)/i,
+            ];
+
+            for (const line of lines) {
+                const trimmed = line.trim();
+                if (!trimmed || trimmed.length < 5) continue;
+
+                // Skip header-like lines
+                if (/^(test|investigation|parameter|observation|result|sl\.?\s*no|s\.?\s*no|date|name|age|sex|patient|ref|reference|unit|range|page|report|lab|laboratory|signature|doctor|certified|approved)/i.test(trimmed) && trimmed.length < 80) {
+                    continue;
+                }
+
+                // Try each pattern
+                for (let pi = 0; pi < patterns.length; pi++) {
+                    const pattern = patterns[pi];
+                    const match = trimmed.match(pattern);
+                    if (!match) continue;
+
+                    let name, value, unit, refLow, refHigh;
+
+                    if (pi === 2) {
+                        // No range pattern
+                        name = match[1].trim();
+                        value = match[2];
+                        unit = match[3] || '';
+                        refLow = null;
+                        refHigh = null;
+                    } else {
+                        name = match[1].trim();
+                        value = match[2];
+                        unit = match[3] || '';
+                        refLow = match[4];
+                        refHigh = match[5];
+                    }
+
+                    // Clean up name - remove trailing colons, numbers
+                    name = name.replace(/[:\-\s]+$/, '').replace(/^\d+[\.\)]\s*/, '').trim();
+
+                    // Skip if name looks like a number or is too short
+                    if (!name || name.length < 2 || /^\d+$/.test(name)) continue;
+
+                    // Skip if name is just common words
+                    const skipWords = ['date', 'time', 'page', 'report', 'name', 'age', 'sex', 'male', 'female', 'patient', 'signature', 'doctor', 'lab', 'laboratory', 'collection', 'received', 'reported', 'sample'];
+                    if (skipWords.includes(name.toLowerCase())) continue;
+
+                    // Validate numbers
+                    const val = parseFloat(value);
+                    if (isNaN(val) || val <= 0 || val > 100000) continue;
+
+                    let status = 'unknown';
+                    if (refLow && refHigh) {
+                        const low = parseFloat(refLow);
+                        const high = parseFloat(refHigh);
+                        if (!isNaN(low) && !isNaN(high) && low > 0 && high > 0 && low < high && val < high * 1000) {
+                            if (val < low) status = 'low';
+                            else if (val > high) status = 'high';
+                            else status = 'normal';
+                        } else {
+                            refLow = null;
+                            refHigh = null;
+                        }
+                    }
+
+                    // Deduplicate
+                    const key = name.toLowerCase().replace(/\s+/g, '');
+                    if (seen.has(key)) continue;
+                    seen.add(key);
+
+                    // Find medical term
+                    const term = findTermByName(name);
+
+                    tests.push({
+                        name: name,
+                        value: value,
+                        unit: unit,
+                        refLow: refLow,
+                        refHigh: refHigh,
+                        status: status,
+                        term: term
+                    });
+
+                    break; // Don't try more patterns for this line
+                }
+            }
+
+            return tests;
+        }
+
+        function extractDate(text) {
+            const patterns = [
+                /(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/g,
+                /(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+(\d{2,4})/i,
+                /(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/g
+            ];
+            for (const p of patterns) {
+                const m = text.match(p);
+                if (m) return m[0];
+            }
+            return '';
+        }
+
+        function detectReportType(text, selectedType) {
+            if (selectedType !== 'auto') return selectedType;
+            const lower = text.toLowerCase();
+            if (/complete blood count|cbc|hemoglobin|haemoglobin|hgb|platelet|mcv|mch/.test(lower)) return 'cbc';
+            if (/liver function|sgpt|sgot|alt|ast|bilirubin|alp|albumin/.test(lower)) return 'lft';
+            if (/kidney function|creatinine|urea|uric acid/.test(lower)) return 'kft';
+            if (/lipid|cholesterol|triglyceride|hdl|ldl|vldl/.test(lower)) return 'lipid';
+            if (/thyroid|tsh|t3|t4|thyroxine/.test(lower)) return 'thyroid';
+            if (/glucose|blood sugar|fbs|rbs|ppbs|hba1c/.test(lower)) return 'sugar';
+            if (/vitamin/.test(lower)) return 'vitamin';
+            if (/urine/.test(lower)) return 'urine';
+            return 'blood';
+        }
+
+        /* ---- EXPLANATION GENERATOR ---- */
+        function getTestExplanation(test, lang) {
+            const statusText = getStatusText(test.status, lang);
+            let base = '';
+
+            if (test.term) {
+                const info = test.term.info[lang] || test.term.info.en;
+                base = info.what;
+            }
+
+            let result = '';
+            if (test.status === 'normal') {
+                if (lang === 'hi') {
+                    result = `यह मान आपकी रिपोर्ट पर छपी संदर्भ सीमा के भीतर है। ${base}`;
+                } else if (lang === 'hinglish') {
+                    result = `Yeh value aapki report par chapi reference range ke andar hai. ${base}`;
+                } else {
+                    result = `This value falls within the reference range printed on your report. ${base}`;
+                }
+            } else if (test.status === 'high') {
+                if (lang === 'hi') {
+                    result = `यह परिणाम आपकी रिपोर्ट पर दी गई संदर्भ सीमा से अधिक है। एक सीमा से बाहर का परिणाम अपने आप में कोई निदान नहीं है। कृपया इसे एक योग्य स्वास्थ्य पेशेवर के साथ चर्चा करें। ${base}`;
+                } else if (lang === 'hinglish') {
+                    result = `Yeh result aapki report par di gayi reference range se zyada hai. Range se bahar ka result apne aap mein koi diagnosis nahi hai. Isse ek qualified healthcare professional ke saath discuss karein. ${base}`;
+                } else {
+                    result = `This result is above the reference range shown on your report. A result outside the range does not by itself establish a diagnosis. Discuss it with a qualified healthcare professional in the context of your symptoms and other results. ${base}`;
+                }
+            } else if (test.status === 'low') {
+                if (lang === 'hi') {
+                    result = `यह परिणाम आपकी रिपोर्ट पर दी गई संदर्भ सीमा से कम है। एक सीमा से बाहर का परिणाम अपने आप में कोई निदान नहीं है। कृपया इसे एक योग्य स्वास्थ्य पेशेवर के साथ चर्चा करें। ${base}`;
+                } else if (lang === 'hinglish') {
+                    result = `Yeh result aapki report par di gayi reference range se kam hai. Range se bahar ka result apne aap mein koi diagnosis nahi hai. Isse ek qualified healthcare professional ke saath discuss karein. ${base}`;
+                } else {
+                    result = `This result is below the reference range shown on your report. A result outside the range does not by itself establish a diagnosis. Discuss it with a qualified healthcare professional in the context of your symptoms and other results. ${base}`;
+                }
+            } else {
+                if (lang === 'hi') {
+                    result = `इस परीक्षण के लिए रिपोर्ट में संदर्भ सीमा नहीं दी गई है, इसलिए स्थिति निर्धारित नहीं की जा सकती। संदर्भ सीमा प्रयोगशालाओं, विधियों, आयु समूहों और अन्य कारकों के बीच भिन्न हो सकती है। ${base}`;
+                } else if (lang === 'hinglish') {
+                    result = `Is test ke liye report mein reference range nahi di gayi hai, isliye status determine nahi ho sakti. Reference ranges laboratories, methods, age groups aur aur factors ke beech differ kar sakti hain. ${base}`;
+                } else {
+                    result = `Reference range not provided in the report for this test, so the status cannot be determined. Reference ranges can differ between laboratories, methods, age groups and other factors. ${base}`;
+                }
+            }
+
+            return result;
+        }
+
+        function getStatusText(status, lang) {
+            if (lang === 'hi') {
+                switch (status) {
+                    case 'normal': return 'संदर्भ सीमा के भीतर';
+                    case 'high': return 'संदर्भ सीमा से अधिक';
+                    case 'low': return 'संदर्भ सीमा से कम';
+                    default: return 'निर्धारित नहीं किया जा सका';
+                }
+            } else if (lang === 'hinglish') {
+                switch (status) {
+                    case 'normal': return 'Within Provided Range';
+                    case 'high': return 'Above Provided Range';
+                    case 'low': return 'Below Provided Range';
+                    default: return 'Unable to Determine';
+                }
+            }
+            switch (status) {
+                case 'normal': return 'Within Provided Range';
+                case 'high': return 'Above Provided Range';
+                case 'low': return 'Below Provided Range';
+                default: return 'Unable to Determine';
+            }
+        }
+
+        function getStatusIcon(status) {
+            switch (status) {
+                case 'normal': return '✓';
+                case 'high': return '↑';
+                case 'low': return '↓';
+                default: return '?';
+            }
+        }
+
+        function getStatusClass(status) {
+            switch (status) {
+                case 'normal': return 'status-normal';
+                case 'high': return 'status-high';
+                case 'low': return 'status-low';
+                default: return 'status-unknown';
+            }
+        }
+
+        /* ---- SIMPLIFY ---- */
+        async function simplifyReport() {
+            if (!currentFile) {
+                showToast('Please upload a medical report first.');
+                return;
+            }
+
+            selectedLanguage = document.getElementById('language').value;
+            const reportTypeSelect = document.getElementById('report-type').value;
+
+            showProcessing();
+
+            try {
+                // Extract text
+                if (currentFile.type === 'application/pdf') {
+                    try {
+                        extractedText = await extractPDFText(currentFile);
+                        if (!extractedText || extractedText.trim().length < 20) {
+                            throw new Error('minimal_text');
+                        }
+                    } catch (err) {
+                        if (err.message === 'minimal_text' || (extractedText && extractedText.trim().length < 20)) {
+                            stopProcessingCycle();
+                            hideProcessing();
+                            showUploadError('This report appears to be scanned or difficult to read. Please upload a clearer PDF or image.');
+                            return;
+                        }
+                        throw err;
+                    }
+                } else if (currentFile.type.startsWith('image/')) {
+                    try {
+                        extractedText = await extractImageText(currentFile);
+                        if (!extractedText || extractedText.trim().length < 10) {
+                            throw new Error('ocr_failed');
+                        }
+                    } catch (err) {
+                        stopProcessingCycle();
+                        hideProcessing();
+                        showUploadError('We could not reliably read this image. Please upload a clearer image.');
+                        return;
+                    }
+                } else {
+                    throw new Error('unsupported');
+                }
+
+                // Try AI backend
+                let aiResult = null;
+                try {
+                    aiResult = await tryAIAnalysis(extractedText, reportTypeSelect, selectedLanguage);
+                } catch (e) {
+                    // AI not available, use local
+                }
+
+                // Process locally
+                const tests = extractMedicalData(extractedText);
+                const reportDate = extractDate(extractedText);
+                const detectedType = detectReportType(extractedText, reportTypeSelect);
+
+                // Add explanations
+                tests.forEach(t => {
+                    t.explanation = getTestExplanation(t, selectedLanguage);
+                });
+
+                // Count statuses
+                const stats = {
+                    total: tests.length,
+                    normal: tests.filter(t => t.status === 'normal').length,
+                    high: tests.filter(t => t.status === 'high').length,
+                    low: tests.filter(t => t.status === 'low').length,
+                    unknown: tests.filter(t => t.status === 'unknown').length
+                };
+
+                currentResults = {
+                    reportType: detectedType,
+                    reportDate: reportDate || 'Not detected',
+                    tests: tests,
+                    stats: stats,
+                    language: selectedLanguage,
+                    extractedText: extractedText
+                };
+
+                stopProcessingCycle();
+                hideProcessing();
+
+                if (tests.length === 0) {
+                    renderNoTests();
+                } else {
+                    renderResults();
+                }
+
+            } catch (err) {
+                stopProcessingCycle();
+                hideProcessing();
+                showUploadError('We could not process this file. Please try uploading a clearer PDF or image.');
+            }
+        }
+
+        async function tryAIAnalysis(text, reportType, language) {
+            // Try to connect to AI backend if configured
+            try {
+                const response = await fetch(AI_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: text.substring(0, 10000), // Limit text size
+                        reportType: reportType,
+                        language: language
+                    }),
+                    signal: AbortSignal.timeout(15000)
+                });
+
+                if (!response.ok) return null;
+
+                const data = await response.json();
+
+                // Validate structure
+                if (!data || typeof data !== 'object') return null;
+                if (!Array.isArray(data.tests)) return null;
+
+                return data;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        /* ---- RENDER RESULTS ---- */
+        function renderNoTests() {
+            const section = document.getElementById('results-section');
+            section.style.display = 'block';
+            section.innerHTML = `
+    <div class="glass-card">
+      <div class="no-tests-card">
+        <div class="no-tests-icon">🔍</div>
+        <h3>No Tests Could Be Detected</h3>
+        <p>We could not identify medical test values in your report. This may happen if the report is scanned, unclear, or uses an unusual format. Please try uploading a clearer copy or a text-based PDF.</p>
+      </div>
+      <div class="action-bar">
+        <button class="btn btn-secondary" onclick="removeFile()">Upload Another Report</button>
+      </div>
+    </div>
+  `;
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderResults() {
+            const section = document.getElementById('results-section');
+            section.style.display = 'block';
+
+            const r = currentResults;
+
+            // Summary cards
+            const summaryGrid = document.getElementById('summary-grid');
+            summaryGrid.innerHTML = `
+    <div class="summary-card">
+      <div class="summary-icon">📋</div>
+      <div class="summary-label">Report Type</div>
+      <div class="summary-value" style="font-size:1rem;">${escapeHtml(r.reportType.toUpperCase())}</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon">📅</div>
+      <div class="summary-label">Report Date</div>
+      <div class="summary-value" style="font-size:1rem;">${escapeHtml(r.reportDate)}</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon">🧪</div>
+      <div class="summary-label">Tests Detected</div>
+      <div class="summary-value">${r.stats.total}</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon" style="color:var(--status-normal-text);">✓</div>
+      <div class="summary-label">Within Range</div>
+      <div class="summary-value">${r.stats.normal}</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon" style="color:var(--status-high-text);">↑</div>
+      <div class="summary-label">Above Range</div>
+      <div class="summary-value">${r.stats.high}</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-icon" style="color:var(--status-low-text);">↓</div>
+      <div class="summary-label">Below Range</div>
+      <div class="summary-value">${r.stats.low}</div>
+    </div>
+  `;
+
+            // Important findings (only abnormal)
+            const abnormalTests = r.tests.filter(t => t.status === 'high' || t.status === 'low');
+            const findingsEl = document.getElementById('important-findings');
+
+            if (abnormalTests.length === 0) {
+                findingsEl.innerHTML = `
+      <div class="no-tests-card">
+        <div class="no-tests-icon">✓</div>
+        <h3>All Detected Values Within Range</h3>
+        <p>All detected test values fall within the reference ranges printed on your report. This does not guarantee good health. Always discuss your results with a qualified healthcare professional.</p>
+      </div>
+    `;
+            } else {
+                findingsEl.innerHTML = abnormalTests.map(t => renderTestCard(t)).join('');
+            }
+
+            // All tests
+            const testList = document.getElementById('test-list');
+            if (r.tests.length === 0) {
+                testList.innerHTML = '<div class="no-tests-card"><p>No test values could be detected in your report.</p></div>';
+            } else {
+                testList.innerHTML = r.tests.map(t => renderTestCard(t)).join('');
+            }
+
+            // Medical terms
+            const termsGrid = document.getElementById('terms-grid');
+            const detectedTerms = r.tests.filter(t => t.term).map(t => t.term);
+            const uniqueTerms = [];
+            const termKeys = new Set();
+            detectedTerms.forEach(t => {
+                if (!termKeys.has(t.key)) {
+                    termKeys.add(t.key);
+                    uniqueTerms.push(t);
+                }
+            });
+
+            if (uniqueTerms.length === 0) {
+                document.getElementById('terms-block').style.display = 'none';
+            } else {
+                document.getElementById('terms-block').style.display = 'block';
+                termsGrid.innerHTML = uniqueTerms.map(term => {
+                    const info = term.info[selectedLanguage] || term.info.en;
+                    return `
+        <div class="term-card">
+          <div class="term-name">${escapeHtml(term.aliases[0].toUpperCase())}</div>
+          <div class="term-info"><strong>What it means:</strong> ${escapeHtml(info.what)}</div>
+          <div class="term-info"><strong>Why it is measured:</strong> ${escapeHtml(info.why)}</div>
+        </div>
+      `;
+                }).join('');
+            }
+
+            // Doctor discussion
+            const discussionCard = document.getElementById('discussion-card');
+            let discussionPoints = [];
+
+            if (selectedLanguage === 'hi') {
+                if (abnormalTests.length > 0) {
+                    discussionPoints.push('आपकी रिपोर्ट में कुछ परिणाम संदर्भ सीमा से बाहर हैं। इन परिणामों को एक योग्य स्वास्थ्य पेशेवर के साथ चर्चा करें।');
+                }
+                discussionPoints.push('संदर्भ सीमा प्रयोगशालाओं, विधियों, आयु समूहों और अन्य कारकों के बीच भिन्न हो सकती है।');
+                discussionPoints.push('अपने लक्षणों, चिकित्सा इतिहास और अन्य परीक्षण परिणामों के संदर्भ में इन परिणामों पर चर्चा करें।');
+                discussionPoints.push('यह उपकरण केवल शैक्षिक उद्देश्यों के लिए है और चिकित्सकीय सलाह का विकल्प नहीं है।');
+            } else if (selectedLanguage === 'hinglish') {
+                if (abnormalTests.length > 0) {
+                    discussionPoints.push('Aapki report mein kuch results reference range se bahar hain. In results ko ek qualified healthcare professional ke saath discuss karein.');
+                }
+                discussionPoints.push('Reference ranges laboratories, methods, age groups aur aur factors ke beech differ kar sakti hain.');
+                discussionPoints.push('Apne symptoms, medical history aur aur test results ke context mein in results par discussion karein.');
+                discussionPoints.push('Yeh tool sirf educational purposes ke liye hai aur medical advice ka substitute nahi hai.');
+            } else {
+                if (abnormalTests.length > 0) {
+                    discussionPoints.push('Some results in your report are outside the reference range provided by the laboratory. Consider discussing these results with a qualified healthcare professional, especially if you have symptoms or other relevant medical information.');
+                }
+                discussionPoints.push('Reference ranges can differ between laboratories, testing methods, age groups and other factors.');
+                discussionPoints.push('Discuss these results in the context of your symptoms, medical history and other test results.');
+                discussionPoints.push('This tool is for educational purposes only and is not a substitute for professional medical advice.');
+            }
+
+            discussionCard.innerHTML = '<ul class="discussion-list">' + discussionPoints.map(p => `<li>${escapeHtml(p)}</li>`).join('') + '</ul>';
+
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderTestCard(test) {
+            const refRange = test.refLow && test.refHigh
+                ? `${escapeHtml(test.refLow)} – ${escapeHtml(test.refHigh)}${test.unit ? ' ' + escapeHtml(test.unit) : ''}`
+                : 'Not provided in the report';
+
+            return `
+    <div class="test-card">
+      <div class="test-card-header">
+        <div class="test-name">${escapeHtml(test.name)}</div>
+        <span class="status-badge ${getStatusClass(test.status)}">
+          ${getStatusIcon(test.status)} ${getStatusText(test.status, selectedLanguage)}
+        </span>
+      </div>
+      <div class="test-value-row">
+        <div class="test-value-item">
+          <span class="test-value-label">Your Result</span>
+          <span class="test-value-data">${escapeHtml(test.value)}${test.unit ? ' ' + escapeHtml(test.unit) : ''}</span>
+        </div>
+        <div class="test-value-item">
+          <span class="test-value-label">Report Reference Range</span>
+          <span class="test-value-data">${refRange}</span>
+        </div>
+      </div>
+      <div class="test-explanation">${escapeHtml(test.explanation)}</div>
+    </div>
+  `;
+        }
+
+        /* ---- DOWNLOAD PDF ---- */
+        async function downloadPDF() {
+            if (!currentResults) return;
+
+            try {
+                const jspdf = await loadJsPDF();
+                const { jsPDF } = jspdf;
+                const doc = new jsPDF();
+                const r = currentResults;
+
+                // Header
+                doc.setFontSize(22);
+                doc.setTextColor(124, 92, 191);
+                doc.text('AGITools24', 20, 22);
+
+                doc.setFontSize(13);
+                doc.setTextColor(80, 80, 80);
+                doc.text('Medical Report Simplification', 20, 30);
+
+                doc.setDrawColor(200, 200, 220);
+                doc.line(20, 35, 190, 35);
+
+                let y = 45;
+
+                // Report info
+                doc.setFontSize(11);
+                doc.setTextColor(40, 40, 40);
+                doc.text(`Report Type: ${r.reportType.toUpperCase()}`, 20, y); y += 7;
+                doc.text(`Report Date: ${r.reportDate}`, 20, y); y += 7;
+                doc.text(`Tests Detected: ${r.stats.total}`, 20, y); y += 7;
+                doc.text(`Within Range: ${r.stats.normal}  |  Above: ${r.stats.high}  |  Below: ${r.stats.low}`, 20, y); y += 12;
+
+                // Important findings
+                const abnormal = r.tests.filter(t => t.status === 'high' || t.status === 'low');
+                if (abnormal.length > 0) {
+                    doc.setFontSize(14);
+                    doc.setTextColor(124, 92, 191);
+                    doc.text('Important Points From Your Report', 20, y); y += 8;
+
+                    doc.setFontSize(9);
+                    doc.setTextColor(50, 50, 50);
+                    for (const t of abnormal) {
+                        if (y > 270) { doc.addPage(); y = 20; }
+                        doc.text(`${t.name}: ${t.value} ${t.unit}`, 20, y); y += 5;
+                        doc.text(`Reference: ${t.refLow || '?'} - ${t.refHigh || '?'}`, 25, y); y += 5;
+                        doc.text(`Status: ${getStatusText(t.status, 'en')}`, 25, y); y += 5;
+                        const lines = doc.splitTextToSize(t.explanation, 165);
+                        doc.text(lines, 25, y); y += lines.length * 5 + 4;
+                    }
+                    y += 6;
+                }
+
+                // All tests
+                doc.setFontSize(14);
+                doc.setTextColor(124, 92, 191);
+                doc.text('Test Results', 20, y); y += 8;
+
+                doc.setFontSize(9);
+                doc.setTextColor(50, 50, 50);
+                for (const t of r.tests) {
+                    if (y > 270) { doc.addPage(); y = 20; }
+                    doc.text(`${t.name}: ${t.value} ${t.unit}`, 20, y); y += 5;
+                    doc.text(`Reference: ${t.refLow || 'Not provided'} - ${t.refHigh || ''}`, 25, y); y += 5;
+                    doc.text(`Status: ${getStatusText(t.status, 'en')}`, 25, y); y += 5;
+                    const lines = doc.splitTextToSize(t.explanation, 165);
+                    doc.text(lines, 25, y); y += lines.length * 5 + 4;
+                }
+
+                // Medical terms
+                const uniqueTerms = [];
+                const termKeys = new Set();
+                r.tests.forEach(t => {
+                    if (t.term && !termKeys.has(t.term.key)) {
+                        termKeys.add(t.term.key);
+                        uniqueTerms.push(t.term);
+                    }
+                });
+
+                if (uniqueTerms.length > 0) {
+                    if (y > 250) { doc.addPage(); y = 20; }
+                    y += 6;
+                    doc.setFontSize(14);
+                    doc.setTextColor(124, 92, 191);
+                    doc.text('Medical Terms Explained', 20, y); y += 8;
+
+                    doc.setFontSize(9);
+                    doc.setTextColor(50, 50, 50);
+                    for (const term of uniqueTerms) {
+                        if (y > 260) { doc.addPage(); y = 20; }
+                        const info = term.info.en;
+                        doc.text(`${term.aliases[0].toUpperCase()}`, 20, y); y += 5;
+                        const lines1 = doc.splitTextToSize(`What it means: ${info.what}`, 165);
+                        doc.text(lines1, 25, y); y += lines1.length * 5;
+                        const lines2 = doc.splitTextToSize(`Why measured: ${info.why}`, 165);
+                        doc.text(lines2, 25, y); y += lines2.length * 5 + 3;
+                    }
+                }
+
+                // Doctor discussion
+                if (y > 240) { doc.addPage(); y = 20; }
+                y += 6;
+                doc.setFontSize(14);
+                doc.setTextColor(124, 92, 191);
+                doc.text('Points to Discuss With Your Doctor', 20, y); y += 8;
+                doc.setFontSize(9);
+                doc.setTextColor(50, 50, 50);
+                const points = [
+                    'Some results may be outside the reference range. Discuss them with a qualified healthcare professional.',
+                    'Reference ranges can differ between laboratories, methods, age groups and other factors.',
+                    'Discuss results in the context of your symptoms, medical history and other tests.',
+                    'This tool is for educational purposes only and does not replace professional medical advice.'
+                ];
+                for (const p of points) {
+                    if (y > 270) { doc.addPage(); y = 20; }
+                    const lines = doc.splitTextToSize(`• ${p}`, 165);
+                    doc.text(lines, 20, y); y += lines.length * 5;
+                }
+
+                // Disclaimer
+                if (y > 250) { doc.addPage(); y = 20; }
+                y += 8;
+                doc.setDrawColor(200, 200, 220);
+                doc.line(20, y, 190, y); y += 7;
+                doc.setFontSize(8);
+                doc.setTextColor(120, 120, 120);
+                const disclaimer = 'AGITools24 Medical Report Simplifier is an educational tool. It does not diagnose, treat or prescribe medication. Always consult a qualified healthcare professional. Reference ranges shown are those printed on your uploaded report.';
+                const dLines = doc.splitTextToSize(disclaimer, 170);
+                doc.text(dLines, 20, y); y += dLines.length * 4 + 4;
+                doc.text('Generated by AGITools24', 20, y);
+
+                doc.save('AGITools24-Medical-Report-Summary.pdf');
+                showToast('PDF downloaded successfully.');
+            } catch (err) {
+                showToast('Could not generate PDF. Please try again.');
+            }
+        }
+
+        /* ---- PRINT ---- */
+        function printReport() {
+            if (!currentResults) {
+                showToast('Please simplify a report first.');
+                return;
+            }
+            window.print();
+        }
+
+        /* ---- COPY SUMMARY ---- */
+        async function copySummary() {
+            if (!currentResults) {
+                showToast('Please simplify a report first.');
+                return;
+            }
+
+            const r = currentResults;
+            let text = 'AGITools24 Medical Report Summary\n\n';
+            text += `Report Type: ${r.reportType.toUpperCase()}\n`;
+            text += `Report Date: ${r.reportDate}\n`;
+            text += `Tests Detected: ${r.stats.total}\n`;
+            text += `Within Range: ${r.stats.normal}\n`;
+            text += `Above Range: ${r.stats.high}\n`;
+            text += `Below Range: ${r.stats.low}\n\n`;
+
+            const abnormal = r.tests.filter(t => t.status === 'high' || t.status === 'low');
+            if (abnormal.length > 0) {
+                text += 'Important Findings:\n';
+                for (const t of abnormal) {
+                    text += `- ${t.name}: ${t.value} ${t.unit} (Reference: ${t.refLow || '?'}-${t.refHigh || '?'}) - ${getStatusText(t.status, 'en')}\n`;
+                }
+                text += '\n';
+            }
+
+            text += 'All Test Results:\n';
+            for (const t of r.tests) {
+                text += `- ${t.name}: ${t.value} ${t.unit} (Reference: ${t.refLow || 'Not provided'}-${t.refHigh || ''}) - ${getStatusText(t.status, 'en')}\n`;
+            }
+
+            text += '\nPlease discuss medical concerns with a qualified healthcare professional.\n';
+            text += 'This tool does not diagnose or treat medical conditions.\n';
+            text += '\nGenerated by AGITools24';
+
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast('Summary copied successfully.');
+            } catch (err) {
+                try {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    showToast('Summary copied successfully.');
+                } catch (e) {
+                    showToast('Could not copy summary. Please try again.');
+                }
+            }
+        }
+
+        /* ---- CLEAR REPORT ---- */
+        function showClearConfirm() {
+            document.getElementById('confirm-modal').classList.add('show');
+        }
+
+        function hideClearConfirm() {
+            document.getElementById('confirm-modal').classList.remove('show');
+        }
+
+        function confirmClear() {
+            hideClearConfirm();
+            removeFile();
+            showToast('Report cleared successfully.');
+        }
+
+        /* ---- FAQ ---- */
+        const faqData = [
+            { q: "What is a medical report simplifier?", a: "A medical report simplifier is an online tool that reads your medical report and organises the test names, values, units and reference ranges into simpler language so you can understand what the report contains. AGITools24 Medical Report Simplifier is designed for educational use and does not diagnose or treat any condition." },
+            { q: "How does AGITools24 Medical Report Simplifier work?", a: "Upload a PDF or image of your medical report. The tool attempts to read the text, identify test names, values, units and reference ranges printed on the report, and then present the information in a structured and simple format. You can download, print or copy the simplified summary." },
+            { q: "Can I upload a PDF medical report?", a: "Yes. AGITools24 Medical Report Simplifier supports PDF files up to 10 MB. Text-based PDFs are read using browser-based text extraction. If the PDF is scanned and no text can be read, the tool will let you know." },
+            { q: "Can I upload a photo of a medical report?", a: "Yes. You can upload JPG, JPEG, PNG and WEBP images up to 10 MB. The tool attempts to read the image using browser-based OCR. If the image is unclear, the tool will ask you to upload a clearer copy." },
+            { q: "Can I understand a blood test report online?", a: "Yes. The tool attempts to identify blood test values and reference ranges from the report you upload and explains them in simple English, Hindi or Hinglish. It does not replace a doctor's interpretation." },
+            { q: "Can AGITools24 explain CBC reports?", a: "The tool can help you understand common CBC parameters such as Hemoglobin, RBC, WBC, Platelets, MCV, MCH and MCHC by showing your values alongside the reference range printed on the report and a simple educational explanation." },
+            { q: "Can AGITools24 explain LFT reports?", a: "Yes. The tool can help you read common Liver Function Test values such as SGPT (ALT), SGOT (AST), ALP, Bilirubin, Total Protein and Albumin using the reference ranges printed on your report." },
+            { q: "Can AGITools24 explain KFT reports?", a: "Yes. The tool can help you read common Kidney Function Test values such as Urea, Creatinine and Uric Acid using the reference ranges printed on your report." },
+            { q: "Can I understand a thyroid report?", a: "The tool can help you read common thyroid test values such as TSH, T3 and T4. It shows your values with the reference ranges from your report and provides simple educational explanations." },
+            { q: "Can I get the explanation in Hindi?", a: "Yes. AGITools24 Medical Report Simplifier supports Simple English, Simple Hindi and Hinglish. You can choose your preferred language before simplifying the report." },
+            { q: "Can I download my simplified report?", a: "Yes. After simplification, you can download a PDF copy of the simplified report, print it, or copy the summary text to your clipboard." },
+            { q: "Does the tool diagnose diseases?", a: "No. AGITools24 Medical Report Simplifier is an educational tool only. It does not diagnose, treat or prescribe medication. Always consult a qualified healthcare professional for medical advice." },
+            { q: "Are medical report reference ranges always the same?", a: "No. Reference ranges can differ between laboratories, testing methods, age groups, gender and other factors. The tool always prefers the reference range printed on your uploaded report." },
+            { q: "Is my medical report stored?", a: "AGITools24 does not permanently store your uploaded report file in your browser. The file is processed locally in your browser. If an AI backend is configured, report text may be sent securely for analysis." },
+            { q: "Can this tool replace a doctor?", a: "No. This tool cannot replace a qualified healthcare professional. It only organises and explains the information already present in your report in simpler language. Always consult your doctor for medical decisions." }
+        ];
+
+        function renderFAQ() {
+            const list = document.getElementById('faq-list');
+            list.innerHTML = faqData.map((item, i) => `
+    <div class="faq-item" data-index="${i}">
+      <div class="faq-question" tabindex="0" role="button" aria-expanded="false">
+        <span>${escapeHtml(item.q)}</span>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">${escapeHtml(item.a)}</div>
+      </div>
+    </div>
+  `).join('');
+
+            list.querySelectorAll('.faq-item').forEach(item => {
+                const q = item.querySelector('.faq-question');
+                const toggleFAQ = () => {
+                    item.classList.toggle('open');
+                    q.setAttribute('aria-expanded', item.classList.contains('open'));
+                };
+                q.addEventListener('click', toggleFAQ);
+                q.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleFAQ();
+                    }
+                });
+            });
+        }
+
+        /* ---- INIT ---- */
+        function init() {
+            initTheme();
+            setupDragDrop();
+            renderFAQ();
+
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            document.getElementById('remove-btn').addEventListener('click', removeFile);
+            document.getElementById('upload-another-btn').addEventListener('click', () => {
+                document.getElementById('file-input').click();
+            });
+            document.getElementById('simplify-btn').addEventListener('click', simplifyReport);
+            document.getElementById('download-btn').addEventListener('click', downloadPDF);
+            document.getElementById('print-btn').addEventListener('click', printReport);
+            document.getElementById('copy-btn').addEventListener('click', copySummary);
+            document.getElementById('clear-btn').addEventListener('click', showClearConfirm);
+            document.getElementById('modal-cancel').addEventListener('click', hideClearConfirm);
+            document.getElementById('modal-confirm').addEventListener('click', confirmClear);
+
+            document.getElementById('confirm-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'confirm-modal') hideClearConfirm();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') hideClearConfirm();
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
 
 </body>
