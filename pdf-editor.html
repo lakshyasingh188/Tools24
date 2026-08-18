@@ -1,545 +1,2310 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8" />
-    <title>Tools24 PDF Editor</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free Online PDF Editor | Edit PDF Files Easily - Tools24</title>
+<meta name="description" content="Edit PDF files online with Tools24 PDF Editor. Add text, images, signatures, highlights, drawings and shapes, organize PDF pages and download your edited PDF easily." />
+<meta name="keywords" content="PDF Editor, Online PDF Editor, Free PDF Editor, Edit PDF Online, PDF Text Editor, PDF Annotation, Sign PDF, Add Text to PDF, Add Image to PDF, PDF Tools, Tools24, Tools24 PDF Editor, Free Online PDF Tools, PDF Editor India" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://agitools24.com/pdf-editor.html" />
+<meta property="og:title" content="Free Online PDF Editor | Edit PDF Files Easily - Tools24" />
+<meta property="og:description" content="Edit PDF files online with Tools24 PDF Editor. Add text, images, signatures, highlights, drawings and shapes." />
+<meta property="og:type" content="website" />
 
-    <!-- ===== CSS ===== -->
-    <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            padding-top: 80px; /* space for top bar */
-            background-color: #f4f7f6;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Caveat&family=Dancing+Script&family=Great+Vibes&family=Pacifico&display=swap" rel="stylesheet">
 
-        /* Top blue bar */
-        .top-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: #007bff; /* nile blue */
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            z-index: 1000;
-        }
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
+<!-- pdf-lib -->
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+<!-- Lucide icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
 
-        .top-title {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 600;
-        }
+<!-- FAQ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What is Tools24 PDF Editor?","acceptedAnswer":{"@type":"Answer","text":"Tools24 PDF Editor is a free browser-based tool to edit PDF files online — add text, images, signatures, highlights, drawings and shapes without installing software."}},
+    {"@type":"Question","name":"Can I edit a PDF online?","acceptedAnswer":{"@type":"Answer","text":"Yes. Tools24 PDF Editor runs entirely in your browser and is free to use."}},
+    {"@type":"Question","name":"Can I add text to PDF?","acceptedAnswer":{"@type":"Answer","text":"Yes. Use the Text tool to click anywhere on the page and type with custom fonts, sizes, colors and alignment."}},
+    {"@type":"Question","name":"Can I add images to PDF?","acceptedAnswer":{"@type":"Answer","text":"Yes. Use the Image tool to upload JPG, PNG or WebP images and place, resize and rotate them."}},
+    {"@type":"Question","name":"Can I sign a PDF online?","acceptedAnswer":{"@type":"Answer","text":"Yes. Use the Signature tool to draw, type or upload your signature."}},
+    {"@type":"Question","name":"Can I highlight a PDF?","acceptedAnswer":{"@type":"Answer","text":"Yes. Use the Highlight tool to mark content in yellow, green, blue or pink."}},
+    {"@type":"Question","name":"Can I delete PDF pages?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can delete, duplicate, rotate and reorder pages using the Pages panel."}},
+    {"@type":"Question","name":"Can I reorder PDF pages?","acceptedAnswer":{"@type":"Answer","text":"Yes. Drag and drop thumbnails in the Pages panel to reorder pages."}},
+    {"@type":"Question","name":"Can I edit PDF on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes. Tools24 PDF Editor is fully responsive and works on Android, iPhone, tablets and desktops."}},
+    {"@type":"Question","name":"Can I download my edited PDF?","acceptedAnswer":{"@type":"Answer","text":"Yes. Click Download PDF and your edited file is saved as a new PDF with all changes embedded."}}
+  ]
+}
+</script>
 
-        /* Green tilted ribbon with arrow */
-        .back-ribbon {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 90px;
-            background: #16a34a; /* green */
-            clip-path: polygon(0 0, 70% 0, 100% 50%, 70% 100%, 0 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
+<style>
+/* ============================================================
+   Tools24 PDF Editor — Styles
+   ============================================================ */
 
-        .back-ribbon span {
-            color: #ffffff;
-            font-size: 24px;
-            font-weight: bold;
-            user-select: none;
-        }
+:root {
+  --grad: linear-gradient(135deg, #a99cf5 0%, #8fc9f6 48%, #f3a7c9 100%);
+  --grad-btn: linear-gradient(135deg, #7657ff, #b06ab3);
+  --grad-soft: linear-gradient(135deg, rgba(169,156,245,0.12), rgba(143,201,246,0.12), rgba(243,167,201,0.12));
+  --accent: #7657ff;
+  --accent-light: #a99cf5;
+  --accent-pink: #f3a7c9;
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --surface-2: #f1f2f6;
+  --surface-3: #e8eaf0;
+  --text: #111111;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --border-soft: #eef0f4;
+  --shadow-sm: 0 2px 8px rgba(17,17,17,0.04);
+  --shadow: 0 8px 24px rgba(17,17,17,0.06);
+  --shadow-lg: 0 15px 50px rgba(17,17,17,0.10);
+  --shadow-glow: 0 6px 20px rgba(118,87,255,0.25);
+}
+[data-theme="dark"] {
+  --bg: #111318;
+  --surface: #181b22;
+  --surface-2: #20242d;
+  --surface-3: #2a2f3a;
+  --text: #ffffff;
+  --text-muted: #a8afbd;
+  --border: #303542;
+  --border-soft: #262a35;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow: 0 8px 24px rgba(0,0,0,0.4);
+  --shadow-lg: 0 15px 50px rgba(0,0,0,0.6);
+  --shadow-glow: 0 6px 20px rgba(155,130,255,0.25);
+  --grad-soft: linear-gradient(135deg, rgba(169,156,245,0.08), rgba(143,201,246,0.08), rgba(243,167,201,0.08));
+}
 
-        .editor-container {
-            width: 100%;
-            max-width: 1100px;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            padding: 20px 30px 40px;
-            box-sizing: border-box;
-        }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.5;
+  -webkit-font-smoothing: antialiased; transition: background .3s, color .3s;
+  overflow-x: hidden;
+}
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, select, textarea { font-family: inherit; }
+a { color: inherit; text-decoration: none; }
+.container { max-width: 1500px; margin: 0 auto; padding: 0 20px; }
 
-        .toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 15px;
-        }
+/* ---------- HEADER ---------- */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+.header-inner { display: flex; align-items: center; gap: 16px; height: 60px; }
+.logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 18px; }
+.logo-mark {
+  width: 34px; height: 34px; border-radius: 9px; background: var(--grad);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 900; font-size: 13px; box-shadow: var(--shadow-glow);
+}
+.logo-text span { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.nav { display: flex; gap: 2px; margin-left: 12px; }
+.nav a {
+  font-size: 13px; font-weight: 500; color: var(--text-muted); padding: 7px 12px;
+  border-radius: var(--radius-xs); transition: .15s;
+}
+.nav a:hover, .nav a.active { color: var(--accent); background: var(--surface-2); }
+.header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.theme-toggle {
+  width: 38px; height: 38px; border-radius: 50%; background: var(--surface-2);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: .2s;
+}
+.theme-toggle:hover { background: var(--surface-3); transform: rotate(15deg); }
+.theme-toggle svg { width: 17px; height: 17px; }
+[data-theme="light"] .icon-sun { display: none; } [data-theme="light"] .icon-moon { display: block; }
+[data-theme="dark"] .icon-sun { display: block; } [data-theme="dark"] .icon-moon { display: none; }
+.hamburger { display: none; flex-direction: column; gap: 4px; padding: 8px; }
+.hamburger span { width: 20px; height: 2px; background: var(--text); border-radius: 2px; }
 
-        /* All buttons blue (nile) */
-        .btn {
-            padding: 8px 16px;
-            border-radius: 4px;
-            border: 1px solid #007bff;
-            background: #007bff;
-            color: #ffffff;
-            cursor: pointer;
-            font-size: 14px;
-        }
+/* ---------- BUTTONS ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px; justify-content: center;
+  padding: 8px 16px; border-radius: var(--radius-xs); font-weight: 600; font-size: 13px;
+  border: 1px solid transparent; transition: .2s; white-space: nowrap;
+}
+.btn svg { width: 15px; height: 15px; }
+.btn-primary { background: var(--grad-btn); color: #fff; box-shadow: var(--shadow-glow); }
+.btn-primary:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.btn-ghost { background: var(--surface-2); color: var(--text); border-color: var(--border); }
+.btn-ghost:hover { background: var(--surface-3); }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
 
-        .btn:hover {
-            background: #005ec4;
-            border-color: #005ec4;
-        }
+/* ---------- HERO ---------- */
+.hero {
+  padding: 24px 0; background: var(--surface); border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background: var(--grad-soft);
+}
+.hero-inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.hero-left { flex: 1; min-width: 280px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 5px; background: var(--grad); color: #fff;
+  padding: 4px 12px; border-radius: 99px; font-size: 11px; font-weight: 700; margin-bottom: 8px;
+}
+.hero h1 { font-size: 28px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 4px; }
+.hero h1 span { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 14px; color: var(--text-muted); }
+.hero-features { display: flex; gap: 10px; flex-wrap: wrap; }
+.hf-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 12px 14px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-sm);
+  transition: .2s; min-width: 150px;
+}
+.hf-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.hf-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+.hf-icon svg { width: 17px; height: 17px; }
+.hf-purple { background: linear-gradient(135deg, #a99cf5, #7657ff); }
+.hf-blue { background: linear-gradient(135deg, #8fc9f6, #4f9ee8); }
+.hf-pink { background: linear-gradient(135deg, #f3a7c9, #e8729b); }
+.hf-card h3 { font-size: 13px; font-weight: 700; }
+.hf-card p { font-size: 11px; color: var(--text-muted); margin: 0; }
 
-        .btn-primary {
-            background: #0056b3;
-            border-color: #0056b3;
-        }
+/* ---------- EDITOR CONTAINER ---------- */
+.editor-wrap { padding: 20px; }
+.editor-container {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-lg); overflow: hidden;
+  max-width: 1500px; margin: 0 auto;
+}
 
-        .btn-primary:hover {
-            background: #00408a;
-            border-color: #00408a;
-        }
+/* ---------- FILE BAR ---------- */
+.file-bar {
+  display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+  background: var(--surface); border-bottom: 1px solid var(--border-soft); flex-wrap: wrap;
+}
+.file-info { display: flex; align-items: center; gap: 10px; }
+.file-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--grad-soft); display: flex; align-items: center; justify-content: center; color: var(--accent); }
+.file-icon svg { width: 16px; height: 16px; }
+.file-text { display: flex; flex-direction: column; line-height: 1.3; }
+.file-text .fn { font-size: 13px; font-weight: 600; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-text .fm { font-size: 11px; color: var(--text-muted); }
+.file-bar-spacer { flex: 1; }
+.file-bar-actions { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.icon-btn {
+  width: 34px; height: 34px; border-radius: 8px; background: var(--surface-2);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: .15s; color: var(--text);
+}
+.icon-btn:hover { background: var(--surface-3); }
+.icon-btn:disabled { opacity: .35; cursor: not-allowed; }
+.icon-btn svg { width: 15px; height: 15px; }
 
-        .status-text {
-            font-size: 13px;
-            color: #666;
-            margin-left: auto;
-        }
+/* ---------- EDITOR BODY ---------- */
+.editor-body { display: flex; height: calc(100vh - 280px); min-height: 500px; }
+@media (max-height: 800px) { .editor-body { height: calc(100vh - 240px); } }
 
-        .canvas-wrapper {
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-        }
+/* ---------- LEFT TOOLBAR ---------- */
+.left-toolbar {
+  width: 72px; flex-shrink: 0; background: var(--surface);
+  border-right: 1px solid var(--border-soft); padding: 10px 8px;
+  display: flex; flex-direction: column; gap: 4px; overflow-y: auto;
+}
+.tool-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 7px 4px; border-radius: var(--radius-xs); transition: .15s;
+  color: var(--text-muted); position: relative;
+}
+.tool-btn svg { width: 18px; height: 18px; }
+.tool-btn span { font-size: 9px; font-weight: 600; }
+.tool-btn:hover { background: var(--surface-2); color: var(--accent); }
+.tool-btn.active { background: var(--grad-soft); color: var(--accent); }
+.tool-btn.active::before {
+  content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 60%; background: var(--grad); border-radius: 0 3px 3px 0;
+}
+.tool-btn[data-tip]:hover::after {
+  content: attr(data-tip); position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%);
+  background: var(--text); color: var(--surface); padding: 4px 10px; border-radius: 6px;
+  font-size: 11px; white-space: nowrap; z-index: 200; pointer-events: none; font-weight: 500;
+}
+.tool-divider { height: 1px; background: var(--border-soft); margin: 4px 0; }
 
-        .canvas-container {
-            position: relative;
-            background: #eaeaea;
-            padding: 10px;
-            border-radius: 4px;
-            overflow: auto;
-            max-height: 80vh;
-        }
+/* ---------- PAGES PANEL ---------- */
+.pages-panel {
+  width: 180px; flex-shrink: 0; background: var(--surface);
+  border-right: 1px solid var(--border-soft); display: flex; flex-direction: column;
+}
+.panel-head {
+  padding: 10px 12px; border-bottom: 1px solid var(--border-soft);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.panel-head h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); }
+.panel-head-actions { display: flex; gap: 3px; }
+.mini-btn {
+  width: 26px; height: 26px; border-radius: 7px; background: var(--surface-2);
+  border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: .15s; color: var(--text);
+}
+.mini-btn:hover { background: var(--surface-3); color: var(--accent); }
+.mini-btn svg { width: 13px; height: 13px; }
+.thumbs { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+.thumb {
+  position: relative; border: 2px solid var(--border); border-radius: 8px;
+  background: #fff; cursor: pointer; overflow: hidden; transition: .15s; user-select: none;
+}
+.thumb.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(118,87,255,0.18); }
+.thumb.dragging { opacity: .4; }
+.thumb.dragover { border-color: var(--accent-light); transform: scale(1.02); }
+.thumb canvas { width: 100%; display: block; }
+.thumb-blank { width: 100%; aspect-ratio: 0.707; background: #fff; display: flex; align-items: center; justify-content: center; color: #999; font-size: 10px; }
+.thumb-num { position: absolute; top: 4px; left: 4px; background: rgba(0,0,0,.65); color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 4px; font-weight: 600; }
+.thumb-actions { position: absolute; bottom: 0; left: 0; right: 0; display: flex; gap: 1px; opacity: 0; transition: .15s; }
+.thumb:hover .thumb-actions { opacity: 1; }
+.thumb-actions button { flex: 1; border: 0; background: rgba(0,0,0,.78); color: #fff; padding: 5px 0; display: flex; align-items: center; justify-content: center; }
+.thumb-actions button:hover { background: var(--accent); }
+.thumb-actions button svg { width: 12px; height: 12px; }
 
-        #pdf-canvas,
-        #draw-canvas {
-            display: block;
-            margin: 0 auto;
-        }
+/* ---------- CANVAS AREA ---------- */
+.canvas-area {
+  flex: 1; overflow: auto; background: #f4f5f8; padding: 24px; position: relative;
+}
+[data-theme="dark"] .canvas-area { background: #0d0f14; }
+.canvas-area.panning { cursor: grabbing !important; }
+.canvas-area.panning * { cursor: grabbing !important; }
+.pages-container { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+.page-wrap { position: relative; background: #fff; box-shadow: var(--shadow-lg); border-radius: 2px; overflow: hidden; }
+.page-wrap.active { outline: 3px solid var(--accent); outline-offset: 4px; }
+.page-canvas { display: block; }
+.page-overlay { position: absolute; inset: 0; touch-action: none; }
 
-        #draw-canvas {
-            position: absolute;
-            left: 10px;
-            top: 10px;
-            pointer-events: auto;
-        }
+/* ---------- OBJECTS ---------- */
+.obj { position: absolute; user-select: none; }
+.obj.selected { outline: 1.5px dashed var(--accent); outline-offset: 1px; }
+.obj-text { white-space: pre-wrap; word-break: break-word; cursor: move; min-width: 8px; }
+.obj-text[contenteditable="true"] { cursor: text; outline: 2px solid var(--accent); background: rgba(255,255,255,.6); }
+.obj-image, .obj-signature, .obj-drawing { cursor: move; }
+.obj-image img, .obj-signature img, .obj-drawing img { width: 100%; height: 100%; display: block; pointer-events: none; }
+.obj-shape { box-sizing: border-box; cursor: move; }
+.obj-highlight { mix-blend-mode: multiply; cursor: move; }
+.obj-whiteout { background: #fff; cursor: move; border: 1px dashed transparent; }
+.obj-whiteout.selected { border-color: var(--accent); }
+.obj-line, .obj-arrow { cursor: move; }
+.obj-line svg, .obj-arrow svg { display: block; overflow: visible; }
+.handle { position: absolute; width: 10px; height: 10px; background: #fff; border: 2px solid var(--accent); border-radius: 2px; z-index: 100; }
+.handle-nw { top: -6px; left: -6px; cursor: nwse-resize; }
+.handle-ne { top: -6px; right: -6px; cursor: nesw-resize; }
+.handle-sw { bottom: -6px; left: -6px; cursor: nesw-resize; }
+.handle-se { bottom: -6px; right: -6px; cursor: nwse-resize; }
+.handle-rot { top: -26px; left: 50%; transform: translateX(-50%); border-radius: 50%; width: 12px; height: 12px; cursor: grab; }
 
-        @media (max-width: 768px) {
-            body {
-                padding-top: 80px;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
+/* ---------- PROPERTIES PANEL ---------- */
+.props-panel {
+  width: 260px; flex-shrink: 0; background: var(--surface);
+  border-left: 1px solid var(--border-soft); display: flex; flex-direction: column;
+}
+.props-body { padding: 14px; overflow-y: auto; flex: 1; }
+.empty-props { text-align: center; color: var(--text-muted); padding: 30px 10px; }
+.empty-props svg { width: 30px; height: 30px; margin-bottom: 8px; opacity: .35; }
+.empty-props p { font-size: 12px; }
+.prop { margin-bottom: 12px; }
+.prop label { display: block; font-size: 10px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.prop input[type="text"], .prop input[type="number"], .prop select, .prop textarea {
+  width: 100%; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px;
+  font-size: 12px; background: var(--surface-2); color: var(--text); transition: .15s;
+}
+.prop input:focus, .prop select:focus, .prop textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(118,87,255,.12); }
+.prop input[type="color"] { width: 100%; height: 30px; padding: 2px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-2); cursor: pointer; }
+.prop input[type="range"] { width: 100%; accent-color: var(--accent); }
+.prop-row { display: flex; gap: 6px; }
+.prop-row > .prop { flex: 1; margin-bottom: 0; }
+.prop-row + .prop { margin-top: 12px; }
+.btn-group { display: flex; gap: 3px; }
+.btn-group button {
+  flex: 1; min-height: 30px; padding: 4px; border: 1px solid var(--border);
+  background: var(--surface-2); border-radius: 6px; font-size: 12px; color: var(--text);
+  transition: .15s; display: flex; align-items: center; justify-content: center; gap: 3px;
+}
+.btn-group button svg { width: 13px; height: 13px; }
+.btn-group button:hover { background: var(--surface-3); }
+.btn-group button.active { background: var(--grad-btn); color: #fff; border-color: transparent; }
+.prop-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 6px; }
+.prop-actions button {
+  padding: 7px; border: 1px solid var(--border); background: var(--surface-2);
+  border-radius: 6px; font-size: 11px; color: var(--text); display: flex; align-items: center; justify-content: center; gap: 3px; transition: .15s;
+}
+.prop-actions button:hover { background: var(--surface-3); }
+.prop-actions button.danger { color: var(--error); border-color: rgba(239,68,68,.3); }
+.prop-actions button.danger:hover { background: rgba(239,68,68,.08); }
+.prop-actions button svg { width: 12px; height: 12px; }
+.layer-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 6px; }
 
-            .editor-container {
-                padding: 15px;
-            }
+/* ---------- BOTTOM BAR ---------- */
+.bottom-bar {
+  display: flex; align-items: center; gap: 8px; padding: 6px 14px;
+  background: var(--surface); border-top: 1px solid var(--border-soft); flex-wrap: wrap;
+}
+.bb-group { display: flex; align-items: center; gap: 3px; }
+.bb-btn { width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; color: var(--text); transition: .15s; }
+.bb-btn svg { width: 14px; height: 14px; }
+.bb-btn:hover { background: var(--surface-2); }
+.bb-btn:disabled { opacity: .35; }
+.bb-divider { width: 1px; height: 22px; background: var(--border-soft); margin: 0 4px; }
+.page-nav { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-muted); }
+.page-nav input { width: 38px; padding: 3px 5px; border: 1px solid var(--border); border-radius: 5px; text-align: center; font-size: 12px; background: var(--surface-2); color: var(--text); }
+.zoom-display { min-width: 48px; text-align: center; font-size: 12px; font-weight: 600; }
+.bb-spacer { flex: 1; }
+.status-tip { font-size: 11px; color: var(--text-muted); }
+.status-shortcuts { font-size: 10px; color: var(--text-muted); display: flex; gap: 10px; }
+.status-shortcuts kbd {
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px;
+  padding: 1px 5px; font-size: 10px; font-family: 'Inter', monospace;
+}
 
-            .toolbar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+/* ---------- MOBILE ---------- */
+.mobile-toolbar { display: none; }
 
-            .status-text {
-                margin-left: 0;
-            }
-        }
-    </style>
+/* ---------- LOADING ---------- */
+.loading-overlay {
+  position: fixed; inset: 0; background: rgba(17,17,17,.55); backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
+}
+.loading-overlay.active { display: flex; }
+.loading-card {
+  background: var(--surface); border-radius: var(--radius); padding: 32px 36px;
+  text-align: center; box-shadow: var(--shadow-lg); min-width: 280px; max-width: 90vw;
+  border: 1px solid var(--border);
+}
+.loading-card h3 { margin: 16px 0 4px; font-size: 16px; font-weight: 700; }
+.loading-card p { margin: 0 0 16px; color: var(--text-muted); font-size: 12px; }
+.spinner {
+  width: 40px; height: 40px; margin: 0 auto;
+  border: 3px solid var(--surface-3); border-top-color: var(--accent);
+  border-radius: 50%; animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.progress { width: 100%; height: 5px; background: var(--surface-3); border-radius: 99px; overflow: hidden; }
+.progress-bar { height: 100%; width: 0%; background: var(--grad); transition: width .3s; border-radius: 99px; }
+
+/* ---------- TOAST ---------- */
+.toast {
+  position: fixed; bottom: 20px; right: 20px; background: var(--text); color: var(--surface);
+  padding: 10px 18px; border-radius: 99px; box-shadow: var(--shadow-lg); z-index: 1100;
+  font-size: 13px; font-weight: 500; opacity: 0; transform: translateX(20px); transition: .3s;
+  pointer-events: none; display: flex; align-items: center; gap: 7px;
+}
+.toast.show { opacity: 1; transform: translateX(0); }
+.toast svg { width: 15px; height: 15px; }
+.toast.error { background: var(--error); color: #fff; }
+.toast.success { background: var(--success); color: #fff; }
+@media (max-width: 768px) {
+  .toast { left: 50%; right: auto; transform: translateX(-50%) translateY(20px); bottom: 80px; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+}
+
+/* ---------- MODAL ---------- */
+.modal {
+  position: fixed; inset: 0; background: rgba(17,17,17,.55); backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
+}
+.modal.active { display: flex; }
+.modal-card {
+  background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-lg);
+  max-width: 540px; width: 100%; overflow: hidden; border: 1px solid var(--border);
+}
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border-soft); }
+.modal-header h3 { font-size: 16px; font-weight: 700; }
+.modal-close { width: 30px; height: 30px; border-radius: 50%; background: var(--surface-2); display: flex; align-items: center; justify-content: center; transition: .15s; }
+.modal-close:hover { background: var(--surface-3); }
+.modal-close svg { width: 15px; height: 15px; }
+.tabs { display: flex; padding: 0 20px; border-bottom: 1px solid var(--border-soft); }
+.tabs button { padding: 10px 14px; border: 0; background: transparent; font-weight: 500; font-size: 13px; color: var(--text-muted); border-bottom: 2px solid transparent; transition: .15s; display: flex; align-items: center; gap: 5px; }
+.tabs button svg { width: 14px; height: 14px; }
+.tabs button.active { color: var(--accent); border-color: var(--accent); }
+.tab-content { padding: 20px; }
+.tab { display: none; flex-direction: column; gap: 10px; }
+.tab.active { display: flex; }
+#sigCanvas { width: 100%; height: 160px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: #fff; cursor: crosshair; touch-action: none; }
+.sig-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 12px; }
+.sig-controls label { display: flex; align-items: center; gap: 5px; }
+.input { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; background: var(--surface-2); color: var(--text); }
+.input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(118,87,255,.12); }
+.file-upload { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 20px; border: 2px dashed var(--border); border-radius: var(--radius-sm); cursor: pointer; color: var(--text-muted); transition: .15s; }
+.file-upload:hover { border-color: var(--accent); color: var(--accent); }
+.file-upload svg { width: 16px; height: 16px; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; padding: 16px 20px; border-top: 1px solid var(--border-soft); }
+.success-card { text-align: center; padding: 36px 28px 28px; }
+.success-icon { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 14px; background: linear-gradient(135deg, rgba(16,185,129,.15), rgba(16,185,129,.05)); color: var(--success); display: flex; align-items: center; justify-content: center; }
+.success-icon svg { width: 32px; height: 32px; }
+.success-card h3 { margin: 0 0 4px; font-size: 20px; font-weight: 700; }
+.success-card p { margin: 0 0 20px; color: var(--text-muted); font-size: 13px; }
+.success-actions { justify-content: center; border: 0; padding: 0; }
+
+/* ---------- UPLOAD EMPTY STATE ---------- */
+.upload-state { padding: 40px 20px; }
+.upload-card { max-width: 540px; margin: 0 auto; text-align: center; }
+.upload-icon { width: 80px; height: 80px; margin: 0 auto 16px; border-radius: 50%; background: var(--grad); display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: var(--shadow-glow); }
+.upload-icon svg { width: 36px; height: 36px; }
+.upload-card h2 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+.upload-card > p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; }
+.dropzone {
+  background: var(--surface); border: 2px dashed var(--border); border-radius: var(--radius);
+  padding: 36px 24px; cursor: pointer; transition: .25s; position: relative; overflow: hidden;
+}
+.dropzone:hover, .dropzone.dragover { border-color: var(--accent); transform: scale(1.01); box-shadow: var(--shadow), 0 0 0 4px rgba(118,87,255,.12); }
+.dz-icon { width: 56px; height: 56px; margin: 0 auto 10px; border-radius: 50%; background: var(--grad-soft); display: flex; align-items: center; justify-content: center; color: var(--accent); }
+.dz-icon svg { width: 26px; height: 26px; }
+.dropzone h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.dropzone .or { font-size: 12px; color: var(--text-muted); margin: 8px 0; }
+.dropzone .info { font-size: 11px; color: var(--text-muted); margin-top: 12px; }
+.feature-pills { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+.pill { background: var(--surface); border: 1px solid var(--border); border-radius: 99px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; gap: 5px; box-shadow: var(--shadow-sm); }
+.pill svg { width: 13px; height: 13px; color: var(--accent); }
+
+/* ---------- SEO ---------- */
+.seo-section { padding: 50px 0; background: var(--surface); border-top: 1px solid var(--border); }
+[data-theme="dark"] .seo-section { background: var(--bg); }
+.seo-section h2 { font-size: 22px; margin: 28px 0 10px; font-weight: 800; }
+.seo-section h2:first-child { margin-top: 0; }
+.seo-section p, .seo-section li { color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+.seo-section strong { color: var(--text); }
+.steps { padding-left: 20px; }
+.steps li { margin-bottom: 6px; }
+.features-list { padding-left: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+@media (max-width: 720px) { .features-list { grid-template-columns: 1fr; } }
+.faq details { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 6px; background: var(--surface-2); transition: .15s; }
+.faq details[open] { background: var(--surface-3); }
+.faq summary { cursor: pointer; font-weight: 600; font-size: 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; font-size: 20px; color: var(--accent); transition: .15s; line-height: 1; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq p { margin: 8px 0 0; }
+.privacy-box { background: var(--grad-soft); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-top: 28px; }
+.privacy-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.privacy-box p { font-size: 13px; margin: 0; }
+.related-tools { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.rt-card { display: flex; align-items: center; gap: 8px; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; font-size: 13px; transition: .2s; }
+.rt-card svg { width: 16px; height: 16px; color: var(--accent); }
+.rt-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); color: var(--accent); }
+
+/* ---------- FOOTER ---------- */
+.footer { background: #0d0d12; color: #cbd5e1; padding: 40px 0 20px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+.footer-brand { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+.footer-brand span { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.footer-col h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .04em; }
+.footer-col a { display: block; font-size: 13px; color: #9ca3af; margin-bottom: 6px; transition: .15s; }
+.footer-col a:hover { color: var(--accent-light); }
+.footer-copy { font-size: 12px; color: #6b7280; text-align: center; border-top: 1px solid #1f1f2a; padding-top: 20px; }
+@media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1100px) {
+  .props-panel { display: none; }
+  .props-panel.open { display: flex; position: fixed; bottom: 0; left: 0; right: 0; height: 55vh; z-index: 200; border-radius: var(--radius) var(--radius) 0 0; box-shadow: var(--shadow-lg); animation: slideUp .25s; }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+}
+@media (max-width: 820px) {
+  .nav { display: none; }
+  .nav.open { display: flex; position: absolute; top: 60px; left: 0; right: 0; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px; box-shadow: var(--shadow); z-index: 99; gap: 2px; }
+  .hamburger { display: flex; }
+  .pages-panel { display: none; }
+  .pages-panel.open { display: flex; position: fixed; bottom: 0; left: 0; right: 0; max-height: 65vh; z-index: 200; border-radius: var(--radius) var(--radius) 0 0; box-shadow: var(--shadow-lg); animation: slideUp .25s; }
+  .left-toolbar { display: none; }
+  .mobile-toolbar {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--surface); border-top: 1px solid var(--border); padding: 5px; z-index: 150; justify-content: space-around;
+  }
+  .mt-btn { flex: 1; min-width: 0; height: 46px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: var(--text-muted); transition: .15s; }
+  .mt-btn svg { width: 18px; height: 18px; }
+  .mt-btn span { font-size: 9px; font-weight: 600; }
+  .mt-btn.active { color: var(--accent); }
+  .canvas-area { padding: 12px 12px 70px; }
+  .editor-body { height: calc(100vh - 200px); min-height: 400px; }
+  .file-bar { padding: 8px 10px; }
+  .file-text .fn { max-width: 120px; }
+  .bottom-bar { padding: 5px 8px; }
+  .status-tip, .status-shortcuts { display: none; }
+  .hero h1 { font-size: 22px; }
+}
+@media (max-width: 480px) {
+  .hero-features { width: 100%; }
+  .hf-card { flex: 1; min-width: 0; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .btn span, .file-bar-actions .btn span { display: none; }
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+.canvas-area::-webkit-scrollbar, .thumbs::-webkit-scrollbar, .props-body::-webkit-scrollbar, .left-toolbar::-webkit-scrollbar { width: 6px; height: 6px; }
+.canvas-area::-webkit-scrollbar-thumb, .thumbs::-webkit-scrollbar-thumb, .props-body::-webkit-scrollbar-thumb, .left-toolbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+.hidden { display: none !important; }
+</style>
 </head>
 <body>
-    <!-- Top header bar -->
-    <div class="top-bar">
-        <div class="back-ribbon" id="back-btn">
-            <span>&larr;</span>
+
+<!-- ============ HEADER ============ -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="https://agitools24.com" class="logo" aria-label="Tools24 Home">
+      <span class="logo-mark">T24</span>
+      <span class="logo-text">Tools<span>24</span></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="https://agitools24.com">Home</a>
+      <a href="https://agitools24.com/pdf-editor.html" class="active">PDF Tools</a>
+      <a href="https://agitools24.com">Image Tools</a>
+      <a href="https://agitools24.com">File Tools</a>
+      <a href="https://agitools24.com">Other Tools</a>
+      <a href="https://agitools24.com">Blog</a>
+      <a href="https://agitools24.com">Pricing</a>
+    </nav>
+    <div class="header-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+        <i data-lucide="sun" class="icon-sun"></i>
+        <i data-lucide="moon" class="icon-moon"></i>
+      </button>
+      <button class="btn btn-ghost btn-sm">Login / Sign Up</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-left">
+      <span class="badge"><i data-lucide="zap" style="width:12px;height:12px;"></i> 100% Free</span>
+      <h1>Tools24 <span>PDF Editor</span></h1>
+      <p>Edit PDF files, add text, images, signatures, highlights and more. Fast, easy and secure.</p>
+    </div>
+    <div class="hero-features">
+      <div class="hf-card">
+        <div class="hf-icon hf-purple"><i data-lucide="shield-check"></i></div>
+        <div><h3>Secure</h3><p>Your files are safe</p></div>
+      </div>
+      <div class="hf-card">
+        <div class="hf-icon hf-blue"><i data-lucide="mouse-pointer-click"></i></div>
+        <div><h3>Easy to Use</h3><p>No installation</p></div>
+      </div>
+      <div class="hf-card">
+        <div class="hf-icon hf-pink"><i data-lucide="smartphone"></i></div>
+        <div><h3>All Devices</h3><p>Mobile, Tablet, Desktop</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EDITOR ============ -->
+<section class="editor-wrap">
+  <div class="editor-container">
+
+    <!-- File bar -->
+    <div class="file-bar" id="fileBar">
+      <div class="file-info">
+        <div class="file-icon"><i data-lucide="file-text"></i></div>
+        <div class="file-text">
+          <span class="fn" id="fileName">No file loaded</span>
+          <span class="fm" id="fileMeta">Upload a PDF to begin</span>
         </div>
-        <h1 class="top-title">Tools24 PDF Editor</h1>
+      </div>
+      <div class="file-bar-spacer"></div>
+      <div class="file-bar-actions">
+        <button class="btn btn-ghost btn-sm" id="changeFileBtn"><i data-lucide="refresh-cw"></i><span>Change File</span></button>
+        <button class="icon-btn" id="undoBtnTop" title="Undo" aria-label="Undo" disabled><i data-lucide="undo-2"></i></button>
+        <button class="icon-btn" id="redoBtnTop" title="Redo" aria-label="Redo" disabled><i data-lucide="redo-2"></i></button>
+        <button class="btn btn-ghost btn-sm" id="clearAllBtn"><i data-lucide="trash-2"></i><span>Clear All</span></button>
+        <button class="btn btn-primary btn-sm" id="downloadBtnTop"><i data-lucide="download"></i><span>Download PDF</span></button>
+      </div>
     </div>
 
-    <div class="editor-container">
-        <section class="toolbar">
-            <input type="file" id="pdf-file" accept="application/pdf" hidden />
-            <input type="file" id="img-file" accept="image/*" hidden />
+    <!-- Editor body -->
+    <div class="editor-body" id="editorBody">
 
-            <button id="open-btn" class="btn">Open PDF</button>
-            <button id="add-text-btn" class="btn">Add Text</button>
-            <button id="add-image-btn" class="btn">Add Image</button>
-            <button id="img-smaller-btn" class="btn">Image -</button>
-            <button id="img-bigger-btn" class="btn">Image +</button>
-            <button id="clear-annotations-btn" class="btn">Clear Annotations</button>
-            <button id="download-btn" class="btn btn-primary">Download Edited PDF</button>
-            <span id="status" class="status-text"></span>
-        </section>
+      <!-- Upload empty state -->
+      <div class="upload-state" id="uploadState" style="flex:1; display:flex; align-items:center; justify-content:center; background:var(--surface-2);">
+        <div class="upload-card">
+          <div class="upload-icon"><i data-lucide="file-up"></i></div>
+          <h2>Start Editing Your PDF</h2>
+          <p>Upload a PDF and edit text, images, signatures, highlights and more.</p>
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload PDF">
+            <div class="dz-icon"><i data-lucide="upload-cloud"></i></div>
+            <h3>Drop your PDF here</h3>
+            <p class="or">or</p>
+            <button class="btn btn-primary" id="browseBtn" type="button"><i data-lucide="folder-open"></i> Choose PDF</button>
+            <p class="info">PDF only · Max 50 MB</p>
+          </div>
+          <div class="feature-pills">
+            <span class="pill"><i data-lucide="type"></i> Add Text</span>
+            <span class="pill"><i data-lucide="image"></i> Add Image</span>
+            <span class="pill"><i data-lucide="signature"></i> Sign</span>
+            <span class="pill"><i data-lucide="highlighter"></i> Highlight</span>
+            <span class="pill"><i data-lucide="pen-tool"></i> Draw</span>
+            <span class="pill"><i data-lucide="layers"></i> Organize</span>
+          </div>
+          <input type="file" id="fileInput" accept="application/pdf,.pdf" hidden />
+        </div>
+      </div>
 
-        <section class="canvas-wrapper">
-            <div class="canvas-container">
-                <canvas id="pdf-canvas"></canvas>
-                <canvas id="draw-canvas"></canvas>
-            </div>
-        </section>
+      <!-- Left toolbar -->
+      <aside class="left-toolbar hidden" id="leftToolbar">
+        <button class="tool-btn active" data-tool="select" data-tip="Select (V)"><i data-lucide="mouse-pointer"></i><span>Select</span></button>
+        <button class="tool-btn" data-tool="hand" data-tip="Hand (H)"><i data-lucide="hand"></i><span>Hand</span></button>
+        <div class="tool-divider"></div>
+        <button class="tool-btn" data-tool="text" data-tip="Add Text (T)"><i data-lucide="type"></i><span>Text</span></button>
+        <button class="tool-btn" data-tool="image" data-tip="Add Image (I)"><i data-lucide="image"></i><span>Image</span></button>
+        <button class="tool-btn" data-tool="draw" data-tip="Draw (D)"><i data-lucide="pen-tool"></i><span>Draw</span></button>
+        <button class="tool-btn" data-tool="highlight" data-tip="Highlight (H)"><i data-lucide="highlighter"></i><span>Highlight</span></button>
+        <div class="tool-divider"></div>
+        <button class="tool-btn" data-tool="rect" data-tip="Rectangle (R)"><i data-lucide="square"></i><span>Rect</span></button>
+        <button class="tool-btn" data-tool="circle" data-tip="Circle (C)"><i data-lucide="circle"></i><span>Circle</span></button>
+        <button class="tool-btn" data-tool="line" data-tip="Line (L)"><i data-lucide="minus"></i><span>Line</span></button>
+        <button class="tool-btn" data-tool="arrow" data-tip="Arrow (A)"><i data-lucide="arrow-right"></i><span>Arrow</span></button>
+        <div class="tool-divider"></div>
+        <button class="tool-btn" data-tool="whiteout" data-tip="Whiteout (W)"><i data-lucide="square-dashed"></i><span>Whiteout</span></button>
+        <button class="tool-btn" data-tool="signature" data-tip="Signature (S)"><i data-lucide="signature"></i><span>Sign</span></button>
+        <button class="tool-btn" data-tool="eraser" data-tip="Eraser (E)"><i data-lucide="eraser"></i><span>Eraser</span></button>
+        <div class="tool-divider"></div>
+        <button class="tool-btn" id="undoBtn" data-tip="Undo (Ctrl+Z)"><i data-lucide="undo-2"></i><span>Undo</span></button>
+        <button class="tool-btn" id="redoBtn" data-tip="Redo (Ctrl+Y)"><i data-lucide="redo-2"></i><span>Redo</span></button>
+      </aside>
+
+      <!-- Pages panel -->
+      <aside class="pages-panel hidden" id="pagesPanel">
+        <div class="panel-head">
+          <h3>Pages</h3>
+          <div class="panel-head-actions">
+            <button class="mini-btn" id="addPageBtn" title="Add page" aria-label="Add page"><i data-lucide="plus"></i></button>
+          </div>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+      </aside>
+
+      <!-- Canvas area -->
+      <div class="canvas-area hidden" id="canvasArea">
+        <div class="pages-container" id="pagesContainer"></div>
+      </div>
+
+      <!-- Properties panel -->
+      <aside class="props-panel hidden" id="propsPanel">
+        <div class="panel-head"><h3 id="panelTitle">Properties</h3></div>
+        <div class="props-body" id="propsBody">
+          <div class="empty-props">
+            <i data-lucide="mouse-pointer-click"></i>
+            <p>Select an object to edit its properties</p>
+          </div>
+        </div>
+      </aside>
     </div>
 
-    <!-- ===== Libraries ===== -->
-    <!-- PDF.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-    <!-- jsPDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Bottom bar -->
+    <div class="bottom-bar hidden" id="bottomBar">
+      <div class="bb-group">
+        <button class="bb-btn" id="firstPageBtn" title="First page" aria-label="First"><i data-lucide="chevrons-left"></i></button>
+        <button class="bb-btn" id="prevPageBtn" title="Previous" aria-label="Previous"><i data-lucide="chevron-left"></i></button>
+        <div class="page-nav">
+          <input type="number" id="pageInput" value="1" min="1" aria-label="Page" />
+          <span>/ <span id="pageCount">1</span></span>
+        </div>
+        <button class="bb-btn" id="nextPageBtn" title="Next" aria-label="Next"><i data-lucide="chevron-right"></i></button>
+        <button class="bb-btn" id="lastPageBtn" title="Last page" aria-label="Last"><i data-lucide="chevrons-right"></i></button>
+      </div>
+      <div class="bb-divider"></div>
+      <div class="bb-group">
+        <button class="bb-btn" id="zoomOutBtn" title="Zoom out" aria-label="Zoom out"><i data-lucide="zoom-out"></i></button>
+        <span class="zoom-display" id="zoomDisplay">100%</span>
+        <button class="bb-btn" id="zoomInBtn" title="Zoom in" aria-label="Zoom in"><i data-lucide="zoom-in"></i></button>
+        <button class="bb-btn" id="fitWidthBtn" title="Fit width" aria-label="Fit width"><i data-lucide="maximize-2"></i></button>
+        <button class="bb-btn" id="fitPageBtn" title="Fit page" aria-label="Fit page"><i data-lucide="square"></i></button>
+      </div>
+      <div class="bb-spacer"></div>
+      <span class="status-tip">Tip: Select an object to edit its properties</span>
+      <div class="status-shortcuts">
+        <span><kbd>Ctrl+Z</kbd> Undo</span>
+        <span><kbd>Ctrl+Y</kbd> Redo</span>
+        <span><kbd>Ctrl+S</kbd> Save</span>
+      </div>
+    </div>
 
-    <!-- ===== JS ===== -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            console.log("PDF Editor JS loaded");
+    <!-- Mobile toolbar -->
+    <div class="mobile-toolbar" id="mobileToolbar">
+      <button class="mt-btn active" data-tool="select"><i data-lucide="mouse-pointer"></i><span>Select</span></button>
+      <button class="mt-btn" data-tool="text"><i data-lucide="type"></i><span>Text</span></button>
+      <button class="mt-btn" data-tool="image"><i data-lucide="image"></i><span>Image</span></button>
+      <button class="mt-btn" data-tool="draw"><i data-lucide="pen-tool"></i><span>Draw</span></button>
+      <button class="mt-btn" data-tool="signature"><i data-lucide="signature"></i><span>Sign</span></button>
+      <button class="mt-btn" data-mt="more"><i data-lucide="more-horizontal"></i><span>More</span></button>
+    </div>
+  </div>
+</section>
 
-            // Back arrow click -> previous page
-            const backBtn = document.getElementById("back-btn");
-            backBtn.addEventListener("click", () => {
-                // yaha chahe to apni main site ka URL de sakte ho:
-                // window.location.href = "https://yourmainwebsite.com";
-                window.history.back();
-            });
+<!-- ============ SEO CONTENT ============ -->
+<section class="seo-section">
+  <div class="container">
+    <h2>Tools24 PDF Editor – Free Online PDF Editor</h2>
+    <p>Tools24 PDF Editor is a free, browser-based PDF editing tool that lets you edit PDF files online without installing any software. Add text, images, signatures, highlights, drawings and shapes directly on your PDF pages, organize pages, and download the edited file — all in your browser. Your files are processed locally whenever possible, so sensitive documents never leave your device.</p>
 
-            const fileInput = document.getElementById("pdf-file");
-            const imgInput = document.getElementById("img-file");
-            const openBtn = document.getElementById("open-btn");
-            const addTextBtn = document.getElementById("add-text-btn");
-            const addImageBtn = document.getElementById("add-image-btn");
-            const imgSmallerBtn = document.getElementById("img-smaller-btn");
-            const imgBiggerBtn = document.getElementById("img-bigger-btn");
-            const clearBtn = document.getElementById("clear-annotations-btn");
-            const downloadBtn = document.getElementById("download-btn");
-            const statusSpan = document.getElementById("status");
+    <h2>How to Edit a PDF Online</h2>
+    <ol class="steps">
+      <li><strong>Upload your PDF</strong> — drag and drop your file or click "Choose PDF".</li>
+      <li><strong>Choose an editing tool</strong> — text, image, draw, highlight, shapes, signature or whiteout.</li>
+      <li><strong>Edit your document</strong> — click on the page to add content, drag to move, use handles to resize and rotate.</li>
+      <li><strong>Review your changes</strong> — zoom, navigate pages, organize and adjust positions.</li>
+      <li><strong>Download the edited PDF</strong> — click Download to save your final file.</li>
+    </ol>
 
-            const pdfCanvas = document.getElementById("pdf-canvas");
-            const drawCanvas = document.getElementById("draw-canvas");
-            const pdfCtx = pdfCanvas.getContext("2d");
-            const drawCtx = drawCanvas.getContext("2d");
+    <h2>What Can You Do With Tools24 PDF Editor?</h2>
+    <ul class="features-list">
+      <li><strong>Add text</strong> to any page with custom fonts, sizes, colors, alignment and styles.</li>
+      <li><strong>Add images</strong> — insert JPG, PNG or WebP images, resize, move and rotate them.</li>
+      <li><strong>Sign PDF</strong> — draw, type or upload your signature and place it anywhere.</li>
+      <li><strong>Highlight PDF</strong> — mark content in yellow, green, blue or pink.</li>
+      <li><strong>Draw on PDF</strong> — freehand drawing with custom stroke, color and opacity.</li>
+      <li><strong>Add shapes</strong> — rectangle, circle, line and arrow.</li>
+      <li><strong>Whiteout</strong> — cover unwanted content with a solid fill, then add replacement text.</li>
+      <li><strong>Organize pages</strong> — reorder, duplicate, delete and rotate pages.</li>
+      <li><strong>Download edited PDF</strong> — export as a fresh, self-contained PDF file.</li>
+    </ul>
 
-            const { jsPDF } = window.jspdf;
-            const pdfjsLib = window["pdfjsLib"];
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq">
+      <details open><summary>What is Tools24 PDF Editor?</summary><p>Tools24 PDF Editor is a free browser-based tool to edit PDF files online — add text, images, signatures, highlights, drawings and shapes without installing software.</p></details>
+      <details><summary>Can I edit a PDF online?</summary><p>Yes. Tools24 PDF Editor runs entirely in your browser and is free to use.</p></details>
+      <details><summary>Can I add text to PDF?</summary><p>Yes. Use the Text tool to click anywhere on the page and type with custom fonts, sizes, colors and alignment.</p></details>
+      <details><summary>Can I add images to PDF?</summary><p>Yes. Use the Image tool to upload JPG, PNG or WebP images and place, resize and rotate them.</p></details>
+      <details><summary>Can I sign a PDF online?</summary><p>Yes. Use the Signature tool to draw, type or upload your signature.</p></details>
+      <details><summary>Can I highlight a PDF?</summary><p>Yes. Use the Highlight tool to mark content in yellow, green, blue or pink.</p></details>
+      <details><summary>Can I delete PDF pages?</summary><p>Yes. You can delete, duplicate, rotate and reorder pages using the Pages panel.</p></details>
+      <details><summary>Can I reorder PDF pages?</summary><p>Yes. Drag and drop thumbnails in the Pages panel to reorder pages.</p></details>
+      <details><summary>Can I edit PDF on mobile?</summary><p>Yes. Tools24 PDF Editor is fully responsive and works on Android, iPhone, tablets and desktops.</p></details>
+      <details><summary>Can I download my edited PDF?</summary><p>Yes. Click Download PDF and your edited file is saved as a new PDF with all changes embedded.</p></details>
+    </div>
 
-            if (!pdfjsLib) {
-                alert("PDF.js load nahi hua. Internet connection / script URL check karo.");
-                return;
-            }
+    <div class="privacy-box">
+      <h3>Your Files, Your Privacy</h3>
+      <p>Tools24 PDF Editor processes your PDF files directly in your browser wherever the implementation supports it. Your documents are not uploaded to any external server during editing. This means your sensitive information stays on your device while you work.</p>
+    </div>
 
-            pdfjsLib.GlobalWorkerOptions.workerSrc =
-                "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
+    <h2>More Tools24 Online Tools</h2>
+    <div class="related-tools">
+      <a href="https://agitools24.com" class="rt-card"><i data-lucide="file-plus-2"></i> Merge PDF</a>
+      <a href="https://agitools24.com" class="rt-card"><i data-lucide="scissors"></i> Split PDF</a>
+      <a href="https://agitools24.com" class="rt-card"><i data-lucide="image"></i> PDF to JPG</a>
+      <a href="https://agitools24.com" class="rt-card"><i data-lucide="image"></i> PDF to PNG</a>
+      <a href="https://agitools24.com" class="rt-card"><i data-lucide="file-text"></i> PDF to Word</a>
+      <a href="https://agitools24.com" class="rt-card"><i data-lucide="file-spreadsheet"></i> PDF to Excel</a>
+      <a href="https://agitools24.com" class="rt-card"><i data-lucide="minimize-2"></i> PDF Compressor</a>
+      <a href="https://agitools24.com" class="rt-card"><i data-lucide="lock"></i> PDF Locker</a>
+      <a href="https://agitools24.com" class="rt-card"><i data-lucide="signature"></i> Sign PDF</a>
+      <a href="https://agitools24.com" class="rt-card"><i data-lucide="droplet"></i> Watermark PDF</a>
+    </div>
+  </div>
+</section>
 
-            let pdfWidth = 0;
-            let pdfHeight = 0;
-            let pdfLoaded = false;
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Tools<span>24</span></div>
+        <p style="font-size:13px;color:#9ca3af;">Free online tools for documents, images and files. Fast, secure and easy to use — right in your browser.</p>
+      </div>
+      <div class="footer-col">
+        <h4>PDF Tools</h4>
+        <a href="https://agitools24.com/pdf-editor.html">PDF Editor</a>
+        <a href="https://agitools24.com">Merge PDF</a>
+        <a href="https://agitools24.com">Split PDF</a>
+        <a href="https://agitools24.com">PDF to JPG</a>
+        <a href="https://agitools24.com">PDF to PNG</a>
+        <a href="https://agitools24.com">PDF Compressor</a>
+        <a href="https://agitools24.com">Sign PDF</a>
+      </div>
+      <div class="footer-col">
+        <h4>Other Tools</h4>
+        <a href="https://agitools24.com">QR Code Generator</a>
+        <a href="https://agitools24.com">Resume Maker</a>
+        <a href="https://agitools24.com">Image Tools</a>
+        <a href="https://agitools24.com">File Converter</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="https://agitools24.com">About</a>
+        <a href="https://agitools24.com">Contact</a>
+        <a href="https://agitools24.com">Privacy Policy</a>
+        <a href="https://agitools24.com">Terms</a>
+      </div>
+    </div>
+    <div class="footer-copy">© <span id="year"></span> Tools24 — Free Online PDF Tools. All processing happens in your browser.</div>
+  </div>
+</footer>
 
-            let annotations = []; // {type:'text'|'image', text?, img?, x,y,w,h}
-            let dragging = false;
-            let dragIndex = -1;
-            let dragOffsetX = 0;
-            let dragOffsetY = 0;
-            let selectedIndex = -1; // resize ke liye selected
+<!-- ============ LOADING ============ -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-card">
+    <div class="spinner"></div>
+    <h3 id="loadingTitle">Loading PDF...</h3>
+    <p id="loadingMsg">Please wait</p>
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+  </div>
+</div>
 
-            function setStatus(msg) {
-                statusSpan.textContent = msg || "";
-            }
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast"></div>
 
-            function redrawAnnotations() {
-                drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
-                annotations.forEach(a => {
-                    if (a.type === "text") {
-                        drawCtx.font = "16px Arial";
-                        drawCtx.fillStyle = "#000000";
-                        drawCtx.fillText(a.text, a.x, a.y);
-                    } else if (a.type === "image" && a.img) {
-                        drawCtx.drawImage(a.img, a.x, a.y, a.w, a.h);
-                    }
-                });
-            }
+<!-- ============ SIGNATURE MODAL ============ -->
+<div class="modal" id="signatureModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>Add Signature</h3>
+      <button class="modal-close" id="sigCloseBtn" aria-label="Close"><i data-lucide="x"></i></button>
+    </div>
+    <div class="tabs" id="sigTabs">
+      <button class="active" data-tab="draw"><i data-lucide="pen-line"></i> Draw</button>
+      <button data-tab="type"><i data-lucide="type"></i> Type</button>
+      <button data-tab="upload"><i data-lucide="upload"></i> Upload</button>
+    </div>
+    <div class="tab-content">
+      <div class="tab active" id="tabDraw">
+        <canvas id="sigCanvas" width="520" height="200"></canvas>
+        <div class="sig-controls">
+          <label>Color <input type="color" id="sigColor" value="#111111" /></label>
+          <label>Width <input type="range" id="sigWidth" min="1" max="6" value="2.5" /></label>
+          <button class="btn btn-ghost btn-sm" id="sigClearBtn"><i data-lucide="eraser"></i> Clear</button>
+        </div>
+      </div>
+      <div class="tab" id="tabType">
+        <input type="text" class="input" id="sigText" placeholder="Type your name" />
+        <label style="font-size:12px;color:var(--text-muted);font-weight:600;">Font
+          <select id="sigFont" class="input">
+            <option value="'Caveat', cursive">Caveat</option>
+            <option value="'Dancing Script', cursive">Dancing Script</option>
+            <option value="'Great Vibes', cursive">Great Vibes</option>
+            <option value="'Pacifico', cursive">Pacifico</option>
+          </select>
+        </label>
+      </div>
+      <div class="tab" id="tabUpload">
+        <label class="file-upload">
+          <input type="file" id="sigFile" accept="image/png,image/jpeg" hidden />
+          <span><i data-lucide="image-upload"></i> Choose signature image (PNG recommended)</span>
+        </label>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-sm" id="sigCancelBtn">Cancel</button>
+      <button class="btn btn-primary btn-sm" id="sigApplyBtn">Apply Signature</button>
+    </div>
+  </div>
+</div>
 
-            /* --------- Open PDF ---------- */
-            openBtn.addEventListener("click", () => {
-                fileInput.click();
-            });
+<!-- ============ SUCCESS MODAL ============ -->
+<div class="modal" id="successModal">
+  <div class="modal-card success-card">
+    <div class="success-icon"><i data-lucide="check-circle-2"></i></div>
+    <h3>Download ready!</h3>
+    <p>Your edited PDF has been generated successfully.</p>
+    <div class="modal-actions success-actions">
+      <a class="btn btn-primary btn-sm" id="downloadLink" download="Tools24-Edited-PDF.pdf"><i data-lucide="download"></i> Download PDF</a>
+      <button class="btn btn-ghost btn-sm" id="editAnotherBtn">Edit Another</button>
+    </div>
+  </div>
+</div>
 
-            fileInput.addEventListener("change", (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
+<script>
+/* ============================================================
+   Tools24 PDF Editor — Application Logic
+   Sections: CONFIG, THEME, STATE, DOM, PDF LOADER, RENDERER,
+   THUMBNAILS, PAGE MANAGER, OBJECT MANAGER, TEXT, IMAGE, DRAW,
+   SHAPE, HIGHLIGHT, SIGNATURE, WHITEOUT, SELECTION, PROPERTIES,
+   ZOOM, UNDO/REDO, EXPORT, TOAST, LOADING, KEYBOARD, RESPONSIVE, INIT
+   ============================================================ */
 
-                if (file.type !== "application/pdf") {
-                    alert("Please select a PDF file.");
-                    return;
-                }
+/* ---------- CONFIG ---------- */
+const CONFIG = {
+  renderScale: 1.5,
+  maxFileSize: 50 * 1024 * 1024,
+  pdfWorkerSrc: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js',
+  fonts: ['Inter', 'Arial', 'Helvetica', 'Times New Roman', 'Georgia', 'Courier New'],
+  highlightColors: [['#fef08a','Yellow'],['#bbf7d0','Green'],['#bfdbfe','Blue'],['#fbcfe8','Pink']],
+};
 
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    const arrayBuffer = event.target.result;
-                    const typedArray = new Uint8Array(arrayBuffer);
-                    loadPdf(typedArray);
-                };
-                reader.readAsArrayBuffer(file);
-            });
+/* ---------- THEME ---------- */
+function initTheme() {
+  const saved = localStorage.getItem('t24-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  $('themeToggle').addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = cur === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('t24-theme', next);
+    refreshIcons();
+  });
+}
 
-            async function loadPdf(typedArray) {
-                try {
-                    setStatus("Loading PDF...");
-                    const loadingTask = pdfjsLib.getDocument(typedArray);
-                    const pdf = await loadingTask.promise;
+/* ---------- APPLICATION STATE ---------- */
+const STATE = {
+  file: null,
+  originalBuffer: null,
+  pdfDoc: null,
+  pages: [],
+  objects: [],
+  selectedId: null,
+  tool: 'select',
+  zoom: 1,
+  currentPage: 0,
+  history: [],
+  historyIndex: -1,
+  toolDefaults: {
+    text: { fontFamily:'Inter', fontSize:16, color:'#111111', bold:false, italic:false, underline:false, align:'left', lineHeight:1.3, opacity:1 },
+    draw: { stroke:'#111111', strokeWidth:2.5, opacity:1 },
+    highlight: { color:'#fef08a', opacity:0.4 },
+    shape: { stroke:'#7657ff', fill:'transparent', strokeWidth:2, opacity:1 },
+    whiteout: { color:'#ffffff', opacity:1 },
+  },
+};
 
-                    const page = await pdf.getPage(1);
-                    const viewport = page.getViewport({ scale: 1.3 });
+/* ---------- DOM REFERENCES ---------- */
+function $(id) { return document.getElementById(id); }
+function $$(sel) { return document.querySelectorAll(sel); }
+function screenScale() { return CONFIG.renderScale * STATE.zoom; }
+function uid() { return 'o' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
-                    pdfWidth = viewport.width;
-                    pdfHeight = viewport.height;
+/* ---------- UTILS ---------- */
+const Utils = {
+  clamp(v,mn,mx) { return Math.min(mx, Math.max(mn, v)); },
+  formatBytes(b) { if(b<1024) return b+' B'; if(b<1048576) return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(2)+' MB'; },
+  escapeHTML(s) { return (s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); },
+  readFileAsDataURL(file) { return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); }); },
+  tick(ms) { return new Promise(r=>setTimeout(r, ms||0)); },
+};
 
-                    pdfCanvas.width = pdfWidth;
-                    pdfCanvas.height = pdfHeight;
-                    drawCanvas.width = pdfWidth;
-                    drawCanvas.height = pdfHeight;
+/* ---------- TOAST MANAGER ---------- */
+const Toast = {
+  show(msg, type='') {
+    const t = $('toast');
+    t.innerHTML = '';
+    const icons = { success:'check-circle', error:'alert-circle', info:'info', '':'bell' };
+    if (icons[type] || icons['']) {
+      const i = document.createElement('i');
+      i.setAttribute('data-lucide', icons[type] || icons['']);
+      t.appendChild(i);
+    }
+    t.appendChild(document.createTextNode(msg));
+    t.className = 'toast show ' + type;
+    refreshIcons();
+    clearTimeout(t._t);
+    t._t = setTimeout(() => t.classList.remove('show'), 3500);
+  },
+};
 
-                    const renderContext = {
-                        canvasContext: pdfCtx,
-                        viewport: viewport,
-                    };
+/* ---------- LOADING MANAGER ---------- */
+const Loading = {
+  show(title, msg) {
+    $('loadingTitle').textContent = title || 'Loading...';
+    $('loadingMsg').textContent = msg || '';
+    $('progressBar').style.width = '0%';
+    $('loadingOverlay').classList.add('active');
+  },
+  hide() { $('loadingOverlay').classList.remove('active'); },
+  progress(p) { $('progressBar').style.width = Utils.clamp(p,0,100) + '%'; },
+  title(t) { $('loadingTitle').textContent = t; },
+  msg(m) { $('loadingMsg').textContent = m; },
+};
 
-                    await page.render(renderContext).promise;
+/* ---------- ERROR HANDLING ---------- */
+function handleError(err) {
+  console.warn('[Tools24]', err);
+  let msg = err && err.message ? err.message : '';
+  if (/password|encrypted/i.test(msg)) msg = 'This PDF is password protected. Please use an unlocked PDF.';
+  else if (/Invalid PDF|not a valid|not a PDF/i.test(msg)) msg = "We couldn't open this PDF. Please check that the file is valid and try again.";
+  else if (/worker|Worker/i.test(msg)) msg = 'Your browser may not support this feature completely. Please try Chrome, Edge, Firefox or Safari.';
+  else if (!msg) msg = 'Something went wrong while processing this PDF. Please try again.';
+  Toast.show(msg, 'error');
+}
 
-                    annotations = [];
-                    selectedIndex = -1;
-                    redrawAnnotations();
+/* ---------- REFRESH ICONS ---------- */
+function refreshIcons() { if (window.lucide) window.lucide.createIcons(); }
 
-                    pdfLoaded = true;
-                    setStatus("PDF loaded. Add text/image, drag to move, resize images with Image +/-.");
-                } catch (error) {
-                    console.error("Error loading PDF:", error);
-                    setStatus("Failed to load PDF.");
-                }
-            }
+/* ---------- PDF LOADER ---------- */
+async function loadPDF(buffer) {
+  if (!window.pdfjsLib) throw new Error('PDF library failed to load. Please refresh.');
+  pdfjsLib.GlobalWorkerOptions.workerSrc = CONFIG.pdfWorkerSrc;
+  STATE.pdfDoc = await pdfjsLib.getDocument({ data: buffer.slice(0) }).promise;
+  return STATE.pdfDoc;
+}
 
-            /* --------- Add Text (instant) ---------- */
-            addTextBtn.addEventListener("click", () => {
-                if (!pdfLoaded) {
-                    alert("Please open a PDF first.");
-                    return;
-                }
-                const text = prompt("Enter text:");
-                if (!text) return;
+async function validateFile(file) {
+  if (!file) throw new Error('No file provided.');
+  const okType = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+  if (!okType) throw new Error("This file is not a valid PDF. Please select another PDF.");
+  if (file.size > CONFIG.maxFileSize) throw new Error('This PDF is too large (max 50 MB). Please try a smaller file.');
+  const buf = await file.slice(0, 5).arrayBuffer();
+  const magic = String.fromCharCode(...new Uint8Array(buf));
+  if (magic.indexOf('%PDF') !== 0) throw new Error("This file is not a valid PDF. Please select another PDF.");
+  return true;
+}
 
-                drawCtx.font = "16px Arial";
-                const w = drawCtx.measureText(text).width;
-                const h = 18;
+async function handleFile(file) {
+  try {
+    await validateFile(file);
+    Loading.show('Loading PDF...', file.name);
+    Loading.progress(15);
+    STATE.file = file;
+    STATE.originalBuffer = await file.arrayBuffer();
+    Loading.progress(35);
+    Loading.title('Processing PDF...');
+    Loading.msg('Reading pages');
+    await loadPDF(STATE.originalBuffer);
+    Loading.progress(60);
 
-                const x = (pdfWidth - w) / 2;
-                const y = 50;
+    const count = STATE.pdfDoc.numPages;
+    if (!count) throw new Error('This PDF has no readable pages.');
+    STATE.pages = [];
+    for (let i = 0; i < count; i++) {
+      const page = await STATE.pdfDoc.getPage(i+1);
+      const vp = page.getViewport({ scale: 1 });
+      STATE.pages.push({ type:'original', originalIndex:i, rotation:0, width:vp.width, height:vp.height });
+    }
+    STATE.objects = []; STATE.selectedId = null; STATE.zoom = 1; STATE.currentPage = 0;
+    STATE.history = []; STATE.historyIndex = -1;
 
-                const ann = {
-                    type: "text",
-                    text,
-                    x,
-                    y,
-                    w,
-                    h
-                };
-                annotations.push(ann);
-                selectedIndex = annotations.length - 1;
-                redrawAnnotations();
-                setStatus("Text added. Drag to move.");
-            });
+    Loading.progress(100);
+    await Utils.tick(200);
+    Loading.hide();
 
-            /* --------- Add Image ---------- */
-            addImageBtn.addEventListener("click", () => {
-                if (!pdfLoaded) {
-                    alert("Please open a PDF first.");
-                    return;
-                }
-                imgInput.click();
-            });
+    showEditor();
+    await renderAllPages();
+    buildThumbnails();
+    updatePageNav();
+    pushHistory();
+    refreshIcons();
+    Toast.show('PDF loaded successfully', 'success');
+  } catch (err) {
+    Loading.hide();
+    handleError(err);
+  }
+}
 
-            imgInput.addEventListener("change", (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
+function showEditor() {
+  $('uploadState').classList.add('hidden');
+  $('leftToolbar').classList.remove('hidden');
+  $('pagesPanel').classList.remove('hidden');
+  $('canvasArea').classList.remove('hidden');
+  $('propsPanel').classList.remove('hidden');
+  $('bottomBar').classList.remove('hidden');
+  $('fileName').textContent = STATE.file.name;
+  $('fileMeta').textContent = `${Utils.formatBytes(STATE.file.size)} · ${STATE.pages.length} pages`;
+  $('undoBtnTop').disabled = false;
+  $('redoBtnTop').disabled = false;
+}
 
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    const img = new Image();
-                    img.onload = () => {
-                        const maxWidth = pdfWidth / 3;
-                        const scale = Math.min(maxWidth / img.width, 1);
-                        const w = img.width * scale;
-                        const h = img.height * scale;
+/* ---------- PDF RENDERER ---------- */
+async function renderPage(pageIndex, canvas, scale) {
+  const pd = STATE.pages[pageIndex];
+  const ctx = canvas.getContext('2d');
+  if (pd.type === 'original') {
+    const page = await STATE.pdfDoc.getPage(pd.originalIndex + 1);
+    const viewport = page.getViewport({ scale });
+    canvas.width = Math.floor(viewport.width);
+    canvas.height = Math.floor(viewport.height);
+    canvas.style.width = viewport.width + 'px';
+    canvas.style.height = viewport.height + 'px';
+    await page.render({ canvasContext: ctx, viewport }).promise;
+  } else {
+    const w = pd.width * scale, h = pd.height * scale;
+    canvas.width = Math.floor(w); canvas.height = Math.floor(h);
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  }
+}
 
-                        const ann = {
-                            type: "image",
-                            img,
-                            x: (pdfWidth - w) / 2,
-                            y: (pdfHeight - h) / 2,
-                            w,
-                            h
-                        };
-                        annotations.push(ann);
-                        selectedIndex = annotations.length - 1;
-                        redrawAnnotations();
-                        setStatus("Image added. Drag to move, use Image +/- to resize.");
-                    };
-                    img.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
+async function renderAllPages() {
+  const cont = $('pagesContainer');
+  cont.innerHTML = '';
+  const total = STATE.pages.length;
+  const large = total > 20;
+  Loading.show('Rendering PDF...', large ? 'Large PDF detected. Rendering pages progressively...' : `Page 1 of ${total}`);
+  for (let i = 0; i < total; i++) {
+    const wrap = document.createElement('div');
+    wrap.className = 'page-wrap' + (i === STATE.currentPage ? ' active' : '');
+    wrap.dataset.index = i;
+    const canvas = document.createElement('canvas');
+    canvas.className = 'page-canvas';
+    wrap.appendChild(canvas);
+    const overlay = document.createElement('div');
+    overlay.className = 'page-overlay';
+    wrap.appendChild(overlay);
+    cont.appendChild(wrap);
+    const sc = screenScale();
+    await renderPage(i, canvas, sc);
+    overlay.style.width = canvas.style.width;
+    overlay.style.height = canvas.style.height;
+    renderPageObjects(wrap, i);
+    attachOverlay(overlay, i);
+    Loading.progress(((i+1)/total)*100);
+    Loading.msg(`Page ${i+1} of ${total}`);
+    if (i % 2 === 0) await Utils.tick();
+  }
+  Loading.hide();
+  const cur = document.querySelector(`.page-wrap[data-index="${STATE.currentPage}"]`);
+  if (cur) cur.scrollIntoView({ block:'center' });
+}
 
-            /* --------- Clear ---------- */
-            clearBtn.addEventListener("click", () => {
-                if (!pdfLoaded) return;
-                annotations = [];
-                selectedIndex = -1;
-                redrawAnnotations();
-                setStatus("Annotations cleared.");
-            });
+async function rerenderPage(pageIndex) {
+  const wrap = document.querySelector(`.page-wrap[data-index="${pageIndex}"]`);
+  if (!wrap) return;
+  const canvas = wrap.querySelector('.page-canvas');
+  const sc = screenScale();
+  await renderPage(pageIndex, canvas, sc);
+  const overlay = wrap.querySelector('.page-overlay');
+  overlay.style.width = canvas.style.width;
+  overlay.style.height = canvas.style.height;
+  renderPageObjects(wrap, pageIndex);
+}
 
-            /* --------- Hit-test for drag ---------- */
-            function hitTest(x, y) {
-                for (let i = annotations.length - 1; i >= 0; i--) {
-                    const a = annotations[i];
-                    if (a.type === "text") {
-                        const w = a.w || drawCtx.measureText(a.text).width;
-                        const h = a.h || 18;
-                        if (x >= a.x && x <= a.x + w && y >= a.y - h && y <= a.y) {
-                            return i;
-                        }
-                    } else if (a.type === "image") {
-                        if (x >= a.x && x <= a.x + a.w && y >= a.y && y <= a.y + a.h) {
-                            return i;
-                        }
-                    }
-                }
-                return -1;
-            }
+async function rerenderAll() { await renderAllPages(); buildThumbnails(); updatePageNav(); }
 
-            function getCanvasXY(e) {
-                const rect = drawCanvas.getBoundingClientRect();
-                return {
-                    x: e.clientX - rect.left,
-                    y: e.clientY - rect.top
-                };
-            }
+function refreshPageObjects(pageIndex) {
+  const wrap = document.querySelector(`.page-wrap[data-index="${pageIndex}"]`);
+  if (wrap) renderPageObjects(wrap, pageIndex);
+}
 
-            drawCanvas.addEventListener("mousedown", (e) => {
-                if (!pdfLoaded) return;
-                const { x, y } = getCanvasXY(e);
+/* ---------- THUMBNAIL MANAGER ---------- */
+async function buildThumbnails() {
+  const cont = $('thumbs');
+  cont.innerHTML = '';
+  for (let i = 0; i < STATE.pages.length; i++) {
+    const pd = STATE.pages[i];
+    const div = document.createElement('div');
+    div.className = 'thumb' + (i === STATE.currentPage ? ' active' : '');
+    div.dataset.index = i;
+    div.draggable = true;
+    div.innerHTML = `<span class="thumb-num">${i+1}</span>`;
+    if (pd.type === 'original') {
+      const tc = document.createElement('canvas');
+      div.appendChild(tc);
+      renderThumb(pd.originalIndex + 1, tc, 160);
+    } else {
+      const blank = document.createElement('div');
+      blank.className = 'thumb-blank';
+      blank.textContent = 'Blank';
+      div.appendChild(blank);
+    }
+    const actions = document.createElement('div');
+    actions.className = 'thumb-actions';
+    actions.innerHTML = `
+      <button data-act="dup" title="Duplicate"><i data-lucide="copy"></i></button>
+      <button data-act="rotL" title="Rotate Left"><i data-lucide="rotate-ccw"></i></button>
+      <button data-act="rotR" title="Rotate Right"><i data-lucide="rotate-cw"></i></button>
+      <button data-act="del" title="Delete"><i data-lucide="trash-2"></i></button>`;
+    actions.querySelectorAll('button').forEach(b => {
+      b.addEventListener('click', e => { e.stopPropagation(); handlePageAction(b.dataset.act, i); });
+    });
+    div.appendChild(actions);
+    div.addEventListener('click', () => goToPage(i));
+    div.addEventListener('dragstart', onThumbDragStart);
+    div.addEventListener('dragover', onThumbDragOver);
+    div.addEventListener('drop', onThumbDrop);
+    div.addEventListener('dragend', onThumbDragEnd);
+    cont.appendChild(div);
+  }
+  refreshIcons();
+}
 
-                const hitIndex = hitTest(x, y);
-                if (hitIndex !== -1) {
-                    dragging = true;
-                    dragIndex = hitIndex;
-                    selectedIndex = hitIndex;
-                    const a = annotations[hitIndex];
-                    dragOffsetX = x - a.x;
-                    dragOffsetY = y - a.y;
-                    setStatus("Dragging... release mouse to drop.");
-                }
-            });
+async function renderThumb(pageNum, canvas, maxW) {
+  try {
+    const page = await STATE.pdfDoc.getPage(pageNum);
+    const base = page.getViewport({ scale: 1 });
+    const scale = maxW / base.width;
+    const viewport = page.getViewport({ scale });
+    const ctx = canvas.getContext('2d');
+    canvas.width = Math.floor(viewport.width);
+    canvas.height = Math.floor(viewport.height);
+    await page.render({ canvasContext: ctx, viewport }).promise;
+  } catch(e) {}
+}
 
-            drawCanvas.addEventListener("mousemove", (e) => {
-                if (!dragging || dragIndex === -1) return;
-                const { x, y } = getCanvasXY(e);
-                const a = annotations[dragIndex];
-                a.x = x - dragOffsetX;
-                a.y = y - dragOffsetY;
-                redrawAnnotations();
-            });
+/* ---------- PAGE MANAGER ---------- */
+function goToPage(idx) {
+  idx = Utils.clamp(idx, 0, STATE.pages.length - 1);
+  STATE.currentPage = idx;
+  document.querySelectorAll('.page-wrap').forEach(w => w.classList.toggle('active', +w.dataset.index === idx));
+  const target = document.querySelector(`.page-wrap[data-index="${idx}"]`);
+  if (target) target.scrollIntoView({ behavior:'smooth', block:'center' });
+  updatePageNav();
+}
 
-            function stopDragging() {
-                if (dragging) {
-                    dragging = false;
-                    dragIndex = -1;
-                    setStatus("Position set. You can move again or resize image.");
-                }
-            }
+function updatePageNav() {
+  $('pageInput').value = STATE.currentPage + 1;
+  $('pageInput').max = STATE.pages.length;
+  $('pageCount').textContent = STATE.pages.length;
+  document.querySelectorAll('.thumb').forEach(t => t.classList.toggle('active', +t.dataset.index === STATE.currentPage));
+}
 
-            drawCanvas.addEventListener("mouseup", stopDragging);
-            drawCanvas.addEventListener("mouseleave", stopDragging);
+async function handlePageAction(act, pageIndex) {
+  if (act === 'dup') duplicatePage(pageIndex);
+  else if (act === 'del') deletePage(pageIndex);
+  else if (act === 'rotL') rotatePage(pageIndex, -90);
+  else if (act === 'rotR') rotatePage(pageIndex, 90);
+}
 
-            /* --------- Image Resize Buttons ---------- */
-            function resizeSelectedImage(factor) {
-                if (selectedIndex === -1) {
-                    alert("Pehle canvas par kisi image par click karke select karein.");
-                    return;
-                }
-                const a = annotations[selectedIndex];
-                if (a.type !== "image") {
-                    alert("Selected item image nahi hai. Image par click karke select karein.");
-                    return;
-                }
-                let newW = a.w * factor;
-                let newH = a.h * factor;
+function duplicatePage(pageIndex) {
+  const pd = STATE.pages[pageIndex];
+  const copy = JSON.parse(JSON.stringify(pd));
+  STATE.pages.splice(pageIndex + 1, 0, copy);
+  STATE.objects.forEach(o => { if (o.page > pageIndex) o.page += 1; });
+  getObjects(pageIndex).forEach(o => {
+    const oc = JSON.parse(JSON.stringify(o));
+    oc.id = uid(); oc.page = pageIndex + 1;
+    STATE.objects.push(oc);
+  });
+  pushHistory();
+  rerenderAll().then(() => goToPage(pageIndex + 1));
+  Toast.show('Page duplicated', 'success');
+}
 
-                const minSize = 20;
-                if (newW < minSize || newH < minSize) {
-                    newW = Math.max(minSize, newW);
-                    newH = Math.max(minSize, newH);
-                }
+function deletePage(pageIndex) {
+  if (STATE.pages.length <= 1) { Toast.show('Cannot delete the only page', 'error'); return; }
+  STATE.pages.splice(pageIndex, 1);
+  STATE.objects = STATE.objects.filter(o => o.page !== pageIndex);
+  STATE.objects.forEach(o => { if (o.page > pageIndex) o.page -= 1; });
+  if (STATE.currentPage >= STATE.pages.length) STATE.currentPage = STATE.pages.length - 1;
+  pushHistory();
+  rerenderAll();
+  Toast.show('Page deleted', 'success');
+}
 
-                a.w = newW;
-                a.h = newH;
-                redrawAnnotations();
-                setStatus("Image resized. Drag to reposition if needed.");
-            }
+function rotatePage(pageIndex, angle) {
+  const pd = STATE.pages[pageIndex];
+  pd.rotation = ((pd.rotation || 0) + angle + 360) % 360;
+  if (pd.rotation % 180 !== 0) {
+    const w = pd.width, h = pd.height;
+    pd.width = h; pd.height = w;
+  }
+  pushHistory();
+  rerenderAll();
+  Toast.show('Page rotated', 'success');
+}
 
-            imgBiggerBtn.addEventListener("click", () => {
-                if (!pdfLoaded) {
-                    alert("Open a PDF first.");
-                    return;
-                }
-                resizeSelectedImage(1.1);
-            });
+function addBlankPage() {
+  const last = STATE.pages[STATE.pages.length - 1];
+  const size = last ? { width: last.width, height: last.height } : { width: 595, height: 842 };
+  STATE.pages.push({ type:'blank', rotation:0, width:size.width, height:size.height });
+  pushHistory();
+  rerenderAll().then(() => goToPage(STATE.pages.length - 1));
+  Toast.show('Blank page added', 'success');
+}
 
-            imgSmallerBtn.addEventListener("click", () => {
-                if (!pdfLoaded) {
-                    alert("Open a PDF first.");
-                    return;
-                }
-                resizeSelectedImage(0.9);
-            });
+// Drag & drop reorder
+let dragSrcIdx = null;
+function onThumbDragStart(e) {
+  dragSrcIdx = +e.currentTarget.dataset.index;
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function onThumbDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  const idx = +e.currentTarget.dataset.index;
+  if (idx !== dragSrcIdx) e.currentTarget.classList.add('dragover');
+}
+function onThumbDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('dragover'));
+}
+function onThumbDrop(e) {
+  e.preventDefault();
+  const targetIdx = +e.currentTarget.dataset.index;
+  if (dragSrcIdx === null || targetIdx === dragSrcIdx) return;
+  const moved = STATE.pages.splice(dragSrcIdx, 1)[0];
+  STATE.pages.splice(targetIdx, 0, moved);
+  // remap object pages: snapshot before splice
+  // We track via a temp id added lazily
+  if (!STATE.pages[0]._uid) STATE.pages.forEach((p,i) => p._uid = 'p'+i);
+  pushHistory();
+  rerenderAll();
+  Toast.show('Pages reordered', 'success');
+  dragSrcIdx = null;
+}
 
-            /* --------- Download Edited PDF ---------- */
-            downloadBtn.addEventListener("click", () => {
-                if (!pdfLoaded) {
-                    alert("Please open and edit a PDF first.");
-                    return;
-                }
+/* ---------- EDITOR OBJECT MANAGER ---------- */
+function getObjects(pageIndex) {
+  return pageIndex != null ? STATE.objects.filter(o => o.page === pageIndex) : STATE.objects;
+}
+function getSelected() { return STATE.objects.find(o => o.id === STATE.selectedId); }
+function addObject(o) { o.id = uid(); STATE.objects.push(o); STATE.selectedId = o.id; return o; }
+function removeObject(id) {
+  STATE.objects = STATE.objects.filter(o => o.id !== id);
+  if (STATE.selectedId === id) STATE.selectedId = null;
+}
+function selectObject(id) { STATE.selectedId = id; }
+function setTool(t) { STATE.tool = t; STATE.selectedId = null; updatePanel(); }
 
-                const merged = document.createElement("canvas");
-                merged.width = pdfWidth;
-                merged.height = pdfHeight;
-                const mctx = merged.getContext("2d");
+function screenToPdf(overlay, clientX, clientY) {
+  const rect = overlay.getBoundingClientRect();
+  const sc = screenScale();
+  return { x: (clientX - rect.left) / sc, y: (clientY - rect.top) / sc };
+}
 
-                mctx.drawImage(pdfCanvas, 0, 0);
-                mctx.drawImage(drawCanvas, 0, 0);
+function buildObjectElement(o) {
+  const sc = screenScale();
+  const el = document.createElement('div');
+  el.className = 'obj obj-' + o.type;
+  el.dataset.id = o.id;
+  el.style.left = (o.x * sc) + 'px';
+  el.style.top = (o.y * sc) + 'px';
+  el.style.width = (o.w * sc) + 'px';
+  el.style.height = (o.h * sc) + 'px';
+  el.style.transform = `rotate(${o.rotation || 0}deg)`;
+  el.style.opacity = o.opacity ?? 1;
 
-                const imgData = merged.toDataURL("image/png");
+  switch (o.type) {
+    case 'text':
+      el.style.fontFamily = o.fontFamily || 'Inter';
+      el.style.fontSize = ((o.fontSize || 16) * sc) + 'px';
+      el.style.color = o.color || '#111111';
+      el.style.fontWeight = o.bold ? '700' : '400';
+      el.style.fontStyle = o.italic ? 'italic' : 'normal';
+      el.style.textDecoration = o.underline ? 'underline' : 'none';
+      el.style.textAlign = o.align || 'left';
+      el.style.lineHeight = o.lineHeight || 1.3;
+      el.style.whiteSpace = 'pre-wrap';
+      el.style.wordBreak = 'break-word';
+      el.textContent = o.text || '';
+      break;
+    case 'image': case 'signature': case 'drawing': {
+      const img = document.createElement('img');
+      img.src = o.src || ''; img.draggable = false;
+      el.appendChild(img);
+      break;
+    }
+    case 'whiteout':
+      el.style.background = o.color || '#ffffff';
+      el.style.opacity = o.opacity ?? 1;
+      break;
+    case 'rect':
+      el.style.border = `${(o.strokeWidth || 2) * sc}px solid ${o.stroke || '#7657ff'}`;
+      el.style.background = (o.fill && o.fill !== 'transparent') ? o.fill : 'transparent';
+      break;
+    case 'circle':
+      el.style.border = `${(o.strokeWidth || 2) * sc}px solid ${o.stroke || '#7657ff'}`;
+      el.style.background = (o.fill && o.fill !== 'transparent') ? o.fill : 'transparent';
+      el.style.borderRadius = '50%';
+      break;
+    case 'line': case 'arrow': {
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(svgNS, 'svg');
+      const w = o.w * sc, h = o.h * sc;
+      svg.setAttribute('width', w); svg.setAttribute('height', h);
+      svg.style.overflow = 'visible';
+      const ln = document.createElementNS(svgNS, 'line');
+      ln.setAttribute('x1', 0); ln.setAttribute('y1', h/2);
+      ln.setAttribute('x2', w); ln.setAttribute('y2', h/2);
+      ln.setAttribute('stroke', o.stroke || '#111111');
+      ln.setAttribute('stroke-width', (o.strokeWidth || 2) * sc);
+      ln.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(ln);
+      if (o.type === 'arrow') {
+        const arr = document.createElementNS(svgNS, 'polygon');
+        const s = 10 * sc;
+        arr.setAttribute('points', `${w-s},${h/2-s/2} ${w},${h/2} ${w-s},${h/2+s/2}`);
+        arr.setAttribute('fill', o.stroke || '#111111');
+        svg.appendChild(arr);
+      }
+      el.appendChild(svg);
+      break;
+    }
+    case 'highlight':
+      el.style.background = o.color || '#fef08a';
+      el.style.opacity = o.opacity ?? 0.4;
+      break;
+  }
+  if (o.id === STATE.selectedId) el.classList.add('selected');
+  return el;
+}
 
-                const orientation = pdfWidth > pdfHeight ? "l" : "p";
-                const pdfDoc = new jsPDF({
-                    orientation: orientation,
-                    unit: "pt",
-                    format: [pdfWidth, pdfHeight],
-                });
+function renderPageObjects(wrap, pageIndex) {
+  const overlay = wrap.querySelector('.page-overlay');
+  overlay.innerHTML = '';
+  getObjects(pageIndex).forEach(o => overlay.appendChild(buildObjectElement(o)));
+  addSelectionHandles(overlay, pageIndex);
+}
 
-                pdfDoc.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-                pdfDoc.save("edited.pdf");
+function addSelectionHandles(overlay, pageIndex) {
+  const sel = getSelected();
+  if (!sel || sel.page !== pageIndex) return;
+  const el = overlay.querySelector(`.obj[data-id="${sel.id}"]`);
+  if (!el) return;
+  ['nw','ne','sw','se'].forEach(p => {
+    const h = document.createElement('div');
+    h.className = 'handle handle-' + p;
+    h.dataset.handle = p;
+    el.appendChild(h);
+  });
+  if (!['line','arrow','highlight','text','whiteout'].includes(sel.type)) {
+    const r = document.createElement('div');
+    r.className = 'handle handle-rot'; r.dataset.handle = 'rot';
+    el.appendChild(r);
+  }
+}
 
-                setStatus("Edited PDF downloaded.");
-            });
-        });
-    </script>
+function renderAllObjects() {
+  document.querySelectorAll('.page-wrap').forEach(w => renderPageObjects(w, +w.dataset.index));
+}
+
+/* ---------- SELECTION MANAGER / INTERACTIONS ---------- */
+let interaction = null;
+
+function attachOverlay(overlay, pageIndex) {
+  overlay.addEventListener('pointerdown', e => onPointerDown(e, overlay, pageIndex));
+}
+
+function onPointerDown(e, overlay, pageIndex) {
+  const tool = STATE.tool;
+  const objEl = e.target.closest('.obj');
+  const handle = e.target.closest('.handle');
+
+  if (tool === 'hand') {
+    const area = $('canvasArea');
+    area.classList.add('panning');
+    interaction = { mode:'pan', startX:e.clientX, startY:e.clientY, scrollLeft:area.scrollLeft, scrollTop:area.scrollTop, area };
+    overlay.setPointerCapture(e.pointerId);
+    document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointerup', onPointerUp);
+    return;
+  }
+
+  if (tool === 'eraser' && objEl) {
+    removeObject(objEl.dataset.id);
+    refreshPageObjects(pageIndex);
+    updatePanel();
+    pushHistory();
+    return;
+  }
+
+  if (handle && objEl) {
+    const obj = STATE.objects.find(o => o.id === objEl.dataset.id);
+    if (!obj) return;
+    selectObject(obj.id);
+    refreshPageObjects(pageIndex);
+    updatePanel();
+    const start = screenToPdf(overlay, e.clientX, e.clientY);
+    interaction = { mode:'handle', handle:handle.dataset.handle, obj, start, oW:obj.w, oH:obj.h, oX:obj.x, oY:obj.y, oR:obj.rotation||0, overlay, pageIndex };
+    overlay.setPointerCapture(e.pointerId);
+    document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointerup', onPointerUp);
+    e.preventDefault();
+    return;
+  }
+
+  if (objEl && (tool === 'select' || tool === 'text')) {
+    const obj = STATE.objects.find(o => o.id === objEl.dataset.id);
+    if (!obj) return;
+    if (obj.type === 'text' && e.detail === 2) { editTextInline(objEl, obj, pageIndex); return; }
+    selectObject(obj.id);
+    refreshPageObjects(pageIndex);
+    updatePanel();
+    const start = screenToPdf(overlay, e.clientX, e.clientY);
+    interaction = { mode:'move', obj, start, oX:obj.x, oY:obj.y, overlay, pageIndex };
+    overlay.setPointerCapture(e.pointerId);
+    document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointerup', onPointerUp);
+    e.preventDefault();
+    return;
+  }
+
+  if (tool === 'select' && !objEl) {
+    selectObject(null);
+    refreshPageObjects(pageIndex);
+    updatePanel();
+    return;
+  }
+
+  // create new object
+  const pos = screenToPdf(overlay, e.clientX, e.clientY);
+  const created = createObjectAt(tool, pageIndex, pos);
+  if (!created) return;
+  refreshPageObjects(pageIndex);
+  updatePanel();
+
+  if (['rect','circle','highlight','line','arrow','whiteout'].includes(tool)) {
+    interaction = { mode:'create', obj:created, start:pos, overlay, pageIndex };
+    overlay.setPointerCapture(e.pointerId);
+    document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointerup', onPointerUp);
+    e.preventDefault();
+  } else if (tool === 'draw') {
+    interaction = { mode:'draw', obj:created, start:pos, points:[{x:0,y:0}], overlay, pageIndex };
+    overlay.setPointerCapture(e.pointerId);
+    document.addEventListener('pointermove', onPointerMove);
+    document.addEventListener('pointerup', onPointerUp);
+    e.preventDefault();
+  } else {
+    pushHistory();
+  }
+}
+
+function onPointerMove(e) {
+  if (!interaction) return;
+  const pos = screenToPdf(interaction.overlay, e.clientX, e.clientY);
+
+  if (interaction.mode === 'pan') {
+    const dx = e.clientX - interaction.startX;
+    const dy = e.clientY - interaction.startY;
+    interaction.area.scrollLeft = interaction.scrollLeft - dx;
+    interaction.area.scrollTop = interaction.scrollTop - dy;
+    return;
+  }
+  if (interaction.mode === 'move') {
+    interaction.obj.x = interaction.oX + (pos.x - interaction.start.x);
+    interaction.obj.y = interaction.oY + (pos.y - interaction.start.y);
+    refreshPageObjects(interaction.pageIndex);
+    return;
+  }
+  if (interaction.mode === 'create') {
+    const dx = pos.x - interaction.start.x;
+    const dy = pos.y - interaction.start.y;
+    interaction.obj.x = Math.min(interaction.start.x, pos.x);
+    interaction.obj.y = Math.min(interaction.start.y, pos.y);
+    if (interaction.obj.type === 'line' || interaction.obj.type === 'arrow') {
+      interaction.obj.w = Math.max(2, Math.abs(dx));
+    } else {
+      interaction.obj.w = Math.max(4, Math.abs(dx));
+      interaction.obj.h = Math.max(4, Math.abs(dy));
+    }
+    refreshPageObjects(interaction.pageIndex);
+    return;
+  }
+  if (interaction.mode === 'draw') {
+    const dx = pos.x - interaction.start.x;
+    const dy = pos.y - interaction.start.y;
+    interaction.points.push({ x:dx, y:dy });
+    const xs = interaction.points.map(p=>p.x), ys = interaction.points.map(p=>p.y);
+    const pad = (interaction.obj.strokeWidth || 2.5) + 4;
+    interaction.obj.w = Math.max(20, Math.max(...xs) - Math.min(...xs) + pad*2);
+    interaction.obj.h = Math.max(20, Math.max(...ys) - Math.min(...ys) + pad*2);
+    renderDrawing(interaction.obj, interaction.points, pad);
+    refreshPageObjects(interaction.pageIndex);
+    return;
+  }
+  if (interaction.mode === 'handle') {
+    const o = interaction.obj;
+    const dx = pos.x - interaction.start.x;
+    const dy = pos.y - interaction.start.y;
+    if (interaction.handle === 'rot') {
+      const cx = o.x + o.w/2, cy = o.y + o.h/2;
+      o.rotation = Math.atan2(pos.y - cy, pos.x - cx) * 180 / Math.PI + 90;
+    } else {
+      const minS = 4;
+      if (interaction.handle === 'se') { o.w = Math.max(minS, interaction.oW + dx); o.h = Math.max(minS, interaction.oH + dy); }
+      else if (interaction.handle === 'sw') { o.x = interaction.oX + dx; o.w = Math.max(minS, interaction.oW - dx); o.h = Math.max(minS, interaction.oH + dy); }
+      else if (interaction.handle === 'ne') { o.w = Math.max(minS, interaction.oW + dx); o.y = interaction.oY + dy; o.h = Math.max(minS, interaction.oH - dy); }
+      else if (interaction.handle === 'nw') { o.x = interaction.oX + dx; o.y = interaction.oY + dy; o.w = Math.max(minS, interaction.oW - dx); o.h = Math.max(minS, interaction.oH - dy); }
+    }
+    refreshPageObjects(interaction.pageIndex);
+    updatePanel();
+  }
+}
+
+function onPointerUp() {
+  document.removeEventListener('pointermove', onPointerMove);
+  document.removeEventListener('pointerup', onPointerUp);
+  $('canvasArea').classList.remove('panning');
+  if (!interaction) return;
+  if (interaction.mode === 'draw' && interaction.obj) {
+    finalizeDrawing(interaction.obj, interaction.points);
+    refreshPageObjects(interaction.pageIndex);
+  }
+  if (['move','create','handle','draw'].includes(interaction.mode)) {
+    pushHistory();
+    updatePanel();
+  }
+  interaction = null;
+}
+
+/* ---------- TEXT TOOL ---------- */
+function createObjectAt(tool, pageIndex, pos) {
+  const d = STATE.toolDefaults;
+  switch (tool) {
+    case 'text': return addObject({ type:'text', page:pageIndex, x:pos.x, y:pos.y, w:200, h:30, rotation:0,
+      text:'New text', fontFamily:d.text.fontFamily, fontSize:d.text.fontSize, color:d.text.color,
+      bold:d.text.bold, italic:d.text.italic, underline:d.text.underline, align:d.text.align, lineHeight:d.text.lineHeight, opacity:d.text.opacity });
+    case 'whiteout': return addObject({ type:'whiteout', page:pageIndex, x:pos.x, y:pos.y, w:1, h:1, rotation:0, color:d.whiteout.color, opacity:d.whiteout.opacity });
+    case 'highlight': return addObject({ type:'highlight', page:pageIndex, x:pos.x, y:pos.y, w:1, h:20, rotation:0, color:d.highlight.color, opacity:d.highlight.opacity });
+    case 'rect': return addObject({ type:'rect', page:pageIndex, x:pos.x, y:pos.y, w:1, h:1, rotation:0, stroke:d.shape.stroke, fill:'transparent', strokeWidth:d.shape.strokeWidth, opacity:d.shape.opacity });
+    case 'circle': return addObject({ type:'circle', page:pageIndex, x:pos.x, y:pos.y, w:1, h:1, rotation:0, stroke:d.shape.stroke, fill:'transparent', strokeWidth:d.shape.strokeWidth, opacity:d.shape.opacity });
+    case 'line': return addObject({ type:'line', page:pageIndex, x:pos.x, y:pos.y, w:1, h:2, rotation:0, stroke:d.draw.stroke, strokeWidth:d.shape.strokeWidth, opacity:1 });
+    case 'arrow': return addObject({ type:'arrow', page:pageIndex, x:pos.x, y:pos.y, w:1, h:2, rotation:0, stroke:d.draw.stroke, strokeWidth:d.shape.strokeWidth, opacity:1 });
+    case 'draw': return addObject({ type:'drawing', page:pageIndex, x:pos.x, y:pos.y, w:1, h:1, rotation:0, src:'', color:d.draw.stroke, strokeWidth:d.draw.strokeWidth, opacity:d.draw.opacity, points:[{x:0,y:0}] });
+    case 'image': triggerImageUpload(pageIndex, pos); return null;
+    case 'signature': openSignatureModal(pageIndex, pos); return null;
+    default: return null;
+  }
+}
+
+function editTextInline(el, obj, pageIndex) {
+  el.setAttribute('contenteditable', 'true');
+  el.focus();
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges(); sel.addRange(range);
+  const finish = () => {
+    el.removeAttribute('contenteditable');
+    obj.text = el.textContent;
+    pushHistory();
+    refreshPageObjects(pageIndex);
+    el.removeEventListener('blur', finish);
+    el.removeEventListener('keydown', onKey);
+  };
+  const onKey = e => {
+    if (e.key === 'Escape' || (e.key === 'Enter' && !e.shiftKey)) { e.preventDefault(); el.blur(); }
+  };
+  el.addEventListener('blur', finish);
+  el.addEventListener('keydown', onKey);
+}
+
+/* ---------- IMAGE TOOL ---------- */
+function triggerImageUpload(pageIndex, pos) {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/png,image/jpeg,image/webp';
+  input.onchange = async () => {
+    const f = input.files[0]; if (!f) return;
+    if (f.size > 8*1024*1024) { Toast.show('Image too large (max 8 MB)', 'error'); return; }
+    let dataUrl = await Utils.readFileAsDataURL(f);
+    if (f.type === 'image/webp' || (!dataUrl.startsWith('data:image/png') && !dataUrl.startsWith('data:image/jpeg'))) {
+      dataUrl = await convertToPng(dataUrl);
+    }
+    const img = new Image();
+    img.onload = () => {
+      const maxW = 300; let w = img.width, h = img.height;
+      if (w > maxW) { h = h * (maxW/w); w = maxW; }
+      addObject({ type:'image', page:pageIndex, x:pos.x, y:pos.y, w, h, rotation:0, opacity:1, src:dataUrl });
+      refreshPageObjects(pageIndex);
+      updatePanel();
+      pushHistory();
+    };
+    img.src = dataUrl;
+  };
+  input.click();
+}
+
+function convertToPng(dataUrl) {
+  return new Promise(res => {
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas');
+      c.width = img.width; c.height = img.height;
+      c.getContext('2d').drawImage(img, 0, 0);
+      res(c.toDataURL('image/png'));
+    };
+    img.src = dataUrl;
+  });
+}
+
+/* ---------- DRAW TOOL ---------- */
+function renderDrawing(obj, points, pad) {
+  const xs = points.map(p=>p.x), ys = points.map(p=>p.y);
+  const minX = Math.min(...xs), minY = Math.min(...ys);
+  const w = Math.max(20, Math.max(...xs) - minX + pad*2);
+  const h = Math.max(20, Math.max(...ys) - minY + pad*2);
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const ctx = c.getContext('2d');
+  ctx.strokeStyle = obj.color || '#111111';
+  ctx.lineWidth = obj.strokeWidth || 2.5;
+  ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  ctx.beginPath();
+  points.forEach((p, i) => {
+    const px = p.x - minX + pad, py = p.y - minY + pad;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  });
+  ctx.stroke();
+  obj.src = c.toDataURL('image/png');
+}
+
+function finalizeDrawing(obj, points) {
+  if (points.length < 2) { removeObject(obj.id); return; }
+  const pad = (obj.strokeWidth || 2.5) + 4;
+  renderDrawing(obj, points, pad);
+}
+
+/* ---------- SIGNATURE TOOL ---------- */
+let sigCtx = null, sigDrawing = false, sigTarget = null;
+
+function openSignatureModal(pageIndex, pos) {
+  sigTarget = { pageIndex, pos };
+  $('signatureModal').classList.add('active');
+  setTimeout(() => { if (sigCtx) sigCtx.clearRect(0,0,$('sigCanvas').width,$('sigCanvas').height); }, 50);
+}
+
+function initSignatureModal() {
+  const canvas = $('sigCanvas');
+  sigCtx = canvas.getContext('2d');
+  $$('#sigTabs button').forEach(b => {
+    b.addEventListener('click', () => {
+      $$('#sigTabs button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      ['Draw','Type','Upload'].forEach(t => { $('tab'+t).classList.toggle('active', t.toLowerCase() === b.dataset.tab); });
+    });
+  });
+  function pos(e) {
+    const r = canvas.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * (canvas.width / r.width), y: (e.clientY - r.top) * (canvas.height / r.height) };
+  }
+  canvas.addEventListener('pointerdown', e => { sigDrawing = true; const p = pos(e); sigCtx.beginPath(); sigCtx.moveTo(p.x, p.y); canvas.setPointerCapture(e.pointerId); });
+  canvas.addEventListener('pointermove', e => {
+    if (!sigDrawing) return;
+    const p = pos(e);
+    sigCtx.strokeStyle = $('sigColor').value; sigCtx.lineWidth = $('sigWidth').value;
+    sigCtx.lineCap = 'round'; sigCtx.lineJoin = 'round';
+    sigCtx.lineTo(p.x, p.y); sigCtx.stroke();
+  });
+  canvas.addEventListener('pointerup', () => sigDrawing = false);
+  $('sigClearBtn').addEventListener('click', () => sigCtx.clearRect(0,0,canvas.width,canvas.height));
+  $('sigCloseBtn').addEventListener('click', () => $('signatureModal').classList.remove('active'));
+  $('sigCancelBtn').addEventListener('click', () => $('signatureModal').classList.remove('active'));
+  $('sigApplyBtn').addEventListener('click', applySignature);
+}
+
+function applySignature() {
+  const tab = document.querySelector('#sigTabs button.active').dataset.tab;
+  const apply = dataUrl => {
+    if (!dataUrl) { Toast.show('Please create a signature first', 'error'); return; }
+    const img = new Image();
+    img.onload = () => {
+      let w = img.width, h = img.height; const maxW = 240;
+      if (w > maxW) { h = h * (maxW/w); w = maxW; }
+      addObject({ type:'signature', page:sigTarget.pageIndex, x:sigTarget.pos.x, y:sigTarget.pos.y, w, h, rotation:0, opacity:1, src:dataUrl });
+      refreshPageObjects(sigTarget.pageIndex);
+      updatePanel();
+      pushHistory();
+      $('signatureModal').classList.remove('active');
+      if (sigCtx) sigCtx.clearRect(0,0,$('sigCanvas').width,$('sigCanvas').height);
+      $('sigText').value = '';
+    };
+    img.src = dataUrl;
+  };
+  if (tab === 'draw') apply(cropCanvas($('sigCanvas')));
+  else if (tab === 'type') {
+    const txt = $('sigText').value.trim();
+    if (!txt) { Toast.show('Type your name first', 'error'); return; }
+    apply(typeSignature(txt, $('sigFont').value));
+  } else if (tab === 'upload') {
+    const f = $('sigFile').files[0];
+    if (!f) { Toast.show('Choose a signature image first', 'error'); return; }
+    Utils.readFileAsDataURL(f).then(apply);
+  }
+}
+
+function cropCanvas(canvas) {
+  const ctx = canvas.getContext('2d');
+  const { width, height } = canvas;
+  const imgData = ctx.getImageData(0,0,width,height);
+  const d = imgData.data;
+  let minX=width, minY=height, maxX=0, maxY=0;
+  for (let y=0;y<height;y++) for (let x=0;x<width;x++) {
+    if (d[(y*width+x)*4+3] > 0) {
+      if (x<minX) minX=x; if (x>maxX) maxX=x;
+      if (y<minY) minY=y; if (y>maxY) maxY=y;
+    }
+  }
+  if (maxX < minX) return canvas.toDataURL();
+  const pad = 8;
+  const w = maxX-minX+pad*2, h = maxY-minY+pad*2;
+  const out = document.createElement('canvas');
+  out.width = w; out.height = h;
+  out.getContext('2d').drawImage(canvas, minX-pad, minY-pad, w, h, 0, 0, w, h);
+  return out.toDataURL('image/png');
+}
+
+function typeSignature(text, font) {
+  const c = document.createElement('canvas');
+  c.width = 520; c.height = 140;
+  const ctx = c.getContext('2d');
+  ctx.font = `46px ${font}`;
+  ctx.fillStyle = '#111111';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, 16, 70);
+  return cropCanvas(c);
+}
+
+/* ---------- PROPERTY PANEL ---------- */
+function updatePanel() {
+  const sel = getSelected();
+  const body = $('propsBody');
+  const title = $('panelTitle');
+  if (!sel) {
+    title.textContent = 'Properties';
+    body.innerHTML = `<div class="empty-props"><i data-lucide="mouse-pointer-click"></i><p>Select an object to edit its properties</p></div>`;
+    refreshIcons();
+    return;
+  }
+  title.textContent = sel.type.charAt(0).toUpperCase() + sel.type.slice(1) + ' Properties';
+  body.innerHTML = propsHTML(sel);
+  bindProps(sel);
+  refreshIcons();
+}
+
+function propsHTML(o) {
+  const layerBtns = `<div class="prop"><label>Layer</label><div class="layer-controls">
+    <button class="btn-ghost" data-layer="front" title="Bring to front"><i data-lucide="chevrons-up"></i></button>
+    <button class="btn-ghost" data-layer="forward" title="Bring forward"><i data-lucide="chevron-up"></i></button>
+    <button class="btn-ghost" data-layer="backward" title="Send backward"><i data-lucide="chevron-down"></i></button>
+    <button class="btn-ghost" data-layer="back" title="Send to back"><i data-lucide="chevrons-down"></i></button>
+  </div></div>`;
+  const actions = `<div class="prop-actions">
+    <button data-act="duplicate"><i data-lucide="copy"></i> Duplicate</button>
+    <button class="danger" data-act="delete"><i data-lucide="trash-2"></i> Delete</button>
+  </div>`;
+
+  if (o.type === 'text') return `
+    <div class="prop"><label>Text</label><textarea rows="2" data-p="text">${Utils.escapeHTML(o.text||'')}</textarea></div>
+    <div class="prop-row"><div class="prop"><label>Font</label><select data-p="fontFamily">${CONFIG.fonts.map(f=>`<option ${o.fontFamily===f?'selected':''}>${f}</option>`).join('')}</select></div>
+    <div class="prop"><label>Size</label><input type="number" data-p="fontSize" value="${o.fontSize||16}" min="6" max="200"/></div></div>
+    <div class="prop"><label>Style</label><div class="btn-group">
+      <button data-p="bold" class="${o.bold?'active':''}"><b>B</b></button>
+      <button data-p="italic" class="${o.italic?'active':''}"><i>I</i></button>
+      <button data-p="underline" class="${o.underline?'active':''}"><u>U</u></button>
+    </div></div>
+    <div class="prop"><label>Alignment</label><div class="btn-group">
+      <button data-p="align" data-v="left" class="${o.align==='left'?'active':''}"><i data-lucide="align-left"></i></button>
+      <button data-p="align" data-v="center" class="${o.align==='center'?'active':''}"><i data-lucide="align-center"></i></button>
+      <button data-p="align" data-v="right" class="${o.align==='right'?'active':''}"><i data-lucide="align-right"></i></button>
+    </div></div>
+    <div class="prop-row"><div class="prop"><label>Color</label><input type="color" data-p="color" value="${o.color||'#111111'}"/></div>
+    <div class="prop"><label>Opacity</label><input type="range" data-p="opacity" min="0.1" max="1" step="0.05" value="${o.opacity??1}"/></div></div>
+    <div class="prop-row"><div class="prop"><label>Line Height</label><input type="number" data-p="lineHeight" value="${o.lineHeight||1.3}" min="0.5" max="3" step="0.1"/></div>
+    <div class="prop"><label>Rotation</label><input type="number" data-p="rotation" value="${o.rotation||0}" min="0" max="360"/></div></div>
+    ${layerBtns}${actions}`;
+
+  if (o.type === 'image' || o.type === 'signature') return `
+    <div class="prop-row"><div class="prop"><label>Width</label><input type="number" data-p="w" value="${Math.round(o.w)}"/></div>
+    <div class="prop"><label>Height</label><input type="number" data-p="h" value="${Math.round(o.h)}"/></div></div>
+    <div class="prop"><label>Rotation</label><input type="range" data-p="rotation" min="0" max="360" value="${o.rotation||0}"/></div>
+    <div class="prop"><label>Opacity</label><input type="range" data-p="opacity" min="0.1" max="1" step="0.05" value="${o.opacity??1}"/></div>
+    <div class="prop-row"><div class="prop"><label>X</label><input type="number" data-p="x" value="${Math.round(o.x)}"/></div>
+    <div class="prop"><label>Y</label><input type="number" data-p="y" value="${Math.round(o.y)}"/></div></div>
+    ${layerBtns}${actions}`;
+
+  if (o.type === 'drawing') return `
+    <div class="prop-row"><div class="prop"><label>Stroke</label><input type="color" data-p="color" value="${o.color||'#111111'}"/></div>
+    <div class="prop"><label>Width</label><input type="number" data-p="strokeWidth" value="${o.strokeWidth||2.5}" min="1" max="20"/></div></div>
+    <div class="prop"><label>Opacity</label><input type="range" data-p="opacity" min="0.1" max="1" step="0.05" value="${o.opacity??1}"/></div>
+    ${layerBtns}${actions}`;
+
+  if (o.type === 'highlight') return `
+    <div class="prop"><label>Color</label><div class="btn-group">${CONFIG.highlightColors.map(c=>`<button data-p="color" data-v="${c[0]}" class="${o.color===c[0]?'active':''}">${c[1]}</button>`).join('')}</div></div>
+    <div class="prop"><label>Opacity</label><input type="range" data-p="opacity" min="0.1" max="1" step="0.05" value="${o.opacity??0.4}"/></div>
+    ${layerBtns}${actions}`;
+
+  if (o.type === 'whiteout') return `
+    <div class="prop"><label>Fill Color</label><input type="color" data-p="color" value="${o.color||'#ffffff'}"/></div>
+    <div class="prop"><label>Opacity</label><input type="range" data-p="opacity" min="0.1" max="1" step="0.05" value="${o.opacity??1}"/></div>
+    ${layerBtns}${actions}`;
+
+  if (['rect','circle','line','arrow'].includes(o.type)) return `
+    <div class="prop-row"><div class="prop"><label>Border</label><input type="color" data-p="stroke" value="${o.stroke||'#7657ff'}"/></div>
+    <div class="prop"><label>Border Width</label><input type="number" data-p="strokeWidth" value="${o.strokeWidth||2}" min="1" max="20"/></div></div>
+    ${o.type !== 'line' && o.type !== 'arrow' ? `<div class="prop"><label>Fill</label><div class="prop-row">
+      <input type="color" data-p="fill" value="${(o.fill && o.fill!=='transparent') ? o.fill : '#ffffff'}"/>
+      <label style="font-size:10px;display:flex;align-items:center;gap:3px;"><input type="checkbox" data-p="fillTransparent" ${(!o.fill||o.fill==='transparent')?'checked':''}/> Transparent</label>
+    </div></div>` : ''}
+    <div class="prop"><label>Opacity</label><input type="range" data-p="opacity" min="0.1" max="1" step="0.05" value="${o.opacity??1}"/></div>
+    <div class="prop"><label>Rotation</label><input type="range" data-p="rotation" min="0" max="360" value="${o.rotation||0}"/></div>
+    ${layerBtns}${actions}`;
+
+  return '<div class="empty-props"><p>No properties available.</p></div>';
+}
+
+function bindProps(o) {
+  $$('#propsBody [data-p]').forEach(el => {
+    el.addEventListener('input', () => {
+      const k = el.dataset.p; let v = el.value;
+      if (el.type === 'number' || el.type === 'range') v = parseFloat(v);
+      if (k === 'fillTransparent') {
+        const fi = document.querySelector('[data-p="fill"]');
+        o.fill = el.checked ? 'transparent' : (fi ? fi.value : '#ffffff');
+      } else { o[k] = v; }
+      refreshPageObjects(o.page);
+    });
+    el.addEventListener('click', () => {
+      if (el.dataset.v) {
+        const k = el.dataset.p; o[k] = el.dataset.v;
+        el.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        refreshPageObjects(o.page);
+      }
+    });
+  });
+  $$('#propsBody .btn-group button[data-p]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const k = btn.dataset.p;
+      if (k === 'align') {
+        o.align = btn.dataset.v;
+        btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      } else {
+        o[k] = !o[k];
+        btn.classList.toggle('active', o[k]);
+      }
+      refreshPageObjects(o.page);
+    });
+  });
+  $$('#propsBody [data-layer]').forEach(b => {
+    b.addEventListener('click', () => {
+      const idx = STATE.objects.findIndex(x => x.id === o.id);
+      if (idx < 0) return;
+      STATE.objects.splice(idx, 1);
+      if (b.dataset.layer === 'front') STATE.objects.push(o);
+      else if (b.dataset.layer === 'back') STATE.objects.unshift(o);
+      else if (b.dataset.layer === 'forward') STATE.objects.splice(Math.min(idx+1, STATE.objects.length), 0, o);
+      else if (b.dataset.layer === 'backward') STATE.objects.splice(Math.max(idx-1, 0), 0, o);
+      refreshPageObjects(o.page);
+      pushHistory();
+    });
+  });
+  $$('#propsBody [data-act]').forEach(b => {
+    b.addEventListener('click', () => {
+      if (b.dataset.act === 'duplicate') {
+        const copy = JSON.parse(JSON.stringify(o));
+        copy.id = uid(); copy.x += 20; copy.y += 20;
+        STATE.objects.push(copy); selectObject(copy.id);
+        renderAllObjects(); updatePanel();
+        pushHistory();
+      } else if (b.dataset.act === 'delete') {
+        removeObject(o.id);
+        renderAllObjects(); updatePanel();
+        pushHistory();
+      }
+    });
+  });
+}
+
+/* ---------- ZOOM MANAGER ---------- */
+function setZoom(z) {
+  z = Utils.clamp(z, 0.25, 4);
+  STATE.zoom = z;
+  $('zoomDisplay').textContent = Math.round(z * 100) + '%';
+  localStorage.setItem('t24-zoom', z);
+  rerenderAll();
+}
+function fitWidth() {
+  const pd = STATE.pages[STATE.currentPage]; if (!pd) return;
+  const availW = $('canvasArea').clientWidth - 48;
+  setZoom(availW / (pd.width * CONFIG.renderScale));
+}
+function fitPage() {
+  const pd = STATE.pages[STATE.currentPage]; if (!pd) return;
+  const area = $('canvasArea');
+  const availW = area.clientWidth - 48, availH = area.clientHeight - 48;
+  setZoom(Math.min(availW / (pd.width * CONFIG.renderScale), availH / (pd.height * CONFIG.renderScale)));
+}
+
+/* ---------- UNDO REDO MANAGER ---------- */
+function pushHistory() {
+  if (STATE.historyIndex < STATE.history.length - 1) STATE.history.length = STATE.historyIndex + 1;
+  STATE.history.push({ objects: JSON.parse(JSON.stringify(STATE.objects)), pages: JSON.parse(JSON.stringify(STATE.pages)), currentPage: STATE.currentPage });
+  STATE.historyIndex = STATE.history.length - 1;
+  if (STATE.history.length > 60) { STATE.history.shift(); STATE.historyIndex--; }
+}
+function undo() {
+  if (STATE.historyIndex <= 0) { Toast.show('Nothing to undo'); return; }
+  STATE.historyIndex--;
+  applyHistory(STATE.history[STATE.historyIndex]);
+}
+function redo() {
+  if (STATE.historyIndex >= STATE.history.length - 1) { Toast.show('Nothing to redo'); return; }
+  STATE.historyIndex++;
+  applyHistory(STATE.history[STATE.historyIndex]);
+}
+function applyHistory(snap) {
+  STATE.objects = JSON.parse(JSON.stringify(snap.objects));
+  STATE.pages = JSON.parse(JSON.stringify(snap.pages));
+  STATE.currentPage = Utils.clamp(snap.currentPage, 0, STATE.pages.length - 1);
+  STATE.selectedId = null;
+  rerenderAll();
+  updatePanel();
+}
+
+/* ---------- EXPORT MANAGER ---------- */
+async function exportPDF() {
+  try {
+    if (!window.PDFLib) throw new Error('PDF export library failed to load. Please refresh.');
+    Loading.show('Preparing your PDF...', 'Building file');
+    Loading.progress(5);
+    const { PDFDocument, rgb, degrees, StandardFonts } = PDFLib;
+    const sourceDoc = await PDFDocument.load(STATE.originalBuffer.slice(0), { ignoreEncryption: true });
+    const outDoc = await PDFDocument.create();
+    const font = await outDoc.embedFont(StandardFonts.Helvetica);
+    const fontBold = await outDoc.embedFont(StandardFonts.HelveticaBold);
+    const fontOblique = await outDoc.embedFont(StandardFonts.HelveticaOblique);
+    const fontBoldOblique = await outDoc.embedFont(StandardFonts.HelveticaBoldOblique);
+    Loading.progress(15);
+    const sourcePages = sourceDoc.getPages();
+    const outPages = [];
+    const total = STATE.pages.length;
+    for (let i = 0; i < total; i++) {
+      const pd = STATE.pages[i];
+      let page, w, h;
+      if (pd.type === 'original' && sourcePages[pd.originalIndex]) {
+        const [copied] = await outDoc.copyPages(sourceDoc, [pd.originalIndex]);
+        outDoc.addPage(copied);
+        page = copied;
+        const sz = copied.getSize(); w = sz.width; h = sz.height;
+        if (pd.rotation) copied.setRotation(degrees(((pd.rotation||0)+360)%360));
+      } else {
+        page = outDoc.addPage([pd.width || 595, pd.height || 842]);
+        const sz = page.getSize(); w = sz.width; h = sz.height;
+      }
+      outPages.push({ page, w, h });
+      Loading.progress(15 + ((i+1)/total)*25);
+      if (i % 3 === 0) await Utils.tick();
+    }
+    Loading.title('Generating PDF...');
+    Loading.msg('Drawing objects');
+    const objs = STATE.objects;
+    for (let j = 0; j < objs.length; j++) {
+      const o = objs[j];
+      const target = outPages[o.page];
+      if (!target) continue;
+      try { drawObjectOnPage(target.page, o, target.w, target.h, { font, fontBold, fontOblique, fontBoldOblique, rgb, degrees, outDoc }); }
+      catch(err) { console.warn('Export skip:', o.type, err); }
+      if (j % 5 === 0) { Loading.progress(40 + (j / Math.max(1,objs.length)) * 55); await Utils.tick(); }
+    }
+    Loading.progress(98);
+    const bytes = await outDoc.save();
+    Loading.progress(100);
+    const blob = new Blob([bytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const a = $('downloadLink');
+    const origName = STATE.file.name.replace(/\.pdf$/i, '');
+    a.download = origName ? `${origName}-Tools24-Edited.pdf` : 'Tools24-Edited-PDF.pdf';
+    a.href = url;
+    await Utils.tick(200);
+    Loading.hide();
+    $('successModal').classList.add('active');
+    Toast.show('PDF downloaded successfully!', 'success');
+    setTimeout(() => { a.click(); }, 400);
+  } catch (err) {
+    Loading.hide();
+    handleError(err);
+  }
+}
+
+function drawObjectOnPage(page, o, pw, ph, lib) {
+  const { rgb, degrees, outDoc } = lib;
+  const x = o.x;
+  const y = ph - o.y;
+  switch (o.type) {
+    case 'text': {
+      const font = pickFont(lib, o);
+      const size = o.fontSize || 16;
+      const c = hexToRgb(o.color || '#111111');
+      const lines = (o.text || '').split('\n');
+      const lh = size * (o.lineHeight || 1.3);
+      lines.forEach((line, idx) => {
+        page.drawText(line, { x, y: y - size - idx * lh, size, font, color: rgb(c.r,c.g,c.b), opacity: o.opacity ?? 1, rotate: degrees(o.rotation || 0) });
+      });
+      break;
+    }
+    case 'whiteout': {
+      const c = hexToRgb(o.color || '#ffffff');
+      page.drawRectangle({ x, y: y - o.h, width: o.w, height: o.h, color: rgb(c.r,c.g,c.b), opacity: o.opacity ?? 1 });
+      break;
+    }
+    case 'rect': {
+      const c = hexToRgb(o.stroke || '#7657ff');
+      const f = (o.fill && o.fill !== 'transparent') ? hexToRgb(o.fill) : null;
+      page.drawRectangle({ x, y: y - o.h, width: o.w, height: o.h, borderColor: rgb(c.r,c.g,c.b), borderWidth: o.strokeWidth || 2, color: f ? rgb(f.r,f.g,f.b) : undefined, opacity: o.opacity ?? 1, rotate: degrees(o.rotation || 0) });
+      break;
+    }
+    case 'circle': {
+      const c = hexToRgb(o.stroke || '#7657ff');
+      const f = (o.fill && o.fill !== 'transparent') ? hexToRgb(o.fill) : null;
+      page.drawEllipse({ x, y: y - o.h, width: o.w, height: o.h, borderColor: rgb(c.r,c.g,c.b), borderWidth: o.strokeWidth || 2, color: f ? rgb(f.r,f.g,f.b) : undefined, opacity: o.opacity ?? 1 });
+      break;
+    }
+    case 'line': case 'arrow': {
+      const c = hexToRgb(o.stroke || '#111111');
+      page.drawLine({ start:{x, y: y - o.h/2}, end:{x: x + o.w, y: y - o.h/2}, thickness: o.strokeWidth || 2, color: rgb(c.r,c.g,c.b), opacity: o.opacity ?? 1 });
+      if (o.type === 'arrow') {
+        const tipX = x + o.w, tipY = y - o.h/2, s = 10;
+        page.drawPolygon({ points:[{x:tipX,y:tipY},{x:tipX-s,y:tipY+s/2},{x:tipX-s,y:tipY-s/2}], color: rgb(c.r,c.g,c.b), borderColor: rgb(c.r,c.g,c.b) });
+      }
+      break;
+    }
+    case 'highlight': {
+      const c = hexToRgb(o.color || '#fef08a');
+      page.drawRectangle({ x, y: y - o.h, width: o.w, height: o.h, color: rgb(c.r,c.g,c.b), opacity: o.opacity ?? 0.4 });
+      break;
+    }
+    case 'image': case 'signature': case 'drawing': {
+      if (!o.src) break;
+      const isPng = o.src.startsWith('data:image/png');
+      const bytes = dataUrlToBytes(o.src);
+      const img = isPng ? outDoc.embedPng(bytes) : outDoc.embedJpg(bytes);
+      page.drawImage(img, { x, y: y - o.h, width: o.w, height: o.h, opacity: o.opacity ?? 1, rotate: degrees(o.rotation || 0) });
+      break;
+    }
+  }
+}
+
+function pickFont(lib, o) {
+  if (o.bold && o.italic) return lib.fontBoldOblique;
+  if (o.bold) return lib.fontBold;
+  if (o.italic) return lib.fontOblique;
+  return lib.font;
+}
+function hexToRgb(hex) {
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return m ? { r: parseInt(m[1],16)/255, g: parseInt(m[2],16)/255, b: parseInt(m[3],16)/255 } : { r:0,g:0,b:0 };
+}
+function dataUrlToBytes(dataUrl) {
+  const b = dataUrl.split(',')[1];
+  const bin = atob(b);
+  const arr = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+  return arr;
+}
+
+/* ---------- KEYBOARD SHORTCUTS ---------- */
+function initKeyboard() {
+  document.addEventListener('keydown', e => {
+    if ($('signatureModal').classList.contains('active')) return;
+    if ($('successModal').classList.contains('active')) return;
+    const editorActive = !$('uploadState').classList.contains('hidden') === false; // editor shown when uploadState hidden
+    const editorShown = $('canvasArea') && !$('canvasArea').classList.contains('hidden');
+    if (!editorShown) {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'o') { e.preventDefault(); $('fileInput').click(); }
+      return;
+    }
+    if (e.target.matches('input,textarea,select,[contenteditable]')) return;
+    const sel = getSelected();
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); return; }
+    if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'y' || (e.shiftKey && e.key.toLowerCase() === 'z'))) { e.preventDefault(); redo(); return; }
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); exportPDF(); return; }
+    if ((e.ctrlKey || e.metaKey) && e.key === '=') { e.preventDefault(); setZoom(STATE.zoom + 0.2); return; }
+    if ((e.ctrlKey || e.metaKey) && e.key === '-') { e.preventDefault(); setZoom(STATE.zoom - 0.2); return; }
+    if ((e.ctrlKey || e.metaKey) && e.key === '0') { e.preventDefault(); fitPage(); return; }
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'o') { e.preventDefault(); $('fileInput').click(); return; }
+    if (e.key === 'Escape') { selectObject(null); renderAllObjects(); updatePanel(); return; }
+    if ((e.key === 'Delete' || e.key === 'Backspace') && sel) { e.preventDefault(); removeObject(sel.id); renderAllObjects(); updatePanel(); pushHistory(); return; }
+    if (sel && e.key.startsWith('Arrow')) {
+      e.preventDefault();
+      const step = e.shiftKey ? 10 : 1;
+      if (e.key === 'ArrowUp') sel.y -= step;
+      if (e.key === 'ArrowDown') sel.y += step;
+      if (e.key === 'ArrowLeft') sel.x -= step;
+      if (e.key === 'ArrowRight') sel.x += step;
+      renderAllObjects(); updatePanel();
+    }
+  });
+}
+
+/* ---------- RESPONSIVE UI ---------- */
+function initResponsive() {
+  $('hamburger').addEventListener('click', () => {
+    const nav = $('nav');
+    const open = nav.classList.toggle('open');
+    $('hamburger').setAttribute('aria-expanded', open);
+  });
+  // Mobile toolbar
+  $$('.mt-btn[data-tool]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tool = btn.dataset.tool;
+      setTool(tool);
+      $$('.tool-btn[data-tool]').forEach(b => b.classList.toggle('active', b.dataset.tool === tool));
+      $$('.mt-btn[data-tool]').forEach(b => b.classList.toggle('active', b.dataset.tool === tool));
+      $$('.mt-btn').forEach(b => { if (!b.dataset.tool) b.classList.remove('active'); });
+    });
+  });
+  document.querySelector('[data-mt="more"]').addEventListener('click', () => {
+    // cycle through more tools
+    $('propsPanel').classList.toggle('open');
+    $('pagesPanel').classList.remove('open');
+  });
+}
+
+/* ---------- INITIALIZATION ---------- */
+function init() {
+  $('year').textContent = new Date().getFullYear();
+  initTheme();
+  initSignatureModal();
+  initKeyboard();
+  initResponsive();
+
+  // Upload
+  const dz = $('dropzone');
+  const input = $('fileInput');
+  $('browseBtn').addEventListener('click', () => input.click());
+  dz.addEventListener('click', () => input.click());
+  dz.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') input.click(); });
+  ['dragenter','dragover'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add('dragover'); }));
+  ['dragleave','drop'].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove('dragover'); }));
+  dz.addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if (f) handleFile(f); });
+  input.addEventListener('change', e => { const f = e.target.files[0]; if (f) handleFile(f); });
+
+  // Toolbar tools
+  $$('.tool-btn[data-tool]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('.tool-btn[data-tool]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      setTool(btn.dataset.tool);
+      $$('.mt-btn[data-tool]').forEach(b => b.classList.toggle('active', b.dataset.tool === btn.dataset.tool));
+      $$('.mt-btn').forEach(b => { if (!b.dataset.tool) b.classList.remove('active'); });
+    });
+  });
+
+  // Undo/Redo
+  $('undoBtn').addEventListener('click', undo);
+  $('redoBtn').addEventListener('click', redo);
+  $('undoBtnTop').addEventListener('click', undo);
+  $('redoBtnTop').addEventListener('click', redo);
+
+  // Zoom
+  $('zoomInBtn').addEventListener('click', () => setZoom(STATE.zoom + 0.2));
+  $('zoomOutBtn').addEventListener('click', () => setZoom(STATE.zoom - 0.2));
+  $('fitWidthBtn').addEventListener('click', fitWidth);
+  $('fitPageBtn').addEventListener('click', fitPage);
+
+  // Page nav
+  $('prevPageBtn').addEventListener('click', () => goToPage(STATE.currentPage - 1));
+  $('nextPageBtn').addEventListener('click', () => goToPage(STATE.currentPage + 1));
+  $('firstPageBtn').addEventListener('click', () => goToPage(0));
+  $('lastPageBtn').addEventListener('click', () => goToPage(STATE.pages.length - 1));
+  $('pageInput').addEventListener('change', e => goToPage(+e.target.value - 1));
+
+  // Page ops
+  $('addPageBtn').addEventListener('click', addBlankPage);
+
+  // Download / clear / change
+  $('downloadBtnTop').addEventListener('click', exportPDF);
+  $('clearAllBtn').addEventListener('click', () => {
+    if (!STATE.objects.length) { Toast.show('Nothing to clear'); return; }
+    STATE.objects = []; STATE.selectedId = null;
+    renderAllObjects(); updatePanel();
+    pushHistory();
+    Toast.show('All objects cleared', 'success');
+  });
+  $('changeFileBtn').addEventListener('click', () => { if (confirm('Discard current edits and open a new PDF?')) location.reload(); });
+  $('editAnotherBtn').addEventListener('click', () => location.reload());
+
+  refreshIcons();
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
 </body>
 </html>
