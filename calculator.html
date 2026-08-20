@@ -3,60 +3,864 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools24 Scientific Calculator</title>
-    <link rel="stylesheet" href="calculator.css">
+    <title>Scientific Calculator Online – Advanced Math Calculator | AGITools24</title>
+    <meta name="description" content="Use AGITools24's free scientific calculator for advanced mathematics, trigonometry, logarithms, powers, roots, statistics, GST, EMI, percentage and unit calculations.">
+    <link rel="canonical" href="https://agitools24.com/scientific-calculator">
+    
+    <!-- SEO Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "AGITools24 Scientific Calculator",
+      "url": "https://agitools24.com/scientific-calculator",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a scientific calculator?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A scientific calculator is an electronic calculator designed to calculate problems in science, engineering, and mathematics, including trigonometry, logarithms, and exponential functions." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this scientific calculator free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, the AGITools24 Scientific Calculator is completely free to use online." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it support degrees and radians?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, you can easily toggle between DEG (Degrees), RAD (Radians), and GRAD (Gradians) modes at the top of the calculator." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it have a GST calculator?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, it includes a dedicated GST Calculator tailored for Indian users, supporting 5%, 12%, 18%, and 28% slabs with CGST/SGST breakdown." }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Secure Math Library -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@11.8.0/lib/browser/math.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-gradient-1: #e0e7ff;
+            --bg-gradient-2: #f0f9ff;
+            --bg-gradient-3: #fae8ff;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --accent-purple: #6366f1;
+            --accent-blue: #3b82f6;
+            --accent-pink: #ec4899;
+            --accent-gradient: linear-gradient(135deg, #6366f1, #3b82f6, #ec4899);
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --input-bg: rgba(255,255,255,0.8);
+            --input-border: rgba(255,255,255,0.6);
+            --btn-glass: rgba(255, 255, 255, 0.5);
+        }
+
+        html.dark {
+            --bg-gradient-1: #0f172a;
+            --bg-gradient-2: #111827;
+            --bg-gradient-3: #1e1b4b;
+            --glass-bg: rgba(30, 41, 59, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --input-bg: rgba(15, 23, 42, 0.8);
+            --input-border: rgba(255,255,255,0.1);
+            --btn-glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2), var(--bg-gradient-3));
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+            margin: 1rem auto;
+            max-width: 1200px;
+            border-radius: 100px;
+        }
+        .logo { font-weight: 800; font-size: 1.5rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--accent-purple); }
+        .theme-toggle { background: var(--input-bg); border: 1px solid var(--glass-border); cursor: pointer; font-size: 1rem; color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 50px; display: flex; align-items: center; gap: 0.3rem; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+        header.tool-header { text-align: center; margin-bottom: 2rem; }
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 800; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .subtitle { color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto 0.5rem; }
+        .small-text { font-size: 0.9rem; color: var(--text-secondary); opacity: 0.8; }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Layout */
+        .main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start; }
+        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+
+        /* Tabs */
+        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; overflow-x: auto; padding-bottom: 0.5rem; }
+        .tab-btn { padding: 0.6rem 1.2rem; background: var(--btn-glass); border: 1px solid var(--input-border); color: var(--text-secondary); border-radius: 12px; cursor: pointer; font-weight: 600; white-space: nowrap; transition: all 0.2s; }
+        .tab-btn.active { background: var(--accent-gradient); color: white; border-color: transparent; }
+
+        /* Display */
+        .calc-display { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 16px; padding: 1.5rem; text-align: right; margin-bottom: 1.5rem; min-height: 100px; display: flex; flex-direction: column; justify-content: flex-end; }
+        .expr { font-size: 1.2rem; color: var(--text-secondary); min-height: 1.5rem; overflow-x: auto; white-space: nowrap; }
+        .result { font-size: 2.5rem; font-weight: 700; color: var(--text-primary); overflow-x: auto; white-space: nowrap; }
+        
+        /* Modes & Memory */
+        .calc-modes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .mode-toggle { display: flex; gap: 0.5rem; }
+        .mode-btn { padding: 0.4rem 0.8rem; border-radius: 8px; border: 1px solid var(--input-border); background: var(--btn-glass); color: var(--text-secondary); cursor: pointer; font-weight: 600; font-size: 0.8rem; }
+        .mode-btn.active { background: var(--accent-purple); color: white; border-color: transparent; }
+        .mem-indicator { font-weight: 700; color: var(--accent-pink); visibility: hidden; }
+
+        /* Buttons Grid */
+        .btn-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+        .btn-grid.scientific { grid-template-columns: repeat(5, 1fr); display: none; }
+        .btn-grid.programmer { grid-template-columns: repeat(4, 1fr); display: none; }
+        
+        .calc-btn {
+            padding: 1rem; border: 1px solid var(--input-border); background: var(--btn-glass); color: var(--text-primary);
+            border-radius: 12px; font-size: 1.1rem; cursor: pointer; transition: all 0.2s; font-weight: 600;
+        }
+        .calc-btn:hover { background: rgba(99, 102, 241, 0.1); border-color: var(--accent-purple); }
+        .calc-btn:active { transform: scale(0.95); }
+        .calc-btn.op { color: var(--accent-purple); }
+        .calc-btn.eq { background: var(--accent-gradient); color: white; border: none; }
+        .calc-btn.danger { color: var(--danger-color); }
+        .calc-btn.wide { grid-column: span 2; }
+        
+        /* Stats & Tools UI */
+        .tool-input-group { margin-bottom: 1rem; }
+        .tool-input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-secondary); }
+        .tool-input-group input, .tool-input-group select { width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--text-primary); }
+        .tool-result { background: var(--input-bg); padding: 1rem; border-radius: 8px; margin-top: 1rem; border: 1px solid var(--input-border); }
+        
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1rem; }
+        .stat-box { background: var(--input-bg); padding: 0.8rem; border-radius: 8px; text-align: center; border: 1px solid var(--input-border); }
+        .stat-box strong { color: var(--accent-purple); font-size: 1.1rem; display: block; }
+        .stat-box span { font-size: 0.8rem; color: var(--text-secondary); }
+
+        /* History */
+        .history-item { background: var(--input-bg); padding: 0.8rem; border-radius: 8px; margin-bottom: 0.5rem; border: 1px solid var(--input-border); }
+        .history-expr { color: var(--text-secondary); font-size: 0.9rem; }
+        .history-result { color: var(--text-primary); font-weight: 700; }
+        .history-actions { margin-top: 0.5rem; display: flex; gap: 0.5rem; }
+        .mini-btn { padding: 0.3rem 0.6rem; font-size: 0.8rem; border-radius: 6px; border: 1px solid var(--input-border); background: transparent; color: var(--text-secondary); cursor: pointer; }
+
+        /* Generic Buttons */
+        .btn { padding: 0.8rem 1.5rem; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1rem; }
+        .btn-primary { background: var(--accent-gradient); color: white; }
+        .btn-secondary { background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--input-border); }
+
+        .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); color: white; padding: 12px 20px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.2); font-weight: 600; }
+        .toast-success { background: var(--success-color); }
+        .toast-error { background: var(--danger-color); }
+
+        .seo-section { max-width: 800px; margin: 3rem auto; line-height: 1.6; color: var(--text-secondary); }
+        .seo-section h3 { color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem; font-size: 1.3rem; }
+    </style>
 </head>
 <body>
 
-<!-- TOP HEADER (Same style as Merge PDF) -->
-<div class="top-header">
-    <a href="index.html" class="back-btn">←</a>
-    <h2>Tools24 Scientific Calculator</h2>
-</div>
-<div class="green-line"></div>
+    <nav>
+        <div class="logo">Tools24</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Privacy</a>
+            <a href="#">Contact</a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span id="themeIcon">🌙</span> <span id="themeText">Dark</span>
+            </button>
+        </div>
+    </nav>
 
-<!-- Calculator Box -->
-<div class="calculator-container">
-    <input type="text" id="display" value="0" disabled>
+    <div class="container">
+        <header class="tool-header">
+            <h1>Scientific Calculator</h1>
+            <p class="subtitle">Advanced Scientific Calculator Online</p>
+            <p class="small-text">Perform scientific, mathematical, trigonometric, logarithmic and statistical calculations quickly with AGITools24.</p>
+        </header>
 
-    <div class="buttons">
-        <button onclick="allClear()">AC</button>
-        <button onclick="clearLast()">C</button>
-        <button onclick="addFunction('sin(')">sin</button>
-        <button onclick="addFunction('cos(')">cos</button>
-        <button onclick="addFunction('tan(')">tan</button>
+        <div class="main-grid">
+            <!-- LEFT: CALCULATOR -->
+            <div class="glass-card">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('scientific', this)">Scientific</button>
+                    <button class="tab-btn" onclick="switchTab('basic', this)">Basic</button>
+                    <button class="tab-btn" onclick="switchTab('programmer', this)">Programmer</button>
+                    <button class="tab-btn" onclick="switchTab('stats', this)">Statistics</button>
+                    <button class="tab-btn" onclick="switchTab('tools', this)">Tools</button>
+                </div>
 
-        <button onclick="addFunction('log(')">log</button>
-        <button onclick="addFunction('sqrt(')">√</button>
-        <button onclick="appendValue('(')">(</button>
-        <button onclick="appendValue(')')">)</button>
-        <button class="op" onclick="appendValue('/')">/</button>
+                <!-- Scientific & Basic Display -->
+                <div id="calcDisplayContainer">
+                    <div class="calc-modes">
+                        <div class="mode-toggle">
+                            <button class="mode-btn active" onclick="setAngleMode('DEG', this)">DEG</button>
+                            <button class="mode-btn" onclick="setAngleMode('RAD', this)">RAD</button>
+                            <button class="mode-btn" onclick="setAngleMode('GRAD', this)">GRAD</button>
+                        </div>
+                        <div style="display:flex; gap:0.5rem; align-items:center;">
+                            <span class="mem-indicator" id="memIndicator">M</span>
+                            <button class="mode-btn" onclick="copyResult()">Copy</button>
+                            <button class="mode-btn" onclick="shareResult()">Share</button>
+                        </div>
+                    </div>
+                    <div class="calc-display">
+                        <div class="expr" id="exprDisplay" tabindex="0"></div>
+                        <div class="result" id="resultDisplay">0</div>
+                    </div>
+                </div>
 
-        <button onclick="appendValue('7')">7</button>
-        <button onclick="appendValue('8')">8</button>
-        <button onclick="appendValue('9')">9</button>
-        <button onclick="appendValue('π')">π</button>
-        <button class="op" onclick="appendValue('*')">×</button>
+                <!-- Scientific Buttons -->
+                <div class="btn-grid scientific" id="scientificPad">
+                    <button class="calc-btn op" onclick="appendVal('sin(')">sin</button>
+                    <button class="calc-btn op" onclick="appendVal('cos(')">cos</button>
+                    <button class="calc-btn op" onclick="appendVal('tan(')">tan</button>
+                    <button class="calc-btn op" onclick="appendVal('log(')">log</button>
+                    <button class="calc-btn op" onclick="appendVal('ln(')">ln</button>
+                    
+                    <button class="calc-btn op" onclick="appendVal('sinh(')">sinh</button>
+                    <button class="calc-btn op" onclick="appendVal('cosh(')">cosh</button>
+                    <button class="calc-btn op" onclick="appendVal('tanh(')">tanh</button>
+                    <button class="calc-btn op" onclick="appendVal('log10(')">log₁₀</button>
+                    <button class="calc-btn op" onclick="appendVal('log2(')">log₂</button>
 
-        <button onclick="appendValue('4')">4</button>
-        <button onclick="appendValue('5')">5</button>
-        <button onclick="appendValue('6')">6</button>
-        <button onclick="addFunction('^2')">x²</button>
-        <button class="op" onclick="appendValue('-')">-</button>
+                    <button class="calc-btn op" onclick="appendVal('^')">xʸ</button>
+                    <button class="calc-btn op" onclick="appendVal('sqrt(')">√</button>
+                    <button class="calc-btn op" onclick="appendVal('cbrt(')">∛</button>
+                    <button class="calc-btn op" onclick="appendVal('!')">!</button>
+                    <button class="calc-btn op" onclick="appendVal('mod')">mod</button>
 
-        <button onclick="appendValue('1')">1</button>
-        <button onclick="appendValue('2')">2</button>
-        <button onclick="appendValue('3')">3</button>
-        <button onclick="appendValue('e')">e</button>
-        <button class="op" onclick="appendValue('+')">+</button>
+                    <button class="calc-btn op" onclick="appendVal('pi')">π</button>
+                    <button class="calc-btn op" onclick="appendVal('e')">e</button>
+                    <button class="calc-btn op" onclick="appendVal('abs(')">|x|</button>
+                    <button class="calc-btn op" onclick="appendVal('10^')">10ˣ</button>
+                    <button class="calc-btn op" onclick="appendVal('e^')">eˣ</button>
 
-        <button onclick="appendValue('0')">0</button>
-        <button onclick="appendValue('.')">.</button>
-        
-        <button class="equal" onclick="calculate()">=</button>
+                    <button class="calc-btn op" onclick="appendVal('(')">(</button>
+                    <button class="calc-btn op" onclick="appendVal(')')">)</button>
+                    <button class="calc-btn danger" onclick="clearAll()">AC</button>
+                    <button class="calc-btn danger" onclick="deleteLast()">DEL</button>
+                    <button class="calc-btn op" onclick="memoryAction('MC')">MC</button>
+                </div>
+
+                <!-- Basic Buttons (Shared Grid Space Below Scientific) -->
+                <div class="btn-grid" id="basicPad" style="margin-top: 0.5rem;">
+                    <button class="calc-btn op" onclick="appendVal('7')">7</button>
+                    <button class="calc-btn op" onclick="appendVal('8')">8</button>
+                    <button class="calc-btn op" onclick="appendVal('9')">9</button>
+                    <button class="calc-btn op" onclick="appendVal('/')">÷</button>
+                    
+                    <button class="calc-btn op" onclick="appendVal('4')">4</button>
+                    <button class="calc-btn op" onclick="appendVal('5')">5</button>
+                    <button class="calc-btn op" onclick="appendVal('6')">6</button>
+                    <button class="calc-btn op" onclick="appendVal('*')">×</button>
+                    
+                    <button class="calc-btn op" onclick="appendVal('1')">1</button>
+                    <button class="calc-btn op" onclick="appendVal('2')">2</button>
+                    <button class="calc-btn op" onclick="appendVal('3')">3</button>
+                    <button class="calc-btn op" onclick="appendVal('-')">−</button>
+                    
+                    <button class="calc-btn op" onclick="appendVal('0')">0</button>
+                    <button class="calc-btn op" onclick="appendVal('.')">.</button>
+                    <button class="calc-btn op" onclick="appendVal('%')">%</button>
+                    <button class="calc-btn op" onclick="appendVal('+')">+</button>
+
+                    <button class="calc-btn op" onclick="memoryAction('MR')">MR</button>
+                    <button class="calc-btn op" onclick="memoryAction('M+')">M+</button>
+                    <button class="calc-btn op" onclick="memoryAction('M-')">M−</button>
+                    <button class="calc-btn eq wide" onclick="calculate()">=</button>
+                </div>
+
+                <!-- Programmer Mode -->
+                <div id="programmerPad" style="display:none;">
+                    <div class="tool-input-group">
+                        <label for="progInput">Enter Decimal or Hex (0x)</label>
+                        <input type="text" id="progInput" oninput="calcProgrammer()" placeholder="e.g., 255 or 0xFF">
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-box"><strong id="binRes">0</strong><span>Binary</span></div>
+                        <div class="stat-box"><strong id="octRes">0</strong><span>Octal</span></div>
+                        <div class="stat-box"><strong id="decRes">0</strong><span>Decimal</span></div>
+                        <div class="stat-box"><strong id="hexRes">0</strong><span>Hexadecimal</span></div>
+                    </div>
+                    <div class="btn-grid" style="grid-template-columns: repeat(4, 1fr); margin-top:1rem;">
+                        <button class="calc-btn op" onclick="appendProg('AND')">AND</button>
+                        <button class="calc-btn op" onclick="appendProg('OR')">OR</button>
+                        <button class="calc-btn op" onclick="appendProg('XOR')">XOR</button>
+                        <button class="calc-btn op" onclick="appendProg('NOT')">NOT</button>
+                        <button class="calc-btn op" onclick="appendProg('<<')"><<</button>
+                        <button class="calc-btn op" onclick="appendProg('>>')">>></button>
+                    </div>
+                </div>
+
+                <!-- Statistics Mode -->
+                <div id="statsPad" style="display:none;">
+                    <div class="tool-input-group">
+                        <label for="statsInput">Enter numbers separated by commas</label>
+                        <input type="text" id="statsInput" placeholder="e.g., 10, 20, 30, 40, 50">
+                        <button class="btn btn-primary" style="margin-top:1rem; width:100%;" onclick="calcStats()">Calculate Stats</button>
+                    </div>
+                    <div class="stats-grid" id="statsResults" style="display:none;">
+                        <div class="stat-box"><strong id="statMean">-</strong><span>Mean</span></div>
+                        <div class="stat-box"><strong id="statMed">-</strong><span>Median</span></div>
+                        <div class="stat-box"><strong id="statMode">-</strong><span>Mode</span></div>
+                        <div class="stat-box"><strong id="statSum">-</strong><span>Sum</span></div>
+                        <div class="stat-box"><strong id="statMin">-</strong><span>Minimum</span></div>
+                        <div class="stat-box"><strong id="statMax">-</strong><span>Maximum</span></div>
+                        <div class="stat-box"><strong id="statRange">-</strong><span>Range</span></div>
+                        <div class="stat-box"><strong id="statStd">-</strong><span>Std Dev</span></div>
+                    </div>
+                </div>
+
+                <!-- Tools Mode (GST, EMI, etc) -->
+                <div id="toolsPad" style="display:none;">
+                    <div class="tabs" style="margin-bottom:1rem;">
+                        <button class="tab-btn active" onclick="switchTool('gst', this)">GST</button>
+                        <button class="tab-btn" onclick="switchTool('emi', this)">EMI</button>
+                        <button class="tab-btn" onclick="switchTool('perc', this)">Percentage</button>
+                        <button class="tab-btn" onclick="switchTool('unit', this)">Units</button>
+                    </div>
+
+                    <!-- GST -->
+                    <div id="tool-gst">
+                        <div class="tool-input-group">
+                            <label>Amount (₹)</label>
+                            <input type="number" id="gstAmount" placeholder="1000" oninput="calcGST()">
+                        </div>
+                        <div class="tool-input-group">
+                            <label>GST Rate</label>
+                            <select id="gstRate" onchange="calcGST()">
+                                <option value="5">5%</option>
+                                <option value="12">12%</option>
+                                <option value="18" selected>18%</option>
+                                <option value="28">28%</option>
+                            </select>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-box"><strong id="gstBase">0</strong><span>Base Amount</span></div>
+                            <div class="stat-box"><strong id="gstCgst">0</strong><span>CGST</span></div>
+                            <div class="stat-box"><strong id="gstSgst">0</strong><span>SGST</span></div>
+                            <div class="stat-box"><strong id="gstTotal">0</strong><span>Total Amount</span></div>
+                        </div>
+                    </div>
+
+                    <!-- EMI -->
+                    <div id="tool-emi" style="display:none;">
+                        <div class="tool-input-group">
+                            <label>Loan Amount (₹)</label>
+                            <input type="number" id="emiAmount" placeholder="500000" oninput="calcEMI()">
+                        </div>
+                        <div class="tool-input-group">
+                            <label>Interest Rate (%)</label>
+                            <input type="number" id="emiRate" placeholder="10" oninput="calcEMI()">
+                        </div>
+                        <div class="tool-input-group">
+                            <label>Tenure (Months)</label>
+                            <input type="number" id="emiMonths" placeholder="60" oninput="calcEMI()">
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-box"><strong id="emiMonthly">0</strong><span>Monthly EMI</span></div>
+                            <div class="stat-box"><strong id="emiInterest">0</strong><span>Total Interest</span></div>
+                            <div class="stat-box"><strong id="emiTotal">0</strong><span>Total Payment</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Percentage -->
+                    <div id="tool-perc" style="display:none;">
+                        <div class="tool-input-group">
+                            <label>What is X% of Y?</label>
+                            <div style="display:flex; gap:0.5rem;">
+                                <input type="number" id="percX" placeholder="20" oninput="calcPerc()">
+                                <span>% of</span>
+                                <input type="number" id="percY" placeholder="500" oninput="calcPerc()">
+                            </div>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-box"><strong id="percRes">0</strong><span>Result</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Unit Converter -->
+                    <div id="tool-unit" style="display:none;">
+                        <div class="tool-input-group">
+                            <label>Category</label>
+                            <select id="unitCat" onchange="updateUnitOptions()">
+                                <option value="length">Length</option>
+                                <option value="weight">Weight</option>
+                                <option value="temp">Temperature</option>
+                            </select>
+                        </div>
+                        <div style="display:flex; gap:0.5rem; align-items:center;">
+                            <input type="number" id="unitInput" placeholder="Value" oninput="convertUnit()">
+                            <select id="unitFrom" onchange="convertUnit()"></select>
+                            <span>=</span>
+                            <select id="unitTo" onchange="convertUnit()"></select>
+                        </div>
+                        <div class="stats-grid" style="margin-top:1rem;">
+                            <div class="stat-box"><strong id="unitRes">0</strong><span>Converted Value</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: HISTORY -->
+            <div class="glass-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                    <h2 style="margin:0;">History</h2>
+                    <button class="mini-btn" onclick="clearHistory()">Clear All</button>
+                </div>
+                <div id="historyList">
+                    <p class="small-text">Your calculation history will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-section">
+            <h3>Scientific Calculator Online</h3>
+            <p>The AGITools24 Scientific Calculator is a powerful online tool designed for students, engineers, and professionals. It supports complex mathematical operations including trigonometry, logarithms, factorials, and powers, alongside integrated utilities like GST and EMI calculators tailored for Indian users.</p>
+            
+            <h3>How to Use the Scientific Calculator</h3>
+            <p>Use the keypad to enter expressions. Toggle between DEG and RAD modes for trigonometric functions. Switch tabs to access Programmer mode, Statistics, or financial tools. Keyboard input is fully supported on desktop.</p>
+
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>What is a scientific calculator?</strong><br>It is a calculator designed for advanced math, including functions like sin, cos, tan, log, and exponential calculations.</p>
+            <p><strong>Is this scientific calculator free?</strong><br>Yes, it is 100% free to use on AGITools24.</p>
+            <p><strong>Does it support degrees and radians?</strong><br>Yes, you can toggle between DEG, RAD, and GRAD modes.</p>
+            <p><strong>Does it have a GST calculator?</strong><br>Yes, it includes a dedicated tab for GST, EMI, and Percentage calculations specific to Indian users.</p>
+        </div>
     </div>
-</div>
 
-<script src="calculator.js"></script>
+    <script>
+        // --- Calculator State ---
+        let currentExpr = '';
+        let angleMode = 'DEG';
+        let memory = 0;
+        let history = JSON.parse(localStorage.getItem('calcHistory')) || [];
+
+        // --- Math.js Custom Scope for Angle Modes ---
+        const mathScope = {
+            pi: Math.PI,
+            e: Math.E,
+            phi: 1.618033988749895,
+            sin: (x) => Math.sin(convertAngle(x)),
+            cos: (x) => Math.cos(convertAngle(x)),
+            tan: (x) => Math.tan(convertAngle(x)),
+            asin: (x) => inverseConvertAngle(Math.asin(x)),
+            acos: (x) => inverseConvertAngle(Math.acos(x)),
+            atan: (x) => inverseConvertAngle(Math.atan(x)),
+            sinh: Math.sinh, cosh: Math.cosh, tanh: Math.tanh,
+            log: (x) => Math.log10(x), 
+            ln: Math.log,
+            log2: Math.log2, log10: Math.log10,
+            abs: Math.abs,
+            sqrt: Math.sqrt,
+            cbrt: Math.cbrt,
+            mod: (a, b) => a % b
+        };
+
+        function convertAngle(x) {
+            if (angleMode === 'DEG') return x * (Math.PI / 180);
+            if (angleMode === 'GRAD') return x * (Math.PI / 200);
+            return x; // RAD
+        }
+
+        function inverseConvertAngle(x) {
+            if (angleMode === 'DEG') return x * (180 / Math.PI);
+            if (angleMode === 'GRAD') return x * (200 / Math.PI);
+            return x; // RAD
+        }
+
+        // --- Basic Calc Functions ---
+        function appendVal(val) {
+            currentExpr += val;
+            document.getElementById('exprDisplay').innerText = currentExpr;
+        }
+
+        function clearAll() {
+            currentExpr = '';
+            document.getElementById('exprDisplay').innerText = '';
+            document.getElementById('resultDisplay').innerText = '0';
+        }
+
+        function deleteLast() {
+            currentExpr = currentExpr.slice(0, -1);
+            document.getElementById('exprDisplay').innerText = currentExpr;
+        }
+
+        function calculate() {
+            try {
+                if (!currentExpr) return;
+                let safeExpr = currentExpr.replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
+                
+                // Evaluate using math.js with custom scope
+                let res = math.evaluate(safeExpr, mathScope);
+                
+                document.getElementById('resultDisplay').innerText = res;
+                addHistory(currentExpr, res);
+            } catch (e) {
+                document.getElementById('resultDisplay').innerText = "Error";
+                toast("Invalid expression", "error");
+            }
+        }
+
+        // --- Modes & Memory ---
+        function setAngleMode(mode, btn) {
+            angleMode = mode;
+            document.querySelectorAll('.mode-toggle .mode-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function memoryAction(action) {
+            let res = parseFloat(document.getElementById('resultDisplay').innerText) || 0;
+            if (action === 'MC') { memory = 0; }
+            if (action === 'MR') { appendVal(memory.toString()); }
+            if (action === 'M+') { memory += res; }
+            if (action === 'M-') { memory -= res; }
+            
+            document.getElementById('memIndicator').style.visibility = (memory !== 0) ? 'visible' : 'hidden';
+        }
+
+        // --- History ---
+        function addHistory(expr, res) {
+            history.push({ expr, res, time: new Date().toLocaleTimeString() });
+            if (history.length > 20) history.shift(); // Limit history
+            localStorage.setItem('calcHistory', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const list = document.getElementById('historyList');
+            if (history.length === 0) {
+                list.innerHTML = '<p class="small-text">Your calculation history will appear here.</p>';
+                return;
+            }
+            list.innerHTML = history.map((h, i) => `
+                <div class="history-item">
+                    <div class="history-expr">${h.expr}</div>
+                    <div class="history-result">= ${h.res}</div>
+                    <div class="history-actions">
+                        <button class="mini-btn" onclick="reuseExpr(${i})">Reuse</button>
+                        <button class="mini-btn" onclick="deleteHistory(${i})">Delete</button>
+                    </div>
+                </div>
+            `).reverse().join('');
+        }
+
+        function deleteHistory(i) {
+            history.splice(i, 1);
+            localStorage.setItem('calcHistory', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function clearHistory() {
+            history = [];
+            localStorage.setItem('calcHistory', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function reuseExpr(i) {
+            currentExpr = history[i].expr;
+            document.getElementById('exprDisplay').innerText = currentExpr;
+            switchTab('scientific', document.querySelector('.tab-btn'));
+        }
+
+        // --- Copy / Share ---
+        function copyResult() {
+            let res = document.getElementById('resultDisplay').innerText;
+            navigator.clipboard.writeText(res).then(() => toast("Copied: " + res, "success"));
+        }
+
+        function shareResult() {
+            let res = document.getElementById('resultDisplay').innerText;
+            let expr = document.getElementById('exprDisplay').innerText;
+            let text = `AGITools24 Scientific Calculator\n${expr} = ${res}`;
+            if (navigator.share) {
+                navigator.share({ title: 'AGITools24 Calc', text: text });
+            } else {
+                navigator.clipboard.writeText(text).then(() => toast("Copied to clipboard!", "success"));
+            }
+        }
+
+        // --- Tab Switching ---
+        function switchTab(tab, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.getElementById('calcDisplayContainer').style.display = 'none';
+            document.getElementById('scientificPad').style.display = 'none';
+            document.getElementById('basicPad').style.display = 'none';
+            document.getElementById('programmerPad').style.display = 'none';
+            document.getElementById('statsPad').style.display = 'none';
+            document.getElementById('toolsPad').style.display = 'none';
+
+            if (tab === 'scientific') {
+                document.getElementById('calcDisplayContainer').style.display = 'block';
+                document.getElementById('scientificPad').style.display = 'grid';
+                document.getElementById('basicPad').style.display = 'grid';
+            } else if (tab === 'basic') {
+                document.getElementById('calcDisplayContainer').style.display = 'block';
+                document.getElementById('basicPad').style.display = 'grid';
+            } else if (tab === 'programmer') {
+                document.getElementById('programmerPad').style.display = 'block';
+            } else if (tab === 'stats') {
+                document.getElementById('statsPad').style.display = 'block';
+            } else if (tab === 'tools') {
+                document.getElementById('toolsPad').style.display = 'block';
+            }
+        }
+
+        // --- Programmer Mode ---
+        function calcProgrammer() {
+            let val = document.getElementById('progInput').value.trim();
+            if (!val) return;
+            try {
+                let num = val.startsWith('0x') ? parseInt(val, 16) : parseInt(val, 10);
+                if (isNaN(num)) throw "Invalid";
+                document.getElementById('binRes').innerText = num.toString(2);
+                document.getElementById('octRes').innerText = num.toString(8);
+                document.getElementById('decRes').innerText = num.toString(10);
+                document.getElementById('hexRes').innerText = num.toString(16).toUpperCase();
+            } catch(e) {
+                document.getElementById('decRes').innerText = "Error";
+            }
+        }
+
+        function appendProg(op) {
+            let input = document.getElementById('progInput');
+            input.value += " " + op + " ";
+            calcProgrammer();
+        }
+
+        // --- Statistics Mode ---
+        function calcStats() {
+            let input = document.getElementById('statsInput').value;
+            let arr = input.split(',').map(Number).filter(n => !isNaN(n));
+            if (arr.length === 0) return;
+
+            let sum = arr.reduce((a, b) => a + b, 0);
+            let mean = sum / arr.length;
+            let sorted = [...arr].sort((a, b) => a - b);
+            let median = sorted.length % 2 === 0 ? (sorted[sorted.length/2 - 1] + sorted[sorted.length/2]) / 2 : sorted[Math.floor(sorted.length/2)];
+            
+            let variance = arr.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / arr.length;
+            let stdDev = Math.sqrt(variance);
+
+            document.getElementById('statsResults').style.display = 'grid';
+            document.getElementById('statMean').innerText = mean.toFixed(2);
+            document.getElementById('statMed').innerText = median;
+            document.getElementById('statMode').innerText = "N/A"; // Simplified
+            document.getElementById('statSum').innerText = sum;
+            document.getElementById('statMin').innerText = sorted[0];
+            document.getElementById('statMax').innerText = sorted[sorted.length - 1];
+            document.getElementById('statRange').innerText = sorted[sorted.length - 1] - sorted[0];
+            document.getElementById('statStd').innerText = stdDev.toFixed(2);
+        }
+
+        // --- Tools: GST ---
+        function calcGST() {
+            let amt = parseFloat(document.getElementById('gstAmount').value) || 0;
+            let rate = parseFloat(document.getElementById('gstRate').value) || 0;
+            
+            let base = amt / (1 + (rate / 100));
+            let gst = amt - base;
+            let cgst = gst / 2;
+            let sgst = gst / 2;
+
+            document.getElementById('gstBase').innerText = "₹" + base.toFixed(2);
+            document.getElementById('gstCgst').innerText = "₹" + cgst.toFixed(2);
+            document.getElementById('gstSgst').innerText = "₹" + sgst.toFixed(2);
+            document.getElementById('gstTotal').innerText = "₹" + amt.toFixed(2);
+        }
+
+        // --- Tools: EMI ---
+        function calcEMI() {
+            let p = parseFloat(document.getElementById('emiAmount').value) || 0;
+            let r = (parseFloat(document.getElementById('emiRate').value) || 0) / 12 / 100;
+            let n = parseFloat(document.getElementById('emiMonths').value) || 0;
+
+            if (p === 0 || n === 0) return;
+
+            let emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+            if (isNaN(emi) || !isFinite(emi)) emi = 0;
+            
+            let total = emi * n;
+            let interest = total - p;
+
+            document.getElementById('emiMonthly').innerText = "₹" + emi.toFixed(2);
+            document.getElementById('emiInterest').innerText = "₹" + interest.toFixed(2);
+            document.getElementById('emiTotal').innerText = "₹" + total.toFixed(2);
+        }
+
+        // --- Tools: Percentage ---
+        function calcPerc() {
+            let x = parseFloat(document.getElementById('percX').value) || 0;
+            let y = parseFloat(document.getElementById('percY').value) || 0;
+            document.getElementById('percRes').innerText = ((x / 100) * y).toFixed(2);
+        }
+
+        // --- Tools: Unit Converter ---
+        const units = {
+            length: { m: 1, cm: 0.01, km: 1000, inch: 0.0254, feet: 0.3048 },
+            weight: { kg: 1, g: 0.001, tonne: 1000, pound: 0.453592, ounce: 0.0283495 }
+        };
+
+        function updateUnitOptions() {
+            let cat = document.getElementById('unitCat').value;
+            let fromSel = document.getElementById('unitFrom');
+            let toSel = document.getElementById('unitTo');
+            fromSel.innerHTML = '';
+            toSel.innerHTML = '';
+            
+            if (cat === 'temp') {
+                ['Celsius', 'Fahrenheit', 'Kelvin'].forEach(u => {
+                    fromSel.add(new Option(u, u));
+                    toSel.add(new Option(u, u));
+                });
+            } else {
+                Object.keys(units[cat]).forEach(u => {
+                    fromSel.add(new Option(u, u));
+                    toSel.add(new Option(u, u));
+                });
+            }
+            convertUnit();
+        }
+
+        function convertUnit() {
+            let cat = document.getElementById('unitCat').value;
+            let val = parseFloat(document.getElementById('unitInput').value) || 0;
+            let from = document.getElementById('unitFrom').value;
+            let to = document.getElementById('unitTo').value;
+            let res = 0;
+
+            if (cat === 'temp') {
+                let c = 0;
+                if (from === 'Celsius') c = val;
+                else if (from === 'Fahrenheit') c = (val - 32) * (5/9);
+                else if (from === 'Kelvin') c = val - 273.15;
+                
+                if (to === 'Celsius') res = c;
+                else if (to === 'Fahrenheit') res = (c * 9/5) + 32;
+                else if (to === 'Kelvin') res = c + 273.15;
+            } else {
+                let base = val * units[cat][from];
+                res = base / units[cat][to];
+            }
+            document.getElementById('unitRes').innerText = res.toFixed(4);
+        }
+
+        // --- Keyboard Support ---
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('programmerPad').style.display !== 'none' || 
+                document.getElementById('statsPad').style.display !== 'none' || 
+                document.getElementById('toolsPad').style.display !== 'none') return;
+                
+            if (e.target.tagName === 'INPUT') return;
+
+            if ((e.key >= '0' && e.key <= '9') || ['+', '-', '*', '/', '.', '(', ')', '%', '!'].includes(e.key)) {
+                appendVal(e.key);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                calculate();
+            } else if (e.key === 'Backspace') {
+                deleteLast();
+            } else if (e.key === 'Escape') {
+                clearAll();
+            }
+        });
+
+        // --- Utilities ---
+        function toast(msg, type) {
+            let el = document.createElement('div');
+            el.className = 'toast-msg ' + (type === 'error' ? 'toast-error' : 'toast-success');
+            el.innerText = msg;
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 3000);
+        }
+
+        function switchTool(tool, btn) {
+            document.querySelectorAll('#toolsPad .tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            ['gst', 'emi', 'perc', 'unit'].forEach(t => {
+                document.getElementById('tool-' + t).style.display = 'none';
+            });
+            document.getElementById('tool-' + tool).style.display = 'block';
+            if (tool === 'unit') updateUnitOptions();
+        }
+
+        // --- Theme Toggle ---
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+        const isDark = savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('themeIcon').textContent = '☀️';
+            document.getElementById('themeText').textContent = 'Light';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isNowDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isNowDark ? 'dark' : 'light');
+            document.getElementById('themeIcon').textContent = isNowDark ? '☀️' : '🌙';
+            document.getElementById('themeText').textContent = isNowDark ? 'Light' : 'Dark';
+        });
+
+        // Initial renders
+        renderHistory();
+        updateUnitOptions();
+    </script>
 </body>
 </html>
