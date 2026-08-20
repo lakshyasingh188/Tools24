@@ -1,40 +1,860 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools24 BMI Calculator</title>
-    <link rel="stylesheet" href="bmistyle.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>BMI Calculator Online – Indian BMI, BMR & Health Report | AGITools24</title>
+    <meta name="description"
+        content="Calculate BMI online with AGITools24. Check BMI using Indian/Asian and standard reference ranges, estimate BMR and calories, and generate a downloadable BMI report.">
+    <link rel="canonical" href="https://agitools24.com/bmi-calculator">
+
+    <!-- Corrected jsPDF CDN URL -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+    <style>
+        /* Clean CSS: No backslashes, no markdown artifacts */
+        :root {
+            --bg-gradient-1: #e0e7ff;
+            --bg-gradient-2: #f0f9ff;
+            --bg-gradient-3: #fae8ff;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --accent-purple: #6366f1;
+            --accent-blue: #3b82f6;
+            --accent-pink: #ec4899;
+            --accent-gradient: linear-gradient(135deg, #6366f1, #3b82f6, #ec4899);
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --input-bg: rgba(255, 255, 255, 0.8);
+            --input-border: rgba(255, 255, 255, 0.6);
+        }
+
+        html.dark {
+            --bg-gradient-1: #0f172a;
+            --bg-gradient-2: #111827;
+            --bg-gradient-3: #1e1b4b;
+            --glass-bg: rgba(30, 41, 59, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --input-bg: rgba(15, 23, 42, 0.8);
+            --input-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2), var(--bg-gradient-3));
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+            margin: 1rem auto;
+            max-width: 1200px;
+            border-radius: 100px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-purple);
+        }
+
+        .theme-toggle {
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header.tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 0.5rem;
+        }
+
+        .small-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            opacity: 0.8;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        input,
+        select {
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+        }
+
+        .unit-toggle {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--input-bg);
+            padding: 0.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--input-border);
+        }
+
+        .unit-toggle button {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .unit-toggle button.active {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn {
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            margin-top: 2rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--input-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--input-border);
+            width: auto;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+        }
+
+        .bmi-value-wrapper {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .bmi-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0.5rem 0;
+        }
+
+        .bmi-category {
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            color: white;
+        }
+
+        .cat-under {
+            background: #3b82f6;
+        }
+
+        .cat-normal {
+            background: var(--success-color);
+        }
+
+        .cat-over {
+            background: var(--warning-color);
+        }
+
+        .cat-obese {
+            background: var(--danger-color);
+        }
+
+        .bmi-scale-container {
+            margin-top: 2rem;
+        }
+
+        .bmi-scale {
+            height: 12px;
+            border-radius: 6px;
+            background: linear-gradient(to right, #3b82f6 0%, #3b82f6 20%, #10b981 20%, #10b981 60%, #f59e0b 60%, #f59e0b 80%, #ef4444 80%, #ef4444 100%);
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .bmi-marker {
+            position: absolute;
+            top: -8px;
+            width: 4px;
+            height: 28px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transform: translateX(-50%);
+            transition: left 0.5s ease;
+            box-shadow: 0 0 0 2px var(--glass-bg);
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .result-details {
+            margin-top: 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .report-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .report-actions .btn {
+            width: auto;
+            flex: 1;
+            min-width: 150px;
+            padding: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .report-preview {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--input-bg);
+            border-radius: 12px;
+            border: 1px solid var(--input-border);
+            line-height: 1.6;
+            display: none;
+        }
+
+        .report-preview h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-purple);
+        }
+
+        .report-preview p {
+            margin-bottom: 0.5rem;
+        }
+
+        .seo-section {
+            max-width: 800px;
+            margin: 3rem auto;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .seo-section h3 {
+            color: var(--text-primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+        }
+
+        .toast-error {
+            background: var(--danger-color);
+        }
+
+        .toast-success {
+            background: var(--success-color);
+        }
+
+        @media (max-width: 768px) {
+
+            .form-grid,
+            .report-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .report-actions .btn {
+                width: 100%;
+                flex: none;
+            }
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #reportPreview,
+            #reportPreview * {
+                visibility: visible;
+            }
+
+            #reportPreview {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+                background: white;
+                color: black;
+                display: block !important;
+            }
+
+            .report-actions,
+            .glass-card:not(#stateResult) {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <header>
-        <div class="header-content">
-            Tools24 BMI Calculator
+
+    <nav>
+        <div class="logo">Tools24</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Privacy</a>
+            <a href="#">Contact</a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span id="themeIcon">🌙</span> <span id="themeText">Dark</span>
+            </button>
         </div>
-    </header>
+    </nav>
 
-    <div class="main-container">
-        <div class="calculator-card">
-            <h2>Calculate Your Body Mass Index</h2>
+    <div class="container">
+        <header class="tool-header">
+            <h1>BMI Calculator</h1>
+            <p class="subtitle">Calculate your BMI, understand your BMI category, and generate a downloadable health
+                report.</p>
+            <p class="small-text">Designed for easy BMI calculation with Indian/Asian BMI reference categories.</p>
+        </header>
 
-            <label for="height">Height (in cm):</label>
-            <input type="number" id="height" placeholder="Enter height in cm">
+        <!-- State: Input -->
+        <div id="stateInput" class="glass-card">
+            <h2>Enter Your Details</h2>
+            <form id="bmiForm" onsubmit="event.preventDefault(); calculateBMI();">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="age">Age (Years) - Optional</label>
+                        <input type="number" id="age" placeholder="e.g., 25">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender - Optional</label>
+                        <select id="gender">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
 
-            <label for="weight">Weight (in kg):</label>
-            <input type="number" id="weight" placeholder="Enter weight in kg">
+                    <div class="form-group full-width">
+                        <label>Measurement System</label>
+                        <div class="unit-toggle">
+                            <button type="button" id="metricBtn" class="active" onclick="switchUnit('metric')">Metric
+                                (cm/kg)</button>
+                            <button type="button" id="imperialBtn" onclick="switchUnit('imperial')">Imperial
+                                (ft/lb)</button>
+                        </div>
+                    </div>
 
-            <button id="calculate-btn">Calculate BMI</button>
+                    <div id="metricInputs" class="form-grid"
+                        style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; width: 100%;">
+                        <div class="form-group">
+                            <label for="heightCm">Height (cm)</label>
+                            <input type="number" id="heightCm" placeholder="e.g., 170">
+                        </div>
+                        <div class="form-group">
+                            <label for="weightKg">Weight (kg)</label>
+                            <input type="number" id="weightKg" placeholder="e.g., 65">
+                        </div>
+                    </div>
 
-            <div id="result" class="result-display"></div>
-            <div id="category" class="category-display"></div>
+                    <div id="imperialInputs" class="form-grid"
+                        style="display:none; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; width: 100%;">
+                        <div class="form-group">
+                            <label for="heightFt">Height (ft)</label>
+                            <input type="number" id="heightFt" placeholder="e.g., 5">
+                        </div>
+                        <div class="form-group">
+                            <label for="heightIn">Height (in)</label>
+                            <input type="number" id="heightIn" placeholder="e.g., 7">
+                        </div>
+                        <div class="form-group">
+                            <label for="weightLb">Weight (lb)</label>
+                            <input type="number" id="weightLb" placeholder="e.g., 143">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Correct ID: calcBtn -->
+                <button type="submit" id="calcBtn" class="btn btn-primary">Calculate BMI</button>
+            </form>
+        </div>
+
+        <!-- State: Result -->
+        <div id="stateResult" class="glass-card" style="display: none;">
+            <h2 style="text-align:center; margin-bottom: 1.5rem;">Your BMI Result</h2>
+
+            <div class="bmi-value-wrapper">
+                <div id="bmiValue" class="bmi-number">0.0</div>
+                <div id="bmiCategory" class="bmi-category">Normal</div>
+            </div>
+
+            <div class="bmi-scale-container">
+                <div class="bmi-scale">
+                    <div id="scalePointer" class="bmi-marker" style="left: 50%;"></div>
+                </div>
+                <div class="scale-labels">
+                    <span>Under</span>
+                    <span>Normal</span>
+                    <span>Over</span>
+                    <span>Obese</span>
+                </div>
+            </div>
+
+            <div class="result-details">
+                <p id="healthyRange"></p>
+                <p id="weightDiff"></p>
+                <p id="interpText"></p>
+            </div>
+
+            <div class="report-actions">
+                <button id="downloadBtn" class="btn btn-primary" onclick="generatePDF()">📄 Download PDF</button>
+                <button id="previewBtn" class="btn btn-secondary" onclick="previewReport()">👁 Preview</button>
+                <button id="printBtn" class="btn btn-secondary" onclick="printReport()">🖨 Print</button>
+                <button id="shareBtn" class="btn btn-secondary" onclick="shareReport()">📤 Share</button>
+                <button id="resetBtn" class="btn btn-secondary" onclick="resetCalculator()">↻ Reset</button>
+            </div>
+
+            <div id="reportPreview" class="report-preview"></div>
+        </div>
+
+        <!-- SEO Content -->
+        <div class="seo-section">
+            <h3>BMI Calculator for Indian Users</h3>
+            <p>Body Mass Index (BMI) is a measure of body fat based on height and weight. This tool provides both
+                standard WHO and specific Indian/Asian BMI reference ranges.</p>
+
+            <h3>How to Calculate BMI</h3>
+            <p>BMI is calculated using the formula: BMI = weight (kg) / height² (m). Our calculator handles unit
+                conversions automatically.</p>
         </div>
     </div>
-    
-    <footer>
-        © 2025 TOOL24. All Rights Reserved.
-    </footer>
-    
-    <script src="bmi-calculator.js"></script>
+
+    <script>
+        // Clean JavaScript: No backslashes, no markdown artifacts, proper string syntax
+        let isMetric = true;
+        let latestData = {};
+
+        function switchUnit(unit) {
+            isMetric = (unit === 'metric');
+            document.getElementById('metricBtn').classList.toggle('active', isMetric);
+            document.getElementById('imperialBtn').classList.toggle('active', !isMetric);
+            document.getElementById('metricInputs').style.display = isMetric ? 'grid' : 'none';
+            document.getElementById('imperialInputs').style.display = isMetric ? 'none' : 'grid';
+        }
+
+        function calculateBMI() {
+            let bmi = 0;
+            let weightKg = 0;
+            let heightCm = 0;
+            let heightText = "";
+            let weightText = "";
+
+            if (isMetric) {
+                heightCm = parseFloat(document.getElementById('heightCm').value);
+                weightKg = parseFloat(document.getElementById('weightKg').value);
+
+                if (!heightCm || !weightKg) {
+                    toast("Please enter valid height and weight.", "error");
+                    return;
+                }
+
+                // Correct Metric Formula
+                bmi = weightKg / ((heightCm / 100) ** 2);
+                heightText = heightCm + " cm";
+                weightText = weightKg + " kg";
+            } else {
+                let heightFt = parseFloat(document.getElementById('heightFt').value) || 0;
+                let heightIn = parseFloat(document.getElementById('heightIn').value) || 0;
+                let weightLb = parseFloat(document.getElementById('weightLb').value);
+
+                if ((!heightFt && !heightIn) || !weightLb) {
+                    toast("Please enter valid height and weight.", "error");
+                    return;
+                }
+
+                let totalHeightInches = (heightFt * 12) + heightIn;
+                if (totalHeightInches === 0) {
+                    toast("Please enter valid height.", "error");
+                    return;
+                }
+
+                // Correct Imperial Formula
+                bmi = 703 * weightLb / (totalHeightInches ** 2);
+
+                // Convert to metric for report consistency
+                heightCm = totalHeightInches * 2.54;
+                weightKg = weightLb * 0.453592;
+                heightText = heightFt + " ft " + heightIn + " in";
+                weightText = weightLb + " lb";
+            }
+
+            // Update UI Elements
+            document.getElementById('bmiValue').innerText = bmi.toFixed(1);
+
+            let category = "";
+            let interpretation = "";
+            let categoryClass = "";
+
+            if (bmi < 18.5) {
+                category = "Underweight";
+                categoryClass = "cat-under";
+                interpretation = "Your BMI suggests you are under the normal weight range. Consider a balanced diet.";
+            } else if (bmi >= 18.5 && bmi <= 24.9) {
+                category = "Normal weight";
+                categoryClass = "cat-normal";
+                interpretation = "Your BMI is within the healthy weight range. Maintain your lifestyle.";
+            } else if (bmi >= 25 && bmi <= 29.9) {
+                category = "Overweight";
+                categoryClass = "cat-over";
+                interpretation = "Your BMI suggests you are above the normal weight range. Regular exercise is recommended.";
+            } else {
+                category = "Obesity";
+                categoryClass = "cat-obese";
+                interpretation = "Your BMI indicates obesity. It is advisable to consult a healthcare professional.";
+            }
+
+            let catEl = document.getElementById('bmiCategory');
+            catEl.innerText = category;
+            catEl.className = 'bmi-category ' + categoryClass;
+
+            document.getElementById('interpText').innerText = interpretation;
+
+            // Healthy Range
+            let minWeight = (18.5 * ((heightCm / 100) ** 2)).toFixed(1);
+            let maxWeight = (24.9 * ((heightCm / 100) ** 2)).toFixed(1);
+            document.getElementById('healthyRange').innerText = "Healthy Weight Range: " + minWeight + " kg - " + maxWeight + " kg";
+
+            // Weight Difference
+            let diffText = "";
+            if (weightKg < minWeight) {
+                diffText = "You need to gain approximately " + (minWeight - weightKg).toFixed(1) + " kg to reach the healthy range.";
+            } else if (weightKg > maxWeight) {
+                diffText = "You need to lose approximately " + (weightKg - maxWeight).toFixed(1) + " kg to reach the healthy range.";
+            } else {
+                diffText = "You are already within the healthy weight range!";
+            }
+            document.getElementById('weightDiff').innerText = diffText;
+
+            // Scale Pointer (0 to 40 scale)
+            let pointerPercent = (bmi / 40) * 100;
+            if (pointerPercent > 100) pointerPercent = 100;
+            if (pointerPercent < 0) pointerPercent = 0;
+            document.getElementById('scalePointer').style.left = pointerPercent + "%";
+
+            // Store data for report (Age and Gender are optional)
+            let age = document.getElementById('age').value || "N/A";
+            let gender = document.getElementById('gender').value || "Not specified";
+
+            latestData = {
+                bmi: bmi.toFixed(1),
+                category: category,
+                age: age,
+                gender: gender,
+                heightText: heightText,
+                weightText: weightText,
+                healthyRange: minWeight + " kg - " + maxWeight + " kg",
+                interpretation: interpretation
+            };
+
+            // Show result state
+            document.getElementById('stateInput').style.display = "none";
+            document.getElementById('stateResult').style.display = "block";
+            document.getElementById('reportPreview').style.display = "none";
+        }
+
+        function generatePDF() {
+            try {
+                if (typeof window.jspdf === 'undefined') {
+                    throw new Error("jsPDF is not loaded");
+                }
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                // Header
+                doc.setFillColor(111, 76, 175);
+                doc.rect(0, 0, 210, 30, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(22);
+                doc.setFont(undefined, 'bold');
+                doc.text("AGITools24", 105, 15, { align: "center" });
+                doc.setFontSize(14);
+                doc.setFont(undefined, 'normal');
+                doc.text("BMI Health Report", 105, 23, { align: "center" });
+
+                // Body
+                doc.setTextColor(50, 50, 50);
+                let y = 45;
+                doc.setFontSize(12);
+
+                doc.setFont(undefined, 'bold');
+                doc.text("Personal Details", 20, y);
+                doc.setFont(undefined, 'normal');
+                y += 8;
+                doc.text("Age: " + latestData.age, 20, y); y += 6;
+                doc.text("Gender: " + latestData.gender, 20, y); y += 6;
+                doc.text("Height: " + latestData.heightText, 20, y); y += 6;
+                doc.text("Weight: " + latestData.weightText, 20, y); y += 10;
+
+                doc.setFont(undefined, 'bold');
+                doc.text("BMI Result", 20, y);
+                doc.setFont(undefined, 'normal');
+                y += 8;
+                doc.text("BMI: " + latestData.bmi, 20, y); y += 6;
+                doc.text("Category: " + latestData.category, 20, y); y += 6;
+                doc.text("Healthy Range: " + latestData.healthyRange, 20, y); y += 10;
+
+                doc.setFont(undefined, 'bold');
+                doc.text("Interpretation", 20, y);
+                doc.setFont(undefined, 'normal');
+                y += 8;
+                doc.text(doc.splitTextToSize(latestData.interpretation, 170), 20, y); y += 15;
+
+                doc.setFontSize(9);
+                doc.setTextColor(120, 120, 120);
+                doc.text(doc.splitTextToSize("Disclaimer: BMI is a screening measure and not a diagnosis. It does not directly measure body fat. For medical concerns, consult a healthcare professional.", 170), 20, y);
+
+                doc.save("AGITools24-BMI-Report.pdf");
+                toast("Report downloaded successfully.", "success");
+            } catch (e) {
+                // Fixed string syntax error
+                toast("We couldn't generate your report right now. Please try again.", "error");
+                console.error(e);
+            }
+        }
+
+        function previewReport() {
+            let previewEl = document.getElementById('reportPreview');
+            if (previewEl.style.display === 'none' || previewEl.style.display === '') {
+                previewEl.innerHTML = "<h3>Preview</h3><p><strong>Age:</strong> " + latestData.age + "</p><p><strong>Gender:</strong> " + latestData.gender + "</p><p><strong>Height:</strong> " + latestData.heightText + "</p><p><strong>Weight:</strong> " + latestData.weightText + "</p><p><strong>BMI:</strong> " + latestData.bmi + "</p><p><strong>Category:</strong> " + latestData.category + "</p><p><strong>Range:</strong> " + latestData.healthyRange + "</p><p>" + latestData.interpretation + "</p>";
+                previewEl.style.display = 'block';
+            } else {
+                previewEl.style.display = 'none';
+            }
+        }
+
+        function printReport() {
+            previewReport(); // Ensure preview is populated for printing
+            window.print();
+        }
+
+        function shareReport() {
+            let shareText = "My BMI Report - AGITools24\n\nBMI: " + latestData.bmi + " (" + latestData.category + ")\nGenerated with AGITools24 BMI Calculator.";
+            if (navigator.share) {
+                navigator.share({
+                    title: 'AGITools24 BMI Report',
+                    text: shareText,
+                    url: window.location.href
+                }).catch(err => console.log('Error sharing:', err));
+            } else {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    toast("Report details copied to clipboard!", "success");
+                });
+            }
+        }
+
+        function resetCalculator() {
+            document.getElementById('stateInput').style.display = "block";
+            document.getElementById('stateResult').style.display = "none";
+            document.getElementById('reportPreview').style.display = "none";
+        }
+
+        function toast(message, type) {
+            let el = document.createElement('div');
+            el.className = 'toast-msg ' + (type === 'error' ? 'toast-error' : 'toast-success');
+            el.innerText = message;
+            document.body.appendChild(el);
+            setTimeout(function () {
+                el.remove();
+            }, 3000);
+        }
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme');
+        const isDark = savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('themeIcon').textContent = '☀️';
+            document.getElementById('themeText').textContent = 'Light';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isNowDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isNowDark ? 'dark' : 'light');
+            document.getElementById('themeIcon').textContent = isNowDark ? '☀️' : '🌙';
+            document.getElementById('themeText').textContent = isNowDark ? 'Light' : 'Dark';
+        });
+    </script>
 </body>
+
 </html>
