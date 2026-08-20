@@ -1,0 +1,2212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO -->
+  <title>Image to PDF Converter Online Free – JPG, PNG to PDF | Tools24</title>
+  <meta name="description"
+    content="Convert JPG, PNG, photos and supported files to PDF online for free with Tools24. Add multiple images, rearrange files, capture photos with your camera and download one high-quality PDF." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://agitools24.com/image-to-pdf.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Image to PDF Converter Online Free | Tools24" />
+  <meta property="og:description"
+    content="Convert JPG, PNG, photos and supported files to PDF online for free. Add multiple images, rearrange files, capture photos with your camera and download one high-quality PDF." />
+  <meta property="og:url" content="https://agitools24.com/image-to-pdf.html" />
+  <meta property="og:site_name" content="Tools24" />
+  <meta property="og:image" content="https://agitools24.com/assets/og-image-to-pdf.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Image to PDF Converter Online Free | Tools24" />
+  <meta name="twitter:description"
+    content="Convert JPG, PNG, photos and supported files to PDF online for free with Tools24." />
+  <meta name="twitter:image" content="https://agitools24.com/assets/og-image-to-pdf.png" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Tools24 Image to PDF Converter",
+  "url": "https://agitools24.com/image-to-pdf.html",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Web Browser",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Convert JPG, PNG, photos and supported files to PDF online for free. Add multiple images, rearrange files, capture photos with your camera and download one high-quality PDF."
+}
+</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"How do I convert a photo to PDF?","acceptedAnswer":{"@type":"Answer","text":"Upload your photo by clicking 'Choose Files' or dragging it into the Tools24 converter. You can add multiple photos, rearrange them, and click 'Convert to PDF' to download a single PDF file."}},
+    {"@type":"Question","name":"Can I convert multiple images into one PDF?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can select multiple JPG, PNG, or WebP images at once, rearrange their order by dragging them, and convert them all into a single combined PDF document."}},
+    {"@type":"Question","name":"Can I use my phone camera to create a PDF?","acceptedAnswer":{"@type":"Answer","text":"Yes, on mobile devices, click the 'Capture with Camera' button. This opens your device camera, allowing you to take a photo which is immediately added to the PDF queue."}},
+    {"@type":"Question","name":"Can I rearrange images before creating the PDF?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. You can drag and drop files to reorder them on desktop, or use the Up and Down arrows on each file card to reorder them on mobile."}},
+    {"@type":"Question","name":"Does Tools24 reduce image quality?","acceptedAnswer":{"@type":"Answer","text":"No. Tools24 preserves the original resolution and aspect ratio of your images without aggressive compression, ensuring your PDF remains in high quality."}},
+    {"@type":"Question","name":"Can I convert JPG and PNG to PDF?","acceptedAnswer":{"@type":"Answer","text":"Yes, Tools24 supports converting both JPG and PNG formats, alongside WebP, BMP, and GIF, directly into a PDF."}},
+    {"@type":"Question","name":"Can I merge multiple PDFs?","acceptedAnswer":{"@type":"Answer","text":"Yes, if you select multiple PDF files, Tools24 will merge them sequentially into one single PDF document while preserving the original pages."}},
+    {"@type":"Question","name":"Is the Image to PDF converter free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Tools24 Image to PDF Converter is completely free to use and requires no signup or installation."}},
+    {"@type":"Question","name":"Are my files uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Your files are processed entirely within your browser. They are never uploaded to a server, ensuring complete privacy and security."}}
+  ]
+}
+</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Required Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/blueimp-load-image@5.16.0/js/load-image.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+  <style>
+    /* ============================================
+   TOOLS24 — IMAGE TO PDF CONVERTER
+   ============================================ */
+
+    :root {
+      --brand-1: #7C8FFF;
+      --brand-2: #65BDF5;
+      --brand-3: #B49AFF;
+      --brand-4: #F39BCB;
+      --brand-gradient: linear-gradient(135deg, #7C8FFF 0%, #65BDF5 35%, #B49AFF 70%, #F39BCB 100%);
+      --brand-gradient-soft: linear-gradient(135deg, rgba(124, 143, 255, 0.15) 0%, rgba(101, 189, 245, 0.12) 35%, rgba(180, 154, 255, 0.12) 70%, rgba(243, 155, 203, 0.12) 100%);
+
+      --bg-primary: #F6F8FE;
+      --bg-secondary: #EEF2FB;
+      --card-bg: #FFFFFF;
+      --card-bg-soft: #F7F9FE;
+      --text-primary: #0E1430;
+      --text-secondary: #4B5478;
+      --text-muted: #7A82A0;
+      --border: rgba(20, 30, 70, 0.10);
+      --border-strong: rgba(20, 30, 70, 0.18);
+      --shadow: 0 10px 30px -10px rgba(40, 50, 90, 0.18);
+      --shadow-lg: 0 24px 60px -20px rgba(40, 50, 90, 0.25);
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --accent-blue: #5B8DEF;
+      --accent-purple: #9B6BFF;
+      --accent-pink: #F37BB3;
+      --success: #22C55E;
+      --danger: #EF4444;
+      --warning: #F59E0B;
+      --header-bg: rgba(255, 255, 255, 0.78);
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #080D18;
+      --bg-secondary: #0B1020;
+      --card-bg: #11192B;
+      --card-bg-soft: #151D33;
+      --text-primary: #F4F7FF;
+      --text-secondary: #B6BED4;
+      --text-muted: #7B8499;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.14);
+      --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+      --shadow-lg: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
+      --glass-bg: rgba(17, 25, 43, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.06);
+      --accent-blue: #7DA8FF;
+      --accent-purple: #B49AFF;
+      --accent-pink: #F39BCB;
+      --header-bg: rgba(11, 16, 32, 0.78);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 0.4s ease, color 0.4s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    input,
+    select {
+      font-family: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+      animation: blobFloat 18s ease-in-out infinite;
+    }
+
+    .bg-blob.b1 {
+      width: 480px;
+      height: 480px;
+      background: #7C8FFF;
+      top: -100px;
+      left: -120px;
+    }
+
+    .bg-blob.b2 {
+      width: 420px;
+      height: 420px;
+      background: #F39BCB;
+      top: 30%;
+      right: -150px;
+      animation-delay: -6s;
+    }
+
+    .bg-blob.b3 {
+      width: 380px;
+      height: 380px;
+      background: #65BDF5;
+      bottom: -100px;
+      left: 30%;
+      animation-delay: -12s;
+    }
+
+    [data-theme="dark"] .bg-blob {
+      opacity: 0.22;
+    }
+
+    @keyframes blobFloat {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(30px, -40px) scale(1.08);
+      }
+    }
+
+    /* ============ HEADER ============ */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+      flex-shrink: 0;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--brand-gradient);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 6px 18px -6px rgba(124, 143, 255, 0.5);
+    }
+
+    .logo-text {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-text span {
+      -webkit-text-fill-color: var(--text-primary);
+      color: var(--text-primary);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto;
+    }
+
+    .nav a {
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .nav a:hover {
+      color: var(--text-primary);
+      background: var(--card-bg-soft);
+    }
+
+    .nav a.active {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 14px;
+      right: 14px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--brand-gradient);
+      box-shadow: 0 0 12px rgba(124, 143, 255, 0.6);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: 8px;
+    }
+
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--card-bg-soft);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+      border-color: var(--border-strong);
+    }
+
+    .theme-toggle .icon-moon {
+      display: none;
+    }
+
+    [data-theme="dark"] .theme-toggle .icon-sun {
+      display: none;
+    }
+
+    [data-theme="dark"] .theme-toggle .icon-moon {
+      display: block;
+    }
+
+    .mobile-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--card-bg-soft);
+      border: 1px solid var(--border);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .mobile-toggle span {
+      width: 18px;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 1px;
+      transition: 0.3s;
+    }
+
+    .mobile-toggle.open span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .mobile-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-toggle.open span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    /* ============ HERO ============ */
+    .hero {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 56px 24px 32px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 .grad {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero .subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* ============ TOOL CARD ============ */
+    .tool-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 32px auto 0;
+      padding: 0 24px;
+    }
+
+    .tool-card {
+      position: relative;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 8px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      padding: 1.5px;
+      background: var(--brand-gradient);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .tool-inner {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 40px;
+      min-height: 420px;
+      position: relative;
+    }
+
+    /* Tool States */
+    .tool-state {
+      display: none;
+    }
+
+    .tool-state.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Upload Area */
+    .upload-area {
+      border: 2.5px dashed var(--border-strong);
+      border-radius: 16px;
+      padding: 48px 24px;
+      text-align: center;
+      background: var(--brand-gradient-soft);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-area:hover {
+      border-color: var(--brand-1);
+      transform: translateY(-2px);
+    }
+
+    .upload-area.drag-over {
+      border-color: var(--brand-1);
+      background: rgba(124, 143, 255, 0.12);
+      transform: scale(1.01);
+      box-shadow: 0 0 60px rgba(124, 143, 255, 0.3);
+    }
+
+    .upload-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 20px;
+      border-radius: 20px;
+      background: var(--brand-gradient);
+      display: grid;
+      place-items: center;
+      color: white;
+      box-shadow: 0 16px 32px -12px rgba(124, 143, 255, 0.6);
+      animation: floatY 3s ease-in-out infinite;
+    }
+
+    @keyframes floatY {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .upload-area h3 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .upload-area p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--brand-gradient);
+      color: white;
+      box-shadow: 0 8px 20px -8px rgba(124, 143, 255, 0.6);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px -8px rgba(124, 143, 255, 0.8);
+    }
+
+    .btn-secondary {
+      background: var(--card-bg-soft);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--brand-1);
+      transform: translateY(-1px);
+    }
+
+    .btn-large {
+      padding: 16px 32px;
+      font-size: 16px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-danger {
+      color: var(--danger);
+      border: 1px solid var(--border);
+      background: var(--card-bg-soft);
+    }
+
+    .btn-danger:hover {
+      border-color: var(--danger);
+    }
+
+    .upload-formats {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* Privacy Note */
+    .privacy-note {
+      margin-top: 20px;
+      padding: 12px 16px;
+      background: var(--card-bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .privacy-note .lock {
+      font-size: 16px;
+    }
+
+    /* File Queue */
+    .queue-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .queue-header h3 {
+      font-size: 18px;
+    }
+
+    .queue-header .count-badge {
+      padding: 4px 12px;
+      background: var(--brand-gradient);
+      color: white;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-left: 8px;
+    }
+
+    .file-queue {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .file-queue::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .file-queue::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .file-queue::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 10px;
+    }
+
+    .file-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--card-bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .file-card:hover {
+      border-color: var(--brand-1);
+      box-shadow: var(--shadow);
+    }
+
+    .sortable-ghost {
+      opacity: 0.4;
+    }
+
+    .sortable-chosen {
+      cursor: grabbing;
+    }
+
+    .sortable-drag {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--brand-2);
+    }
+
+    .file-num {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .file-handle {
+      cursor: grab;
+      color: var(--text-muted);
+      font-size: 18px;
+      padding: 4px;
+    }
+
+    .file-preview {
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .file-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .file-preview .pdf-icon {
+      color: var(--danger);
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    .file-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .file-name {
+      font-weight: 600;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-primary);
+    }
+
+    .file-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: all 0.15s ease;
+    }
+
+    .icon-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--brand-1);
+    }
+
+    .icon-btn.danger:hover {
+      color: var(--danger);
+      border-color: var(--danger);
+    }
+
+    /* Action Bar */
+    .action-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .action-left {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .action-right {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Processing State */
+    .processing-state {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .processing-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      border-radius: 24px;
+      background: var(--brand-gradient);
+      display: grid;
+      place-items: center;
+      color: white;
+      position: relative;
+    }
+
+    .processing-icon svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .processing-icon::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 28px;
+      border: 2px solid transparent;
+      border-top-color: var(--brand-1);
+      border-right-color: var(--brand-3);
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .processing-stage {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .processing-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .progress-track {
+      max-width: 400px;
+      margin: 0 auto;
+      height: 8px;
+      background: var(--card-bg-soft);
+      border-radius: 100px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--brand-gradient);
+      border-radius: 100px;
+      width: 0%;
+      transition: width 0.4s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      animation: shimmer 1.5s linear infinite;
+    }
+
+    @keyframes shimmer {
+      from {
+        transform: translateX(-100%);
+      }
+
+      to {
+        transform: translateX(100%);
+      }
+    }
+
+    /* Success State */
+    .success-state {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      background: var(--success);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 40px;
+      animation: pop 0.5s ease;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0);
+      }
+
+      60% {
+        transform: scale(1.15);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .success-state h3 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .success-state p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .success-info {
+      display: inline-flex;
+      gap: 24px;
+      padding: 16px 24px;
+      background: var(--card-bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .info-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .info-value {
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .success-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ============ SECTIONS ============ */
+    .section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(28px, 4vw, 38px);
+      margin-bottom: 12px;
+    }
+
+    .section-head h2 .grad {
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-head p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* SEO content */
+    .seo-content {
+      max-width: 820px;
+      margin: 0 auto;
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .seo-content h2 {
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      font-size: 26px;
+    }
+
+    .seo-content h3 {
+      color: var(--text-primary);
+      margin: 24px 0 8px;
+      font-size: 20px;
+    }
+
+    .seo-content p {
+      margin-bottom: 14px;
+    }
+
+    .seo-content ul {
+      padding-left: 24px;
+      margin-bottom: 14px;
+    }
+
+    .seo-content li {
+      margin-bottom: 6px;
+    }
+
+    /* FAQ */
+    .faq-list {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .faq-item.open {
+      border-color: var(--brand-1);
+    }
+
+    .faq-q {
+      width: 100%;
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-primary);
+    }
+
+    .faq-q .chev {
+      color: var(--text-muted);
+      transition: transform 0.25s ease;
+    }
+
+    .faq-item.open .faq-q .chev {
+      transform: rotate(180deg);
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 300px;
+    }
+
+    .faq-a-inner {
+      padding: 0 20px 18px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 40px 24px 24px;
+      margin-top: 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+
+    .footer-brand p {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-top: 10px;
+      max-width: 320px;
+    }
+
+    .footer-col h4 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 4px 0;
+      transition: color 0.2s ease;
+    }
+
+    .footer-col a:hover {
+      color: var(--brand-1);
+    }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Toasts & Modal */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--brand-1);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-lg);
+      min-width: 280px;
+      max-width: 380px;
+      animation: toastIn 0.3s ease;
+      pointer-events: auto;
+    }
+
+    .toast.error {
+      border-left-color: var(--danger);
+    }
+
+    .toast.success {
+      border-left-color: var(--success);
+    }
+
+    .toast.warning {
+      border-left-color: var(--warning);
+    }
+
+    .toast.out {
+      animation: toastOut 0.3s ease forwards;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes toastOut {
+      to {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      border-radius: 16px;
+      max-width: 90vw;
+      max-height: 90vh;
+      width: 600px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h3 {
+      font-size: 16px;
+    }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--card-bg-soft);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+    }
+
+    .modal-body {
+      padding: 20px;
+      overflow: auto;
+      text-align: center;
+    }
+
+    .modal-body img {
+      max-width: 100%;
+      max-height: 70vh;
+      margin: 0 auto;
+      border-radius: 8px;
+    }
+
+    .modal-body iframe {
+      width: 100%;
+      height: 70vh;
+      border: none;
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 68px;
+      left: 0;
+      right: 0;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      z-index: 99;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-menu.open {
+      transform: translateY(0);
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .mobile-menu a.active {
+      color: var(--text-primary);
+      background: var(--card-bg-soft);
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .nav {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .tool-inner {
+        padding: 24px 20px;
+      }
+
+      .upload-area {
+        padding: 32px 16px;
+      }
+
+      .hero {
+        padding: 32px 20px 20px;
+      }
+
+      .section {
+        padding: 56px 20px;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .action-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .action-left,
+      .action-right {
+        justify-content: center;
+      }
+
+      .btn {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .toast-container {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+      }
+
+      .toast {
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      .file-card {
+        flex-wrap: wrap;
+      }
+
+      .file-info {
+        width: calc(100% - 100px);
+      }
+
+      .file-actions {
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .file-handle {
+        display: none;
+      }
+
+      .file-num {
+        display: none;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--brand-1);
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bg-blob b1"></div>
+  <div class="bg-blob b2"></div>
+  <div class="bg-blob b3"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo" aria-label="Tools24 home">
+        <div class="logo-mark">T</div>
+        <div class="logo-text">Tools<span>24</span></div>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/image-tools">Image Tools</a>
+        <a href="/pdf-tools" class="active" aria-current="page">PDF Tools</a>
+        <a href="/file-tools">File Tools</a>
+        <a href="/all-tools">All Tools</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="icon-sun">☀️</span>
+          <span class="icon-moon">🌙</span>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a>
+    <a href="/image-tools">Image Tools</a>
+    <a href="/pdf-tools" class="active">PDF Tools</a>
+    <a href="/file-tools">File Tools</a>
+    <a href="/all-tools">All Tools</a>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <span class="hero-badge">Free • Fast • Secure • No Installation</span>
+    <h1>Convert Images &amp; Files to <span class="grad">PDF Online</span></h1>
+    <p class="subtitle">Convert photos, scanned documents and supported files into high-quality PDF files quickly and
+      easily. Add multiple files, arrange them in your preferred order, and download one PDF.</p>
+  </section>
+
+  <!-- ============ TOOL ============ -->
+  <section class="tool-wrap" id="tool">
+    <div class="tool-card">
+      <div class="tool-inner">
+
+        <!-- State: Upload / Queue -->
+        <div class="tool-state active" id="stateUpload">
+          <div class="upload-area" id="uploadArea" role="button" tabindex="0" aria-label="Upload files">
+            <div class="upload-icon">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+            </div>
+            <h3>Drag &amp; Drop files here</h3>
+            <p>or choose from your device</p>
+            <div class="btn-row">
+              <button class="btn btn-primary" id="chooseBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                </svg>
+                Choose Files
+              </button>
+              <button class="btn btn-secondary" id="cameraBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                  <circle cx="12" cy="13" r="4" />
+                </svg>
+                Capture with Camera
+              </button>
+            </div>
+            <div class="upload-formats">JPG • JPEG • PNG • WEBP • BMP • GIF • PDF • TXT • HTML • CSV</div>
+          </div>
+
+          <input type="file" id="fileInput" accept="image/*,application/pdf,text/html,text/plain,text/csv,.bmp,.gif"
+            multiple hidden>
+          <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+
+          <div class="privacy-note">
+            <span class="lock">🔒</span>
+            <span><strong>Private &amp; Secure:</strong> Your files are processed securely. Whenever possible, file
+              processing happens directly in your browser and your files are not uploaded to our server.</span>
+          </div>
+
+          <!-- File Queue -->
+          <div id="queueSection" class="hidden" style="margin-top:32px;">
+            <div class="queue-header">
+              <h3>Selected Files <span class="count-badge" id="fileCount">0</span></h3>
+              <button class="btn btn-secondary" id="addMoreBtn" style="padding: 8px 16px; font-size: 14px;">＋ Add More
+                Files</button>
+            </div>
+            <div class="file-queue" id="fileQueue"></div>
+
+            <div class="action-bar">
+              <div class="action-left">
+                <button class="btn btn-danger" id="clearBtn">Clear All</button>
+              </div>
+              <div class="action-right">
+                <button class="btn btn-primary btn-large" id="convertBtn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="12" y1="18" x2="12" y2="12" />
+                    <polyline points="9 15 12 12 15 15" />
+                  </svg>
+                  Convert to PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- State: Processing -->
+        <div class="tool-state" id="stateProcessing">
+          <div class="processing-state">
+            <div class="processing-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+              </svg>
+            </div>
+            <div class="processing-stage" id="processingStage">Preparing files...</div>
+            <div class="processing-sub" id="processingSub">Processing 1 of 1</div>
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- State: Success -->
+        <div class="tool-state" id="stateSuccess">
+          <div class="success-state">
+            <div class="success-icon">✓</div>
+            <h3>PDF Created Successfully</h3>
+            <p id="successMsg">Your files have been converted into a single PDF.</p>
+            <div class="success-info">
+              <div class="info-item">
+                <span class="info-label">Files</span>
+                <span class="info-value" id="successFiles">0</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">PDF Size</span>
+                <span class="info-value" id="successSize">0 KB</span>
+              </div>
+            </div>
+            <div class="success-actions">
+              <button class="btn btn-primary" id="downloadBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download PDF
+              </button>
+              <button class="btn btn-secondary" id="createAnotherBtn">＋ Create Another PDF</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SEO CONTENT ============ -->
+  <section class="section">
+    <div class="seo-content">
+      <h2>Image to PDF Converter Online</h2>
+      <p>The Tools24 Image to PDF Converter is a free online tool that allows you to convert JPG, PNG, and other image
+        formats directly into a PDF document. Whether you need to convert a single photo to PDF or merge multiple images
+        into one PDF file, our tool handles it smoothly. Because it runs entirely in your browser, your files remain
+        private and secure.</p>
+
+      <h3>Convert JPG, PNG, and Camera Photos to PDF</h3>
+      <p>You can easily convert JPG to PDF or PNG to PDF with a single click. If you are using a mobile phone, the
+        camera capture feature allows you to take a photo and immediately convert it into a PDF document. This is
+        perfect for scanning receipts, documents, or forms on the go.</p>
+
+      <h3>Merge Multiple Images and PDFs into One</h3>
+      <p>Need to combine multiple files? Tools24 lets you add multiple images and existing PDF files, rearrange them in
+        your preferred order, and merge them all into a single PDF. This makes it an ideal solution for creating
+        reports, portfolios, or submitting assignments.</p>
+
+      <h2>How to Convert Images to PDF</h2>
+      <ul>
+        <li><strong>Select or capture your images:</strong> Click "Choose Files" or use the camera button on mobile.
+        </li>
+        <li><strong>Add more files if required:</strong> Use the "Add More Files" button to append more images or PDFs.
+        </li>
+        <li><strong>Rearrange them in your preferred order:</strong> Drag and drop files on desktop, or use the arrow
+          buttons on mobile to set the exact page order.</li>
+        <li><strong>Click Convert to PDF:</strong> The tool will process your files and generate a high-quality PDF.
+        </li>
+        <li><strong>Download your PDF:</strong> Save the final PDF document to your device.</li>
+      </ul>
+
+      <h2>Why Use Tools24 Image to PDF Converter?</h2>
+      <p>Tools24 offers a fast, secure, and high-quality PDF conversion experience. It is a mobile image to PDF
+        converter that works flawlessly on both Android and iOS devices, as well as desktop computers. There is no
+        installation required, no signup needed, and we do not compress your images aggressively, ensuring your PDF
+        quality remains intact. All processing is done locally in your browser whenever possible, ensuring your files
+        are never uploaded to a server.</p>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section" style="padding-top:0;">
+    <div class="section-head">
+      <h2>Frequently Asked <span class="grad">Questions</span></h2>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <div class="logo-mark">T</div>
+          <div class="logo-text">Tools<span>24</span></div>
+        </a>
+        <p>Tools24 offers a growing collection of free online tools for images, PDFs and everyday tasks — fast, private
+          and easy to use.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <a href="/all-tools">All Tools</a>
+        <a href="/image-tools">Image Tools</a>
+        <a href="/pdf-tools">PDF Tools</a>
+        <a href="/file-tools">File Tools</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/privacy">Privacy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/cookies">Cookies</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Tools24. All rights reserved.</div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Preview Modal -->
+  <div class="modal-overlay" id="previewModal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="previewTitle">File Preview</h3>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body" id="previewBody"></div>
+    </div>
+  </div>
+
+  <script>
+    'use strict';
+
+    /* ============================================================
+       TOOLS24 IMAGE TO PDF CONVERTER
+       ============================================================ */
+
+    // ---------- Theme Manager ----------
+    const themeToggle = document.getElementById('themeToggle');
+    function applyTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('tools24-theme', t);
+    }
+    const savedTheme = localStorage.getItem('tools24-theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(savedTheme);
+    themeToggle.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+    });
+
+    // ---------- Mobile Menu ----------
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileToggle.addEventListener('click', () => {
+      const open = mobileToggle.classList.toggle('open');
+      mobileMenu.classList.toggle('open', open);
+      mobileToggle.setAttribute('aria-expanded', open);
+    });
+
+    // ---------- Toast ----------
+    function toast(msg, type = 'info', duration = 3200) {
+      const c = document.getElementById('toastContainer');
+      const el = document.createElement('div');
+      el.className = `toast ${type}`;
+      const icons = { info: 'ℹ️', success: '✓', error: '⚠️', warning: '⚠' };
+      el.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${msg}</span>`;
+      c.appendChild(el);
+      setTimeout(() => {
+        el.classList.add('out');
+        setTimeout(() => el.remove(), 300);
+      }, duration);
+    }
+
+    // ---------- FAQ ----------
+    const faqs = [
+      ['How do I convert a photo to PDF?', 'Upload your photo by clicking "Choose Files" or dragging it into the Tools24 converter. You can add multiple photos, rearrange them, and click "Convert to PDF" to download a single PDF file.'],
+      ['Can I convert multiple images into one PDF?', 'Yes. You can select multiple JPG, PNG, or WebP images at once, rearrange their order by dragging them, and convert them all into a single combined PDF document.'],
+      ['Can I use my phone camera to create a PDF?', 'Yes, on mobile devices, click the "Capture with Camera" button. This opens your device camera, allowing you to take a photo which is immediately added to the PDF queue.'],
+      ['Can I rearrange images before creating the PDF?', 'Absolutely. You can drag and drop files to reorder them on desktop, or use the Up and Down arrows on each file card to reorder them on mobile.'],
+      ['Does Tools24 reduce image quality?', 'No. Tools24 preserves the original resolution and aspect ratio of your images without aggressive compression, ensuring your PDF remains in high quality.'],
+      ['Can I convert JPG and PNG to PDF?', 'Yes, Tools24 supports converting both JPG and PNG formats, alongside WebP, BMP, and GIF, directly into a PDF.'],
+      ['Can I merge multiple PDFs?', 'Yes, if you select multiple PDF files, Tools24 will merge them sequentially into one single PDF document while preserving the original pages.'],
+      ['Is the Image to PDF converter free?', 'Yes. Tools24 Image to PDF Converter is completely free to use and requires no signup or installation.'],
+      ['Are my files uploaded to a server?', 'No. Your files are processed entirely within your browser. They are never uploaded to a server, ensuring complete privacy and security.']
+    ];
+    const faqList = document.getElementById('faqList');
+    faqs.forEach(([q, a]) => {
+      const item = document.createElement('div');
+      item.className = 'faq-item';
+      item.innerHTML = `
+    <button class="faq-q" aria-expanded="false">
+      <span>${q}</span>
+      <span class="chev">▾</span>
+    </button>
+    <div class="faq-a"><div class="faq-a-inner">${a}</div></div>`;
+      const btn = item.querySelector('.faq-q');
+      btn.addEventListener('click', () => {
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open);
+      });
+      faqList.appendChild(item);
+    });
+
+    /* ============================================================
+       PDF CONVERTER CORE
+       ============================================================ */
+
+    const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25 MB
+    let filesArray = [];
+    let generatedPdfBlob = null;
+
+    const $ = id => document.getElementById(id);
+    const uploadArea = $('uploadArea');
+    const fileInput = $('fileInput');
+    const cameraInput = $('cameraInput');
+    const queueSection = $('queueSection');
+    const fileQueue = $('fileQueue');
+
+    // ---------- State Manager ----------
+    function setState(state) {
+      document.querySelectorAll('.tool-state').forEach(s => s.classList.remove('active'));
+      const map = { upload: 'stateUpload', processing: 'stateProcessing', success: 'stateSuccess' };
+      $(map[state]).classList.add('active');
+    }
+
+    // ---------- File Handling ----------
+    function addFiles(newFiles) {
+      let added = 0;
+      for (let file of newFiles) {
+        if (file.size > MAX_FILE_SIZE) {
+          toast(`${file.name} is larger than 25MB and was skipped.`, 'error');
+          continue;
+        }
+        if (file.size === 0) {
+          toast(`${file.name} is empty and was skipped.`, 'error');
+          continue;
+        }
+
+        const isSupported = file.type.startsWith('image/') || file.type === 'application/pdf';
+        if (!isSupported) {
+          toast(`${file.name} is not a supported format.`, 'error');
+          continue;
+        }
+
+        filesArray.push({
+          id: Math.random().toString(36).substr(2, 9),
+          file: file,
+          url: URL.createObjectURL(file)
+        });
+        added++;
+      }
+
+      if (added > 0) {
+        renderFileList();
+        toast(`${added} file(s) added.`, 'success');
+      }
+    }
+
+    function removeFile(id) {
+      const idx = filesArray.findIndex(f => f.id === id);
+      if (idx !== -1) {
+        URL.revokeObjectURL(filesArray[idx].url);
+        filesArray.splice(idx, 1);
+        renderFileList();
+      }
+    }
+
+    function clearAll() {
+      if (filesArray.length > 1 && !confirm('Are you sure you want to clear all selected files?')) return;
+      filesArray.forEach(f => URL.revokeObjectURL(f.url));
+      filesArray = [];
+      renderFileList();
+      toast('All files cleared.', 'info');
+    }
+
+    // ---------- Render Queue ----------
+    function renderFileList() {
+      fileQueue.innerHTML = '';
+      $('fileCount').textContent = filesArray.length;
+      queueSection.classList.toggle('hidden', filesArray.length === 0);
+
+      filesArray.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'file-card';
+        card.dataset.id = item.id;
+
+        const isPdf = item.file.type === 'application/pdf';
+        const fileExt = item.file.name.split('.').pop().toUpperCase();
+
+        card.innerHTML = `
+      <div class="file-handle" title="Drag to reorder">⠿</div>
+      <div class="file-num">${index + 1}</div>
+      <div class="file-preview" data-id="${item.id}">
+        ${isPdf ? `<div class="pdf-icon">PDF</div>` : `<img src="${item.url}" alt="${item.file.name}">`}
+      </div>
+      <div class="file-info">
+        <div class="file-name">${item.file.name}</div>
+        <div class="file-meta">${fileExt} • ${formatBytes(item.file.size)}</div>
+      </div>
+      <div class="file-actions">
+        <button class="icon-btn" data-action="up" title="Move Up">↑</button>
+        <button class="icon-btn" data-action="down" title="Move Down">↓</button>
+        <button class="icon-btn danger" data-action="remove" title="Remove">✕</button>
+      </div>
+    `;
+
+        fileQueue.appendChild(card);
+      });
+
+      // Bind actions
+      fileQueue.querySelectorAll('.icon-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          const card = e.target.closest('.file-card');
+          const id = card.dataset.id;
+          const action = btn.dataset.action;
+
+          if (action === 'remove') removeFile(id);
+          else if (action === 'up') moveItem(id, -1);
+          else if (action === 'down') moveItem(id, 1);
+        });
+      });
+
+      fileQueue.querySelectorAll('.file-preview').forEach(p => {
+        p.addEventListener('click', () => openPreview(p.dataset.id));
+      });
+    }
+
+    function moveItem(id, direction) {
+      const index = filesArray.findIndex(f => f.id === id);
+      if (index === -1) return;
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= filesArray.length) return;
+      [filesArray[index], filesArray[newIndex]] = [filesArray[newIndex], filesArray[index]];
+      renderFileList();
+    }
+
+    // Drag and drop reorder
+    Sortable.create(fileQueue, {
+      animation: 150,
+      handle: '.file-handle',
+      ghostClass: 'sortable-ghost',
+      chosenClass: 'sortable-chosen',
+      dragClass: 'sortable-drag',
+      onEnd: function (evt) {
+        let newOrder = [];
+        Array.from(fileQueue.children).forEach(item => {
+          let id = item.dataset.id;
+          let fileObj = filesArray.find(f => f.id === id);
+          if (fileObj) newOrder.push(fileObj);
+        });
+        filesArray = newOrder;
+        renderFileList();
+      }
+    });
+
+    // ---------- Upload Events ----------
+    uploadArea.addEventListener('click', () => fileInput.click());
+    uploadArea.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+    });
+
+    ['dragenter', 'dragover'].forEach(ev => uploadArea.addEventListener(ev, e => {
+      e.preventDefault();
+      uploadArea.classList.add('drag-over');
+    }));
+    ['dragleave', 'drop'].forEach(ev => uploadArea.addEventListener(ev, e => {
+      e.preventDefault();
+      uploadArea.classList.remove('drag-over');
+    }));
+    uploadArea.addEventListener('drop', e => {
+      if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', e => {
+      if (e.target.files.length) addFiles(e.target.files);
+      e.target.value = '';
+    });
+
+    $('chooseBtn').addEventListener('click', e => {
+      e.stopPropagation();
+      fileInput.click();
+    });
+
+    $('cameraBtn').addEventListener('click', e => {
+      e.stopPropagation();
+      cameraInput.click();
+    });
+
+    cameraInput.addEventListener('change', e => {
+      if (e.target.files.length) {
+        addFiles(e.target.files);
+        toast('Image captured successfully.', 'success');
+      }
+      e.target.value = '';
+    });
+
+    $('addMoreBtn').addEventListener('click', () => fileInput.click());
+    $('clearBtn').addEventListener('click', clearAll);
+
+    // ---------- Preview Modal ----------
+    function openPreview(id) {
+      const item = filesArray.find(f => f.id === id);
+      if (!item) return;
+
+      const modal = $('previewModal');
+      const body = $('previewBody');
+      const title = $('previewTitle');
+
+      title.textContent = item.file.name;
+      body.innerHTML = '';
+
+      if (item.file.type === 'application/pdf') {
+        const iframe = document.createElement('iframe');
+        iframe.src = item.url;
+        body.appendChild(iframe);
+      } else {
+        const img = document.createElement('img');
+        img.src = item.url;
+        img.alt = item.file.name;
+        body.appendChild(img);
+      }
+
+      modal.classList.add('open');
+    }
+
+    $('modalClose').addEventListener('click', () => $('previewModal').classList.remove('open'));
+    $('previewModal').addEventListener('click', e => {
+      if (e.target.id === 'previewModal') e.target.classList.remove('open');
+    });
+
+    // ---------- Convert Logic ----------
+    $('convertBtn').addEventListener('click', convertToPDF);
+
+    async function convertToPDF() {
+      if (filesArray.length === 0) {
+        toast('Please add files first.', 'warning');
+        return;
+      }
+
+      setState('processing');
+      updateProgress(0, 'Preparing files...', `Processing 0 of ${filesArray.length}`);
+
+      try {
+        const { PDFDocument } = PDFLib;
+        const pdfDoc = await PDFDocument.create();
+        const total = filesArray.length;
+        let processed = 0;
+        let failed = [];
+
+        for (let i = 0; i < total; i++) {
+          const item = filesArray[i];
+          updateProgress((i / total) * 100, 'Processing files...', `Processing ${i + 1} of ${total}`);
+
+          try {
+            if (item.file.type === 'application/pdf') {
+              const arrayBuffer = await item.file.arrayBuffer();
+              const srcDoc = await PDFDocument.load(arrayBuffer);
+              const pages = await pdfDoc.copyPages(srcDoc, srcDoc.getPageIndices());
+              pages.forEach(p => pdfDoc.addPage(p));
+            } else if (item.file.type.startsWith('image/')) {
+              // loadImage handles EXIF orientation perfectly
+              await new Promise((resolve, reject) => {
+                loadImage(item.file, async function (canvas) {
+                  try {
+                    // Downscale massive images to prevent memory crashes
+                    let maxDim = 4000;
+                    if (canvas.width > maxDim || canvas.height > maxDim) {
+                      let scale = maxDim / Math.max(canvas.width, canvas.height);
+                      let newCanvas = document.createElement('canvas');
+                      newCanvas.width = Math.round(canvas.width * scale);
+                      newCanvas.height = Math.round(canvas.height * scale);
+                      newCanvas.getContext('2d').drawImage(canvas, 0, 0, newCanvas.width, newCanvas.height);
+                      canvas = newCanvas;
+                    }
+
+                    const isJpg = item.file.type === 'image/jpeg';
+                    const blob = await new Promise(res => canvas.toBlob(res, isJpg ? 'image/jpeg' : 'image/png', 0.92));
+                    const imgBytes = await blob.arrayBuffer();
+                    const embeddedImg = isJpg ? await pdfDoc.embedJpg(imgBytes) : await pdfDoc.embedPng(imgBytes);
+
+                    // A4 dimensions in points
+                    const A4_PORTRAIT = [595.28, 841.89];
+                    const A4_LANDSCAPE = [841.89, 595.28];
+                    let pageDims = canvas.width > canvas.height ? A4_LANDSCAPE : A4_PORTRAIT;
+                    const page = pdfDoc.addPage(pageDims);
+
+                    // Contain fit
+                    const margin = 20;
+                    const maxWidth = pageDims[0] - margin * 2;
+                    const maxHeight = pageDims[1] - margin * 2;
+
+                    const imgRatio = canvas.width / canvas.height;
+                    let drawWidth = maxWidth;
+                    let drawHeight = drawWidth / imgRatio;
+
+                    if (drawHeight > maxHeight) {
+                      drawHeight = maxHeight;
+                      drawWidth = drawHeight * imgRatio;
+                    }
+
+                    const x = (pageDims[0] - drawWidth) / 2;
+                    const y = (pageDims[1] - drawHeight) / 2;
+
+                    page.drawImage(embeddedImg, { x, y, width: drawWidth, height: drawHeight });
+                    resolve();
+                  } catch (err) {
+                    console.error('Image processing error:', err);
+                    reject(err);
+                  }
+                }, { canvas: true, orientation: true, maxWidth: 4000, maxHeight: 4000 });
+              });
+            }
+          } catch (err) {
+            console.error('File failed:', item.file.name, err);
+            failed.push(item.file.name);
+          }
+          processed++;
+        }
+
+        // Data Integrity Check
+        if (failed.length > 0) {
+          toast(`${total} files selected, but ${failed.length} could not be processed. Please check the failed file(s) before downloading.`, 'error', 6000);
+          setState('upload');
+          return;
+        }
+
+        updateProgress(90, 'Generating PDF...', 'Finalizing your document');
+        const pdfBytes = await pdfDoc.save();
+        generatedPdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+        updateProgress(100, 'PDF Ready!', 'Completed');
+
+        // Success UI
+        $('successFiles').textContent = total;
+        $('successSize').textContent = formatBytes(generatedPdfBlob.size);
+        $('successMsg').textContent = `Your ${total} files have been converted into a single PDF.`;
+
+        setTimeout(() => setState('success'), 500);
+        toast('PDF Created Successfully!', 'success');
+
+      } catch (error) {
+        console.error('Conversion failed:', error);
+        toast('Something went wrong while creating your PDF.', 'error', 5000);
+        setState('upload');
+      }
+    }
+
+    function updateProgress(pct, stage, sub) {
+      $('progressFill').style.width = pct + '%';
+      $('processingStage').textContent = stage;
+      $('processingSub').textContent = sub;
+    }
+
+    // ---------- Download ----------
+    $('downloadBtn').addEventListener('click', () => {
+      if (!generatedPdfBlob) return;
+      const url = URL.createObjectURL(generatedPdfBlob);
+      const a = document.createElement('a');
+      const date = new Date().toISOString().split('T')[0];
+      a.href = url;
+      a.download = `Tools24-Images-to-PDF-${date}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    $('createAnotherBtn').addEventListener('click', () => {
+      if (generatedPdfBlob) URL.revokeObjectURL(generatedPdfBlob);
+      generatedPdfBlob = null;
+      filesArray.forEach(f => URL.revokeObjectURL(f.url));
+      filesArray = [];
+      renderFileList();
+      setState('upload');
+    });
+
+    // Helpers
+    function formatBytes(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // Initial state
+    setState('upload');
+
+    console.log('%cTools24 Image to PDF Converter ready', 'color:#7C8FFF;font-weight:700;font-size:14px;');
+  </script>
+</body>
+
+</html>
