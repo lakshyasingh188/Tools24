@@ -673,141 +673,840 @@ body.dark #appleNav a {
   color: #ffffff !important;
 }
 
+/* ============================================================
+   TOOLS24 — Compact Full-Width Footer
+   ============================================================ */
 
-/* Footer */
-.main-footer {
-    background: #222;
-    color: var(--white);
-    padding: 60px 0 20px;
-}
+.tools24-footer {
+  /* Default Light Theme Tokens */
+  --t24-bg: #ffffff;
+  --t24-bg-soft: #f8f9fc;
+  --t24-text: #0f172a;
+  --t24-muted: #64748b;
+  --t24-heading: #0b1220;
+  --t24-border: rgba(15, 23, 42, 0.08);
+  --t24-accent: #4f46e5;
+  --t24-accent-2: #7c3aed;
 
-.footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.footer-col h3 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: white;
-}
-
-.footer-col h4 {
-    margin-bottom: 20px;
-    font-size: 18px;
-}
-
-.footer-col p {
-    color: white;
-    margin-bottom: 20px;
-}
-
-.footer-col ul li {
-    margin-bottom: 10px;
+  /* FORCE FULL VIEWPORT WIDTH (Left to Right Edge) */
+  position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: 40px; /* Small gap above footer */
+  
+  box-sizing: border-box;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--t24-bg);
+  color: var(--t24-text);
+  border-top: 1px solid var(--t24-border);
+  overflow: hidden;
 }
 
-.footer-col ul a {
-    color: white;
-    transition: var(--transition);
+/* Top Accent Line */
+.tools24-footer__top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--t24-accent), var(--t24-accent-2));
 }
 
-.footer-col ul a:hover {
-    color: var(--white);
+.tools24-footer * {
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
-.social-links {
-    display: flex;
-    gap: 15px;
+/* Inner Container - Keeps Content Centered */
+.tools24-footer__inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
 }
 
-.social-links a {
-    width: 35px;
-    height: 35px;
-    background: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: var(--transition);
+/* Bottom Bar */
+.tools24-footer__bottom {
+  border-top: 1px solid var(--t24-border);
+  background: var(--t24-bg-soft);
 }
 
-.social-links a:hover {
-    background: rgb(78, 78, 243);
+.tools24-footer__bottom-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 16px;
+  flex-direction: column;
+  text-align: center;
 }
 
-.footer-bottom {
-    text-align: center;
-    padding-top: 30px;
-    border-top: 1px solid white;
-    color: #888;
-    font-size: 14px;
+/* ============================================================
+   RESPONSIVE GRID
+   ============================================================ */
+
+/* Tablet */
+@media (min-width: 768px) {
+  .tools24-footer__inner {
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 32px;
+    padding: 40px 32px 32px;
+  }
+  .tools24-footer__bottom-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    padding: 14px 32px;
+  }
 }
 
-/* Mobile Responsive */
-@media (max-width: 992px) {
-    .info-row {
-        flex-direction: column;
-    }
-    .footer-grid {
-        grid-template-columns: 1fr 1fr;
-    }
+/* ============================================================
+   COMPACT UI ELEMENTS
+   ============================================================ */
+
+.tools24-footer__brand { gap: 12px; }
+
+.tools24-footer__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--t24-heading);
+  width: fit-content;
 }
 
-@media (max-width: 768px) {
-    .nav-menu {
-        display: none;
-    }
-    .hero h1 {
-        font-size: 32px;
-    }
-    .mobile-menu-toggle {
-        display: block;
-    }
-    .footer-grid {
-        grid-template-columns: 1fr;
-    }
-}
-.powered-logo img{
-    width:50px;
-    height:50px;
-    border-radius:50%;
-    object-fit:cover;
-    background:#fff;
-    border:2px solid #ff7a00;
+.tools24-footer__logo-mark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--t24-accent), var(--t24-accent-2));
+  color: #fff;
+  flex-shrink: 0;
 }
 
-.powered-info{
-    display:flex;
-    flex-direction:column;
+.tools24-footer__logo-text {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.tools24-footer__logo-text span { color: var(--t24-accent); }
+
+.tools24-footer__desc {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--t24-muted);
+  max-width: 40ch;
 }
 
-.powered-info span{
-    color:#bdbdbd;
-    font-size:12px;
+.tools24-footer__social {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
 }
 
-.powered-info a{
-    color:#fff;
-    text-decoration:none;
-    font-size:18px;
-    font-weight:700;
-    transition:0.3s;
+.tools24-footer__social-link {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--t24-muted);
+  background: var(--t24-bg-soft);
+  border: 1px solid var(--t24-border);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.tools24-footer__social-link:hover {
+  color: #fff;
+  background: var(--t24-accent);
+  border-color: transparent;
+  transform: translateY(-2px);
 }
 
-.powered-info a:hover{
-    color:greenyellow;
-}
-.company-link{
-    text-decoration:none;
-    color:#0b2c5d;
-    font-size:22px;
-    font-weight:700;
-    transition:.3s;
+.tools24-footer__heading {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--t24-heading);
+  margin: 0 0 12px;
 }
 
-.company-link:hover{
-    color:#ff6b00;
+.tools24-footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
+.tools24-footer__link {
+  font-size: 0.85rem;
+  color: var(--t24-muted);
+  text-decoration: none;
+  line-height: 1.4;
+  display: inline-flex;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.tools24-footer__link:hover {
+  color: var(--t24-accent);
+  transform: translateX(2px);
+}
+.tools24-footer__link--strong {
+  color: var(--t24-accent);
+  font-weight: 600;
+}
+
+.tools24-footer__info {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tools24-footer__info li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.85rem;
+}
+.tools24-footer__info-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--t24-muted);
+  font-weight: 600;
+}
+
+.tools24-footer__copy,
+.tools24-footer__powered {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--t24-muted);
+}
+.tools24-footer__copy-link {
+  color: var(--t24-text);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+.tools24-footer__copy-link:hover { color: var(--t24-accent); }
+
+/* ============================================================
+   DARK MODE SUPPORT
+   ============================================================ */
+.dark .tools24-footer,
+[data-theme="dark"] .tools24-footer,
+html.dark .tools24-footer {
+  --t24-bg: #0b1020;
+  --t24-bg-soft: #080d1a;
+  --t24-text: #5d7fc4;
+  --t24-muted: #94a3b8;
+  --t24-heading: #0a1920;
+  --t24-border: rgba(255, 255, 255, 0.08);
+  --t24-accent: #818cf8;
+  --t24-accent-2: #c084fc;
+}
+
+.dark .tools24-footer__copy-link,
+[data-theme="dark"] .tools24-footer__copy-link,
+html.dark .tools24-footer__copy-link { color: #e6eaf2; }
+
+/* All classes are namespaced with .tools24-faq* to prevent conflicts */
+.tools24-faq {
+  --t24-faq-bg: transparent;
+  --t24-faq-text: #1a1a1a;
+  --t24-faq-muted: #6d8dc0;
+  --t24-faq-card-bg: rgba(255, 255, 255, 0.555);
+  --t24-faq-card-border: rgba(15, 23, 42, 0.10);
+  --t24-faq-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.04),
+                         0 8px 24px rgba(15, 23, 42, 0.06);
+  --t24-faq-hover-border: rgba(15, 23, 42, 0.18);
+  --t24-faq-badge-bg: rgba(15, 23, 42, 0.06);
+  --t24-faq-badge-text: #948080;
+  --t24-faq-question-bg: transparent;
+  --t24-faq-question-active-bg: rgba(15, 23, 42, 0.03);
+  --t24-faq-icon-bg: rgba(15, 23, 42, 0.06);
+  --t24-faq-icon-line: #1a1a1a;
+  --t24-faq-focus: #2563eb;
+
+  width: 100%;
+  box-sizing: border-box;
+  padding: 56px 16px 64px;
+  background: var(--t24-faq-bg);
+  color: var(--t24-faq-text);
+  font-family: inherit;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Dark Mode Support ===== */
+/* Automatically adapts to standard dark mode classes used by Tools24 */
+.dark .tools24-faq,
+[data-theme="dark"] .tools24-faq,
+html.dark .tools24-faq,
+body.dark .tools24-faq,
+.theme-dark .tools24-faq {
+  --t24-faq-text: #f1f5f9;
+  --t24-faq-muted: #9aa6b6;
+  --t24-faq-card-bg: rgba(30, 41, 59, 0.55);
+  --t24-faq-card-border: rgba(255, 255, 255, 0.10);
+  --t24-faq-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.20),
+                         0 8px 24px rgba(0, 0, 0, 0.25);
+  --t24-faq-hover-border: rgba(255, 255, 255, 0.20);
+  --t24-faq-badge-bg: rgba(255, 255, 255, 0.08);
+  --t24-faq-badge-text: #e2e8f0;
+  --t24-faq-question-active-bg: rgba(255, 255, 255, 0.04);
+  --t24-faq-icon-bg: rgba(255, 255, 255, 0.10);
+  --t24-faq-icon-line: #f1f5f9;
+  --t24-faq-focus: #60a5fa;
+}
+
+/* Fallback for OS-level dark mode preference */
+@media (prefers-color-scheme: dark) {
+  html:not(.light):not([data-theme="light"]) .tools24-faq {
+    --t24-faq-text: #f1f5f9;
+    --t24-faq-muted: #9aa6b6;
+    --t24-faq-card-bg: rgba(30, 41, 59, 0.55);
+    --t24-faq-card-border: rgba(255, 255, 255, 0.10);
+    --t24-faq-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.20),
+                           0 8px 24px rgba(0, 0, 0, 0.25);
+    --t24-faq-hover-border: rgba(255, 255, 255, 0.20);
+    --t24-faq-badge-bg: rgba(255, 255, 255, 0.08);
+    --t24-faq-badge-text: #e2e8f0;
+    --t24-faq-question-active-bg: rgba(255, 255, 255, 0.04);
+    --t24-faq-icon-bg: rgba(255, 255, 255, 0.10);
+    --t24-faq-icon-line: #f1f5f9;
+    --t24-faq-focus: #60a5fa;
+  }
+}
+
+/* ===== Container ===== */
+.tools24-faq__container {
+  max-width: 880px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ===== Header ===== */
+.tools24-faq__header {
+  text-align: center;
+  margin-bottom: 36px;
+  padding: 0 4px;
+}
+
+.tools24-faq__badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--t24-faq-badge-bg);
+  color: var(--t24-faq-badge-text);
+  margin-bottom: 14px;
+  line-height: 1;
+}
+
+.tools24-faq__title {
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 10px;
+  color: var(--t24-faq-text);
+  letter-spacing: -0.01em;
+}
+
+.tools24-faq__subtitle {
+  font-size: clamp(14px, 2.2vw, 16px);
+  line-height: 1.55;
+  color: var(--t24-faq-muted);
+  margin: 0 auto;
+  max-width: 620px;
+}
+
+/* ===== FAQ List ===== */
+.tools24-faq__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== FAQ Item ===== */
+.tools24-faq__item {
+  border: 1px solid var(--t24-faq-card-border);
+  border-radius: 14px;
+  background: var(--t24-faq-card-bg);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--t24-faq-card-shadow);
+  overflow: hidden;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.tools24-faq__item:hover {
+  border-color: var(--t24-faq-hover-border);
+}
+
+.tools24-faq__item-heading {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* ===== Question Button ===== */
+.tools24-faq__question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--t24-faq-question-bg);
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  color: var(--t24-faq-text);
+  border-radius: 14px;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s ease;
+}
+
+.tools24-faq__question:hover {
+  background: var(--t24-faq-question-active-bg);
+}
+
+.tools24-faq__question:focus-visible {
+  outline: 2px solid var(--t24-faq-focus);
+  outline-offset: -2px;
+}
+
+.tools24-faq__question-text {
+  font-size: clamp(15px, 2.4vw, 16px);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--t24-faq-text);
+  flex: 1 1 auto;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* ===== Plus/Chevron Icon ===== */
+.tools24-faq__icon {
+  position: relative;
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--t24-faq-icon-bg);
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.tools24-faq__icon::before,
+.tools24-faq__icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--t24-faq-icon-line);
+  transform: translate(-50%, -50%);
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.tools24-faq__icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.tools24-faq__item.is-open .tools24-faq__icon::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+  opacity: 0;
+}
+
+.tools24-faq__item.is-open .tools24-faq__icon {
+  transform: rotate(0deg);
+}
+
+/* ===== Answer ===== */
+.tools24-faq__answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.26s ease;
+}
+
+.tools24-faq__item.is-open .tools24-faq__answer {
+  grid-template-rows: 1fr;
+}
+
+.tools24-faq__answer > p {
+  margin: 0;
+  padding: 0 18px 18px;
+  font-size: clamp(13.5px, 2.1vw, 15px);
+  line-height: 1.65;
+  color: var(--t24-faq-muted);
+  overflow: hidden;
+}
+
+.tools24-faq__answer[hidden] {
+  display: none;
+}
+
+/* ===== Responsive Breakpoints ===== */
+@media (max-width: 640px) {
+  .tools24-faq {
+    padding: 40px 14px 48px;
+  }
+  .tools24-faq__header {
+    margin-bottom: 26px;
+  }
+  .tools24-faq__question {
+    padding: 14px 14px;
+    gap: 12px;
+  }
+  .tools24-faq__answer > p {
+    padding: 0 14px 16px;
+  }
+  .tools24-faq__list {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .tools24-faq {
+    padding: 32px 12px 40px;
+  }
+  .tools24-faq__question {
+    padding: 13px 12px;
+  }
+  .tools24-faq__answer > p {
+    padding: 0 12px 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tools24-faq {
+    padding: 72px 24px 88px;
+  }
+}
+
+/* Respect reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .tools24-faq__answer,
+  .tools24-faq__icon,
+  .tools24-faq__icon::before,
+  .tools24-faq__icon::after,
+  .tools24-faq__item {
+    transition: none !important;
+  }
+}
+
+/* All classes are namespaced with .tools24-faq* to prevent conflicts */
+.tools24-faq {
+  /* Light Mode Colors matching your screenshot */
+  --t24-faq-bg: #f8fafc;          /* Light gray page background */
+  --t24-faq-text: #1e293b;        /* Dark slate heading text */
+  --t24-faq-muted: #64748b;       /* Muted gray paragraph text */
+  --t24-faq-card-bg: #ffffff;     /* Pure white cards */
+  --t24-faq-card-border: #e2e8f0; /* Light gray subtle borders */
+  --t24-faq-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 
+                         0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --t24-faq-hover-border: #cbd5e1;/* Slightly darker border on hover */
+  --t24-faq-badge-bg: #eff6ff;    /* Light blue badge background */
+  --t24-faq-badge-text: #2563eb;  /* Blue badge text */
+  --t24-faq-question-bg: transparent;
+  --t24-faq-question-active-bg: #f8fafc;
+  --t24-faq-icon-bg: #f1f5f9;     /* Light gray icon background */
+  --t24-faq-icon-line: #334155;   /* Dark slate icon lines */
+  --t24-faq-focus: #3b82f6;       /* Blue focus ring */
+
+  width: 100%;
+  box-sizing: border-box;
+  padding: 56px 16px 64px;
+  background: white;
+  color: var(--t24-faq-text);
+  font-family: inherit;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Dark Mode Support ===== */
+/* Automatically adapts if the user has dark mode enabled on their device/site */
+.dark .tools24-faq,
+[data-theme="dark"] .tools24-faq,
+html.dark .tools24-faq,
+body.dark .tools24-faq,
+.theme-dark .tools24-faq {
+  --t24-faq-bg: #0f172a;
+  --t24-faq-text: #f1f5f9;
+  --t24-faq-muted: #94a3b8;
+  --t24-faq-card-bg: #1e293b;
+  --t24-faq-card-border: #334155;
+  --t24-faq-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 
+                         0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  --t24-faq-hover-border: #475569;
+  --t24-faq-badge-bg: rgba(59, 130, 246, 0.15);
+  --t24-faq-badge-text: #60a5fa;
+  --t24-faq-question-active-bg: rgba(255, 255, 255, 0.03);
+  --t24-faq-icon-bg: #334155;
+  --t24-faq-icon-line: #f1f5f9;
+  --t24-faq-focus: #60a5fa;
+}
+
+/* Fallback for OS-level dark mode preference */
+@media (prefers-color-scheme: dark) {
+  html:not(.light):not([data-theme="light"]) .tools24-faq {
+    --t24-faq-bg: #0f172a;
+    --t24-faq-text: #f1f5f9;
+    --t24-faq-muted: #94a3b8;
+    --t24-faq-card-bg: #1e293b;
+    --t24-faq-card-border: #334155;
+    --t24-faq-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 
+                           0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    --t24-faq-hover-border: #475569;
+    --t24-faq-badge-bg: rgba(59, 130, 246, 0.15);
+    --t24-faq-badge-text: #60a5fa;
+    --t24-faq-question-active-bg: rgba(255, 255, 255, 0.03);
+    --t24-faq-icon-bg: #334155;
+    --t24-faq-icon-line: #f1f5f9;
+    --t24-faq-focus: #60a5fa;
+  }
+}
+
+/* ===== Container ===== */
+.tools24-faq__container {
+  max-width: 880px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ===== Header ===== */
+.tools24-faq__header {
+  text-align: center;
+  margin-bottom: 36px;
+  padding: 0 4px;
+}
+
+.tools24-faq__badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--t24-faq-badge-bg);
+  color: var(--t24-faq-badge-text);
+  margin-bottom: 14px;
+  line-height: 1;
+}
+
+.tools24-faq__title {
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 10px;
+  color: var(--t24-faq-text);
+  letter-spacing: -0.01em;
+}
+
+.tools24-faq__subtitle {
+  font-size: clamp(14px, 2.2vw, 16px);
+  line-height: 1.55;
+  color: var(--t24-faq-muted);
+  margin: 0 auto;
+  max-width: 620px;
+}
+
+/* ===== FAQ List ===== */
+.tools24-faq__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== FAQ Item ===== */
+.tools24-faq__item {
+  border: 1px solid var(--t24-faq-card-border);
+  border-radius: 14px;
+  background: var(--t24-faq-card-bg);
+  box-shadow: var(--t24-faq-card-shadow);
+  overflow: hidden;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.tools24-faq__item:hover {
+  border-color: var(--t24-faq-hover-border);
+}
+
+.tools24-faq__item-heading {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* ===== Question Button ===== */
+.tools24-faq__question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--t24-faq-question-bg);
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  color: var(--t24-faq-text);
+  border-radius: 14px;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s ease;
+}
+
+.tools24-faq__question:hover {
+  background: var(--t24-faq-question-active-bg);
+}
+
+.tools24-faq__question:focus-visible {
+  outline: 2px solid var(--t24-faq-focus);
+  outline-offset: -2px;
+}
+
+.tools24-faq__question-text {
+  font-size: clamp(15px, 2.4vw, 16px);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--t24-faq-text);
+  flex: 1 1 auto;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* ===== Plus/Chevron Icon ===== */
+.tools24-faq__icon {
+  position: relative;
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--t24-faq-icon-bg);
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.tools24-faq__icon::before,
+.tools24-faq__icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--t24-faq-icon-line);
+  transform: translate(-50%, -50%);
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.tools24-faq__icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.tools24-faq__item.is-open .tools24-faq__icon::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+  opacity: 0;
+}
+
+.tools24-faq__item.is-open .tools24-faq__icon {
+  transform: rotate(0deg);
+}
+
+/* ===== Answer ===== */
+.tools24-faq__answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.26s ease;
+}
+
+.tools24-faq__item.is-open .tools24-faq__answer {
+  grid-template-rows: 1fr;
+}
+
+.tools24-faq__answer > p {
+  margin: 0;
+  padding: 0 18px 18px;
+  font-size: clamp(13.5px, 2.1vw, 15px);
+  line-height: 1.65;
+  color: var(--t24-faq-muted);
+  overflow: hidden;
+}
+
+.tools24-faq__answer[hidden] {
+  display: none;
+}
+
+/* ===== Responsive Breakpoints ===== */
+@media (max-width: 640px) {
+  .tools24-faq {
+    padding: 40px 14px 48px;
+  }
+  .tools24-faq__header {
+    margin-bottom: 26px;
+  }
+  .tools24-faq__question {
+    padding: 14px 14px;
+    gap: 12px;
+  }
+  .tools24-faq__answer > p {
+    padding: 0 14px 16px;
+  }
+  .tools24-faq__list {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .tools24-faq {
+    padding: 32px 12px 40px;
+  }
+  .tools24-faq__question {
+    padding: 13px 12px;
+  }
+  .tools24-faq__answer > p {
+    padding: 0 12px 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tools24-faq {
+    padding: 72px 24px 88px;
+  }
+}
+
+/* Respect reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .tools24-faq__answer,
+  .tools24-faq__icon,
+  .tools24-faq__icon::before,
+  .tools24-faq__icon::after,
+  .tools24-faq__item {
+    transition: none !important;
+  }
+}
