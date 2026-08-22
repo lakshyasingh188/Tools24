@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Passport Photo Maker Online – Resize, Crop & Print |Tools24</title>
+    <meta name="description" content="Create passport-size photos online with Tools24.com. Crop, resize, change background, create printable photo sheets and download high-quality photos." />
+    <link rel="canonical" href="https://agitools24.com/passport-photo-maker" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Passport Photo Maker Online | Tools24.com" />
+    <meta property="og:description" content="Create passport-size photos online. Crop, resize, change background, and download printable photo sheets." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Cropper.js & jsPDF Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+
+    <!-- Tool Styles -->
+    <link rel="stylesheet" href="passport-photo.css" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Passport Photo Maker",
+      "url": "https://agitools24.com/passport-photo-maker",
+      "description": "Create passport-size photos online. Crop, resize, change background, create printable photo sheets.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "publisher": { "@type": "Organization", "name": "Tools24.com", "url": "https://agitools24.com" }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Existing Website Header (Placeholder integration) -->
+    <header class="t24-header">
+        <div class="container">
+            <a href="/" class="logo">Tools<span>24</span></a>
+            <button id="themeToggle" class="btn-icon" aria-label="Toggle dark mode">🌙</button>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a> › <a href="/image-tools">Image Tools</a> › Passport Photo Maker
+        </nav>
+
+        <section class="tool-header">
+            <h1>Passport Photo Maker</h1>
+            <p>Create passport-size photos online, crop, resize, change background and download printable photo sheets.</p>
+            <div class="privacy-badge">🔒 Your photos are processed locally in your browser. Nothing is uploaded.</div>
+        </section>
+
+        <!-- STEP 1: Upload / Camera -->
+        <section id="uploadSection" class="card active-section">
+            <div id="dropZone" class="drop-zone">
+                <div class="drop-zone-content">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <h3>Upload Your Photo</h3>
+                    <p>Drag & drop, or choose a file (JPG, PNG, WEBP)</p>
+                    <div class="btn-group">
+                        <button id="chooseFileBtn" class="btn btn-primary">Choose Photo</button>
+                        <button id="openCameraBtn" class="btn">Take Photo</button>
+                    </div>
+                    <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" hidden />
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 2: Editor -->
+        <section id="editorSection" class="card hidden">
+            <div class="editor-layout">
+                <div class="editor-stage">
+                    <img id="editorImage" src="" alt="Photo to edit" />
+                </div>
+                <div class="editor-controls">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="crop">Crop & Rotate</button>
+                        <button class="tab-btn" data-tab="adjust">Adjust</button>
+                        <button class="tab-btn" data-tab="bg">Background</button>
+                    </div>
+
+                    <div id="tab-crop" class="tab-content active">
+                        <div class="control-grid">
+                            <button class="btn btn-sm" data-rotate="-90">⟲ Rotate Left</button>
+                            <button class="btn btn-sm" data-rotate="90">⟳ Rotate Right</button>
+                            <button class="btn btn-sm" data-zoom="0.1">Zoom In</button>
+                            <button class="btn btn-sm" data-zoom="-0.1">Zoom Out</button>
+                            <button class="btn btn-sm" data-action="reset-crop">Reset Crop</button>
+                        </div>
+                    </div>
+
+                    <div id="tab-adjust" class="tab-content hidden">
+                        <label>Brightness <span id="brightVal">100%</span>
+                            <input type="range" id="brightness" min="50" max="150" value="100" /></label>
+                        <label>Contrast <span id="contrastVal">100%</span>
+                            <input type="range" id="contrast" min="50" max="150" value="100" /></label>
+                        <label>Saturation <span id="satVal">100%</span>
+                            <input type="range" id="saturation" min="0" max="200" value="100" /></label>
+                        <button class="btn btn-sm" data-action="reset-adjust">Reset Adjustments</button>
+                    </div>
+
+                    <div id="tab-bg" class="tab-content hidden">
+                        <div class="bg-swatches">
+                            <button class="swatch active" data-bg="original" style="background:linear-gradient(135deg,#888,#bbb);"></button>
+                            <button class="swatch" data-bg="#ffffff" style="background:#fff;"></button>
+                            <button class="swatch" data-bg="#dbeafe" style="background:#dbeafe;"></button>
+                            <button class="swatch" data-bg="#3b82f6" style="background:#3b82f6;"></button>
+                            <input type="color" id="customBgColor" value="#ffffff" class="swatch-color" />
+                        </div>
+                        <label>Background Strength <span id="threshVal">35</span>
+                            <input type="range" id="bgThreshold" min="10" max="80" value="35" /></label>
+                        <button class="btn btn-sm" id="applyBgBtn">Apply Background</button>
+                        <button class="btn btn-sm" id="restoreBgBtn">Restore Original</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 3: Settings & Download -->
+        <section id="settingsSection" class="card hidden">
+            <div class="settings-layout">
+                <div class="settings-left">
+                    <h3>Photo Size & Download</h3>
+                    <select id="sizePreset">
+                        <optgroup label="India">
+                            <option value="35|45|mm" selected>India Passport — 35 × 45 mm</option>
+                            <option value="35|45|mm">India Visa — 35 × 45 mm</option>
+                            <option value="25|35|mm">PAN Card — 25 × 35 mm</option>
+                        </optgroup>
+                        <optgroup label="International">
+                            <option value="51|51|mm">USA — 51 × 51 mm (2x2 inch)</option>
+                            <option value="35|45|mm">UK — 35 × 45 mm</option>
+                            <option value="50|70|mm">Canada — 50 × 70 mm</option>
+                        </optgroup>
+                        <option value="custom">Custom Size</option>
+                    </select>
+                    
+                    <div id="customSizePanel" class="hidden">
+                        <div class="row">
+                            <input type="number" id="customW" placeholder="W" value="35" />
+                            <input type="number" id="customH" placeholder="H" value="45" />
+                            <select id="sizeUnit">
+                                <option value="mm">mm</option>
+                                <option value="cm">cm</option>
+                                <option value="inch">inch</option>
+                                <option value="px">px</option>
+                            </select>
+                        </div>
+                        <select id="dpiSel">
+                            <option value="300">300 DPI (Print)</option>
+                            <option value="600">600 DPI (High)</option>
+                        </select>
+                    </div>
+                    <p class="info-note">Requirements may vary. Verify official requirements before submission.</p>
+
+                    <div class="quality-check" id="qualityCheck">
+                        <h4>Quality Check</h4>
+                        <ul id="qcList"><li>Upload photo to check quality.</li></ul>
+                    </div>
+                </div>
+
+                <div class="settings-right">
+                    <h3>Preview & Export</h3>
+                    <div id="previewArea" class="preview-area">Generate to see preview</div>
+                    <button id="generateBtn" class="btn btn-primary btn-block">Generate Passport Photo</button>
+                    
+                    <div class="download-grid">
+                        <button id="downloadJpgBtn" class="btn" disabled>Download JPG</button>
+                        <button id="downloadPngBtn" class="btn" disabled>Download PNG</button>
+                    </div>
+                    <button id="resetAllBtn" class="btn btn-danger btn-block">Reset All</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 4: Photo Sheet Maker -->
+        <section id="sheetSection" class="card hidden">
+            <h3>Printable Photo Sheet Maker</h3>
+            <div class="sheet-layout">
+                <div class="sheet-controls">
+                    <select id="sheetSize">
+                        <option value="a4">A4 (210 × 297 mm)</option>
+                        <option value="letter">Letter (8.5 × 11 inch)</option>
+                        <option value="a5">A5 (148 × 210 mm)</option>
+                    </select>
+                    <select id="sheetCopies">
+                        <option value="2">2 Photos</option>
+                        <option value="4">4 Photos</option>
+                        <option value="8" selected>8 Photos</option>
+                        <option value="12">12 Photos</option>
+                        <option value="16">16 Photos</option>
+                    </select>
+                    <label>Spacing (mm)<input type="number" id="sheetSpacing" value="4" /></label>
+                    <label>Margin (mm)<input type="number" id="sheetMargin" value="10" /></label>
+                    <select id="sheetBorder">
+                        <option value="none">No Border</option>
+                        <option value="solid" selected>Thin Line</option>
+                        <option value="cutmarks">Cut Marks</option>
+                    </select>
+                    <button id="generateSheetBtn" class="btn btn-primary btn-block">Generate Sheet</button>
+                    
+                    <div class="download-grid">
+                        <button id="downloadPdfBtn" class="btn" disabled>Download PDF</button>
+                        <button id="printSheetBtn" class="btn" disabled>Print Sheet</button>
+                    </div>
+                </div>
+                <div class="sheet-preview-wrap">
+                    <canvas id="sheetCanvas" width="400" height="565"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO Content -->
+        <section class="seo-content card">
+            <h2>Passport Photo Maker Features</h2>
+            <p>Tools24 Passport Photo Maker lets you create a passport-size photo directly in your browser — no software installation, no signup, and no upload to any server. Upload a photo or capture one with your camera, choose the size you need, adjust the crop and background, then download a high-quality image or a ready-to-print photo sheet.</p>
+            <h3>How to Make a Passport Size Photo?</h3>
+            <ol>
+                <li>Upload or capture your photo.</li>
+                <li>Select your country's preset size or enter a custom size.</li>
+                <li>Crop and adjust brightness/contrast.</li>
+                <li>Change the background to white or blue.</li>
+                <li>Download as JPG/PNG or generate a printable A4 PDF sheet.</li>
+            </ol>
+        </section>
+    </main>
+
+    <!-- Camera Modal -->
+    <div id="cameraModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Take Photo</h3>
+                <button id="closeCameraBtn" class="btn-icon">×</button>
+            </div>
+            <div class="modal-body">
+                <video id="cameraVideo" autoplay playsinline muted></video>
+                <canvas id="cameraCanvas" class="hidden"></canvas>
+                <div class="camera-controls">
+                    <button id="switchCameraBtn" class="btn btn-sm">Switch Camera</button>
+                    <button id="captureBtn" class="capture-btn" aria-label="Capture"></button>
+                    <button id="useCaptureBtn" class="btn btn-sm" disabled>Use Photo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UI Loaders -->
+    <div id="loaderOverlay" class="loader-overlay hidden">
+        <div class="loader-box">
+            <div class="spinner"></div>
+            <p id="loaderText">Processing...</p>
+        </div>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Existing Website Footer (Placeholder) -->
+    <footer class="t24-footer">
+        <div class="container">
+            <p>© 2025 Tools24.com — All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="passport-photo.js"></script>
+</body>
+</html>
