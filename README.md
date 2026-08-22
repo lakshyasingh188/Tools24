@@ -1,347 +1,490 @@
-# 🚀 Tools24 — Smart Online Tools
+# 🛠️ Tools24
 
-<p align="center">
-  <strong>Powerful • Fast • Simple • Accessible</strong>
-</p>
+### Smart Online Tools — One Platform, Many Useful Tools
 
-<p align="center">
-  A modern collection of free online tools for PDFs, images, documents, productivity, calculations and everyday digital tasks.
-</p>
+[![Website](https://img.shields.io/badge/Website-agitools24.com-0A7B5E?style=for-the-badge)](https://www.agitools24.com/)
+[![Free](https://img.shields.io/badge/Tools-Free-success?style=for-the-badge)](https://www.agitools24.com/)
+[![Responsive](https://img.shields.io/badge/Mobile-Responsive-blue?style=for-the-badge)](https://www.agitools24.com/)
 
-<p align="center">
-  🌐 <a href="https://www.agitools24.com">Visit Tools24</a>
-</p>
+**Tools24** is a free online toolkit designed to make everyday digital tasks easier, faster and more convenient.
 
----
+The platform brings together **PDF tools, image tools, document generators, calculators and other useful utilities** in one place, so users do not need to visit multiple websites for common tasks.
 
-## 📌 About Tools24
-
-**Tools24** is an all-in-one online tools platform designed to make everyday digital tasks faster, easier and more accessible.
-
-The platform brings multiple useful utilities together in one place, allowing users to work with **PDFs, images, documents, calculations, resumes, marriage biodata, salary slips and other productivity tools** directly from their browser.
-
-🎯 **Our goal:** Build a reliable and easy-to-use digital toolkit where users can complete common tasks without installing complicated software.
-
-🌐 **Live Website:** https://www.agitools24.com
+🌐 **Live Website:** https://www.agitools24.com/
 
 ---
 
-## ✨ Features
+## ✨ What is Tools24?
 
-### 📄 PDF & Document Tools
+Tools24 is an all-in-one online utility platform focused on providing simple and practical browser-based tools for everyday users.
 
-* PDF to JPG
-* PDF to PNG
-* PDF to Word
-* PDF to Excel
-* JPG to PDF
-* Excel to PDF
-* Merge PDF / Files
-* Split PDF
-* Compress PDF
-* PDF Editor
-* Sign PDF
-* File Converter
-* File Rename Tool
+Whether you need to convert a PDF, resize an image, merge files, create a professional resume, generate a salary slip, sign a PDF or perform a calculation, Tools24 provides these utilities from a single platform.
 
-### 🖼️ Image Tools
+### Our Goal
 
-* JPG to PNG
-* Image Converter
-* Photo Resizer
-* PDF & Photo Resizer
-* Image Watermark
-* Background Remover
-* Image Optimization
+> **One Platform. Many Smart Tools.**
 
-### 🧾 Document & Generator Tools
-
-* Resume / CV Maker
-* Marriage Biodata Maker
-* Salary Slip Generator
-* Medical Report Simplifier
-* Other document-generation utilities
-
-### 🧮 Productivity Tools
-
-* Scientific Calculator
-* BMI Calculator
-* Typing Test
-* QR Code Tool
-* Astrology / Horoscope Tools
-* Everyday utility tools
-
-> Tools24 is continuously evolving, and new tools and improvements are added over time.
+Tools24 aims to make useful digital utilities accessible to students, professionals, businesses and everyday internet users.
 
 ---
 
-## 🌟 Why Tools24?
+# 🚀 Available Tools
 
-### ⚡ Fast & Simple
+Tools24 currently provides tools across multiple categories.
 
-Tools are designed with a clean interface so users can complete common tasks with minimal steps.
+## 📄 PDF Tools
 
-### 🌐 No Installation
+### JPG to PDF
 
-Most tools work directly in a modern web browser.
+Convert JPG images into a PDF document.
 
-### 📱 Responsive Design
+### PDF to JPG
 
-The platform is designed to work across:
+Convert PDF pages into high-quality JPG images.
 
-* 📱 Mobile
-* 💻 Desktop
-* 🖥️ Windows
+### PDF to PNG
+
+Convert PDF pages into PNG images.
+
+### Merge Files
+
+Combine multiple files into a single document.
+
+### Compress PDF
+
+Reduce PDF file size while maintaining usable document quality.
+
+### PDF Editor
+
+Edit PDF documents and work with PDF content online.
+
+### Sign PDF
+
+Add signatures to PDF documents.
+
+### Split PDF
+
+Split a PDF document into separate pages or files.
+
+---
+
+# 🖼️ Image Tools
+
+### JPG to PNG
+
+Convert JPG images into PNG format.
+
+### Photo & PDF Resizer
+
+Resize images and PDF-related files according to required dimensions.
+
+### Image Watermark
+
+Add text watermarks to images.
+
+---
+
+# 📑 Document Tools
+
+### Resume / CV Maker
+
+Create a professional resume or CV using an easy online interface.
+
+### Marriage Biodata Maker
+
+Create a marriage biodata document with a simple form-based workflow.
+
+### Salary Slip Generator
+
+Generate professional salary-slip documents in PDF format.
+
+---
+
+# 🧮 Utility Tools
+
+### Scientific Calculator
+
+Perform advanced mathematical and scientific calculations.
+
+### BMI Calculator
+
+Calculate Body Mass Index using basic body measurements.
+
+### File Rename Tool
+
+Rename files without changing their file format.
+
+---
+
+# ⭐ Why Tools24?
+
+Tools24 is designed around a simple idea:
+
+```text
+Different Tasks
+      ↓
+Different Websites
+      ↓
+Too Much Time
+      ↓
+      Tools24
+      ↓
+Many Useful Tools
+      ↓
+One Platform
+```
+
+### Key Benefits
+
+* ⚡ Fast and convenient
+* 🧰 Multiple tools in one place
+* 📱 Designed for different screen sizes
+* 💻 Works across modern devices
+* 🚫 No software installation required
+* 📄 PDF utilities
+* 🖼️ Image utilities
+* 📑 Document generators
+* 🧮 Everyday calculators
+* 🔧 Continuously expanding tool collection
+
+---
+
+# 📱 Cross-Device Experience
+
+Tools24 is designed to be accessible from different types of devices.
+
+### Supported Platforms
+
+* 📱 Android
+* 🍎 iPhone / iPad
+* 💻 Windows
 * 🍎 macOS
 * 🐧 Linux
+* 📲 Tablets
+* 🌐 Modern web browsers
 
-### 🔒 Privacy-Focused
-
-Tools are designed with user privacy in mind. Where server-side processing is used, uploaded files should be handled according to the applicable processing and privacy implementation of that specific tool.
-
-### 🆓 Easy to Access
-
-Tools24 aims to provide useful digital utilities that are accessible to students, professionals, freelancers and everyday users.
+The website focuses on providing a consistent experience across desktop and mobile devices.
 
 ---
 
-## 🛠️ Technology Stack
+# 🔒 Privacy & File Safety
 
-Tools24 is primarily built using modern web technologies.
+Tools24 is designed with user privacy and file safety in mind.
 
-| Technology           | Purpose                                  |
-| -------------------- | ---------------------------------------- |
-| HTML5                | Website structure                        |
-| CSS3                 | Responsive UI and styling                |
-| JavaScript           | Tool functionality and interactions      |
-| Web APIs             | Browser-based processing                 |
-| Node.js              | Server-side functionality where required |
-| PDF Libraries        | PDF processing and generation            |
-| JavaScript Libraries | Document, image and utility features     |
+According to the platform's current website information, uploaded files are kept securely and are removed from the server after a period of time.
 
-The exact technology used can vary from tool to tool depending on its requirements.
+> File-processing and storage behavior can vary depending on the individual tool and its implementation. Users should avoid uploading highly sensitive documents unless they are comfortable with the tool's processing method.
 
 ---
 
-## 📂 Project Structure
+# ⚙️ No Installation Required
 
-The repository contains individual HTML, CSS and JavaScript files for different tools.
+Tools24 works directly through the web browser.
+
+There is no need to install separate desktop software for the supported online tools.
+
+```text
+Open Browser
+     ↓
+Visit Tools24
+     ↓
+Select a Tool
+     ↓
+Upload / Enter Data
+     ↓
+Process
+     ↓
+Download Result
+```
+
+---
+
+# 🎨 User Experience
+
+Tools24 focuses on making tools simple enough for users without technical knowledge.
+
+The platform emphasizes:
+
+* Clean interfaces
+* Easy navigation
+* Simple input forms
+* Clear action buttons
+* Quick workflows
+* Responsive layouts
+* Easy file downloads
+* Practical everyday utilities
+
+---
+
+# 🏗️ Platform Categories
+
+```text
+Tools24
+│
+├── 📄 PDF Tools
+│   ├── JPG to PDF
+│   ├── PDF to JPG
+│   ├── PDF to PNG
+│   ├── Merge Files
+│   ├── Compress PDF
+│   ├── PDF Editor
+│   ├── Sign PDF
+│   └── Split PDF
+│
+├── 🖼️ Image Tools
+│   ├── JPG to PNG
+│   ├── Photo Resizer
+│   └── Image Watermark
+│
+├── 📑 Document Tools
+│   ├── Resume / CV Maker
+│   ├── Marriage Biodata Maker
+│   └── Salary Slip Generator
+│
+└── 🧮 Utility Tools
+    ├── Scientific Calculator
+    ├── BMI Calculator
+    └── File Rename Tool
+```
+
+---
+
+# 🎯 Who Is Tools24 For?
+
+Tools24 can be useful for:
+
+### 👨‍🎓 Students
+
+* Resume creation
+* PDF conversion
+* Image resizing
+* Document preparation
+* Calculations
+
+### 👨‍💼 Professionals
+
+* Resume/CV creation
+* Salary slip generation
+* PDF editing
+* PDF signing
+* File management
+
+### 🏢 Businesses
+
+* Document preparation
+* PDF utilities
+* Image watermarking
+* File conversion
+* Professional documents
+
+### 👤 Everyday Users
+
+* Image conversion
+* PDF conversion
+* File merging
+* File resizing
+* Calculations
+* Document creation
+
+---
+
+# 💡 Product Philosophy
+
+Tools24 follows three simple principles:
+
+### 1. Simple
+
+Users should be able to understand a tool without technical knowledge.
+
+### 2. Useful
+
+Every tool should solve a real-world digital problem.
+
+### 3. Accessible
+
+Tools should be easy to access from different devices without requiring complicated software installation.
+
+---
+
+# 🔮 Future Roadmap
+
+Tools24 is continuously evolving.
+
+Possible future improvements include:
+
+* [ ] More PDF conversion tools
+* [ ] Advanced PDF editing
+* [ ] PDF to Word
+* [ ] PDF to Excel
+* [ ] PDF to Text
+* [ ] OCR / text extraction
+* [ ] Advanced document scanner
+* [ ] Photo editing tools
+* [ ] Passport photo tools
+* [ ] More image compression options
+* [ ] More document generators
+* [ ] AI-powered tools
+* [ ] Multi-language support
+* [ ] Improved mobile experience
+* [ ] PWA support
+* [ ] Android application
+* [ ] iOS application
+* [ ] User accounts
+* [ ] Saved documents/projects
+* [ ] More productivity tools
+
+---
+
+# 🛠️ Technology
+
+Tools24 is a modern web-based platform.
+
+Depending on the individual tool, the project can use technologies and browser capabilities such as:
+
+* HTML5
+* CSS3
+* JavaScript
+* Responsive Web Design
+* Browser File APIs
+* PDF processing libraries
+* Canvas APIs
+* Camera APIs
+* Client-side utilities
+* Server-side processing where required
+
+Individual tools may use additional libraries depending on their functionality.
+
+---
+
+# 📂 Suggested Project Structure
 
 ```text
 Tools24/
 │
 ├── index.html
-├── main-index.css
-├── main-index.js
 │
-├── PDF Tools
-│   ├── pdf-to-jpg.html
-│   ├── pdf-to-png.html
-│   ├── pdf-to-word.html
-│   ├── pdf-to-excel.html
-│   ├── merge.html
-│   ├── split.html
-│   ├── compress-pdf-or-photo.html
-│   ├── pdf-editor.html
-│   └── sign.html
+├── about.html
 │
-├── Image Tools
-│   ├── jpg-to-pdf.html
-│   ├── jpg-to-png.html
-│   ├── image-converter.html
-│   ├── photo-resizer.html
-│   ├── watermark.html
-│   └── background-remover.html
+├── assets/
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   └── icons/
 │
-├── Productivity Tools
-│   ├── calculator.html
-│   ├── bmi-calculator.html
-│   ├── typping.html
-│   ├── resume.html
-│   ├── marriage-biodata.html
-│   └── slip.html
+├── tools/
+│   ├── pdf/
+│   ├── image/
+│   ├── document/
+│   └── utility/
 │
-├── Other Tools
-│   ├── medical.html
-│   ├── QR.html
-│   ├── astrology.js
-│   └── astrology related files
+├── components/
 │
-├── server.js
-├── package.json
-├── supabase.js
-├── CNAME
-└── README.md
+├── README.md
+│
+└── LICENSE
 ```
 
 ---
 
-## 🚀 Getting Started
+# 🐛 Bug Reporting
 
-### 1. Clone the Repository
+If you find a problem with a tool, please provide:
 
-```bash
-git clone https://github.com/lakshyasingh188/Tools24.git
+```text
+Tool:
+Device:
+Browser:
+Operating System:
+Problem:
+Expected Result:
+Actual Result:
 ```
 
-### 2. Open the Project
+Screenshots or screen recordings are also helpful when reporting UI or functionality issues.
+
+---
+
+# 💡 Feature Requests
+
+Have an idea for a new tool?
+
+Suggestions are welcome.
+
+Potential future tools include:
+
+* PDF to Word
+* PDF to Excel
+* OCR
+* QR Code Generator
+* Password Generator
+* Image Compressor
+* Passport Photo Maker
+* Document Scanner
+* File Converter
+* AI utilities
+* More professional document generators
+
+---
+
+# 🤝 Contributing
+
+Contributions and suggestions are welcome.
+
+### Development Workflow
 
 ```bash
+# Clone the repository
+git clone <YOUR_REPOSITORY_URL>
+
+# Enter the project
 cd Tools24
+
+# Open the project in your editor
+code .
 ```
 
-### 3. Run Locally
+For a static web project, you can run it using a local development server such as VS Code Live Server or another suitable web server.
 
-For simple frontend tools, you can open the HTML files directly in your browser.
+---
 
-For tools that require a local server or backend, use the appropriate Node.js setup.
+# 📜 License
 
-```bash
-npm install
+Unless a separate license is provided with the project:
+
+```text
+Copyright © 2026 Tools24
+
+All rights reserved.
 ```
 
-Then run the project according to the configuration in `package.json`.
+Do not copy, redistribute or commercially reuse the project code, branding or original assets without permission.
 
 ---
 
-## 🌐 Live Website
+# 🌐 Official Website
 
-Visit the live platform:
+## Tools24
 
-**https://www.agitools24.com**
+**Smart Online Tools — One Platform, Many Useful Tools**
 
-Tools24 currently provides a growing collection of online utilities covering PDF processing, image conversion, document generation, calculators and productivity tasks.
-
----
-
-## 🎯 Who Can Use Tools24?
-
-Tools24 can be useful for:
-
-* 👨‍🎓 Students
-* 👨‍💻 Developers
-* 🧑‍💼 Professionals
-* 🧑‍🏫 Teachers
-* 🧑‍🎨 Designers
-* 🧑‍💻 Freelancers
-* 🏢 Small businesses
-* 📄 Office users
-* 🌐 Everyday internet users
+🌍 https://www.agitools24.com/
 
 ---
 
-## 💡 Use Cases
-
-### Students
-
-Create resumes, convert files, resize photos, calculate values and work with PDFs.
-
-### Professionals
-
-Prepare documents, generate salary slips, convert files and perform quick productivity tasks.
-
-### Freelancers
-
-Quickly process client documents, images and PDFs without installing multiple applications.
-
-### Everyday Users
-
-Perform common file, image and document operations directly from the browser.
-
----
-
-## 🔐 Privacy & Security
-
-Tools24 aims to provide a privacy-conscious experience.
-
-Users should avoid uploading highly sensitive or confidential information unless the relevant tool clearly explains how the data is processed.
-
-For tools involving server-side processing, the actual data handling depends on that tool's implementation.
-
-For more information, visit:
-
-**Privacy Policy:**
-https://www.agitools24.com/privacy.html
-
----
-
-## 📈 Project Vision
-
-Tools24 is being developed with a long-term vision of becoming a comprehensive online utility platform.
-
-### Future Goals
-
-* 🚀 More PDF tools
-* 🖼️ Advanced image utilities
-* 🤖 AI-powered tools
-* 📄 More document generators
-* 📱 Better mobile experience
-* 🌍 Multi-language support
-* ⚡ Improved processing performance
-* 🔐 Stronger privacy-focused architecture
-* 🎨 More premium templates
-* 🧰 More productivity utilities
-
----
-
-## 🤝 Contributing
-
-Suggestions, bug reports and improvements are welcome.
-
-If you find an issue or have an idea for a new tool:
-
-1. Open an Issue
-2. Describe the problem or feature
-3. Provide screenshots or examples when useful
-4. Submit a Pull Request if you are contributing code
-
----
-
-## ⭐ Support the Project
+# ❤️ Support Tools24
 
 If you find Tools24 useful:
 
-⭐ Star the repository
-🌐 Visit the website
-📢 Share it with others
+⭐ Star the project
+🐛 Report bugs
 💡 Suggest new tools
+📢 Share Tools24
+🤝 Contribute improvements
 
 ---
 
-## 👨‍💻 Developer
+## 🚀 Tools24
 
-**Lakshya Singh**
+### One Platform. Many Smart Tools.
 
-Web Developer & Creator of Tools24
-
-🌐 Website: https://www.agitools24.com
-💻 GitHub: https://github.com/lakshyasingh188
-
----
-
-## 📜 License
-
-This repository is provided for educational, development and productivity purposes.
-
-Before redistributing or commercially reusing any component, review the individual files, dependencies and third-party library licenses used by that component.
-
----
-
-## 🔗 Quick Links
-
-| Resource             | Link                                       |
-| -------------------- | ------------------------------------------ |
-| 🌐 Tools24 Website   | https://www.agitools24.com                 |
-| 💻 GitHub Repository | https://github.com/lakshyasingh188/Tools24 |
-| 📖 About Tools24     | https://www.agitools24.com/about.html      |
-| 🔒 Privacy Policy    | https://www.agitools24.com/privacy.html    |
-
----
-
-<p align="center">
-  <strong>Tools24 — One Platform. Many Smart Tools.</strong>
-</p>
-
-<p align="center">
-  Built with ❤️ for a faster and simpler digital experience.
-</p>
+**Fast • Useful • Simple • Accessible**
