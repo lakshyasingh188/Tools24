@@ -1,59 +1,1023 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tools24 Merge Files | PDF & Images</title>
-  <link rel="stylesheet" href="merge.css">
-  <!-- Required Library for merging everything in the browser -->
-  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Merge Files to PDF Online Free | Tools24</title>
+    <meta name="description" content="Merge images, PDFs and supported files into one PDF online with Tools24. Arrange files, scan documents with your camera and create a professional PDF quickly.">
+    <link rel="canonical" href="https://agitools24.com/merge-files-to-pdf">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Merge Files to PDF Online Free | Tools24">
+    <meta property="og:description" content="Combine images, PDFs and supported files into one PDF online with Tools24. Fast, simple and secure.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://agitools24.com/merge-files-to-pdf">
+    <meta property="og:image" content="https://agitools24.com/assets/og-image.png">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Merge Files to PDF Online Free | Tools24">
+    <meta name="twitter:description" content="Combine images, PDFs and supported files into one PDF online with Tools24.">
+
+    <!-- Structured Data FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can I merge multiple files into one PDF?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Tools24 allows you to select multiple files, arrange them in your desired order, and merge them into a single PDF document directly in your browser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I merge images and PDFs together?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. You can mix JPG, PNG, WEBP images with existing PDF files, and the tool will combine them into one cohesive PDF."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I scan documents using my phone camera?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, on mobile devices, you can use the 'Scan with Camera' feature to capture multiple pages using your phone's camera and add them directly to the PDF."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my files uploaded to a server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Your files are processed entirely locally in your browser. We do not upload your files to any external server, ensuring complete privacy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I create an A4 PDF from photos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, in the PDF settings before merging, you can select 'A4' as the page size. The tool will automatically fit your photos to A4 pages while maintaining aspect ratio."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #c2e9fb 0%, #a1c4fd 40%, #fbc2eb 100%);
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --card-border: rgba(255, 255, 255, 0.6);
+            --text-main: #1a1a1a;
+            --text-muted: #555555;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --danger: #ef4444;
+            --shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            --radius: 16px;
+        }
+
+        html.dark {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            --card-bg: rgba(30, 41, 59, 0.6);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f1f5f9;
+            --text-muted: #cbd5e1;
+            --primary: #818cf8;
+            --primary-hover: #6366f1;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Header */
+        header {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-decoration: none;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo span { color: var(--primary); }
+        nav { display: flex; gap: 1rem; align-items: center; }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: none; /* Hide on mobile */
+        }
+        @media (min-width: 768px) { nav a { display: inline; } }
+        
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s;
+        }
+        .theme-toggle:hover { transform: scale(1.1); }
+
+        /* Main Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            padding-bottom: 4rem;
+        }
+
+        /* Glass Card System */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Typography */
+        h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; text-align: center; }
+        .subtitle { color: var(--text-muted); text-align: center; font-size: 1rem; margin-bottom: 1.5rem; }
+        .privacy-note { text-align: center; font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 0.3rem; margin-bottom: 1rem;}
+        h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; }
+
+        /* Upload Zone */
+        .upload-zone {
+            border: 2px dashed var(--card-border);
+            border-radius: var(--radius);
+            padding: 2rem 1rem;
+            text-align: center;
+            transition: border-color 0.3s, background 0.3s;
+            cursor: pointer;
+        }
+        .upload-zone.dragover { border-color: var(--primary); background: rgba(79, 70, 229, 0.05); }
+        .upload-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .upload-text { font-weight: 600; margin-bottom: 0.25rem; }
+        .upload-subtext { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+        
+        /* Buttons */
+        .btn-group { display: flex; flex-direction: column; gap: 0.75rem; align-items: center; }
+        @media (min-width: 480px) { .btn-group { flex-direction: row; justify-content: center; } }
+        
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 0.8rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 280px;
+        }
+        @media (min-width: 480px) { .btn { width: auto; } }
+        
+        .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25); }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
+        
+        .btn-secondary { background: rgba(255,255,255,0.5); color: var(--text-main); border: 1px solid var(--card-border); }
+        html.dark .btn-secondary { background: rgba(255,255,255,0.1); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.8); }
+        html.dark .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+        .btn-success { background: #10b981; color: #fff; width: 100%; max-width: 100%; }
+        .btn-success:hover { background: #059669; }
+
+        /* File List */
+        .file-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .file-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 0.75rem;
+            gap: 0.75rem;
+            transition: background 0.2s;
+        }
+        html.dark .file-item { background: rgba(255,255,255,0.05); }
+        
+        .file-item .drag-handle { cursor: grab; color: var(--text-muted); font-size: 1.2rem; touch-action: none; }
+        .file-thumb { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; background: #fff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .file-info { flex-grow: 1; min-width: 0; }
+        .file-name { font-weight: 600; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .file-meta { font-size: 0.75rem; color: var(--text-muted); }
+        .badge-unsupported { font-size: 0.65rem; background: var(--danger); color: white; padding: 0.1rem 0.4rem; border-radius: 4px; margin-left: 0.5rem; vertical-align: middle; }
+        
+        .file-actions { display: flex; gap: 0.25rem; }
+        .icon-btn { background: transparent; border: none; color: var(--text-muted); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: background 0.2s; }
+        .icon-btn:hover { background: rgba(0,0,0,0.05); }
+        html.dark .icon-btn:hover { background: rgba(255,255,255,0.1); }
+        .icon-btn.danger:hover { color: var(--danger); }
+
+        /* Settings Grid */
+        .settings-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media (min-width: 600px) { .settings-grid { grid-template-columns: 1fr 1fr; } }
+        
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+        select {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 0.6rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* Progress & Result UI */
+        .progress-container { display: none; }
+        .progress-container.active { display: block; }
+        .progress-bar-bg { width: 100%; height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 0.5rem; }
+        html.dark .progress-bar-bg { background: rgba(255,255,255,0.1); }
+        .progress-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
+        .progress-text { font-size: 0.85rem; color: var(--text-muted); text-align: center; }
+        
+        .result-container { display: none; text-align: center; }
+        .result-container.active { display: block; }
+        .result-icon { font-size: 3rem; margin-bottom: 1rem; color: #10b981; }
+        .result-info { background: rgba(255,255,255,0.3); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
+        html.dark .result-info { background: rgba(255,255,255,0.05); }
+        .filename-input { width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-main); margin-bottom: 1rem; font-size: 0.9rem; }
+
+        /* Camera Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 1rem;
+        }
+        .modal-overlay.active { display: flex; }
+        .camera-stage { position: relative; width: 100%; max-width: 500px; aspect-ratio: 3/4; background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 1rem; }
+        #camera-video { width: 100%; height: 100%; object-fit: cover; }
+        #camera-canvas { display: none; width: 100%; height: 100%; object-fit: contain; background: #fff; }
+        
+        .camera-controls { display: flex; gap: 1rem; justify-content: center; width: 100%; max-width: 500px; }
+        .cam-btn { background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.5); padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: 600; backdrop-filter: blur(10px); cursor: pointer; width: 100%; }
+        .cam-btn.capture { background: white; color: black; border: none; width: 60px; height: 60px; border-radius: 50%; padding: 0; border: 4px solid rgba(255,255,255,0.5); }
+        .cam-btn.primary { background: var(--primary); border: none; }
+        
+        .captured-thumbs { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; max-height: 100px; overflow-y: auto; }
+        .captured-thumb { width: 50px; height: 50px; border-radius: 4px; object-fit: cover; border: 2px solid white; }
+
+        /* FAQ */
+        .faq-item { margin-bottom: 1rem; border-bottom: 1px solid var(--card-border); padding-bottom: 1rem; }
+        .faq-q { font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-q::after { content: '+'; font-size: 1.2rem; transition: transform 0.2s; }
+        .faq-item.active .faq-q::after { transform: rotate(45deg); }
+        .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; color: var(--text-muted); font-size: 0.9rem; }
+        .faq-item.active .faq-a { max-height: 200px; padding-top: 0.5rem; }
+
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: #1f2937; color: white; padding: 0.8rem 1.2rem; border-radius: 8px;
+            font-size: 0.9rem; z-index: 2000; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .toast.active { display: block; animation: fadeInUp 0.3s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+    </style>
+</head>
 <body>
 
-  <div class="glow-canvas"></div>
-
-  <nav class="nav-container">
-    <button class="back-link" onclick="location.reload()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-        stroke-linecap="round" stroke-linejoin="round">
-        <path d="m15 18-6-6 6-6" />
-      </svg>
-      Back
-    </button>
-  </nav>
-
-  <main class="wrapper">
-    <header class="app-header">
-      <h1>Tools24 Merge Files</h1>
-      <p>Combine your PDFs, JPGs, and PNGs into one single document</p>
+    <header>
+        <a href="https://agitools24.com" class="logo">Tools<span>24</span></a>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Privacy</a>
+            <a href="#">Contact</a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+        </nav>
     </header>
 
-    <div class="glass-container">
-      <div id="slots-list" class="slots-list">
-        <!-- 10 line-by-line slots generated by script.js -->
-      </div>
+    <div class="container">
+        <h1>Merge Files to PDF</h1>
+        <p class="subtitle">Combine images and supported files into one professional PDF — fast, simple and secure.</p>
+        <div class="privacy-note">🔒 Your files are processed locally in your browser whenever possible.</div>
 
-      <div class="footer-actions">
-        <button id="process-btn" class="merge-trigger" disabled>
-          <span id="btn-text">Merge All Files</span>
-        </button>
-        <p id="status-feedback" class="status-feedback"></p>
-      </div>
+        <!-- Upload Area -->
+        <div class="glass-card">
+            <div class="upload-zone" id="dropZone">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Drop your files here</div>
+                <div class="upload-subtext">or choose files from your device</div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="selectFilesBtn">Select Files</button>
+                    <button class="btn btn-secondary" id="openCameraBtn">📷 Scan with Camera</button>
+                </div>
+                <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.webp,.bmp,.gif,.pdf,.txt,.html,.docx,.xlsx" style="display:none;">
+            </div>
+        </div>
+
+        <!-- File List Area -->
+        <div class="glass-card" id="fileListCard" style="display:none;">
+            <h2>Selected Files</h2>
+            <div class="file-list" id="fileList"></div>
+        </div>
+
+        <!-- Settings Area -->
+        <div class="glass-card" id="settingsCard" style="display:none;">
+            <h2>PDF Settings</h2>
+            <div class="settings-grid">
+                <div class="form-group">
+                    <label for="pageSize">Page Size</label>
+                    <select id="pageSize">
+                        <option value="A4">A4</option>
+                        <option value="Letter">Letter</option>
+                        <option value="Original">Original Image Ratio</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="orientation">Orientation</label>
+                    <select id="orientation">
+                        <option value="Auto">Auto</option>
+                        <option value="Portrait">Portrait</option>
+                        <option value="Landscape">Landscape</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="margin">Margins</label>
+                    <select id="margin">
+                        <option value="Small">Small</option>
+                        <option value="None">None</option>
+                        <option value="Normal">Normal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quality">Image Quality</label>
+                    <select id="quality">
+                        <option value="High">High</option>
+                        <option value="Standard">Standard</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Merge Button -->
+        <div id="actionCard" class="glass-card" style="display:none; text-align: center;">
+            <button class="btn btn-primary" id="mergeBtn" style="width: 100%;">Merge & Create PDF</button>
+        </div>
+
+        <!-- Progress Area -->
+        <div class="glass-card progress-container" id="progressCard">
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBar"></div></div>
+            <div class="progress-text" id="progressText">Preparing...</div>
+        </div>
+
+        <!-- Result Area -->
+        <div class="glass-card result-container" id="resultCard">
+            <div class="result-icon">✓</div>
+            <h2>PDF Created Successfully</h2>
+            <div class="result-info" id="resultInfo"></div>
+            <input type="text" class="filename-input" id="filenameInput" value="Tools24-Merged-PDF">
+            <div class="btn-group">
+                <button class="btn btn-success" id="downloadBtn">⬇ Download PDF</button>
+                <button class="btn btn-secondary" id="resetBtn">Create Another PDF</button>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="glass-card">
+            <h2>Frequently Asked Questions</h2>
+            <div id="faqContainer"></div>
+        </div>
     </div>
-  </main>
 
-  <!-- Full Screen Loading System -->
-  <div id="loading-overlay" class="loading-overlay">
-    <div class="loader-box">
-      <div class="loading-ring"></div>
-      <h2>Processing Files</h2>
-      <p>Converting images and merging PDFs... please wait.</p>
+    <!-- Camera Modal -->
+    <div class="modal-overlay" id="cameraModal">
+        <div class="camera-stage">
+            <video id="camera-video" autoplay playsinline></video>
+            <canvas id="camera-canvas"></canvas>
+        </div>
+        <div class="camera-controls" id="cameraControlsLive">
+            <button class="cam-btn" id="closeCameraBtn">Cancel</button>
+            <button class="cam-btn capture" id="captureBtn"></button>
+            <button class="cam-btn primary" id="doneCameraBtn">Done</button>
+        </div>
+        <div class="camera-controls" id="cameraControlsReview" style="display:none;">
+            <button class="cam-btn" id="retakeBtn">Retake</button>
+            <button class="cam-btn primary" id="usePhotoBtn">Use Photo</button>
+        </div>
+        <div class="captured-thumbs" id="capturedThumbs"></div>
     </div>
-  </div>
 
-  <script src="merge.js"></script>
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // PDF.js Worker Setup
+        if (window['pdfjsLib']) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+
+        // State
+        let filesArray = [];
+        let pdfDoc = null;
+        let cameraStream = null;
+        let cameraImage = null;
+        let capturedPhotos = [];
+
+        // DOM Elements
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileListCard = document.getElementById('fileListCard');
+        const fileList = document.getElementById('fileList');
+        const settingsCard = document.getElementById('settingsCard');
+        const actionCard = document.getElementById('actionCard');
+        const mergeBtn = document.getElementById('mergeBtn');
+        const progressCard = document.getElementById('progressCard');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const resultCard = document.getElementById('resultCard');
+        const resultInfo = document.getElementById('resultInfo');
+        const toast = document.getElementById('toast');
+
+        // --- Utility Functions ---
+        function showToast(msg, duration = 3000) {
+            toast.textContent = msg;
+            toast.classList.add('active');
+            setTimeout(() => toast.classList.remove('active'), duration);
+        }
+
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+
+        function getFileExt(filename) {
+            return filename.split('.').pop().toLowerCase();
+        }
+
+        // --- Theme Toggle ---
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            themeToggle.textContent = '☀️';
+        }
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.textContent = isDark ? '☀️' : '🌙';
+        });
+
+        // --- File Selection ---
+        document.getElementById('selectFilesBtn').addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+        
+        // Drag & Drop
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            });
+        });
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+            });
+        });
+        dropZone.addEventListener('drop', (e) => {
+            if (e.dataTransfer.files.length > 0) handleFiles(e.dataTransfer.files);
+        });
+
+        function handleFiles(fileListObj) {
+            const supported = ['jpg', 'jpeg', 'png', 'webp', 'bmp', 'gif', 'pdf', 'txt', 'html', 'docx', 'xlsx'];
+            const files = Array.from(fileListObj);
+            
+            files.forEach(file => {
+                const ext = getFileExt(file.name);
+                const isSupported = supported.includes(ext);
+                filesArray.push({
+                    id: Date.now() + Math.random(),
+                    file: file,
+                    ext: ext,
+                    supported: isSupported,
+                    thumb: null,
+                    pageCount: ext === 'pdf' ? '...' : null
+                });
+            });
+            
+            renderFileList();
+            fileInput.value = ''; // Reset input
+        }
+
+        // --- Render File List ---
+        async function renderFileList() {
+            if (filesArray.length === 0) {
+                fileListCard.style.display = 'none';
+                settingsCard.style.display = 'none';
+                actionCard.style.display = 'none';
+                return;
+            }
+            
+            fileListCard.style.display = 'block';
+            settingsCard.style.display = 'block';
+            actionCard.style.display = 'block';
+            
+            fileList.innerHTML = '';
+            
+            for (let item of filesArray) {
+                const div = document.createElement('div');
+                div.className = 'file-item';
+                div.dataset.id = item.id;
+                
+                let thumbHTML = `<div class="file-thumb">📄</div>`;
+                if (['jpg', 'jpeg', 'png', 'webp', 'bmp', 'gif'].includes(item.ext)) {
+                    item.thumb = item.thumb || URL.createObjectURL(item.file);
+                    thumbHTML = `<div class="file-thumb" style="padding:0; overflow:hidden;"><img src="${item.thumb}" style="width:100%; height:100%; object-fit:cover;"></div>`;
+                } else if (item.ext === 'pdf') {
+                    thumbHTML = `<div class="file-thumb">📕</div>`;
+                } else if (item.ext === 'txt') {
+                    thumbHTML = `<div class="file-thumb">📝</div>`;
+                } else if (item.ext === 'docx') {
+                    thumbHTML = `<div class="file-thumb">📘</div>`;
+                } else if (item.ext === 'xlsx') {
+                    thumbHTML = `<div class="file-thumb">📗</div>`;
+                }
+
+                const badge = !item.supported ? `<span class="badge-unsupported">Unsupported</span>` : '';
+                
+                div.innerHTML = `
+                    <span class="drag-handle">⠿</span>
+                    ${thumbHTML}
+                    <div class="file-info">
+                        <div class="file-name">${item.file.name} ${badge}</div>
+                        <div class="file-meta">${formatBytes(item.file.size)} ${item.pageCount ? '• ' + item.pageCount + ' pages' : ''}</div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="icon-btn danger" data-action="delete" title="Delete">🗑️</button>
+                    </div>
+                `;
+                fileList.appendChild(div);
+                
+                // Fetch PDF page count asynchronously
+                if (item.ext === 'pdf' && item.pageCount === '...') {
+                    fetchPdfPageCount(item);
+                }
+            }
+            
+            // Init Sortable
+            Sortable.create(fileList, {
+                handle: '.drag-handle',
+                animation: 150,
+                onEnd: (evt) => {
+                    const movedItem = filesArray.splice(evt.oldIndex, 1)[0];
+                    filesArray.splice(evt.newIndex, 0, movedItem);
+                }
+            });
+        }
+
+        // Delete file
+        fileList.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-action="delete"]');
+            if (btn) {
+                const itemDiv = btn.closest('.file-item');
+                const id = parseFloat(itemDiv.dataset.id);
+                filesArray = filesArray.filter(f => f.id !== id);
+                renderFileList();
+            }
+        });
+
+        // PDF Page Count Fetcher
+        async function fetchPdfPageCount(item) {
+            try {
+                const arrayBuffer = await item.file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                item.pageCount = pdf.numPages;
+                renderFileList(); // Re-render to show count
+            } catch (error) {
+                item.pageCount = '?';
+                renderFileList();
+            }
+        }
+
+        // --- Camera Logic ---
+        const cameraModal = document.getElementById('cameraModal');
+        const video = document.getElementById('camera-video');
+        const cameraCanvas = document.getElementById('camera-canvas');
+        const captureBtn = document.getElementById('captureBtn');
+        const closeCameraBtn = document.getElementById('closeCameraBtn');
+        const doneCameraBtn = document.getElementById('doneCameraBtn');
+        const retakeBtn = document.getElementById('retakeBtn');
+        const usePhotoBtn = document.getElementById('usePhotoBtn');
+        const capturedThumbs = document.getElementById('capturedThumbs');
+        const controlsLive = document.getElementById('cameraControlsLive');
+        const controlsReview = document.getElementById('cameraControlsReview');
+
+        document.getElementById('openCameraBtn').addEventListener('click', openCamera);
+        closeCameraBtn.addEventListener('click', closeCamera);
+        captureBtn.addEventListener('click', capturePhoto);
+        retakeBtn.addEventListener('click', retakePhoto);
+        usePhotoBtn.addEventListener('click', usePhoto);
+        doneCameraBtn.addEventListener('click', finishCameraScanning);
+
+        async function openCamera() {
+            cameraModal.classList.add('active');
+            capturedPhotos = [];
+            capturedThumbs.innerHTML = '';
+            controlsLive.style.display = 'flex';
+            controlsReview.style.display = 'none';
+            video.style.display = 'block';
+            cameraCanvas.style.display = 'none';
+            
+            try {
+                cameraStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'environment' }
+                });
+                video.srcObject = cameraStream;
+            } catch (err) {
+                showToast('Camera permission denied or unavailable. Please use "Select Files" instead.');
+                closeCamera();
+                // Fallback to file input with capture
+                fileInput.setAttribute('capture', 'environment');
+                fileInput.click();
+                setTimeout(() => fileInput.removeAttribute('capture'), 500);
+            }
+        }
+
+        function closeCamera() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            cameraModal.classList.remove('active');
+        }
+
+        function capturePhoto() {
+            const context = cameraCanvas.getContext('2d');
+            const width = video.videoWidth;
+            const height = video.videoHeight;
+            
+            cameraCanvas.width = width;
+            cameraCanvas.height = height;
+            context.drawImage(video, 0, 0, width, height);
+            
+            cameraImage = cameraCanvas.toDataURL('image/jpeg', 0.9);
+            
+            // Switch UI
+            video.style.display = 'none';
+            cameraCanvas.style.display = 'block';
+            controlsLive.style.display = 'none';
+            controlsReview.style.display = 'flex';
+        }
+
+        function retakePhoto() {
+            cameraImage = null;
+            video.style.display = 'block';
+            cameraCanvas.style.display = 'none';
+            controlsLive.style.display = 'flex';
+            controlsReview.style.display = 'none';
+        }
+
+        function usePhoto() {
+            if (cameraImage) {
+                capturedPhotos.push(cameraImage);
+                
+                // Add thumb
+                const img = document.createElement('img');
+                img.src = cameraImage;
+                img.className = 'captured-thumb';
+                capturedThumbs.appendChild(img);
+                
+                retakePhoto(); // Ready for next shot
+            }
+        }
+
+        async function finishCameraScanning() {
+            for (let i = 0; i < capturedPhotos.length; i++) {
+                const dataUrl = capturedPhotos[i];
+                const blob = await (await fetch(dataUrl)).blob();
+                const file = new File([blob], `Scan_${Date.now()}_${i+1}.jpg`, { type: 'image/jpeg' });
+                filesArray.push({
+                    id: Date.now() + Math.random(),
+                    file: file,
+                    ext: 'jpg',
+                    supported: true,
+                    thumb: dataUrl,
+                    pageCount: null
+                });
+            }
+            closeCamera();
+            renderFileList();
+            showToast(`${capturedPhotos.length} pages added to list.`);
+            capturedPhotos = [];
+        }
+
+        // --- Core PDF Generation Engine ---
+        mergeBtn.addEventListener('click', generateFinalPDF);
+
+        async function generateFinalPDF() {
+            const validFiles = filesArray.filter(f => f.supported);
+            if (validFiles.length === 0) {
+                showToast('No supported files to merge.');
+                return;
+            }
+
+            // Init UI
+            progressCard.classList.add('active');
+            fileListCard.style.display = 'none';
+            settingsCard.style.display = 'none';
+            actionCard.style.display = 'none';
+            resultCard.classList.remove('active');
+            
+            try {
+                const mergedPdf = await PDFLib.PDFDocument.create();
+                const pageSize = document.getElementById('pageSize').value;
+                const orientation = document.getElementById('orientation').value;
+                const marginType = document.getElementById('margin').value;
+                const quality = document.getElementById('quality').value;
+
+                const margins = {
+                    None: 0,
+                    Small: 20,
+                    Normal: 40
+                }[marginType];
+
+                for (let i = 0; i < validFiles.length; i++) {
+                    const item = validFiles[i];
+                    updateProgress(i, validFiles.length, `Processing ${item.file.name}`);
+                    
+                    if (['jpg', 'jpeg', 'png', 'webp', 'bmp', 'gif'].includes(item.ext)) {
+                        await convertImageToPDFPage(mergedPdf, item, pageSize, orientation, margins, quality);
+                    } else if (item.ext === 'pdf') {
+                        await loadExistingPDF(mergedPdf, item);
+                    } else if (['txt', 'html', 'docx', 'xlsx'].includes(item.ext)) {
+                        await convertDocToPDFPage(mergedPdf, item, pageSize, orientation, margins);
+                    }
+                    
+                    // Yield to UI to prevent freezing
+                    await new Promise(r => setTimeout(r, 10));
+                }
+
+                updateProgress(validFiles.length, validFiles.length, 'Finalizing PDF...');
+                const pdfBytes = await mergedPdf.save();
+                
+                // Show Result
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                
+                const pageCount = mergedPdf.getPageCount();
+                const sizeStr = formatBytes(blob.size);
+                
+                resultInfo.innerHTML = `<strong>Pages:</strong> ${pageCount} <br> <strong>Size:</strong> ${sizeStr}`;
+                document.getElementById('downloadBtn').onclick = () => {
+                    const filename = document.getElementById('filenameInput').value || 'Tools24-Merged-PDF';
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename.endsWith('.pdf') ? filename : filename + '.pdf';
+                    a.click();
+                };
+                
+                progressCard.classList.remove('active');
+                resultCard.classList.add('active');
+                
+            } catch (error) {
+                console.error(error);
+                showToast('An error occurred during PDF generation. Check console.');
+                progressCard.classList.remove('active');
+                fileListCard.style.display = 'block';
+                settingsCard.style.display = 'block';
+                actionCard.style.display = 'block';
+            }
+        }
+
+        function updateProgress(current, total, msg) {
+            const percent = Math.round((current / total) * 100);
+            progressBar.style.width = `${percent}%`;
+            progressText.textContent = `${msg} (${current}/${total})`;
+        }
+
+        // Image to PDF Page
+        async function convertImageToPDFPage(mergedPdf, item, pageSize, orientation, margins, quality) {
+            let img;
+            // Convert all images to PNG via canvas to ensure compatibility with pdf-lib
+            const imgEl = new Image();
+            imgEl.src = item.thumb;
+            await new Promise(r => imgEl.onload = r);
+            
+            const canvas = document.createElement('canvas');
+            // Scale down for standard quality to save size
+            const maxDim = quality === 'High' ? 2000 : 1200;
+            let w = imgEl.width, h = imgEl.height;
+            if (w > maxDim || h > maxDim) {
+                if (w > h) { h = h * (maxDim / w); w = maxDim; }
+                else { w = w * (maxDim / h); h = maxDim; }
+            }
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(imgEl, 0, 0, w, h);
+            const pngBytes = await new Promise(res => canvas.toBlob(res, 'image/png'));
+            const arrayBuffer = await pngBytes.arrayBuffer();
+            
+            try {
+                img = await mergedPdf.embedPng(arrayBuffer);
+            } catch (e) {
+                // fallback try jpg
+                const jpgBytes = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.9));
+                const jpgBuffer = await jpgBytes.arrayBuffer();
+                img = await mergedPdf.embedJpg(jpgBuffer);
+            }
+
+            // Determine orientation
+            let isLandscape = img.width > img.height;
+            if (orientation !== 'Auto') {
+                isLandscape = orientation === 'Landscape';
+            }
+
+            // Determine Page Size
+            let pageW, pageH;
+            if (pageSize === 'Original') {
+                pageW = img.width + (margins * 2);
+                pageH = img.height + (margins * 2);
+            } else if (pageSize === 'Letter') {
+                pageW = isLandscape ? 11 * 72 : 8.5 * 72;
+                pageH = isLandscape ? 8.5 * 72 : 11 * 72;
+            } else { // A4
+                pageW = isLandscape ? 11.69 * 72 : 8.27 * 72;
+                pageH = isLandscape ? 8.27 * 72 : 11.69 * 72;
+            }
+
+            const page = mergedPdf.addPage([pageW, pageH]);
+            
+            // Fit image maintaining aspect ratio
+            const availW = pageW - (margins * 2);
+            const availH = pageH - (margins * 2);
+            const scale = Math.min(availW / img.width, availH / img.height);
+            const drawW = img.width * scale;
+            const drawH = img.height * scale;
+            
+            const x = (pageW - drawW) / 2;
+            const y = (pageH - drawH) / 2;
+            
+            page.drawImage(img, { x, y, width: drawW, height: drawH });
+        }
+
+        // Existing PDF Merge
+        async function loadExistingPDF(mergedPdf, item) {
+            const arrayBuffer = await item.file.arrayBuffer();
+            const srcPdf = await PDFLib.PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+            const pages = await mergedPdf.copyPages(srcPdf, srcPdf.getPageIndices());
+            pages.forEach(p => mergedPdf.addPage(p));
+        }
+
+        // Document (TXT, HTML, DOCX, XLSX) to PDF via HTML rendering
+        async function convertDocToPDFPage(mergedPdf, item, pageSize, orientation, margins) {
+            let htmlContent = '';
+            let isLandscape = orientation === 'Landscape';
+            
+            if (item.ext === 'txt') {
+                const text = await item.file.text();
+                htmlContent = `<pre style="font-family: monospace; white-space: pre-wrap; word-wrap: break-word; padding: 20px; color: #000;">${text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>`;
+            } else if (item.ext === 'html') {
+                htmlContent = await item.file.text();
+            } else if (item.ext === 'docx') {
+                const arrayBuffer = await item.file.arrayBuffer();
+                const result = await mammoth.convertToHtml({ arrayBuffer });
+                htmlContent = `<div style="padding: 20px; color: #000;">${result.value}</div>`;
+            } else if (item.ext === 'xlsx') {
+                const arrayBuffer = await item.file.arrayBuffer();
+                const wb = XLSX.read(arrayBuffer, { type: 'array' });
+                htmlContent = '<div style="padding: 20px; color: #000;">';
+                wb.SheetNames.forEach(sheetName => {
+                    const sheet = wb.Sheets[sheetName];
+                    const html = XLSX.utils.sheet_to_html(sheet);
+                    htmlContent += `<h3>${sheetName}</h3>${html}<br>`;
+                });
+                htmlContent += '</div>';
+            }
+
+            // Render HTML to Canvas
+            const container = document.createElement('div');
+            container.style.position = 'absolute';
+            container.style.left = '-9999px';
+            container.style.top = '0';
+            container.style.width = '800px';
+            container.style.background = '#fff';
+            container.innerHTML = htmlContent;
+            document.body.appendChild(container);
+
+            const canvas = await html2canvas(container, { scale: 1.5, backgroundColor: '#ffffff' });
+            document.body.removeChild(container);
+
+            // Determine orientation from canvas if Auto
+            if (orientation === 'Auto') isLandscape = canvas.width > canvas.height;
+
+            let pageW, pageH;
+            if (pageSize === 'Letter') {
+                pageW = isLandscape ? 11 * 72 : 8.5 * 72;
+                pageH = isLandscape ? 8.5 * 72 : 11 * 72;
+            } else { // Default A4
+                pageW = isLandscape ? 11.69 * 72 : 8.27 * 72;
+                pageH = isLandscape ? 8.27 * 72 : 11.69 * 72;
+            }
+
+            const imgBytes = canvas.toDataURL('image/png');
+            const img = await mergedPdf.embedPng(imgBytes);
+            
+            const page = mergedPdf.addPage([pageW, pageH]);
+            const availW = pageW - (margins * 2);
+            const availH = pageH - (margins * 2);
+            const scale = Math.min(availW / img.width, availH / img.height);
+            const drawW = img.width * scale;
+            const drawH = img.height * scale;
+            
+            page.drawImage(img, { x: (pageW - drawW) / 2, y: (pageH - drawH) / 2, width: drawW, height: drawH });
+        }
+
+        // --- Reset Tool ---
+        document.getElementById('resetBtn').addEventListener('click', resetTool);
+        function resetTool() {
+            filesArray.forEach(f => { if (f.thumb && f.thumb.startsWith('blob:')) URL.revokeObjectURL(f.thumb); });
+            filesArray = [];
+            resultCard.classList.remove('active');
+            renderFileList();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- FAQ Renderer ---
+        const faqs = [
+            { q: "Can I merge multiple files into one PDF?", a: "Yes, Tools24 allows you to select multiple files, arrange them in your desired order, and merge them into a single PDF document directly in your browser." },
+            { q: "Can I merge images and PDFs together?", a: "Absolutely. You can mix JPG, PNG, WEBP images with existing PDF files, and the tool will combine them into one cohesive PDF." },
+            { q: "Can I scan documents using my phone camera?", a: "Yes, on mobile devices, you can use the 'Scan with Camera' feature to capture multiple pages using your phone's camera and add them directly to the PDF." },
+            { q: "Are my files uploaded to a server?", a: "No. Your files are processed entirely locally in your browser. We do not upload your files to any external server, ensuring complete privacy." },
+            { q: "Can I create an A4 PDF from photos?", a: "Yes, in the PDF settings before merging, you can select 'A4' as the page size. The tool will automatically fit your photos to A4 pages while maintaining aspect ratio." },
+            { q: "How many files can I merge?", a: "There is no strict limit on the number of files, but since processing happens in your browser, extremely large numbers of high-resolution images might affect performance on low-end devices." }
+        ];
+        const faqContainer = document.getElementById('faqContainer');
+        faqs.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'faq-item';
+            div.innerHTML = `<div class="faq-q">${item.q}</div><div class="faq-a">${item.a}</div>`;
+            div.querySelector('.faq-q').addEventListener('click', () => div.classList.toggle('active'));
+            faqContainer.appendChild(div);
+        });
+    </script>
 </body>
-
 </html>
