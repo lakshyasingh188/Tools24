@@ -1,49 +1,3642 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
+
 <head>
-  <meta charset="UTF-8">
-  <title>File Rename Tool</title>
-  <link rel="stylesheet" href="rename.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Rename Tool Online – Batch Rename Files Free | Tools24</title>
+    <meta name="description"
+        content="Rename files online for free with Tools24. Batch rename multiple files, add prefixes, suffixes, numbering, find and replace filenames, and download renamed files securely.">
+    <meta name="keywords"
+        content="file rename tool, rename files online, batch file renamer, bulk rename files, online file renamer, rename multiple files, file renamer, free file rename tool, batch rename tool">
+    <meta property="og:title" content="File Rename Tool Online – Batch Rename Files Free | Tools24">
+    <meta property="og:description"
+        content="Rename files online for free with Tools24. Batch rename multiple files with prefixes, suffixes, numbering and more.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Tools24">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"How do I rename multiple files?","acceptedAnswer":{"@type":"Answer","text":"Select your files, choose a rename rule (prefix, suffix, find & replace, numbering, etc.), preview the changes, then download the renamed files as a ZIP."}},
+    {"@type":"Question","name":"Can I rename files on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes, the Tools24 File Rename Tool is fully responsive and works on Android, iPhone, and tablet browsers."}},
+    {"@type":"Question","name":"Can I rename PDF files?","acceptedAnswer":{"@type":"Answer","text":"Yes, you can rename PDF files along with images, documents, videos, archives, and any other common file type."}},
+    {"@type":"Question","name":"Can I rename images?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. JPG, PNG, WEBP, GIF, SVG and other image files can all be renamed in batch."}},
+    {"@type":"Question","name":"Can I rename 100 files at once?","acceptedAnswer":{"@type":"Answer","text":"Yes, the tool supports up to 100 files per batch rename operation."}},
+    {"@type":"Question","name":"Are my files uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. Your files are processed entirely in your browser. They are never uploaded to any server."}},
+    {"@type":"Question","name":"Can I download all renamed files?","acceptedAnswer":{"@type":"Answer","text":"Yes, you can download renamed files individually or as a single ZIP file."}},
+    {"@type":"Question","name":"Can I add numbering to filenames?","acceptedAnswer":{"@type":"Answer","text":"Yes, the numbering feature lets you set start number, increment, digit count, separator, and position."}},
+    {"@type":"Question","name":"Can I replace text in filenames?","acceptedAnswer":{"@type":"Answer","text":"Yes, use the Find & Replace option in Batch Rename to search for and replace any text in filenames."}},
+    {"@type":"Question","name":"Can I remove spaces from filenames?","acceptedAnswer":{"@type":"Answer","text":"Yes, use the Advanced Rename tab to remove spaces, replace them with dashes, underscores, or custom characters."}}
+  ]
+}
+</script>
+    <style>
+        /* ========== CSS RESET & VARIABLES ========== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --bg: #f0f2f8;
+            --fg: #1a1a2e;
+            --fg-secondary: #374151;
+            --muted: #6b7280;
+            --card: rgba(255, 255, 255, 0.82);
+            --card-solid: #ffffff;
+            --card-hover: rgba(255, 255, 255, 0.95);
+            --border: rgba(0, 0, 0, 0.07);
+            --border-strong: rgba(0, 0, 0, 0.12);
+            --accent: #7c5cfc;
+            --accent-hover: #6a48e8;
+            --accent-light: rgba(124, 92, 252, 0.1);
+            --grad1: #A9C7FF;
+            --grad2: #B9A6F4;
+            --grad3: #F0A9C7;
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.1);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.1);
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.1);
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-xs: 6px;
+            --font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            --header-h: 64px;
+            --toolbar-h: 52px;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0d1220;
+            --fg: #f0f0f5;
+            --fg-secondary: #c4c9d4;
+            --muted: #8b92a5;
+            --card: rgba(22, 30, 52, 0.85);
+            --card-solid: #161e34;
+            --card-hover: rgba(28, 38, 65, 0.95);
+            --border: rgba(255, 255, 255, 0.07);
+            --border-strong: rgba(255, 255, 255, 0.12);
+            --accent: #9d8aff;
+            --accent-hover: #b5a5ff;
+            --accent-light: rgba(157, 138, 255, 0.12);
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none
+        }
+
+        button {
+            font-family: var(--font);
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: inherit
+        }
+
+        input,
+        select,
+        textarea {
+            font-family: var(--font);
+            font-size: inherit
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            border-radius: var(--radius-xs)
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff
+        }
+
+        img {
+            max-width: 100%;
+            display: block
+        }
+
+        /* ========== BACKGROUND DECORATION ========== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -120px;
+            right: -120px;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, var(--grad1) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -80px;
+            left: -80px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--grad3) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .bg-deco-mid {
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--grad2) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        /* ========== HEADER ========== */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            height: var(--header-h)
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--fg);
+            white-space: nowrap
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--grad1), var(--grad2), var(--grad3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: -0.5px
+        }
+
+        .nav-desktop {
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        .nav-desktop a {
+            padding: 8px 14px;
+            border-radius: var(--radius-xs);
+            color: var(--fg-secondary);
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.2s
+        }
+
+        .nav-desktop a:hover,
+        .nav-desktop a.active {
+            background: var(--accent-light);
+            color: var(--accent)
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--fg-secondary);
+            transition: all 0.2s;
+            background: transparent
+        }
+
+        .theme-btn:hover {
+            background: var(--accent-light);
+            color: var(--accent)
+        }
+
+        .hamburger {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            align-items: center;
+            justify-content: center;
+            color: var(--fg);
+            flex-direction: column;
+            gap: 5px
+        }
+
+        .hamburger span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--fg);
+            border-radius: 2px;
+            transition: all 0.3s
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px)
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px)
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: var(--header-h);
+            left: 0;
+            right: 0;
+            background: var(--card-solid);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 20px;
+            flex-direction: column;
+            gap: 4px;
+            box-shadow: var(--shadow)
+        }
+
+        .mobile-nav.show {
+            display: flex
+        }
+
+        .mobile-nav a {
+            padding: 12px 16px;
+            border-radius: var(--radius-xs);
+            color: var(--fg-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s
+        }
+
+        .mobile-nav a:hover,
+        .mobile-nav a.active {
+            background: var(--accent-light);
+            color: var(--accent)
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 24px;
+            text-align: center;
+            position: relative;
+            z-index: 1
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border-radius: 100px;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 12px;
+            color: var(--fg)
+        }
+
+        .hero-desc {
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto 14px
+        }
+
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 100px;
+            background: var(--success-bg);
+            color: var(--success);
+            font-size: 0.78rem;
+            font-weight: 600
+        }
+
+        /* ========== TOOL CARD ========== */
+        .tool-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+            position: relative;
+            z-index: 1
+        }
+
+        .tool-card {
+            background: var(--card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden
+        }
+
+        .tool-card-inner {
+            padding: 28px
+        }
+
+        @media(max-width:640px) {
+            .tool-card-inner {
+                padding: 16px
+            }
+        }
+
+        /* ========== UPLOAD AREA ========== */
+        .upload-zone {
+            border: 2px dashed var(--border-strong);
+            border-radius: var(--radius-sm);
+            padding: 48px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            background: var(--accent-light)
+        }
+
+        .upload-zone:hover,
+        .upload-zone.drag-over {
+            border-color: var(--accent);
+            background: rgba(124, 92, 252, 0.08);
+            transform: scale(1.005)
+        }
+
+        .upload-zone.drag-over {
+            box-shadow: 0 0 0 4px var(--accent-light)
+        }
+
+        .upload-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 16px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--grad1), var(--grad2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff
+        }
+
+        .upload-icon svg {
+            width: 28px;
+            height: 28px
+        }
+
+        .upload-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--fg)
+        }
+
+        .upload-sub {
+            font-size: 0.88rem;
+            color: var(--muted);
+            margin-bottom: 20px
+        }
+
+        .upload-btns {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 22px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+            min-height: 44px;
+            white-space: nowrap
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(124, 92, 252, 0.3)
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(124, 92, 252, 0.4)
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none
+        }
+
+        .btn-secondary {
+            background: var(--accent-light);
+            color: var(--accent);
+            border: 1px solid transparent
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent)
+        }
+
+        .btn-ghost {
+            color: var(--fg-secondary);
+            padding: 8px 14px
+        }
+
+        .btn-ghost:hover {
+            background: var(--accent-light);
+            color: var(--accent)
+        }
+
+        .btn-danger {
+            background: var(--error-bg);
+            color: var(--error)
+        }
+
+        .btn-danger:hover {
+            background: var(--error);
+            color: #fff
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: #fff
+        }
+
+        .btn-success:hover {
+            background: #0ea371
+        }
+
+        .btn-sm {
+            padding: 7px 14px;
+            font-size: 0.8rem;
+            min-height: 36px;
+            border-radius: var(--radius-xs)
+        }
+
+        .upload-info {
+            margin-top: 16px;
+            font-size: 0.78rem;
+            color: var(--muted)
+        }
+
+        .upload-info span {
+            color: var(--fg-secondary);
+            font-weight: 500
+        }
+
+        /* ========== FILE COUNT BAR ========== */
+        .file-count-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px
+        }
+
+        .file-count-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--fg)
+        }
+
+        .file-count-text .count-num {
+            color: var(--accent)
+        }
+
+        .file-count-text .ready-text {
+            color: var(--success);
+            font-weight: 500;
+            font-size: 0.82rem;
+            margin-left: 8px
+        }
+
+        .file-count-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        /* ========== RENAME PANEL ========== */
+        .rename-panel {
+            margin-bottom: 20px
+        }
+
+        .tab-bar {
+            display: flex;
+            gap: 4px;
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+            padding: 4px;
+            margin-bottom: 20px;
+            overflow-x: auto
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 0;
+            padding: 10px 16px;
+            border-radius: var(--radius-xs);
+            font-weight: 600;
+            font-size: 0.84rem;
+            color: var(--muted);
+            transition: all 0.2s;
+            white-space: nowrap;
+            text-align: center
+        }
+
+        .tab-btn.active {
+            background: var(--card-solid);
+            color: var(--accent);
+            box-shadow: var(--shadow)
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: var(--fg)
+        }
+
+        .tab-content {
+            display: none
+        }
+
+        .tab-content.active {
+            display: block
+        }
+
+        .rule-section {
+            margin-bottom: 16px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--card-solid);
+            transition: all 0.2s
+        }
+
+        .rule-section.disabled {
+            opacity: 0.5;
+            pointer-events: none
+        }
+
+        .rule-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px
+        }
+
+        .rule-header label {
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .rule-header input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent);
+            cursor: pointer
+        }
+
+        .rule-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 10px
+        }
+
+        .rule-row:last-child {
+            margin-bottom: 0
+        }
+
+        .rule-label {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--muted);
+            min-width: 80px
+        }
+
+        .rule-input {
+            flex: 1;
+            min-width: 120px;
+            padding: 9px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xs);
+            background: var(--bg);
+            color: var(--fg);
+            font-size: 0.88rem;
+            transition: border-color 0.2s
+        }
+
+        .rule-input:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px var(--accent-light)
+        }
+
+        .rule-select {
+            padding: 9px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xs);
+            background: var(--bg);
+            color: var(--fg);
+            font-size: 0.88rem;
+            min-width: 100px
+        }
+
+        .rule-select:focus {
+            border-color: var(--accent);
+            outline: none
+        }
+
+        .var-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px
+        }
+
+        .var-chip {
+            padding: 5px 10px;
+            border-radius: 100px;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent
+        }
+
+        .var-chip:hover {
+            border-color: var(--accent);
+            background: rgba(124, 92, 252, 0.18)
+        }
+
+        .ext-warning {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: var(--radius-xs);
+            background: var(--warning-bg);
+            color: var(--warning);
+            font-size: 0.8rem;
+            margin-top: 8px
+        }
+
+        .ext-warning svg {
+            flex-shrink: 0;
+            margin-top: 1px
+        }
+
+        .rename-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border)
+        }
+
+        /* ========== ADVANCED GRID ========== */
+        .adv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 8px
+        }
+
+        .adv-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xs);
+            font-size: 0.84rem;
+            font-weight: 500;
+            color: var(--fg-secondary);
+            background: var(--card-solid);
+            transition: all 0.2s;
+            text-align: left;
+            min-height: 44px
+        }
+
+        .adv-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-light)
+        }
+
+        .adv-btn.active {
+            border-color: var(--accent);
+            color: #fff;
+            background: var(--accent)
+        }
+
+        .adv-btn svg {
+            flex-shrink: 0
+        }
+
+        .adv-custom {
+            margin-top: 12px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--card-solid);
+            display: none
+        }
+
+        .adv-custom.show {
+            display: block
+        }
+
+        /* ========== PREVIEW PANEL ========== */
+        .preview-panel {
+            margin-bottom: 20px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--card-solid)
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px
+        }
+
+        .preview-header h3 {
+            font-size: 0.95rem;
+            font-weight: 700
+        }
+
+        .preview-summary {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 0.82rem;
+            font-weight: 500
+        }
+
+        .preview-summary .ok {
+            color: var(--success)
+        }
+
+        .preview-summary .warn {
+            color: var(--warning)
+        }
+
+        .preview-summary .err {
+            color: var(--error)
+        }
+
+        .preview-list {
+            max-height: 260px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xs)
+        }
+
+        .preview-row {
+            display: grid;
+            grid-template-columns: 1fr 32px 1fr 40px;
+            gap: 8px;
+            align-items: center;
+            padding: 8px 12px;
+            font-size: 0.82rem;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .preview-row:last-child {
+            border-bottom: none
+        }
+
+        .preview-arrow {
+            color: var(--muted);
+            text-align: center
+        }
+
+        .preview-status {
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .preview-status svg {
+            width: 16px;
+            height: 16px
+        }
+
+        .preview-status.ok svg {
+            color: var(--success)
+        }
+
+        .preview-status.warn svg {
+            color: var(--warning)
+        }
+
+        .preview-status.err svg {
+            color: var(--error)
+        }
+
+        .preview-filename {
+            font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.78rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .preview-filename.changed {
+            color: var(--accent);
+            font-weight: 600
+        }
+
+        /* ========== TOOLBAR ========== */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+            overflow-x: auto;
+            flex-wrap: nowrap;
+            -webkit-overflow-scrolling: touch
+        }
+
+        .toolbar::-webkit-scrollbar {
+            height: 0
+        }
+
+        .toolbar .btn-sm {
+            flex-shrink: 0
+        }
+
+        .sort-wrap {
+            position: relative;
+            flex-shrink: 0
+        }
+
+        .sort-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 4px;
+            background: var(--card-solid);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xs);
+            box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            z-index: 50;
+            padding: 4px
+        }
+
+        .sort-menu.show {
+            display: block
+        }
+
+        .sort-menu button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            padding: 9px 14px;
+            font-size: 0.84rem;
+            color: var(--fg-secondary);
+            border-radius: var(--radius-xs);
+            text-align: left;
+            transition: all 0.15s
+        }
+
+        .sort-menu button:hover {
+            background: var(--accent-light);
+            color: var(--accent)
+        }
+
+        .toolbar-sep {
+            width: 1px;
+            height: 24px;
+            background: var(--border);
+            flex-shrink: 0
+        }
+
+        /* ========== FILE LIST ========== */
+        .file-table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        .file-table thead {
+            position: sticky;
+            top: 0;
+            z-index: 2
+        }
+
+        .file-table th {
+            padding: 10px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--muted);
+            text-align: left;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border)
+        }
+
+        .file-table td {
+            padding: 10px 12px;
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle
+        }
+
+        .file-table tr:hover td {
+            background: var(--accent-light)
+        }
+
+        .file-name-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0
+        }
+
+        .file-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            color: #fff;
+            flex-shrink: 0;
+            background: var(--muted)
+        }
+
+        .file-name-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 200px;
+            font-weight: 500
+        }
+
+        .file-new-name {
+            font-family: 'SF Mono', SFMono-Regular, Consolas, monospace;
+            font-size: 0.8rem;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .file-size {
+            color: var(--muted);
+            font-size: 0.82rem;
+            white-space: nowrap
+        }
+
+        .file-status {
+            font-size: 0.78rem;
+            font-weight: 600
+        }
+
+        .file-status.unchanged {
+            color: var(--muted)
+        }
+
+        .file-status.renamed {
+            color: var(--success)
+        }
+
+        .file-status.warning {
+            color: var(--warning)
+        }
+
+        .file-status.error {
+            color: var(--error)
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 4px;
+            flex-wrap: nowrap
+        }
+
+        .file-actions .btn-sm {
+            padding: 6px 8px;
+            min-width: 32px
+        }
+
+        .file-actions .btn-sm svg {
+            width: 16px;
+            height: 16px
+        }
+
+        /* MOBILE FILE CARDS */
+        .file-cards {
+            display: none
+        }
+
+        .file-card {
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            background: var(--card-solid);
+            transition: all 0.2s
+        }
+
+        .file-card:hover {
+            border-color: var(--accent)
+        }
+
+        .file-card-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px
+        }
+
+        .file-card-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .file-card-name {
+            font-weight: 600;
+            font-size: 0.88rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .file-card-meta {
+            font-size: 0.76rem;
+            color: var(--muted);
+            margin-top: 2px
+        }
+
+        .file-card-new {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            background: var(--bg);
+            border-radius: var(--radius-xs);
+            margin-bottom: 10px
+        }
+
+        .file-card-new span {
+            font-size: 0.78rem;
+            color: var(--muted);
+            flex-shrink: 0
+        }
+
+        .file-card-new code {
+            font-family: 'SF Mono', SFMono-Regular, Consolas, monospace;
+            font-size: 0.8rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+            color: var(--accent);
+            font-weight: 600
+        }
+
+        .file-card-actions {
+            display: flex;
+            gap: 6px
+        }
+
+        /* ========== EMPTY STATE ========== */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px
+        }
+
+        .empty-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--grad2), var(--grad3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff
+        }
+
+        .empty-icon svg {
+            width: 28px;
+            height: 28px
+        }
+
+        .empty-state h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 6px
+        }
+
+        .empty-state p {
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-bottom: 16px
+        }
+
+        /* ========== DOWNLOAD SECTION ========== */
+        .download-section {
+            text-align: center;
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--success-bg);
+            margin-top: 20px
+        }
+
+        .download-section h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px
+        }
+
+        .download-section .sub {
+            font-size: 0.88rem;
+            color: var(--fg-secondary);
+            margin-bottom: 18px
+        }
+
+        .download-btns {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        /* ========== MODAL ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(4px)
+        }
+
+        .modal-overlay.show {
+            display: flex
+        }
+
+        .modal {
+            background: var(--card-solid);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 460px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px
+        }
+
+        .modal h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 16px
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px
+        }
+
+        /* ========== TOAST ========== */
+        .toast-container {
+            position: fixed;
+            top: calc(var(--header-h) + 12px);
+            right: 12px;
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none
+        }
+
+        .toast {
+            pointer-events: auto;
+            padding: 12px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            animation: toastIn 0.3s ease;
+            max-width: 360px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .toast.info {
+            background: var(--card-solid);
+            color: var(--fg);
+            border: 1px solid var(--border)
+        }
+
+        .toast.success {
+            background: #ecfdf5;
+            color: var(--success);
+            border: 1px solid #a7f3d0
+        }
+
+        .toast.error {
+            background: #fef2f2;
+            color: var(--error);
+            border: 1px solid #fecaca
+        }
+
+        .toast.warning {
+            background: #fffbeb;
+            color: var(--warning);
+            border: 1px solid #fde68a
+        }
+
+        .toast.out {
+            animation: toastOut 0.3s ease forwards
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(40px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0)
+            }
+        }
+
+        @keyframes toastOut {
+            to {
+                opacity: 0;
+                transform: translateX(40px)
+            }
+        }
+
+        /* ========== LOADING OVERLAY ========== */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 250;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px)
+        }
+
+        .loading-overlay.show {
+            display: flex
+        }
+
+        .loading-box {
+            background: var(--card-solid);
+            border-radius: var(--radius);
+            padding: 32px 40px;
+            text-align: center;
+            box-shadow: var(--shadow-lg)
+        }
+
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 0 auto 14px
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .loading-box p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--fg)
+        }
+
+        .loading-box .sub {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 4px
+        }
+
+        /* ========== SEO CONTENT ========== */
+        .seo-section {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 60px 20px 40px;
+            position: relative;
+            z-index: 1
+        }
+
+        .seo-section h2 {
+            font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+            font-weight: 800;
+            margin-bottom: 14px;
+            color: var(--fg)
+        }
+
+        .seo-section h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 18px 0 8px;
+            color: var(--fg)
+        }
+
+        .seo-section p {
+            color: var(--fg-secondary);
+            font-size: 0.92rem;
+            margin-bottom: 12px;
+            line-height: 1.7
+        }
+
+        .seo-section ul {
+            padding-left: 20px;
+            margin-bottom: 14px
+        }
+
+        .seo-section li {
+            color: var(--fg-secondary);
+            font-size: 0.92rem;
+            margin-bottom: 6px;
+            line-height: 1.6
+        }
+
+        .faq-item {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .faq-item:last-child {
+            border-bottom: none
+        }
+
+        .faq-q {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+            color: var(--fg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .faq-q svg {
+            flex-shrink: 0;
+            transition: transform 0.2s
+        }
+
+        .faq-q.open svg {
+            transform: rotate(180deg)
+        }
+
+        .faq-a {
+            color: var(--fg-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            display: none;
+            padding-left: 24px
+        }
+
+        .faq-a.open {
+            display: block
+        }
+
+        /* ========== FOOTER ========== */
+        .site-footer {
+            border-top: 1px solid var(--border);
+            padding: 28px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1
+        }
+
+        .site-footer p {
+            font-size: 0.82rem;
+            color: var(--muted)
+        }
+
+        .site-footer a {
+            color: var(--accent);
+            font-weight: 600
+        }
+
+        .privacy-note {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 20px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1
+        }
+
+        .privacy-note p {
+            font-size: 0.82rem;
+            color: var(--muted);
+            padding: 14px 20px;
+            background: var(--success-bg);
+            border-radius: var(--radius-sm);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media(max-width:768px) {
+            .nav-desktop {
+                display: none
+            }
+
+            .hamburger {
+                display: flex
+            }
+
+            .file-table {
+                display: none
+            }
+
+            .file-cards {
+                display: block
+            }
+
+            .preview-row {
+                grid-template-columns: 1fr 24px 1fr 32px;
+                font-size: 0.76rem;
+                padding: 6px 8px
+            }
+
+            .adv-grid {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .toolbar {
+                gap: 4px
+            }
+        }
+
+        @media(max-width:480px) {
+            .hero {
+                padding: 28px 16px 18px
+            }
+
+            .tool-section {
+                padding: 0 12px 30px
+            }
+
+            .tool-card-inner {
+                padding: 12px
+            }
+
+            .upload-zone {
+                padding: 32px 16px
+            }
+
+            .upload-btns {
+                flex-direction: column;
+                align-items: stretch
+            }
+
+            .rule-row {
+                flex-direction: column;
+                align-items: stretch
+            }
+
+            .rule-label {
+                min-width: unset
+            }
+
+            .adv-grid {
+                grid-template-columns: 1fr
+            }
+
+            .rename-actions {
+                flex-direction: column
+            }
+
+            .rename-actions .btn {
+                width: 100%
+            }
+
+            .file-count-bar {
+                flex-direction: column;
+                align-items: flex-start
+            }
+
+            .download-btns {
+                flex-direction: column;
+                align-items: stretch
+            }
+
+            .download-btns .btn {
+                width: 100%
+            }
+        }
+
+        @media(min-width:769px) {
+            .file-cards {
+                display: none !important
+            }
+        }
+
+        /* ========== REDUCED MOTION ========== */
+        @media(prefers-reduced-motion:reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important
+            }
+        }
+
+        /* ========== SCROLLBAR ========== */
+        .preview-list::-webkit-scrollbar,
+        .modal::-webkit-scrollbar {
+            width: 6px
+        }
+
+        .preview-list::-webkit-scrollbar-track,
+        .modal::-webkit-scrollbar-track {
+            background: transparent
+        }
+
+        .preview-list::-webkit-scrollbar-thumb,
+        .modal::-webkit-scrollbar-thumb {
+            background: var(--border-strong);
+            border-radius: 3px
+        }
+
+        /* ========== HIDDEN ========== */
+        .hidden {
+            display: none !important
+        }
+    </style>
 </head>
+
 <body>
+    <div class="bg-deco-mid" aria-hidden="true"></div>
 
-<div class="container">
+    <!-- TOAST CONTAINER -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
-  <!-- FIRST SCREEN -->
-  <div id="firstScreen">
-    <h1>Rename File</h1>
-    <label class="btn">
-      Select File
-      <input type="file" id="fileInput" hidden>
-    </label>
-  </div>
-
-  <!-- WORK AREA -->
-  <div id="workArea" class="hidden">
-    <p class="success">✔ File selected</p>
-    <p id="fileName"></p>
-
-    <input type="text" id="newName" placeholder="Enter new file name (without extension)">
-
-    <button id="renameBtn">Rename File</button>
-
-    <!-- LOADING -->
-    <div id="loader" class="hidden">
-      <p>Renaming... <span id="progress">0</span>%</p>
-      <div class="bar">
-        <div class="fill" id="fill"></div>
-      </div>
+    <!-- LOADING OVERLAY -->
+    <div class="loading-overlay" id="loadingOverlay" role="alert" aria-busy="true">
+        <div class="loading-box">
+            <div class="spinner"></div>
+            <p id="loadingText">Processing...</p>
+            <p class="sub" id="loadingSub"></p>
+        </div>
     </div>
 
-    <!-- DOWNLOAD -->
-    <div id="downloadArea" class="hidden">
-      <a id="downloadBtn" download>Download Renamed File</a>
-      <p class="tick hidden" id="tick">✔ file has been downloaded successfully</p>
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
+        <div class="modal" id="modalContent"></div>
     </div>
-  </div>
 
-</div>
+    <!-- ========== HEADER ========== -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="/" class="logo" aria-label="Tools24 Home">
+                <div class="logo-icon">T24</div>
+                <span>Tools24</span>
+            </a>
+            <nav class="nav-desktop" aria-label="Main navigation">
+                <a href="/">Home</a>
+                <a href="/tools" class="active">All Tools</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+            </nav>
+            <div class="header-actions">
+                <button class="theme-btn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+                    <svg id="themeIconSun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                    </svg>
+                    <svg id="themeIconMoon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                </button>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+        <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+            <a href="/">Home</a>
+            <a href="/tools" class="active">All Tools</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </header>
 
-<script src="rename.js"></script>
+    <main>
+        <!-- ========== HERO ========== -->
+        <section class="hero" aria-labelledby="heroHeading">
+            <div class="hero-badge">TOOLS24 &bull; FILE MANAGEMENT</div>
+            <h1 id="heroHeading">File Rename Tool</h1>
+            <p class="hero-desc">Rename multiple files instantly with powerful batch-renaming tools. Fast, private and
+                completely browser-based.</p>
+            <div class="privacy-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                Files are processed locally
+            </div>
+        </section>
+
+        <!-- ========== TOOL ========== -->
+        <section class="tool-section" aria-label="File Rename Tool">
+            <div class="tool-card">
+                <div class="tool-card-inner">
+
+                    <!-- Upload Area -->
+                    <div id="uploadArea" class="upload-zone" role="button" tabindex="0"
+                        aria-label="Drop files here or click to choose files">
+                        <div class="upload-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
+                        </div>
+                        <p class="upload-title">Drop your files here</p>
+                        <p class="upload-sub">or choose files from your device</p>
+                        <div class="upload-btns">
+                            <button class="btn btn-primary" id="chooseFilesBtn" type="button">Choose Files</button>
+                            <button class="btn btn-secondary" id="chooseFolderBtn" type="button">Choose Folder</button>
+                        </div>
+                        <p class="upload-info">Images &bull; PDF &bull; DOCX &bull; XLSX &bull; PPTX &bull; TXT &bull;
+                            ZIP &bull; MP3 &bull; MP4 &bull; and other common files</p>
+                        <p class="upload-info"><span>Maximum files: 100</span></p>
+                    </div>
+                    <input type="file" id="fileInput" multiple hidden>
+                    <input type="file" id="folderInput" webkitdirectory multiple hidden>
+
+                    <!-- File Count Bar -->
+                    <div id="fileCountBar" class="file-count-bar hidden">
+                        <div class="file-count-text">
+                            <span class="count-num" id="fileCountNum">0</span> files selected
+                            <span class="ready-text" id="readyCountText"></span>
+                        </div>
+                        <div class="file-count-actions">
+                            <button class="btn btn-sm btn-secondary" id="addMoreBtn" type="button">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                                Add Files
+                            </button>
+                            <button class="btn btn-sm btn-danger" id="clearAllBtn" type="button">Clear All</button>
+                        </div>
+                    </div>
+
+                    <!-- Rename Panel -->
+                    <div id="renamePanel" class="rename-panel hidden">
+                        <div class="tab-bar" role="tablist">
+                            <button class="tab-btn active" role="tab" aria-selected="true" data-tab="quick">Quick
+                                Rename</button>
+                            <button class="tab-btn" role="tab" aria-selected="false" data-tab="batch">Batch
+                                Rename</button>
+                            <button class="tab-btn" role="tab" aria-selected="false"
+                                data-tab="advanced">Advanced</button>
+                        </div>
+
+                        <!-- Quick Rename Tab -->
+                        <div class="tab-content active" id="tabQuick" role="tabpanel">
+                            <div class="rule-section">
+                                <div class="rule-header"><label for="quickSelect">Select File</label></div>
+                                <select class="rule-select" id="quickSelect" style="width:100%;margin-bottom:12px">
+                                    <option value="">-- Choose a file --</option>
+                                </select>
+                                <div class="rule-row"><span class="rule-label">Current</span><input class="rule-input"
+                                        id="quickCurrent" readonly></div>
+                                <div class="rule-row"><span class="rule-label">New Name</span><input class="rule-input"
+                                        id="quickNew" placeholder="Enter new filename"></div>
+                                <div class="rule-header" style="margin-top:10px">
+                                    <label><input type="checkbox" id="quickChangeExt"> Change extension</label>
+                                </div>
+                                <div id="quickExtWrap" class="hidden" style="margin-top:8px">
+                                    <div class="rule-row"><span class="rule-label">Extension</span><input
+                                            class="rule-input" id="quickExt" placeholder="pdf" style="max-width:120px">
+                                    </div>
+                                    <div class="ext-warning">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                            <path
+                                                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                                            <line x1="12" y1="9" x2="12" y2="13" />
+                                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                                        </svg>
+                                        Changing an extension does not convert the file format.
+                                    </div>
+                                </div>
+                                <div style="margin-top:14px">
+                                    <button class="btn btn-sm btn-primary" id="quickApplyBtn" type="button">Apply Quick
+                                        Rename</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Batch Rename Tab -->
+                        <div class="tab-content" id="tabBatch" role="tabpanel">
+                            <!-- Find & Replace -->
+                            <div class="rule-section disabled" id="ruleFindReplace">
+                                <div class="rule-header"><label><input type="checkbox" class="rule-toggle"
+                                            data-rule="findReplace"> Find &amp; Replace</label></div>
+                                <div class="rule-row"><span class="rule-label">Find</span><input class="rule-input"
+                                        id="batchFind" placeholder="Text to find"></div>
+                                <div class="rule-row"><span class="rule-label">Replace</span><input class="rule-input"
+                                        id="batchReplace" placeholder="Replace with"></div>
+                            </div>
+                            <!-- Remove Text -->
+                            <div class="rule-section disabled" id="ruleRemoveText">
+                                <div class="rule-header"><label><input type="checkbox" class="rule-toggle"
+                                            data-rule="removeText"> Remove Text</label></div>
+                                <div class="rule-row"><span class="rule-label">Text</span><input class="rule-input"
+                                        id="batchRemoveText" placeholder="Text to remove"></div>
+                            </div>
+                            <!-- Prefix -->
+                            <div class="rule-section disabled" id="rulePrefix">
+                                <div class="rule-header"><label><input type="checkbox" class="rule-toggle"
+                                            data-rule="prefix"> Add Prefix</label></div>
+                                <div class="rule-row"><span class="rule-label">Prefix</span><input class="rule-input"
+                                        id="batchPrefix" placeholder="e.g. india-"></div>
+                            </div>
+                            <!-- Suffix -->
+                            <div class="rule-section disabled" id="ruleSuffix">
+                                <div class="rule-header"><label><input type="checkbox" class="rule-toggle"
+                                            data-rule="suffix"> Add Suffix</label></div>
+                                <div class="rule-row"><span class="rule-label">Suffix</span><input class="rule-input"
+                                        id="batchSuffix" placeholder="e.g. -final"></div>
+                            </div>
+                            <!-- Numbering -->
+                            <div class="rule-section disabled" id="ruleNumbering">
+                                <div class="rule-header"><label><input type="checkbox" class="rule-toggle"
+                                            data-rule="numbering"> Numbering</label></div>
+                                <div class="rule-row"><span class="rule-label">Start</span><input class="rule-input"
+                                        id="numStart" type="number" value="1" min="0" style="max-width:80px"><span
+                                        class="rule-label" style="margin-left:12px">Step</span><input class="rule-input"
+                                        id="numStep" type="number" value="1" min="1" style="max-width:80px"><span
+                                        class="rule-label" style="margin-left:12px">Digits</span><input
+                                        class="rule-input" id="numDigits" type="number" value="2" min="1" max="10"
+                                        style="max-width:80px"></div>
+                                <div class="rule-row"><span class="rule-label">Position</span><select
+                                        class="rule-select" id="numPosition">
+                                        <option value="suffix">After Name</option>
+                                        <option value="prefix">Before Name</option>
+                                    </select><span class="rule-label" style="margin-left:12px">Separator</span><input
+                                        class="rule-input" id="numSeparator" value="-" style="max-width:80px"></div>
+                            </div>
+                            <!-- Custom Pattern -->
+                            <div class="rule-section disabled" id="rulePattern">
+                                <div class="rule-header"><label><input type="checkbox" class="rule-toggle"
+                                            data-rule="pattern"> Custom Pattern</label></div>
+                                <div class="rule-row"><span class="rule-label">Pattern</span><input class="rule-input"
+                                        id="batchPattern" placeholder="e.g. {date}-{number}-{name}.{ext}"></div>
+                                <div class="var-chips">
+                                    <button class="var-chip" type="button" data-var="{name}">{name}</button>
+                                    <button class="var-chip" type="button" data-var="{ext}">{ext}</button>
+                                    <button class="var-chip" type="button" data-var="{number}">{number}</button>
+                                    <button class="var-chip" type="button" data-var="{date}">{date}</button>
+                                    <button class="var-chip" type="button" data-var="{time}">{time}</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Tab -->
+                        <div class="tab-content" id="tabAdvanced" role="tabpanel">
+                            <div class="adv-grid" id="advGrid">
+                                <button class="adv-btn" data-adv="lowercase" type="button"><svg width="16" height="16"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round">
+                                        <polyline points="4 7 4 4 20 4 20 7" />
+                                        <line x1="9" y1="20" x2="15" y2="20" />
+                                        <line x1="12" y1="4" x2="12" y2="20" />
+                                    </svg> lowercase</button>
+                                <button class="adv-btn" data-adv="uppercase" type="button"><svg width="16" height="16"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round">
+                                        <polyline points="4 7 4 4 20 4 20 7" />
+                                        <line x1="9" y1="20" x2="15" y2="20" />
+                                        <line x1="12" y1="4" x2="12" y2="20" />
+                                    </svg> UPPERCASE</button>
+                                <button class="adv-btn" data-adv="titlecase" type="button"><svg width="16" height="16"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round">
+                                        <polyline points="4 7 4 4 20 4 20 7" />
+                                        <line x1="9" y1="20" x2="15" y2="20" />
+                                        <line x1="12" y1="4" x2="12" y2="20" />
+                                    </svg> Title Case</button>
+                                <button class="adv-btn" data-adv="removeSpaces" type="button"><svg width="16"
+                                        height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round">
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg> Remove Spaces</button>
+                                <button class="adv-btn" data-adv="spacesToDash" type="button"><svg width="16"
+                                        height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round">
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg> Spaces to -</button>
+                                <button class="adv-btn" data-adv="spacesToUnderscore" type="button"><svg width="16"
+                                        height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round">
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg> Spaces to _</button>
+                                <button class="adv-btn" data-adv="removeSpecial" type="button"><svg width="16"
+                                        height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round">
+                                        <polyline points="3 6 5 6 21 6" />
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                    </svg> Remove Special Chars</button>
+                                <button class="adv-btn" data-adv="removeDupSpaces" type="button"><svg width="16"
+                                        height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round">
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg> Remove Duplicate Spaces</button>
+                                <button class="adv-btn" data-adv="removeBrackets" type="button"><svg width="16"
+                                        height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round">
+                                        <polyline points="4 14 10 14 10 20" />
+                                        <polyline points="20 10 14 10 14 4" />
+                                        <line x1="14" y1="10" x2="21" y2="3" />
+                                        <line x1="3" y1="21" x2="10" y2="14" />
+                                    </svg> Remove Brackets</button>
+                                <button class="adv-btn" data-adv="trimSpaces" type="button"><svg width="16" height="16"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round">
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg> Trim Spaces</button>
+                                <button class="adv-btn" data-adv="addDate" type="button"><svg width="16" height="16"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" />
+                                        <line x1="8" y1="2" x2="8" y2="6" />
+                                        <line x1="3" y1="10" x2="21" y2="10" />
+                                    </svg> Add Date</button>
+                                <button class="adv-btn" data-adv="addTime" type="button"><svg width="16" height="16"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12 6 12 12 16 14" />
+                                    </svg> Add Time</button>
+                            </div>
+                            <div class="adv-custom" id="advCustomRemoveBefore">
+                                <div class="rule-row"><span class="rule-label">Character</span><input class="rule-input"
+                                        id="advRemoveBeforeChar" placeholder="e.g. -"></div>
+                                <button class="btn btn-sm btn-primary" id="advRemoveBeforeApply" type="button"
+                                    style="margin-top:8px">Apply</button>
+                            </div>
+                            <div class="adv-custom" id="advCustomRemoveAfter">
+                                <div class="rule-row"><span class="rule-label">Character</span><input class="rule-input"
+                                        id="advRemoveAfterChar" placeholder="e.g. -"></div>
+                                <button class="btn btn-sm btn-primary" id="advRemoveAfterApply" type="button"
+                                    style="margin-top:8px">Apply</button>
+                            </div>
+                            <div class="adv-custom" id="advCustomSpacesTo">
+                                <div class="rule-row"><span class="rule-label">Replace with</span><input
+                                        class="rule-input" id="advSpacesToChar" placeholder="e.g. _"
+                                        style="max-width:100px"></div>
+                                <button class="btn btn-sm btn-primary" id="advSpacesToApply" type="button"
+                                    style="margin-top:8px">Apply</button>
+                            </div>
+                        </div>
+
+                        <!-- Rename Actions -->
+                        <div class="rename-actions">
+                            <button class="btn btn-primary" id="applyRulesBtn" type="button">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                                Apply Rename
+                            </button>
+                            <button class="btn btn-secondary" id="previewRulesBtn" type="button">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                                Preview
+                            </button>
+                            <button class="btn btn-ghost" id="resetRulesBtn" type="button">Reset Rules</button>
+                        </div>
+                    </div>
+
+                    <!-- Preview Panel -->
+                    <div id="previewPanel" class="preview-panel hidden">
+                        <div class="preview-header">
+                            <h3>Rename Preview</h3>
+                            <div class="preview-summary" id="previewSummary"></div>
+                        </div>
+                        <div id="previewAutoResolve" class="hidden" style="margin-bottom:10px">
+                            <button class="btn btn-sm btn-warning" id="autoResolveBtn" type="button"
+                                style="background:var(--warning-bg);color:var(--warning);border:1px solid var(--warning)">Auto
+                                Resolve Duplicates</button>
+                        </div>
+                        <div class="preview-list" id="previewList"></div>
+                    </div>
+
+                    <!-- Toolbar -->
+                    <div id="toolbar" class="toolbar hidden">
+                        <button class="btn btn-sm btn-secondary" id="tbAddFiles" type="button">Add Files</button>
+                        <div class="toolbar-sep"></div>
+                        <div class="sort-wrap">
+                            <button class="btn btn-sm btn-ghost" id="tbSortBtn" type="button">Sort</button>
+                            <div class="sort-menu" id="sortMenu">
+                                <button type="button" data-sort="name-asc">Name A-Z</button>
+                                <button type="button" data-sort="name-desc">Name Z-A</button>
+                                <button type="button" data-sort="size-asc">Size Small-Large</button>
+                                <button type="button" data-sort="size-desc">Size Large-Small</button>
+                                <button type="button" data-sort="type">File Type</button>
+                                <button type="button" data-sort="original">Original Order</button>
+                            </div>
+                        </div>
+                        <div class="toolbar-sep"></div>
+                        <button class="btn btn-sm btn-ghost" id="tbUndo" type="button" title="Undo" aria-label="Undo">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round">
+                                <polyline points="1 4 1 10 7 10" />
+                                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                            </svg>
+                            Undo
+                        </button>
+                        <button class="btn btn-sm btn-ghost" id="tbRedo" type="button" title="Redo" aria-label="Redo">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round">
+                                <polyline points="23 4 23 10 17 10" />
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                            </svg>
+                            Redo
+                        </button>
+                        <div class="toolbar-sep"></div>
+                        <button class="btn btn-sm btn-danger" id="tbClear" type="button">Clear</button>
+                        <div style="flex:1"></div>
+                        <button class="btn btn-sm btn-primary" id="tbDownloadAll" type="button">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            Download All
+                        </button>
+                    </div>
+
+                    <!-- File List Container -->
+                    <div id="fileListContainer">
+                        <!-- Empty State -->
+                        <div id="emptyState" class="empty-state">
+                            <div class="empty-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round">
+                                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                                    <polyline points="13 2 13 9 20 9" />
+                                </svg>
+                            </div>
+                            <h3>No files selected</h3>
+                            <p>Drop your files here or choose files from your device.</p>
+                            <button class="btn btn-primary" id="emptyChooseBtn" type="button">Choose Files</button>
+                        </div>
+                        <!-- Desktop Table -->
+                        <div class="file-table-wrap" id="fileTableWrap" style="display:none;overflow-x:auto">
+                            <table class="file-table" role="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>File</th>
+                                        <th>Original Name</th>
+                                        <th>New Name</th>
+                                        <th>Size</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="fileTableBody"></tbody>
+                            </table>
+                        </div>
+                        <!-- Mobile Cards -->
+                        <div class="file-cards" id="fileCardsWrap"></div>
+                    </div>
+
+                    <!-- Download Section -->
+                    <div id="downloadSection" class="download-section hidden">
+                        <h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                <polyline points="22 4 12 14.01 9 11.01" />
+                            </svg>
+                            Rename completed
+                        </h3>
+                        <p class="sub" id="downloadCountText">0 files ready</p>
+                        <div class="download-btns">
+                            <button class="btn btn-success" id="dlDownloadAll" type="button">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
+                                </svg>
+                                Download All as ZIP
+                            </button>
+                            <button class="btn btn-secondary" id="dlSaveFolder" type="button" style="display:none">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round">
+                                    <path
+                                        d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                                </svg>
+                                Save to Folder
+                            </button>
+                            <button class="btn btn-ghost" id="dlRenameMore" type="button">Rename More Files</button>
+                            <button class="btn btn-ghost" id="dlStartOver" type="button">Start Over</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SEO CONTENT ========== -->
+        <section class="seo-section" aria-label="Information about the File Rename Tool">
+            <h2>What is a File Rename Tool?</h2>
+            <p>A File Rename Tool is an online utility that allows you to change the names of multiple files at once
+                without installing any software. Whether you need to add prefixes, suffixes, sequential numbers, or
+                perform find-and-replace operations on filenames, this tool handles it all directly in your browser.</p>
+
+            <h2>How to Rename Multiple Files?</h2>
+            <p>Renaming multiple files with Tools24 is simple:</p>
+            <ul>
+                <li>Select or drag and drop your files into the upload area.</li>
+                <li>Choose a rename method: Quick Rename for single files, Batch Rename for rules applied to all files,
+                    or Advanced for case changes and space handling.</li>
+                <li>Preview the changes before applying them.</li>
+                <li>Click "Apply Rename" and download your renamed files individually or as a ZIP.</li>
+            </ul>
+
+            <h2>How Batch Rename Works</h2>
+            <p>Batch rename applies one or more rules to every selected file simultaneously. You can combine rules like
+                adding a prefix, inserting sequential numbers, and replacing specific text — all in a single operation.
+                The tool processes filenames as strings, preserving the original file contents and format entirely.</p>
+
+            <h2>Is it Safe to Rename Files Online?</h2>
+            <p>Yes. The Tools24 File Rename Tool processes everything locally in your browser. Your files never leave
+                your device during the rename process. No data is uploaded to any server.</p>
+
+            <h2>Are My Files Uploaded?</h2>
+            <p>No. Your files are processed locally in your browser whenever possible. Files are not uploaded to our
+                server for normal renaming operations. The only network requests made are to load the tool itself and
+                the JSZip library needed for ZIP creation.</p>
+
+            <h2>File Rename Tool Features</h2>
+            <ul>
+                <li>Batch rename up to 100 files at once</li>
+                <li>Add prefixes and suffixes to filenames</li>
+                <li>Find and replace text in filenames</li>
+                <li>Sequential numbering with custom start, step, and digit count</li>
+                <li>Custom patterns with variables like {name}, {number}, {date}, {time}</li>
+                <li>Case conversion: lowercase, UPPERCASE, Title Case</li>
+                <li>Space handling: remove, replace with dashes or underscores</li>
+                <li>Remove special characters, brackets, and duplicate spaces</li>
+                <li>Duplicate filename detection and auto-resolution</li>
+                <li>Invalid character detection with automatic fix option</li>
+                <li>Undo and redo rename operations</li>
+                <li>Sort files by name, size, or type before renaming</li>
+                <li>Individual file editing and download</li>
+                <li>Download all renamed files as a ZIP</li>
+                <li>Save to Folder on supported browsers</li>
+                <li>Light and dark mode</li>
+                <li>Fully responsive for mobile, tablet, and desktop</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-q" tabindex="0" role="button" aria-expanded="false">How do I rename multiple files? <svg
+                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg></div>
+                <div class="faq-a">Select your files using drag-and-drop or the file picker, configure your rename rules
+                    in the Batch Rename tab, preview the results, click "Apply Rename", then download the renamed files.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" tabindex="0" role="button" aria-expanded="false">Can I rename files on mobile? <svg
+                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg></div>
+                <div class="faq-a">Yes, the Tools24 File Rename Tool is fully responsive and works on Android phones,
+                    iPhones, and tablets. The interface adapts to smaller screens with card-based file display and
+                    touch-friendly controls.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" tabindex="0" role="button" aria-expanded="false">Can I rename PDF files? <svg
+                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg></div>
+                <div class="faq-a">Absolutely. You can rename PDF files just like any other file type. The tool changes
+                    the filename while keeping the PDF content completely intact.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" tabindex="0" role="button" aria-expanded="false">Can I rename images? <svg width="16"
+                        height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg></div>
+                <div class="faq-a">Yes. JPG, PNG, WEBP, GIF, SVG and all other image formats can be renamed in batch.
+                    The actual image data is never modified — only the filename changes.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" tabindex="0" role="button" aria-expanded="false">Can I rename 100 files at once? <svg
+                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg></div>
+                <div class="faq-a">Yes, the tool supports up to 100 files per batch. All 100 files can be renamed and
+                    downloaded together as a single ZIP file.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" tabindex="0" role="button" aria-expanded="false">Are my files uploaded? <svg
+                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg></div>
+                <div class="faq-a">No. All file processing happens locally in your browser. Your files are never sent to
+                    any server. This tool respects your privacy completely.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" tabindex="0" role="button" aria-expanded="false">Can I download all renamed files?
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg></div>
+                <div class="faq-a">Yes. After renaming, you can download each file individually or download all renamed
+                    files together as a ZIP archive named "Tools24-Renamed-Files.zip".</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" tabindex="0" role="button" aria-expanded="false">Can I add numbering to filenames?
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg></div>
+                <div class="faq-a">Yes. The Numbering option in Batch Rename lets you set a start number, increment
+                    step, digit padding, separator, and position (before or after the filename).</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" tabindex="0" role="button" aria-expanded="false">Can I replace text in filenames?
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg></div>
+                <div class="faq-a">Yes. Use the "Find & Replace" option in the Batch Rename tab to search for specific
+                    text in filenames and replace it with new text across all selected files.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" tabindex="0" role="button" aria-expanded="false">Can I remove spaces from filenames?
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg></div>
+                <div class="faq-a">Yes. The Advanced tab offers options to remove all spaces, replace spaces with dashes
+                    or underscores, or replace spaces with any custom character.</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Privacy Note -->
+    <div class="privacy-note">
+        <p>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            Your files are processed locally in your browser whenever possible. Files are not uploaded to our server for
+            normal renaming operations.
+        </p>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="site-footer">
+        <p>&copy; 2026 Tools24 &mdash; <a href="https://agitools24.com">AGITools24.com</a></p>
+    </footer>
+
+    <script>
+        /* ================================================================
+           FILE RENAME TOOL — Complete JavaScript Implementation
+           Tools24 / AGITools24.com
+           ================================================================ */
+
+        (function () {
+            'use strict';
+
+            // ========== CONFIGURATION ==========
+            const MAX_FILES = 100;
+            const INVALID_CHARS = /[\/\\:*?"<>|]/;
+            const INVALID_CHARS_LIST = '/ \\ : * ? " < > |';
+
+            // ========== STATE ==========
+            let files = []; // {id, file, originalName, currentName, previewName}
+            let history = []; // array of arrays of currentName strings
+            let historyIndex = -1;
+            let idCounter = 0;
+            let activeAdvancedRules = new Set();
+            let previewNames = []; // temporary preview
+
+            // ========== DOM REFS ==========
+            const $ = (s) => document.querySelector(s);
+            const $$ = (s) => document.querySelectorAll(s);
+
+            const fileInput = $('#fileInput');
+            const folderInput = $('#folderInput');
+            const uploadArea = $('#uploadArea');
+            const fileCountBar = $('#fileCountBar');
+            const fileCountNum = $('#fileCountNum');
+            const readyCountText = $('#readyCountText');
+            const renamePanel = $('#renamePanel');
+            const previewPanel = $('#previewPanel');
+            const previewList = $('#previewList');
+            const previewSummary = $('#previewSummary');
+            const previewAutoResolve = $('#previewAutoResolve');
+            const toolbar = $('#toolbar');
+            const emptyState = $('#emptyState');
+            const fileTableWrap = $('#fileTableWrap');
+            const fileTableBody = $('#fileTableBody');
+            const fileCardsWrap = $('#fileCardsWrap');
+            const downloadSection = $('#downloadSection');
+            const downloadCountText = $('#downloadCountText');
+            const loadingOverlay = $('#loadingOverlay');
+            const loadingText = $('#loadingText');
+            const loadingSub = $('#loadingSub');
+            const modalOverlay = $('#modalOverlay');
+            const modalContent = $('#modalContent');
+            const toastContainer = $('#toastContainer');
+            const sortMenu = $('#sortMenu');
+
+            // ========== UTILITY FUNCTIONS ==========
+
+            // Escape HTML to prevent XSS from filenames
+            function esc(str) {
+                const d = document.createElement('div');
+                d.textContent = str;
+                return d.innerHTML;
+            }
+
+            // Format file size
+            function formatSize(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+            }
+
+            // Get file extension (lowercase, without dot)
+            function getExt(filename) {
+                const idx = filename.lastIndexOf('.');
+                return idx > 0 ? filename.substring(idx + 1).toLowerCase() : '';
+            }
+
+            // Get filename without extension
+            function getNameWithoutExt(filename) {
+                const idx = filename.lastIndexOf('.');
+                return idx > 0 ? filename.substring(0, idx) : filename;
+            }
+
+            // Get current date string
+            function getDateStr() {
+                const d = new Date();
+                return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+            }
+
+            // Get current time string
+            function getTimeStr() {
+                const d = new Date();
+                return String(d.getHours()).padStart(2, '0') + '-' + String(d.getMinutes()).padStart(2, '0') + '-' + String(d.getSeconds()).padStart(2, '0');
+            }
+
+            // Pad number with zeros
+            function padNum(n, digits) {
+                return String(n).padStart(digits, '0');
+            }
+
+            // File icon color map
+            function getFileIconColor(ext) {
+                const map = {
+                    pdf: '#ef4444', doc: '#2563eb', docx: '#2563eb',
+                    xls: '#16a34a', xlsx: '#16a34a', csv: '#16a34a',
+                    ppt: '#ea580c', pptx: '#ea580c',
+                    jpg: '#8b5cf6', jpeg: '#8b5cf6', png: '#8b5cf6', webp: '#8b5cf6', gif: '#8b5cf6', svg: '#8b5cf6', bmp: '#8b5cf6',
+                    mp3: '#ec4899', wav: '#ec4899', ogg: '#ec4899', flac: '#ec4899',
+                    mp4: '#06b6d4', mov: '#06b6d4', avi: '#06b6d4', mkv: '#06b6d4', webm: '#06b6d4',
+                    zip: '#f59e0b', rar: '#f59e0b', '7z': '#f59e0b', tar: '#f59e0b', gz: '#f59e0b',
+                    txt: '#6b7280', log: '#6b7280', md: '#6b7280',
+                    js: '#eab308', ts: '#3178c6', html: '#ea580c', css: '#2563eb', json: '#6b7280', xml: '#ea580c',
+                    py: '#3776ab', java: '#f89820', cpp: '#00599c', c: '#00599c'
+                };
+                return map[ext] || '#6b7280';
+            }
+
+            // Generate file icon HTML
+            function fileIconHTML(ext) {
+                const color = getFileIconColor(ext);
+                const label = ext ? ext.substring(0, 4).toUpperCase() : '?';
+                return '<div class="file-icon" style="background:' + color + '">' + esc(label) + '</div>';
+            }
+
+            // Validate a single filename
+            function validateFilename(name) {
+                if (!name || name.trim() === '') return { valid: false, error: 'empty' };
+                if (INVALID_CHARS.test(name)) return { valid: false, error: 'invalid_chars' };
+                if (name.length > 255) return { valid: false, error: 'too_long' };
+                return { valid: true };
+            }
+
+            // Check for duplicates in an array of names
+            function findDuplicates(names) {
+                const seen = {};
+                const dupes = {};
+                names.forEach((n, i) => {
+                    const lower = n.toLowerCase();
+                    if (seen[lower] !== undefined) {
+                        dupes[i] = true;
+                        dupes[seen[lower]] = true;
+                    } else {
+                        seen[lower] = i;
+                    }
+                });
+                return dupes;
+            }
+
+            // Fix invalid characters in filename
+            function fixInvalidChars(name) {
+                return name.replace(/[\/\\:*?"<>|]/g, '_');
+            }
+
+            // ========== TOAST SYSTEM ==========
+            function showToast(message, type) {
+                type = type || 'info';
+                const toast = document.createElement('div');
+                toast.className = 'toast ' + type;
+                toast.textContent = message;
+                toastContainer.appendChild(toast);
+                setTimeout(() => {
+                    toast.classList.add('out');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3500);
+            }
+
+            // ========== LOADING SYSTEM ==========
+            function showLoading(text, sub) {
+                loadingText.textContent = text || 'Processing...';
+                loadingSub.textContent = sub || '';
+                loadingOverlay.classList.add('show');
+            }
+            function hideLoading() {
+                loadingOverlay.classList.remove('show');
+            }
+
+            // ========== MODAL SYSTEM ==========
+            function showModal(html) {
+                modalContent.innerHTML = html;
+                modalOverlay.classList.add('show');
+            }
+            function hideModal() {
+                modalOverlay.classList.remove('show');
+            }
+            modalOverlay.addEventListener('click', function (e) {
+                if (e.target === modalOverlay) hideModal();
+            });
+
+            // ========== THEME MANAGEMENT ==========
+            function initTheme() {
+                const saved = localStorage.getItem('tools24-theme');
+                if (saved) {
+                    document.documentElement.setAttribute('data-theme', saved);
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+                updateThemeIcon();
+            }
+            function toggleTheme() {
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('tools24-theme', next);
+                updateThemeIcon();
+            }
+            function updateThemeIcon() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                $('#themeIconSun').style.display = isDark ? 'block' : 'none';
+                $('#themeIconMoon').style.display = isDark ? 'none' : 'block';
+            }
+            $('#themeToggle').addEventListener('click', toggleTheme);
+
+            // ========== MOBILE MENU ==========
+            const hamburgerBtn = $('#hamburgerBtn');
+            const mobileNav = $('#mobileNav');
+            hamburgerBtn.addEventListener('click', function () {
+                const isOpen = mobileNav.classList.toggle('show');
+                hamburgerBtn.classList.toggle('open');
+                hamburgerBtn.setAttribute('aria-expanded', isOpen);
+            });
+
+            // ========== FILE HANDLING ==========
+            function addFiles(fileList) {
+                const remaining = MAX_FILES - files.length;
+                if (remaining <= 0) {
+                    showToast('Maximum ' + MAX_FILES + ' files reached.', 'warning');
+                    return;
+                }
+                const toAdd = Array.from(fileList).slice(0, remaining);
+                if (fileList.length > remaining) {
+                    showToast('Only ' + remaining + ' more files can be added (max ' + MAX_FILES + ').', 'warning');
+                }
+                toAdd.forEach(f => {
+                    files.push({
+                        id: ++idCounter,
+                        file: f,
+                        originalName: f.name,
+                        currentName: f.name,
+                        previewName: f.name
+                    });
+                });
+                // Save initial state to history
+                if (history.length === 0) {
+                    pushHistory();
+                }
+                updateUI();
+                if (toAdd.length > 0) {
+                    showToast(toAdd.length + ' file(s) added.', 'success');
+                }
+            }
+
+            function removeFile(id) {
+                files = files.filter(f => f.id !== id);
+                if (files.length === 0) {
+                    history = [];
+                    historyIndex = -1;
+                } else {
+                    pushHistory();
+                }
+                updateUI();
+            }
+
+            function clearAllFiles() {
+                showModal(
+                    '<h3>Clear All Files?</h3>' +
+                    '<p style="color:var(--muted);font-size:0.9rem;margin-bottom:4px">This will remove all ' + files.length + ' file(s) and reset rename history.</p>' +
+                    '<div class="modal-actions">' +
+                    '<button class="btn btn-ghost" onclick="document.querySelector(\'#modalOverlay\').classList.remove(\'show\')">Cancel</button>' +
+                    '<button class="btn btn-danger" id="confirmClearAll">Clear All</button>' +
+                    '</div>'
+                );
+                $('#confirmClearAll').addEventListener('click', function () {
+                    files = [];
+                    history = [];
+                    historyIndex = -1;
+                    activeAdvancedRules.clear();
+                    resetAllRules();
+                    hideModal();
+                    updateUI();
+                    showToast('All files cleared.', 'info');
+                });
+            }
+
+            // File input handlers
+            fileInput.addEventListener('change', function () {
+                if (this.files.length) addFiles(this.files);
+                this.value = '';
+            });
+            folderInput.addEventListener('change', function () {
+                if (this.files.length) addFiles(this.files);
+                this.value = '';
+            });
+
+            // Upload area click
+            uploadArea.addEventListener('click', function (e) {
+                if (e.target.closest('button')) return;
+                fileInput.click();
+            });
+            uploadArea.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+            });
+
+            // Choose buttons
+            $('#chooseFilesBtn').addEventListener('click', function (e) { e.stopPropagation(); fileInput.click(); });
+            $('#chooseFolderBtn').addEventListener('click', function (e) { e.stopPropagation(); folderInput.click(); });
+            $('#emptyChooseBtn').addEventListener('click', function () { fileInput.click(); });
+            $('#addMoreBtn').addEventListener('click', function () { fileInput.click(); });
+            $('#clearAllBtn').addEventListener('click', clearAllFiles);
+            $('#tbAddFiles').addEventListener('click', function () { fileInput.click(); });
+            $('#tbClear').addEventListener('click', clearAllFiles);
+
+            // ========== DRAG & DROP ==========
+            let dragCounter = 0;
+            uploadArea.addEventListener('dragenter', function (e) {
+                e.preventDefault();
+                dragCounter++;
+                uploadArea.classList.add('drag-over');
+            });
+            uploadArea.addEventListener('dragleave', function (e) {
+                e.preventDefault();
+                dragCounter--;
+                if (dragCounter <= 0) { uploadArea.classList.remove('drag-over'); dragCounter = 0; }
+            });
+            uploadArea.addEventListener('dragover', function (e) { e.preventDefault(); });
+            uploadArea.addEventListener('drop', function (e) {
+                e.preventDefault();
+                dragCounter = 0;
+                uploadArea.classList.remove('drag-over');
+                if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+            });
+
+            // Also allow drop on the whole page when files are present
+            document.body.addEventListener('dragover', function (e) { e.preventDefault(); });
+            document.body.addEventListener('drop', function (e) {
+                e.preventDefault();
+                if (e.dataTransfer.files.length && files.length > 0) {
+                    addFiles(e.dataTransfer.files);
+                }
+            });
+
+            // ========== RENAME HISTORY (UNDO/REDO) ==========
+            function pushHistory() {
+                const snapshot = files.map(f => f.currentName);
+                // Remove any future states if we branched
+                if (historyIndex < history.length - 1) {
+                    history = history.slice(0, historyIndex + 1);
+                }
+                history.push(snapshot);
+                historyIndex = history.length - 1;
+            }
+
+            function undo() {
+                if (historyIndex <= 0) { showToast('Nothing to undo.', 'info'); return; }
+                historyIndex--;
+                restoreFromHistory();
+                showToast('Undo applied.', 'info');
+            }
+
+            function redo() {
+                if (historyIndex >= history.length - 1) { showToast('Nothing to redo.', 'info'); return; }
+                historyIndex++;
+                restoreFromHistory();
+                showToast('Redo applied.', 'info');
+            }
+
+            function restoreFromHistory() {
+                const snapshot = history[historyIndex];
+                files.forEach((f, i) => {
+                    if (snapshot[i] !== undefined) f.currentName = snapshot[i];
+                });
+                updateUI();
+            }
+
+            $('#tbUndo').addEventListener('click', undo);
+            $('#tbRedo').addEventListener('click', redo);
+
+            // ========== SORTING ==========
+            $('#tbSortBtn').addEventListener('click', function (e) {
+                e.stopPropagation();
+                sortMenu.classList.toggle('show');
+            });
+            document.addEventListener('click', function () { sortMenu.classList.remove('show'); });
+
+            $$('[data-sort]').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const sort = this.getAttribute('data-sort');
+                    sortFiles(sort);
+                    sortMenu.classList.remove('show');
+                });
+            });
+
+            function sortFiles(type) {
+                switch (type) {
+                    case 'name-asc':
+                        files.sort((a, b) => a.originalName.localeCompare(b.originalName));
+                        break;
+                    case 'name-desc':
+                        files.sort((a, b) => b.originalName.localeCompare(a.originalName));
+                        break;
+                    case 'size-asc':
+                        files.sort((a, b) => a.file.size - b.file.size);
+                        break;
+                    case 'size-desc':
+                        files.sort((a, b) => b.file.size - a.file.size);
+                        break;
+                    case 'type':
+                        files.sort((a, b) => getExt(a.originalName).localeCompare(getExt(b.originalName)) || a.originalName.localeCompare(b.originalName));
+                        break;
+                    case 'original':
+                        files.sort((a, b) => a.id - b.id);
+                        break;
+                }
+                pushHistory();
+                updateUI();
+                showToast('Files sorted.', 'info');
+            }
+
+            // ========== TAB SYSTEM ==========
+            $$('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    $$('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+                    $$('.tab-content').forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+                    $('#tab' + capitalize(this.getAttribute('data-tab'))).classList.add('active');
+                });
+            });
+
+            function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+            // ========== RULE TOGGLES ==========
+            $$('.rule-toggle').forEach(cb => {
+                cb.addEventListener('change', function () {
+                    const rule = this.getAttribute('data-rule');
+                    const section = this.closest('.rule-section');
+                    if (this.checked) {
+                        section.classList.remove('disabled');
+                    } else {
+                        section.classList.add('disabled');
+                    }
+                    autoPreview();
+                });
+            });
+
+            // Live preview on input changes in batch tab
+            ['batchFind', 'batchReplace', 'batchRemoveText', 'batchPrefix', 'batchSuffix', 'numStart', 'numStep', 'numDigits', 'numPosition', 'numSeparator', 'batchPattern'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', autoPreview);
+                    el.addEventListener('change', autoPreview);
+                }
+            });
+
+            // Variable chips
+            $$('.var-chip').forEach(chip => {
+                chip.addEventListener('click', function () {
+                    const input = $('#batchPattern');
+                    const v = this.getAttribute('data-var');
+                    const start = input.selectionStart;
+                    const end = input.selectionEnd;
+                    const val = input.value;
+                    input.value = val.substring(0, start) + v + val.substring(end);
+                    input.focus();
+                    input.setSelectionRange(start + v.length, start + v.length);
+                    autoPreview();
+                });
+            });
+
+            // Auto preview debounce
+            let previewTimeout = null;
+            function autoPreview() {
+                clearTimeout(previewTimeout);
+                previewTimeout = setTimeout(() => {
+                    if (files.length > 0 && isAnyBatchRuleActive()) {
+                        generatePreview();
+                    }
+                }, 300);
+            }
+
+            function isAnyBatchRuleActive() {
+                return !!(
+                    ($('#ruleFindReplace').classList.contains('disabled') ? false : true) ||
+                    ($('#ruleRemoveText').classList.contains('disabled') ? false : true) ||
+                    ($('#rulePrefix').classList.contains('disabled') ? false : true) ||
+                    ($('#ruleSuffix').classList.contains('disabled') ? false : true) ||
+                    ($('#ruleNumbering').classList.contains('disabled') ? false : true) ||
+                    ($('#rulePattern').classList.contains('disabled') ? false : true) ||
+                    activeAdvancedRules.size > 0
+                );
+            }
+
+            // ========== RENAME LOGIC ==========
+
+            function generatePreview() {
+                previewNames = files.map((f, i) => {
+                    return applyRules(f.originalName, i);
+                });
+                renderPreview();
+            }
+
+            function applyRules(originalName, index) {
+                let namePart = getNameWithoutExt(originalName);
+                let extPart = getExt(originalName);
+
+                // Check if custom pattern is active (overrides other batch rules)
+                const patternEnabled = !$('#rulePattern').classList.contains('disabled');
+                const patternText = $('#batchPattern').value.trim();
+
+                if (patternEnabled && patternText) {
+                    let result = patternText;
+                    result = result.replace(/\{name\}/g, namePart);
+                    result = result.replace(/\{ext\}/g, extPart);
+                    result = result.replace(/\{number\}/g, getNumberStr(index));
+                    result = result.replace(/\{date\}/g, getDateStr());
+                    result = result.replace(/\{time\}/g, getTimeStr());
+                    return result;
+                }
+
+                // Apply find & replace
+                if (!$('#ruleFindReplace').classList.contains('disabled')) {
+                    const find = $('#batchFind').value;
+                    const replace = $('#batchReplace').value;
+                    if (find) {
+                        if (find.includes('*') || find.includes('?')) {
+                            // Simple wildcard: * = any chars, ? = single char
+                            const regexStr = find.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.');
+                            try { namePart = namePart.replace(new RegExp(regexStr, 'g'), replace); } catch (e) { }
+                        } else {
+                            // Case-insensitive find/replace
+                            const flags = [];
+                            namePart = namePart.split(find).join(replace);
+                        }
+                    }
+                }
+
+                // Remove text
+                if (!$('#ruleRemoveText').classList.contains('disabled')) {
+                    const removeText = $('#batchRemoveText').value;
+                    if (removeText) namePart = namePart.split(removeText).join('');
+                }
+
+                // Numbering
+                if (!$('#ruleNumbering').classList.contains('disabled')) {
+                    const numStr = getNumberStr(index);
+                    const pos = $('#numPosition').value;
+                    const sep = $('#numSeparator').value;
+                    if (pos === 'prefix') {
+                        namePart = numStr + sep + namePart;
+                    } else {
+                        namePart = namePart + sep + numStr;
+                    }
+                }
+
+                // Prefix
+                if (!$('#rulePrefix').classList.contains('disabled')) {
+                    namePart = $('#batchPrefix').value + namePart;
+                }
+
+                // Suffix
+                if (!$('#ruleSuffix').classList.contains('disabled')) {
+                    namePart = namePart + $('#batchSuffix').value;
+                }
+
+                // Advanced rules
+                if (activeAdvancedRules.has('lowercase')) namePart = namePart.toLowerCase();
+                if (activeAdvancedRules.has('uppercase')) namePart = namePart.toUpperCase();
+                if (activeAdvancedRules.has('titlecase')) namePart = namePart.replace(/\b\w/g, c => c.toUpperCase());
+                if (activeAdvancedRules.has('removeSpaces')) namePart = namePart.replace(/ /g, '');
+                if (activeAdvancedRules.has('spacesToDash')) namePart = namePart.replace(/ /g, '-');
+                if (activeAdvancedRules.has('spacesToUnderscore')) namePart = namePart.replace(/ /g, '_');
+                if (activeAdvancedRules.has('removeSpecial')) namePart = namePart.replace(/[^a-zA-Z0-9._\- ]/g, '');
+                if (activeAdvancedRules.has('removeDupSpaces')) namePart = namePart.replace(/  +/g, ' ');
+                if (activeAdvancedRules.has('removeBrackets')) namePart = namePart.replace(/[\[\]\(\)\{\}]/g, '');
+                if (activeAdvancedRules.has('trimSpaces')) namePart = namePart.trim();
+                if (activeAdvancedRules.has('addDate')) namePart = namePart + '-' + getDateStr();
+                if (activeAdvancedRules.has('addTime')) namePart = namePart + '-' + getTimeStr();
+
+                // Reconstruct filename
+                if (extPart) return namePart + '.' + extPart;
+                return namePart;
+            }
+
+            function getNumberStr(index) {
+                const start = parseInt($('#numStart').value) || 0;
+                const step = parseInt($('#numStep').value) || 1;
+                const digits = parseInt($('#numDigits').value) || 2;
+                const num = start + (index * step);
+                return padNum(num, digits);
+            }
+
+            // ========== RENDER PREVIEW ==========
+            function renderPreview() {
+                if (previewNames.length === 0) {
+                    previewPanel.classList.add('hidden');
+                    return;
+                }
+
+                previewPanel.classList.remove('hidden');
+
+                // Validate
+                let okCount = 0, warnCount = 0, errCount = 0;
+                const dupes = findDuplicates(previewNames);
+
+                previewNames.forEach((name, i) => {
+                    const v = validateFilename(name);
+                    if (!v.valid) errCount++;
+                    else if (dupes[i]) warnCount++;
+                    else okCount++;
+                });
+
+                previewSummary.innerHTML =
+                    '<span class="ok">' + okCount + ' valid</span>' +
+                    (warnCount > 0 ? '<span class="warn">' + warnCount + ' duplicate' + (warnCount > 1 ? 's' : '') + '</span>' : '') +
+                    (errCount > 0 ? '<span class="err">' + errCount + ' error' + (errCount > 1 ? 's' : '') + '</span>' : '');
+
+                previewAutoResolve.classList.toggle('hidden', warnCount === 0);
+
+                // Build preview rows
+                let html = '';
+                files.forEach((f, i) => {
+                    const orig = f.originalName;
+                    const newName = previewNames[i];
+                    const v = validateFilename(newName);
+                    const isDupe = dupes[i];
+                    const isChanged = orig !== newName;
+                    let statusClass = 'ok', statusIcon = '';
+                    if (!v.valid) {
+                        statusClass = 'err';
+                        statusIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
+                    } else if (isDupe) {
+                        statusClass = 'warn';
+                        statusIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+                    } else {
+                        statusIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+                    }
+
+                    html += '<div class="preview-row">' +
+                        '<span class="preview-filename" title="' + esc(orig) + '">' + esc(orig) + '</span>' +
+                        '<span class="preview-arrow">&rarr;</span>' +
+                        '<span class="preview-filename' + (isChanged ? ' changed' : '') + '" title="' + esc(newName) + '">' + esc(newName) + '</span>' +
+                        '<span class="preview-status ' + statusClass + '">' + statusIcon + '</span>' +
+                        '</div>';
+                });
+                previewList.innerHTML = html;
+            }
+
+            // Auto-resolve duplicates
+            $('#autoResolveBtn').addEventListener('click', function () {
+                const resolved = [];
+                const seen = {};
+                previewNames.forEach((name, i) => {
+                    let finalName = name;
+                    let base = getNameWithoutExt(name);
+                    const ext = getExt(name);
+                    let counter = 1;
+                    let key = finalName.toLowerCase();
+                    while (seen[key]) {
+                        finalName = base + ' (' + counter + ')' + (ext ? '.' + ext : '');
+                        key = finalName.toLowerCase();
+                        counter++;
+                    }
+                    seen[key] = true;
+                    resolved.push(finalName);
+                });
+                previewNames = resolved;
+                renderPreview();
+                showToast('Duplicates resolved automatically.', 'success');
+            });
+
+            // ========== APPLY RENAME ==========
+            $('#applyRulesBtn').addEventListener('click', function () {
+                if (files.length === 0) { showToast('Please select at least one file.', 'warning'); return; }
+
+                // Generate preview if not yet generated
+                if (isAnyBatchRuleActive()) {
+                    generatePreview();
+                } else {
+                    previewNames = files.map(f => f.currentName);
+                }
+
+                // Validate all
+                let hasErrors = false;
+                const dupes = findDuplicates(previewNames);
+                previewNames.forEach((name, i) => {
+                    const v = validateFilename(name);
+                    if (!v.valid) hasErrors = true;
+                    if (dupes[i]) hasErrors = true;
+                });
+
+                if (hasErrors) {
+                    renderPreview();
+                    showToast('Please fix validation errors before applying.', 'error');
+                    return;
+                }
+
+                // Apply
+                files.forEach((f, i) => {
+                    f.currentName = previewNames[i];
+                });
+                pushHistory();
+                updateUI();
+                showToast('Rename applied successfully!', 'success');
+            });
+
+            // Preview button
+            $('#previewRulesBtn').addEventListener('click', function () {
+                if (files.length === 0) { showToast('Please select at least one file.', 'warning'); return; }
+                generatePreview();
+            });
+
+            // Reset rules
+            $('#resetRulesBtn').addEventListener('click', function () {
+                resetAllRules();
+                previewPanel.classList.add('hidden');
+                previewNames = [];
+                showToast('Rules reset.', 'info');
+            });
+
+            function resetAllRules() {
+                // Uncheck all toggles
+                $$('.rule-toggle').forEach(cb => { cb.checked = false; });
+                // Disable all sections
+                $$('#renamePanel .rule-section').forEach(s => s.classList.add('disabled'));
+                // Clear inputs
+                ['batchFind', 'batchReplace', 'batchRemoveText', 'batchPrefix', 'batchSuffix', 'batchPattern'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = '';
+                });
+                $('#numStart').value = '1';
+                $('#numStep').value = '1';
+                $('#numDigits').value = '2';
+                $('#numPosition').value = 'suffix';
+                $('#numSeparator').value = '-';
+                // Clear advanced
+                activeAdvancedRules.clear();
+                $$('.adv-btn').forEach(b => b.classList.remove('active'));
+                // Quick rename
+                $('#quickSelect').value = '';
+                $('#quickCurrent').value = '';
+                $('#quickNew').value = '';
+                $('#quickChangeExt').checked = false;
+                $('#quickExt').value = '';
+                $('#quickExtWrap').classList.add('hidden');
+            }
+
+            // ========== QUICK RENAME ==========
+            function populateQuickSelect() {
+                const sel = $('#quickSelect');
+                const currentVal = sel.value;
+                let html = '<option value="">-- Choose a file --</option>';
+                files.forEach(f => {
+                    html += '<option value="' + f.id + '">' + esc(f.originalName) + '</option>';
+                });
+                sel.innerHTML = html;
+                if (currentVal && files.find(f => f.id === parseInt(currentVal))) {
+                    sel.value = currentVal;
+                }
+            }
+
+            $('#quickSelect').addEventListener('change', function () {
+                const id = parseInt(this.value);
+                const f = files.find(x => x.id === id);
+                if (f) {
+                    $('#quickCurrent').value = f.currentName;
+                    $('#quickNew').value = f.currentName;
+                } else {
+                    $('#quickCurrent').value = '';
+                    $('#quickNew').value = '';
+                }
+            });
+
+            $('#quickChangeExt').addEventListener('change', function () {
+                $('#quickExtWrap').classList.toggle('hidden', !this.checked);
+            });
+
+            $('#quickApplyBtn').addEventListener('click', function () {
+                const id = parseInt($('#quickSelect').value);
+                if (!id) { showToast('Please select a file.', 'warning'); return; }
+                const f = files.find(x => x.id === id);
+                if (!f) return;
+
+                let newName = $('#quickNew').value.trim();
+                if (!newName) { showToast('Please enter a new filename.', 'warning'); return; }
+
+                const changeExt = $('#quickChangeExt').checked;
+                if (changeExt) {
+                    const newExt = $('#quickExt').value.trim().replace(/^\./, '');
+                    if (newExt) {
+                        newName = getNameWithoutExt(newName) + '.' + newExt;
+                    }
+                } else {
+                    // Preserve original extension
+                    const origExt = getExt(f.originalName);
+                    const newNameExt = getExt(newName);
+                    if (origExt && newNameExt !== origExt) {
+                        newName = getNameWithoutExt(newName) + '.' + origExt;
+                    }
+                }
+
+                const v = validateFilename(newName);
+                if (!v.valid) {
+                    if (v.error === 'invalid_chars') {
+                        showModal(
+                            '<h3>Invalid Filename</h3>' +
+                            '<p style="color:var(--muted);font-size:0.9rem;margin-bottom:12px">This filename contains characters that may not be supported: ' + INVALID_CHARS_LIST + '</p>' +
+                            '<div class="modal-actions">' +
+                            '<button class="btn btn-ghost" onclick="document.querySelector(\'#modalOverlay\').classList.remove(\'show\')">Cancel</button>' +
+                            '<button class="btn btn-primary" id="fixNameBtn">Fix Name</button>' +
+                            '</div>'
+                        );
+                        $('#fixNameBtn').addEventListener('click', function () {
+                            newName = fixInvalidChars(newName);
+                            f.currentName = newName;
+                            pushHistory();
+                            hideModal();
+                            updateUI();
+                            showToast('Filename fixed and applied.', 'success');
+                        });
+                        return;
+                    }
+                    showToast('Invalid filename.', 'error');
+                    return;
+                }
+
+                f.currentName = newName;
+                pushHistory();
+                updateUI();
+                populateQuickSelect();
+                $('#quickCurrent').value = newName;
+                showToast('File renamed.', 'success');
+            });
+
+            // ========== ADVANCED RENAME BUTTONS ==========
+            $$('.adv-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const adv = this.getAttribute('data-adv');
+
+                    // Toggle buttons
+                    const toggleBtns = ['lowercase', 'uppercase', 'titlecase', 'removeSpaces', 'spacesToDash', 'spacesToUnderscore', 'removeSpecial', 'removeDupSpaces', 'removeBrackets', 'trimSpaces', 'addDate', 'addTime'];
+                    if (toggleBtns.includes(adv)) {
+                        if (activeAdvancedRules.has(adv)) {
+                            activeAdvancedRules.delete(adv);
+                            this.classList.remove('active');
+                        } else {
+                            // Mutually exclusive case options
+                            if (['lowercase', 'uppercase', 'titlecase'].includes(adv)) {
+                                ['lowercase', 'uppercase', 'titlecase'].forEach(r => {
+                                    activeAdvancedRules.delete(r);
+                                    document.querySelector('[data-adv="' + r + '"]').classList.remove('active');
+                                });
+                            }
+                            // Mutually exclusive space options
+                            if (['removeSpaces', 'spacesToDash', 'spacesToUnderscore'].includes(adv)) {
+                                ['removeSpaces', 'spacesToDash', 'spacesToUnderscore'].forEach(r => {
+                                    activeAdvancedRules.delete(r);
+                                    document.querySelector('[data-adv="' + r + '"]').classList.remove('active');
+                                });
+                            }
+                            activeAdvancedRules.add(adv);
+                            this.classList.add('active');
+                        }
+                        autoPreview();
+                    }
+
+                    // Custom input buttons
+                    if (adv === 'removeBeforeChar') {
+                        const panel = $('#advCustomRemoveBefore');
+                        const others = ['advCustomRemoveAfter', 'advCustomSpacesTo'];
+                        others.forEach(id => document.getElementById(id).classList.remove('show'));
+                        panel.classList.toggle('show');
+                    }
+                    if (adv === 'removeAfterChar') {
+                        const panel = $('#advCustomRemoveAfter');
+                        const others = ['advCustomRemoveBefore', 'advCustomSpacesTo'];
+                        others.forEach(id => document.getElementById(id).classList.remove('show'));
+                        panel.classList.toggle('show');
+                    }
+                    // Note: "Spaces to custom" is handled via spacesToDash/Underscore toggle + custom panel
+                });
+            });
+
+            // Actually, let me add a "Spaces to Custom" option to the adv grid dynamically... 
+            // Instead, let me handle the "Spaces to -" button to also show custom panel if clicked while active
+            // For simplicity, I'll handle the advanced custom actions directly:
+
+            $('#advRemoveBeforeApply').addEventListener('click', function () {
+                const ch = $('#advRemoveBeforeChar').value;
+                if (!ch) { showToast('Enter a character.', 'warning'); return; }
+                files.forEach(f => {
+                    const idx = f.currentName.indexOf(ch);
+                    if (idx >= 0) {
+                        const ext = getExt(f.currentName);
+                        let name = getNameWithoutExt(f.currentName);
+                        name = name.substring(0, idx);
+                        f.currentName = ext ? name + '.' + ext : name;
+                    }
+                });
+                pushHistory();
+                updateUI();
+                showToast('Text before "' + esc(ch) + '" removed.', 'success');
+            });
+
+            $('#advRemoveAfterApply').addEventListener('click', function () {
+                const ch = $('#advRemoveAfterChar').value;
+                if (!ch) { showToast('Enter a character.', 'warning'); return; }
+                files.forEach(f => {
+                    const idx = f.currentName.indexOf(ch);
+                    if (idx >= 0) {
+                        const ext = getExt(f.currentName);
+                        let name = getNameWithoutExt(f.currentName);
+                        name = name.substring(0, idx + ch.length);
+                        f.currentName = ext ? name + '.' + ext : name;
+                    }
+                });
+                pushHistory();
+                updateUI();
+                showToast('Text after "' + esc(ch) + '" removed.', 'success');
+            });
+
+            // ========== INDIVIDUAL FILE EDIT (MODAL) ==========
+            function openEditModal(id) {
+                const f = files.find(x => x.id === id);
+                if (!f) return;
+                showModal(
+                    '<h3>Edit Filename</h3>' +
+                    '<div style="margin-bottom:12px">' +
+                    '<label style="font-size:0.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">Original</label>' +
+                    '<input class="rule-input" value="' + esc(f.originalName) + '" readonly style="width:100%;opacity:0.6">' +
+                    '</div>' +
+                    '<div style="margin-bottom:12px">' +
+                    '<label style="font-size:0.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:4px">New Filename</label>' +
+                    '<input class="rule-input" id="editNameInput" value="' + esc(f.currentName) + '" style="width:100%">' +
+                    '</div>' +
+                    '<div class="ext-warning" style="margin-bottom:12px">' +
+                    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' +
+                    'Changing an extension does not convert the file format.' +
+                    '</div>' +
+                    '<div class="modal-actions">' +
+                    '<button class="btn btn-ghost" onclick="document.querySelector(\'#modalOverlay\').classList.remove(\'show\')">Cancel</button>' +
+                    '<button class="btn btn-primary" id="editSaveBtn">Save</button>' +
+                    '</div>'
+                );
+                const input = $('#editNameInput');
+                input.focus();
+                input.select();
+                $('#editSaveBtn').addEventListener('click', function () {
+                    let newName = input.value.trim();
+                    if (!newName) { showToast('Filename cannot be empty.', 'warning'); return; }
+                    const v = validateFilename(newName);
+                    if (!v.valid) {
+                        if (v.error === 'invalid_chars') {
+                            showModal(
+                                '<h3>Invalid Filename</h3>' +
+                                '<p style="color:var(--muted);font-size:0.9rem;margin-bottom:12px">This filename contains unsupported characters.</p>' +
+                                '<div class="modal-actions">' +
+                                '<button class="btn btn-ghost" onclick="document.querySelector(\'#modalOverlay\').classList.remove(\'show\')">Cancel</button>' +
+                                '<button class="btn btn-primary" id="editFixBtn">Fix Name</button>' +
+                                '</div>'
+                            );
+                            $('#editFixBtn').addEventListener('click', function () {
+                                newName = fixInvalidChars(newName);
+                                f.currentName = newName;
+                                pushHistory();
+                                hideModal();
+                                updateUI();
+                                showToast('Filename fixed.', 'success');
+                            });
+                            return;
+                        }
+                        showToast('Invalid filename.', 'error');
+                        return;
+                    }
+                    f.currentName = newName;
+                    pushHistory();
+                    hideModal();
+                    updateUI();
+                    showToast('Filename updated.', 'success');
+                });
+            }
+
+            // ========== DOWNLOAD FUNCTIONS ==========
+            function downloadSingleFile(id) {
+                const f = files.find(x => x.id === id);
+                if (!f) return;
+                const url = URL.createObjectURL(f.file);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = f.currentName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(() => URL.revokeObjectURL(url), 5000);
+            }
+
+            async function downloadAllAsZip() {
+                if (files.length === 0) { showToast('No files to download.', 'warning'); return; }
+
+                // Check for JSZip
+                if (typeof JSZip === 'undefined') {
+                    showToast('JSZip library failed to load. Please refresh the page.', 'error');
+                    return;
+                }
+
+                showLoading('Preparing ZIP...', '0 / ' + files.length + ' files');
+
+                try {
+                    const zip = new JSZip();
+                    const usedNames = {};
+
+                    for (let i = 0; i < files.length; i++) {
+                        const f = files[i];
+                        let name = f.currentName;
+                        // Handle duplicates in zip
+                        let base = name;
+                        let counter = 1;
+                        while (usedNames[name.toLowerCase()]) {
+                            const ext = getExt(base);
+                            const nameWithoutExt = getNameWithoutExt(base);
+                            name = nameWithoutExt + ' (' + counter + ')' + (ext ? '.' + ext : '');
+                            counter++;
+                        }
+                        usedNames[name.toLowerCase()] = true;
+                        zip.file(name, f.file);
+                        loadingSub.textContent = (i + 1) + ' / ' + files.length + ' files';
+                        // Yield to UI
+                        if (i % 10 === 0) await new Promise(r => setTimeout(r, 0));
+                    }
+
+                    loadingText.textContent = 'Compressing...';
+                    const blob = await zip.generateAsync({ type: 'blob' }, function (metadata) {
+                        loadingSub.textContent = Math.round(metadata.percent) + '%';
+                    });
+
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'Tools24-Renamed-Files.zip';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    setTimeout(() => URL.revokeObjectURL(url), 10000);
+
+                    hideLoading();
+                    showDownloadSection();
+                    showToast('ZIP downloaded successfully!', 'success');
+                } catch (e) {
+                    hideLoading();
+                    showToast('The ZIP could not be generated. Please try again.', 'error');
+                }
+            }
+
+            async function saveToFolder() {
+                if (!window.showDirectoryPicker) {
+                    showToast('Your browser does not support folder saving. Download ZIP instead.', 'warning');
+                    return;
+                }
+                try {
+                    const dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+                    showLoading('Saving files...', '0 / ' + files.length);
+                    const usedNames = {};
+                    for (let i = 0; i < files.length; i++) {
+                        const f = files[i];
+                        let name = f.currentName;
+                        let base = name;
+                        let counter = 1;
+                        while (usedNames[name.toLowerCase()]) {
+                            const ext = getExt(base);
+                            const nameWithoutExt = getNameWithoutExt(base);
+                            name = nameWithoutExt + ' (' + counter + ')' + (ext ? '.' + ext : '');
+                            counter++;
+                        }
+                        usedNames[name.toLowerCase()] = true;
+                        const fileHandle = await dirHandle.getFileHandle(name, { create: true });
+                        const writable = await fileHandle.createWritable();
+                        await writable.write(f.file);
+                        await writable.close();
+                        loadingSub.textContent = (i + 1) + ' / ' + files.length + ' files';
+                    }
+                    hideLoading();
+                    showToast('All files saved to folder!', 'success');
+                } catch (e) {
+                    hideLoading();
+                    if (e.name !== 'AbortError') {
+                        showToast('Could not save to folder. Try downloading ZIP instead.', 'error');
+                    }
+                }
+            }
+
+            // Download buttons
+            $('#tbDownloadAll').addEventListener('click', downloadAllAsZip);
+            $('#dlDownloadAll').addEventListener('click', downloadAllAsZip);
+            $('#dlSaveFolder').addEventListener('click', saveToFolder);
+            $('#dlRenameMore').addEventListener('click', function () {
+                downloadSection.classList.add('hidden');
+                fileInput.click();
+            });
+            $('#dlStartOver').addEventListener('click', function () {
+                files = [];
+                history = [];
+                historyIndex = -1;
+                activeAdvancedRules.clear();
+                resetAllRules();
+                updateUI();
+            });
+
+            // Show Save to Folder button if supported
+            if (window.showDirectoryPicker) {
+                $('#dlSaveFolder').style.display = '';
+            }
+
+            function showDownloadSection() {
+                const renamedCount = files.filter(f => f.originalName !== f.currentName).length;
+                downloadCountText.textContent = files.length + ' file' + (files.length !== 1 ? 's' : '') + ' ready' + (renamedCount > 0 ? ' (' + renamedCount + ' renamed)' : '');
+                downloadSection.classList.remove('hidden');
+            }
+
+            // ========== UPDATE UI ==========
+            function updateUI() {
+                const hasFiles = files.length > 0;
+
+                // Upload area
+                uploadArea.style.display = hasFiles ? 'none' : '';
+
+                // File count bar
+                fileCountBar.classList.toggle('hidden', !hasFiles);
+                fileCountNum.textContent = files.length;
+
+                // Ready count
+                const renamedCount = files.filter(f => f.originalName !== f.currentName).length;
+                readyCountText.textContent = renamedCount > 0 ? renamedCount + ' renamed' : '';
+
+                // Rename panel
+                renamePanel.classList.toggle('hidden', !hasFiles);
+
+                // Toolbar
+                toolbar.classList.toggle('hidden', !hasFiles);
+
+                // Empty state
+                emptyState.style.display = hasFiles ? 'none' : '';
+
+                // File table / cards
+                fileTableWrap.style.display = hasFiles ? '' : 'none';
+                fileCardsWrap.style.display = hasFiles ? '' : 'none';
+
+                // Download section
+                if (hasFiles && renamedCount > 0) {
+                    showDownloadSection();
+                } else {
+                    downloadSection.classList.add('hidden');
+                }
+
+                // Hide preview if no rules active
+                if (!isAnyBatchRuleActive()) {
+                    previewPanel.classList.add('hidden');
+                }
+
+                // Populate quick select
+                populateQuickSelect();
+
+                // Render file list
+                renderFileList();
+            }
+
+            function renderFileList() {
+                // Desktop table
+                let tableHTML = '';
+                files.forEach((f, i) => {
+                    const ext = getExt(f.originalName);
+                    const isRenamed = f.originalName !== f.currentName;
+                    const statusClass = isRenamed ? 'renamed' : 'unchanged';
+                    const statusText = isRenamed ? 'Renamed' : 'Unchanged';
+
+                    tableHTML += '<tr>' +
+                        '<td>' + (i + 1) + '</td>' +
+                        '<td><div class="file-name-cell">' + fileIconHTML(ext) + '<span class="file-name-text" title="' + esc(f.originalName) + '">' + esc(f.originalName) + '</span></div></td>' +
+                        '<td><span class="file-new-name" title="' + esc(f.currentName) + '">' + esc(f.currentName) + '</span></td>' +
+                        '<td><span class="file-size">' + formatSize(f.file.size) + '</span></td>' +
+                        '<td><span class="file-status ' + statusClass + '">' + statusText + '</span></td>' +
+                        '<td><div class="file-actions">' +
+                        '<button class="btn btn-sm btn-ghost" title="Edit" aria-label="Edit filename" data-edit="' + f.id + '">' +
+                        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+                        '</button>' +
+                        '<button class="btn btn-sm btn-ghost" title="Download" aria-label="Download file" data-download="' + f.id + '">' +
+                        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+                        '</button>' +
+                        '<button class="btn btn-sm btn-ghost" title="Remove" aria-label="Remove file" data-remove="' + f.id + '" style="color:var(--error)">' +
+                        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
+                        '</button>' +
+                        '</div></td>' +
+                        '</tr>';
+                });
+                fileTableBody.innerHTML = tableHTML;
+
+                // Mobile cards
+                let cardsHTML = '';
+                files.forEach((f, i) => {
+                    const ext = getExt(f.originalName);
+                    const isRenamed = f.originalName !== f.currentName;
+                    const statusClass = isRenamed ? 'renamed' : 'unchanged';
+                    const statusText = isRenamed ? 'Renamed' : 'Unchanged';
+
+                    cardsHTML += '<div class="file-card">' +
+                        '<div class="file-card-top">' +
+                        fileIconHTML(ext) +
+                        '<div class="file-card-info">' +
+                        '<div class="file-card-name" title="' + esc(f.originalName) + '">' + esc(f.originalName) + '</div>' +
+                        '<div class="file-card-meta">' + formatSize(f.file.size) + ' &bull; <span class="file-status ' + statusClass + '">' + statusText + '</span></div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="file-card-new">' +
+                        '<span>New:</span>' +
+                        '<code title="' + esc(f.currentName) + '">' + esc(f.currentName) + '</code>' +
+                        '</div>' +
+                        '<div class="file-card-actions">' +
+                        '<button class="btn btn-sm btn-secondary" data-edit="' + f.id + '">' +
+                        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit' +
+                        '</button>' +
+                        '<button class="btn btn-sm btn-secondary" data-download="' + f.id + '">' +
+                        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download' +
+                        '</button>' +
+                        '<button class="btn btn-sm btn-danger" data-remove="' + f.id + '">' +
+                        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
+                        '</button>' +
+                        '</div>' +
+                        '</div>';
+                });
+                fileCardsWrap.innerHTML = cardsHTML;
+
+                // Attach event delegates for edit/download/remove
+                document.querySelectorAll('[data-edit]').forEach(btn => {
+                    btn.addEventListener('click', function () { openEditModal(parseInt(this.getAttribute('data-edit'))); });
+                });
+                document.querySelectorAll('[data-download]').forEach(btn => {
+                    btn.addEventListener('click', function () { downloadSingleFile(parseInt(this.getAttribute('data-download'))); });
+                });
+                document.querySelectorAll('[data-remove]').forEach(btn => {
+                    btn.addEventListener('click', function () { removeFile(parseInt(this.getAttribute('data-remove'))); });
+                });
+            }
+
+            // ========== FAQ ACCORDION ==========
+            $$('.faq-q').forEach(q => {
+                q.addEventListener('click', function () {
+                    const a = this.nextElementSibling;
+                    const isOpen = a.classList.toggle('open');
+                    this.classList.toggle('open', isOpen);
+                    this.setAttribute('aria-expanded', isOpen);
+                });
+                q.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); }
+                });
+            });
+
+            // ========== KEYBOARD SHORTCUTS ==========
+            document.addEventListener('keydown', function (e) {
+                if (e.ctrlKey || e.metaKey) {
+                    if (e.key === 'z' && !e.shiftKey) { e.preventDefault(); undo(); }
+                    if ((e.key === 'z' && e.shiftKey) || e.key === 'y') { e.preventDefault(); redo(); }
+                }
+                if (e.key === 'Escape') {
+                    hideModal();
+                    sortMenu.classList.remove('show');
+                }
+            });
+
+            // ========== INIT ==========
+            initTheme();
+            updateUI();
+
+        })();
+    </script>
 </body>
+
 </html>
