@@ -1,0 +1,3051 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astrology Report Generator — Tools24</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --bg: #F0EAF8;
+            --bg-deep: #E4DAF3;
+            --card: rgba(255, 255, 255, 0.72);
+            --card-hover: rgba(255, 255, 255, 0.88);
+            --card-border: rgba(255, 255, 255, 0.6);
+            --text: #1E1B4B;
+            --text-sec: #4C4880;
+            --text-muted: #7C78A8;
+            --accent: #8B5CF6;
+            --accent-light: #A78BFA;
+            --accent-blue: #6366F1;
+            --accent-pink: #EC4899;
+            --accent-pink-light: #F9A8D4;
+            --gradient-main: linear-gradient(135deg, #E8E0F0 0%, #C7D2FE 50%, #FBCFE8 100%);
+            --gradient-btn: linear-gradient(135deg, #8B5CF6, #6366F1, #EC4899);
+            --gradient-card: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(99, 102, 241, 0.06));
+            --shadow-sm: 0 2px 8px rgba(30, 27, 75, 0.06);
+            --shadow-md: 0 4px 20px rgba(30, 27, 75, 0.08);
+            --shadow-lg: 0 8px 40px rgba(30, 27, 75, 0.12);
+            --shadow-glow: 0 0 30px rgba(139, 92, 246, 0.15);
+            --radius: 20px;
+            --radius-sm: 12px;
+            --radius-lg: 28px;
+            --blob1: rgba(167, 139, 250, 0.25);
+            --blob2: rgba(249, 168, 212, 0.2);
+            --blob3: rgba(129, 140, 248, 0.18);
+            --input-bg: rgba(255, 255, 255, 0.6);
+            --input-border: rgba(139, 92, 246, 0.2);
+            --input-focus: rgba(139, 92, 246, 0.4);
+            --toggle-bg: #D1D5DB;
+            --toggle-active: #8B5CF6;
+            --success: #10B981;
+            --error: #EF4444;
+            --warning: #F59E0B;
+            --nav-bg: rgba(255, 255, 255, 0.65);
+            --preview-bg: #E5E7EB;
+            --report-bg: #FFFFFF;
+            --report-text: #1a1a2e;
+            --report-heading: #2D2B55;
+            --report-accent: #7C3AED;
+            --report-border: #E5E7EB;
+            --report-light: #F5F3FF;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0B1120;
+            --bg-deep: #0F172A;
+            --card: rgba(30, 41, 59, 0.72);
+            --card-hover: rgba(30, 41, 59, 0.9);
+            --card-border: rgba(148, 163, 184, 0.15);
+            --text: #F1F5F9;
+            --text-sec: #CBD5E1;
+            --text-muted: #94A3B8;
+            --accent: #A78BFA;
+            --accent-light: #C4B5FD;
+            --accent-blue: #818CF8;
+            --accent-pink: #F472B6;
+            --accent-pink-light: #F9A8D4;
+            --gradient-main: linear-gradient(135deg, #0B1120 0%, #1E1B4B 50%, #1a0a2e 100%);
+            --gradient-card: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(99, 102, 241, 0.08));
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 30px rgba(139, 92, 246, 0.1);
+            --blob1: rgba(139, 92, 246, 0.08);
+            --blob2: rgba(236, 72, 153, 0.06);
+            --blob3: rgba(99, 102, 241, 0.06);
+            --input-bg: rgba(15, 23, 42, 0.6);
+            --input-border: rgba(139, 92, 246, 0.25);
+            --input-focus: rgba(139, 92, 246, 0.5);
+            --nav-bg: rgba(15, 23, 42, 0.8);
+            --preview-bg: #1E293B;
+            --report-bg: #FFFFFF;
+            --report-text: #1a1a2e;
+            --report-heading: #2D2B55;
+            --report-accent: #7C3AED;
+            --report-border: #E5E7EB;
+            --report-light: #F5F3FF;
+        }
+
+        /* ===== RESET & BASE ===== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--gradient-main);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.4s ease, color 0.3s ease;
+            line-height: 1.6;
+        }
+
+        /* ===== BACKGROUND BLOBS ===== */
+        .bg-blobs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: blobFloat 20s ease-in-out infinite;
+        }
+
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--blob1);
+            top: -10%;
+            left: -5%;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--blob2);
+            bottom: -10%;
+            right: -5%;
+            animation-delay: -7s;
+        }
+
+        .blob-3 {
+            width: 350px;
+            height: 350px;
+            background: var(--blob3);
+            top: 40%;
+            left: 50%;
+            animation-delay: -14s;
+        }
+
+        @keyframes blobFloat {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            25% {
+                transform: translate(30px, -40px) scale(1.05);
+            }
+
+            50% {
+                transform: translate(-20px, 20px) scale(0.95);
+            }
+
+            75% {
+                transform: translate(40px, 30px) scale(1.02);
+            }
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 0 24px;
+            transition: background 0.3s ease;
+        }
+
+        .nav-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--gradient-btn);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: 16px;
+            box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3);
+        }
+
+        .nav-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-sec);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            background: rgba(139, 92, 246, 0.08);
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s;
+            margin-left: 4px;
+        }
+
+        .theme-btn:hover {
+            background: var(--card-hover);
+            transform: scale(1.05);
+        }
+
+        .hamburger {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 18px;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .mobile-menu-panel {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 280px;
+            background: var(--bg-deep);
+            border-left: 1px solid var(--card-border);
+            padding: 24px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mobile-menu.active .mobile-menu-panel {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-close {
+            align-self: flex-end;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            background: var(--card);
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-menu-panel a {
+            text-decoration: none;
+            color: var(--text-sec);
+            font-size: 15px;
+            font-weight: 500;
+            padding: 12px 16px;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .mobile-menu-panel a:hover {
+            color: var(--accent);
+            background: rgba(139, 92, 246, 0.08);
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 32px 24px 60px;
+        }
+
+        /* ===== HERO / TITLE ===== */
+        .tool-hero {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .tool-hero h1 {
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 800;
+            background: var(--gradient-btn);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .tool-hero p {
+            color: var(--text-sec);
+            font-size: clamp(14px, 2.5vw, 17px);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* ===== GLASS CARD ===== */
+        .glass-card {
+            background: var(--card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            padding: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ===== FORM STYLES ===== */
+        .form-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-section-title i {
+            color: var(--accent);
+            font-size: 14px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-sec);
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .form-input.error,
+        .form-select.error {
+            border-color: var(--error);
+        }
+
+        .error-msg {
+            font-size: 12px;
+            color: var(--error);
+            min-height: 16px;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237C78A8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        /* ===== COLLAPSIBLE SECTION ===== */
+        .collapsible-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 14px 0;
+            user-select: none;
+        }
+
+        .collapsible-header h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .collapsible-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--input-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-sec);
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+
+        .collapsible-header.open .collapsible-icon {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .collapsible-body.open {
+            max-height: 600px;
+        }
+
+        /* ===== TOGGLE GRID ===== */
+        .toggle-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding-bottom: 8px;
+        }
+
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            background: var(--input-bg);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .toggle-item:hover {
+            border-color: var(--input-border);
+        }
+
+        .toggle-item.active {
+            border-color: var(--accent);
+            background: rgba(139, 92, 246, 0.08);
+        }
+
+        .toggle-switch {
+            width: 38px;
+            height: 20px;
+            border-radius: 10px;
+            background: var(--toggle-bg);
+            position: relative;
+            flex-shrink: 0;
+            transition: background 0.2s;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #fff;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        .toggle-item.active .toggle-switch {
+            background: var(--toggle-active);
+        }
+
+        .toggle-item.active .toggle-switch::after {
+            transform: translateX(18px);
+        }
+
+        .toggle-label {
+            font-size: 13px;
+            color: var(--text-sec);
+            font-weight: 400;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.25s ease;
+            text-decoration: none;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: var(--gradient-btn);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--card);
+            color: var(--text);
+            border: 1px solid var(--card-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--card-hover);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(139, 92, 246, 0.08);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.18);
+        }
+
+        .btn-sm {
+            padding: 8px 14px;
+            font-size: 13px;
+            border-radius: 10px;
+        }
+
+        .btn-lg {
+            padding: 16px 36px;
+            font-size: 16px;
+            border-radius: 16px;
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ===== LANGUAGE SELECTOR ===== */
+        .lang-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .lang-option {
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-sec);
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .lang-option:hover {
+            border-color: var(--accent);
+        }
+
+        .lang-option.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        /* ===== LOADING STATE ===== */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-card {
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            padding: 40px 48px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            max-width: 400px;
+            width: 90%;
+            backdrop-filter: blur(20px);
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--input-border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .loading-steps {
+            text-align: left;
+        }
+
+        .loading-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 0;
+            font-size: 13px;
+            color: var(--text-muted);
+            transition: all 0.3s;
+        }
+
+        .loading-step.active {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .loading-step.done {
+            color: var(--success);
+        }
+
+        .loading-step i {
+            width: 18px;
+            text-align: center;
+        }
+
+        /* ===== TOAST NOTIFICATIONS ===== */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 24px;
+            z-index: 400;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            padding: 14px 20px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 280px;
+            max-width: 400px;
+            box-shadow: var(--shadow-lg);
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(12px);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-success {
+            background: rgba(16, 185, 129, 0.95);
+            color: #fff;
+        }
+
+        .toast-error {
+            background: rgba(239, 68, 68, 0.95);
+            color: #fff;
+        }
+
+        .toast-info {
+            background: rgba(99, 102, 241, 0.95);
+            color: #fff;
+        }
+
+        /* ===== PREVIEW CONTAINER ===== */
+        .preview-container {
+            display: none;
+        }
+
+        .preview-container.active {
+            display: block;
+        }
+
+        .preview-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 16px 20px;
+            background: var(--card);
+            border-radius: var(--radius) var(--radius) 0 0;
+            border: 1px solid var(--card-border);
+            border-bottom: none;
+        }
+
+        .preview-toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .preview-toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .page-counter {
+            font-size: 13px;
+            color: var(--text-sec);
+            font-weight: 500;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .zoom-controls {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .zoom-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            background: var(--input-bg);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .zoom-btn:hover {
+            background: var(--card-hover);
+        }
+
+        .zoom-level {
+            font-size: 12px;
+            color: var(--text-sec);
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .preview-viewport {
+            background: var(--preview-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 0 0 var(--radius) var(--radius);
+            padding: 32px;
+            overflow: auto;
+            max-height: 80vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        .preview-pages-wrapper {
+            transform-origin: top center;
+            transition: transform 0.2s;
+        }
+
+        /* ===== REPORT PAGES (A4) ===== */
+        .report-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: var(--report-bg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 24px;
+            padding: 18mm 20mm;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+            color: var(--report-text);
+            font-size: 11pt;
+            line-height: 1.6;
+        }
+
+        .report-page:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Report header */
+        .rpt-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--report-accent);
+            margin-bottom: 16px;
+        }
+
+        .rpt-brand {
+            font-size: 14pt;
+            font-weight: 700;
+            color: var(--report-accent);
+        }
+
+        .rpt-page-num {
+            font-size: 9pt;
+            color: #666;
+        }
+
+        /* Report footer */
+        .rpt-footer {
+            position: absolute;
+            bottom: 14mm;
+            left: 20mm;
+            right: 20mm;
+            padding-top: 8px;
+            border-top: 1px solid var(--report-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 8pt;
+            color: #999;
+        }
+
+        /* Cover page */
+        .rpt-cover {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 261mm;
+            text-align: center;
+        }
+
+        .rpt-cover-ornament {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #F5F3FF, #EDE9FE, #FDF2F8);
+            border: 2px solid var(--report-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 32px;
+            color: var(--report-accent);
+        }
+
+        .rpt-cover h1 {
+            font-size: 26pt;
+            font-weight: 800;
+            color: var(--report-heading);
+            margin-bottom: 6px;
+        }
+
+        .rpt-cover h2 {
+            font-size: 13pt;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 32px;
+        }
+
+        .rpt-cover-info {
+            text-align: left;
+            width: 100%;
+            max-width: 360px;
+        }
+
+        .rpt-cover-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dotted #ddd;
+            font-size: 10pt;
+        }
+
+        .rpt-cover-row .label {
+            color: #888;
+        }
+
+        .rpt-cover-row .value {
+            font-weight: 600;
+            color: var(--report-heading);
+        }
+
+        .rpt-cover-intro {
+            margin-top: 28px;
+            font-size: 10pt;
+            color: #555;
+            line-height: 1.7;
+            max-width: 380px;
+        }
+
+        /* Section headings */
+        .rpt-section {
+            margin-bottom: 18px;
+        }
+
+        .rpt-section-title {
+            font-size: 14pt;
+            font-weight: 700;
+            color: var(--report-heading);
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1.5px solid var(--report-accent);
+        }
+
+        .rpt-subsection-title {
+            font-size: 11pt;
+            font-weight: 600;
+            color: var(--report-accent);
+            margin: 12px 0 6px;
+        }
+
+        .rpt-text {
+            font-size: 10pt;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        .rpt-text-sm {
+            font-size: 9pt;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .rpt-bullet {
+            padding-left: 16px;
+            position: relative;
+            margin-bottom: 4px;
+            font-size: 10pt;
+            color: #333;
+        }
+
+        .rpt-bullet::before {
+            content: '•';
+            position: absolute;
+            left: 4px;
+            color: var(--report-accent);
+            font-weight: 700;
+        }
+
+        /* Kundli chart */
+        .kundli-chart {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border: 2px solid var(--report-accent);
+            border-radius: 4px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 340px;
+            margin: 12px auto;
+        }
+
+        .kundli-cell {
+            border: 1px solid #ddd;
+            padding: 8px 4px;
+            text-align: center;
+            font-size: 8pt;
+            min-height: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #FAFAFE;
+        }
+
+        .kundli-cell .house-num {
+            font-size: 7pt;
+            color: #999;
+            font-weight: 600;
+        }
+
+        .kundli-cell .house-sign {
+            font-weight: 600;
+            color: var(--report-heading);
+            font-size: 9pt;
+        }
+
+        .kundli-cell .house-planet {
+            font-size: 7pt;
+            color: var(--report-accent);
+        }
+
+        .kundli-cell.center-cell {
+            background: var(--report-light);
+            grid-column: 2/4;
+            grid-row: 2/4;
+            border: 2px solid var(--report-accent);
+        }
+
+        .kundli-center-label {
+            font-size: 8pt;
+            color: var(--report-accent);
+            font-weight: 600;
+        }
+
+        /* Planet table */
+        .planet-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 9pt;
+        }
+
+        .planet-table th {
+            background: var(--report-light);
+            padding: 6px 8px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--report-heading);
+            border: 1px solid #ddd;
+        }
+
+        .planet-table td {
+            padding: 5px 8px;
+            border: 1px solid #eee;
+            color: #444;
+        }
+
+        /* Strength/challenge cards */
+        .rpt-card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .rpt-card {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        .rpt-card-strength {
+            background: #F0FDF4;
+            border-color: #BBF7D0;
+        }
+
+        .rpt-card-challenge {
+            background: #FFF7ED;
+            border-color: #FED7AA;
+        }
+
+        .rpt-card-opportunity {
+            background: #EFF6FF;
+            border-color: #BFDBFE;
+        }
+
+        .rpt-card-guidance {
+            background: #F5F3FF;
+            border-color: #DDD6FE;
+        }
+
+        .rpt-card h4 {
+            font-size: 9pt;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .rpt-card p {
+            font-size: 8.5pt;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Lucky info */
+        .lucky-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .lucky-item {
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            background: var(--report-light);
+        }
+
+        .lucky-item .lucky-label {
+            font-size: 8pt;
+            color: #888;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .lucky-item .lucky-value {
+            font-size: 12pt;
+            font-weight: 700;
+            color: var(--report-accent);
+            margin-top: 2px;
+        }
+
+        /* Disclaimer */
+        .rpt-disclaimer {
+            margin-top: 14px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: #FFFBEB;
+            border: 1px solid #FDE68A;
+            font-size: 8pt;
+            color: #92400E;
+            line-height: 1.6;
+        }
+
+        /* ===== SAVED REPORTS ===== */
+        .saved-section {
+            margin-top: 32px;
+        }
+
+        .saved-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .saved-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 20px;
+            transition: all 0.2s;
+        }
+
+        .saved-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .saved-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .saved-card-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .saved-card-lang {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .saved-card-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        .saved-card-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: var(--gradient-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--accent);
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: var(--text-sec);
+            max-width: 400px;
+            margin: 0 auto 24px;
+        }
+
+        /* ===== TAB NAV ===== */
+        .tab-nav {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            padding: 4px;
+            border: 1px solid var(--card-border);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-sec);
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(139, 92, 246, 0.08);
+        }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            .report-page,
+            .report-page * {
+                visibility: visible;
+            }
+
+            .report-page {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 210mm;
+                min-height: 297mm;
+                margin: 0;
+                padding: 18mm 20mm;
+                box-shadow: none;
+                page-break-after: always;
+            }
+
+            .preview-toolbar,
+            .preview-viewport,
+            .navbar,
+            .bg-blobs,
+            .toast-container,
+            .loading-overlay,
+            .mobile-menu {
+                display: none !important;
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toggle-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .rpt-card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lucky-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-container {
+                padding: 20px 14px 40px;
+            }
+
+            .glass-card {
+                padding: 20px 16px;
+            }
+
+            .preview-viewport {
+                padding: 16px 8px;
+                max-height: 70vh;
+            }
+
+            .preview-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .preview-toolbar-left,
+            .preview-toolbar-right {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .saved-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .report-page {
+                font-size: 10pt;
+                padding: 14mm 16mm;
+            }
+
+            .rpt-cover h1 {
+                font-size: 22pt;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lang-selector {
+                gap: 6px;
+            }
+
+            .lang-option {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .btn-lg {
+                padding: 14px 24px;
+                font-size: 14px;
+            }
+        }
+
+        /* ===== REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        .preview-viewport::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .preview-viewport::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .preview-viewport::-webkit-scrollbar-thumb {
+            background: rgba(139, 92, 246, 0.3);
+            border-radius: 4px;
+        }
+
+        .preview-viewport::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 92, 246, 0.5);
+        }
+
+        /* View switching */
+        .view-form,
+        .view-preview,
+        .view-saved {
+            display: none;
+        }
+
+        .view-form.active,
+        .view-preview.active,
+        .view-saved.active {
+            display: block;
+        }
+
+        /* Confirm modal */
+        .confirm-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 350;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirm-overlay.active {
+            display: flex;
+        }
+
+        .confirm-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 28px;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
+        }
+
+        .confirm-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .confirm-card p {
+            font-size: 14px;
+            color: var(--text-sec);
+            margin-bottom: 20px;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Blobs -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-inner">
+            <a href="#" class="nav-brand" aria-label="Tools24 Home">
+                <div class="nav-logo">T24</div>
+                <span class="nav-title">Tools24</span>
+            </a>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Privacy</a>
+                <a href="#">Contact</a>
+                <button class="theme-btn" id="themeToggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+        <div class="mobile-menu-panel">
+            <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu"><i
+                    class="fas fa-times"></i></button>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Privacy</a>
+            <a href="#">Contact</a>
+            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--card-border);">
+                <button class="theme-btn" id="themeToggleMobile" aria-label="Toggle dark mode"
+                    style="width: 100%; border-radius: 12px; gap: 8px; font-size: 14px;">
+                    <i class="fas fa-moon"></i> <span>Toggle Theme</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" role="alert" aria-live="assertive">
+        <div class="loading-card">
+            <div class="loading-spinner"></div>
+            <div class="loading-title" id="loadingTitle">Preparing your astrology report...</div>
+            <div class="loading-steps">
+                <div class="loading-step" data-step="0"><i class="fas fa-circle-notch fa-spin"></i> Processing birth
+                    details</div>
+                <div class="loading-step" data-step="1"><i class="fas fa-circle"></i> Preparing astrology analysis</div>
+                <div class="loading-step" data-step="2"><i class="fas fa-circle"></i> Creating report sections</div>
+                <div class="loading-step" data-step="3"><i class="fas fa-circle"></i> Formatting A4 document</div>
+                <div class="loading-step" data-step="4"><i class="fas fa-circle"></i> Preparing preview</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div class="confirm-overlay" id="confirmOverlay">
+        <div class="confirm-card">
+            <h3 id="confirmTitle">Confirm</h3>
+            <p id="confirmMsg">Are you sure?</p>
+            <div class="confirm-actions">
+                <button class="btn btn-secondary btn-sm" id="confirmCancel">Cancel</button>
+                <button class="btn btn-danger btn-sm" id="confirmOk">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Hero -->
+        <div class="tool-hero">
+            <h1>Astrology Report Generator</h1>
+            <p>Generate a personalized astrology report in your preferred language.</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-nav" role="tablist">
+            <button class="tab-btn active" data-tab="form" role="tab" aria-selected="true">
+                <i class="fas fa-pen-to-square"></i> Create Report
+            </button>
+            <button class="tab-btn" data-tab="saved" role="tab" aria-selected="false">
+                <i class="fas fa-bookmark"></i> Saved Reports
+            </button>
+        </div>
+
+        <!-- FORM VIEW -->
+        <div class="view-form active" id="viewForm">
+            <form id="astrologyForm" novalidate>
+                <!-- Personal Information -->
+                <div class="glass-card" style="margin-bottom: 20px;">
+                    <div class="form-section-title"><i class="fas fa-user"></i> Personal Information</div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="fullName">Full Name</label>
+                            <input type="text" class="form-input" id="fullName" placeholder="Enter your full name"
+                                autocomplete="name">
+                            <span class="error-msg" id="fullNameError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="gender">Gender (Optional)</label>
+                            <select class="form-select" id="gender">
+                                <option value="">Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <span class="error-msg"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="dob">Date of Birth</label>
+                            <input type="date" class="form-input" id="dob">
+                            <span class="error-msg" id="dobError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="tob">Time of Birth</label>
+                            <input type="time" class="form-input" id="tob">
+                            <span class="error-msg" id="tobError"></span>
+                        </div>
+                        <div class="form-group full-width">
+                            <label class="form-label" for="pob">Place of Birth</label>
+                            <input type="text" class="form-input" id="pob" placeholder="e.g. Mumbai, Maharashtra, India"
+                                autocomplete="address-level2">
+                            <span class="error-msg" id="pobError"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language Selection -->
+                <div class="glass-card" style="margin-bottom: 20px;">
+                    <div class="form-section-title"><i class="fas fa-language"></i> Report Language</div>
+                    <div class="lang-selector" id="langSelector">
+                        <div class="lang-option active" data-lang="en">English</div>
+                        <div class="lang-option" data-lang="hi">Hindi</div>
+                        <div class="lang-option" data-lang="hinglish">Hinglish</div>
+                    </div>
+                    <input type="hidden" id="selectedLang" value="en">
+                </div>
+
+                <!-- Report Sections -->
+                <div class="glass-card" style="margin-bottom: 20px;">
+                    <div class="collapsible-header open" data-collapsible="sections">
+                        <h3><i class="fas fa-list-check"
+                                style="color: var(--accent); margin-right: 6px; font-size: 14px;"></i> Report Sections
+                        </h3>
+                        <div class="collapsible-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="collapsible-body open" id="sectionsBody">
+                        <div class="toggle-grid" id="toggleGrid">
+                            <!-- Toggles generated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="generateBtn">
+                    <i class="fas fa-wand-magic-sparkles"></i> Generate Report
+                </button>
+            </form>
+        </div>
+
+        <!-- PREVIEW VIEW -->
+        <div class="view-preview" id="viewPreview">
+            <div class="preview-container active">
+                <!-- Toolbar -->
+                <div class="preview-toolbar">
+                    <div class="preview-toolbar-left">
+                        <button class="btn btn-secondary btn-sm" id="backToForm"><i class="fas fa-arrow-left"></i>
+                            Back</button>
+                        <div class="page-counter" id="pageCounter">Page 1 of 5</div>
+                        <div class="zoom-controls">
+                            <button class="zoom-btn" id="zoomOut" aria-label="Zoom out"><i
+                                    class="fas fa-minus"></i></button>
+                            <span class="zoom-level" id="zoomLevel">80%</span>
+                            <button class="zoom-btn" id="zoomIn" aria-label="Zoom in"><i
+                                    class="fas fa-plus"></i></button>
+                            <button class="zoom-btn" id="zoomFit" aria-label="Fit to page"><i
+                                    class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div class="preview-toolbar-right">
+                        <button class="btn btn-primary btn-sm" id="downloadPdf"><i class="fas fa-file-pdf"></i> Download
+                            PDF</button>
+                        <button class="btn btn-secondary btn-sm" id="saveReport"><i class="fas fa-bookmark"></i>
+                            Save</button>
+                        <button class="btn btn-secondary btn-sm" id="printReport"><i class="fas fa-print"></i>
+                            Print</button>
+                        <button class="btn btn-secondary btn-sm" id="shareReport"><i class="fas fa-share-nodes"></i>
+                            Share</button>
+                        <button class="btn btn-ghost btn-sm" id="regenerateReport"><i class="fas fa-rotate"></i>
+                            Regenerate</button>
+                        <button class="btn btn-ghost btn-sm" id="newReport"><i class="fas fa-plus"></i> New</button>
+                    </div>
+                </div>
+                <!-- Viewport -->
+                <div class="preview-viewport" id="previewViewport">
+                    <div class="preview-pages-wrapper" id="previewWrapper">
+                        <!-- Report pages injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAVED REPORTS VIEW -->
+        <div class="view-saved" id="viewSaved">
+            <div class="saved-section">
+                <div id="savedReportsContent">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        /* ============================================================
+           TOOLS24 ASTROLOGY REPORT GENERATOR — COMPLETE ENGINE
+           ============================================================ */
+
+        // ===== SECTION TOGGLES CONFIG =====
+        const SECTION_TOGGLES = [
+            { id: 'birthDetails', label: 'Basic Birth Details', default: true },
+            { id: 'birthChart', label: 'Birth Chart / Kundli', default: true },
+            { id: 'planetaryPositions', label: 'Planetary Positions', default: true },
+            { id: 'zodiacInfo', label: 'Zodiac & Moon Sign', default: true },
+            { id: 'ascendantNakshatra', label: 'Ascendant & Nakshatra', default: true },
+            { id: 'personality', label: 'Personality Analysis', default: true },
+            { id: 'career', label: 'Career & Education', default: true },
+            { id: 'finance', label: 'Finance', default: true },
+            { id: 'relationships', label: 'Relationship / Marriage', default: true },
+            { id: 'family', label: 'Family & Lifestyle', default: false },
+            { id: 'health', label: 'Health & Lifestyle', default: false },
+            { id: 'strengths', label: 'Strengths & Challenges', default: true },
+            { id: 'opportunities', label: 'Opportunities', default: true },
+            { id: 'guidance', label: 'Recommended Guidance', default: true },
+            { id: 'luckyInfo', label: 'Lucky Numbers & Colors', default: true },
+            { id: 'importantPeriods', label: 'Important Periods', default: false },
+            { id: 'futureGuidance', label: 'General Future Guidance', default: false },
+        ];
+
+        // ===== ZODIAC DATA =====
+        const ZODIAC = [
+            { name: 'Aries', symbol: '♈', element: 'Fire', ruler: 'Mars', hi: 'मेष', startMonth: 3, startDay: 21, endMonth: 4, endDay: 19 },
+            { name: 'Taurus', symbol: '♉', element: 'Earth', ruler: 'Venus', hi: 'वृषभ', startMonth: 4, startDay: 20, endMonth: 5, endDay: 20 },
+            { name: 'Gemini', symbol: '♊', element: 'Air', ruler: 'Mercury', hi: 'मिथुन', startMonth: 5, startDay: 21, endMonth: 6, endDay: 20 },
+            { name: 'Cancer', symbol: '♋', element: 'Water', ruler: 'Moon', hi: 'कर्क', startMonth: 6, startDay: 21, endMonth: 7, endDay: 22 },
+            { name: 'Leo', symbol: '♌', element: 'Fire', ruler: 'Sun', hi: 'सिंह', startMonth: 7, startDay: 23, endMonth: 8, endDay: 22 },
+            { name: 'Virgo', symbol: '♍', element: 'Earth', ruler: 'Mercury', hi: 'कन्या', startMonth: 8, startDay: 23, endMonth: 9, endDay: 22 },
+            { name: 'Libra', symbol: '♎', element: 'Air', ruler: 'Venus', hi: 'तुला', startMonth: 9, startDay: 23, endMonth: 10, endDay: 22 },
+            { name: 'Scorpio', symbol: '♏', element: 'Water', ruler: 'Pluto', hi: 'वृश्चिक', startMonth: 10, startDay: 23, endMonth: 11, endDay: 21 },
+            { name: 'Sagittarius', symbol: '♐', element: 'Fire', ruler: 'Jupiter', hi: 'धनु', startMonth: 11, startDay: 22, endMonth: 12, endDay: 21 },
+            { name: 'Capricorn', symbol: '♑', element: 'Earth', ruler: 'Saturn', hi: 'मकर', startMonth: 12, startDay: 22, endMonth: 1, endDay: 19 },
+            { name: 'Aquarius', symbol: '♒', element: 'Air', ruler: 'Saturn', hi: 'कुम्भ', startMonth: 1, startDay: 20, endMonth: 2, endDay: 18 },
+            { name: 'Pisces', symbol: '♓', element: 'Water', ruler: 'Jupiter', hi: 'मीन', startMonth: 2, startDay: 19, endMonth: 3, endDay: 20 },
+        ];
+
+        const NAKSHATRAS = [
+            { name: 'Ashwini', hi: 'अश्विनी' }, { name: 'Bharani', hi: 'भरणी' }, { name: 'Krittika', hi: 'कृत्तिका' },
+            { name: 'Rohini', hi: 'रोहिणी' }, { name: 'Mrigashira', hi: 'मृगशिरा' }, { name: 'Ardra', hi: 'आर्द्रा' },
+            { name: 'Punarvasu', hi: 'पुनर्वसु' }, { name: 'Pushya', hi: 'पुष्य' }, { name: 'Ashlesha', hi: 'आश्लेषा' },
+            { name: 'Magha', hi: 'मघा' }, { name: 'Purva Phalguni', hi: 'पूर्व फाल्गुनी' }, { name: 'Uttara Phalguni', hi: 'उत्तर फाल्गुनी' },
+            { name: 'Hasta', hi: 'हस्त' }, { name: 'Chitra', hi: 'चित्रा' }, { name: 'Swati', hi: 'स्वाति' },
+            { name: 'Vishakha', hi: 'विशाखा' }, { name: 'Anuradha', hi: 'अनुराधा' }, { name: 'Jyeshtha', hi: 'ज्येष्ठा' },
+            { name: 'Mula', hi: 'मूल' }, { name: 'Purva Ashadha', hi: 'पूर्वाषाढ़ा' }, { name: 'Uttara Ashadha', hi: 'उत्तराषाढ़ा' },
+            { name: 'Shravana', hi: 'श्रवण' }, { name: 'Dhanishta', hi: 'धनिष्ठा' }, { name: 'Shatabhisha', hi: 'शतभिषा' },
+            { name: 'Purva Bhadrapada', hi: 'पूर्व भाद्रपद' }, { name: 'Uttara Bhadrapada', hi: 'उत्तर भाद्रपद' }, { name: 'Revati', hi: 'रेवती' },
+        ];
+
+        const PLANETS = ['Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn', 'Rahu', 'Ketu'];
+        const PLANETS_HI = ['सूर्य', 'चंद्र', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि', 'राहु', 'केतु'];
+
+        // ===== PERSONALITY DATA PER SIGN =====
+        const SIGN_DATA = {
+            Aries: {
+                strengths: ['Natural leadership abilities', 'Courage and determination', 'Enthusiastic and energetic approach', 'Straightforward communication', 'Pioneering spirit'],
+                challenges: ['Impatience in challenging situations', 'Tendency to act before thinking', 'Difficulty with prolonged routines', 'May come across as aggressive'],
+                personality: 'Individuals born under Aries are known for their dynamic and assertive nature. They possess a natural drive that pushes them to take initiative in various aspects of life. Their energy is contagious, often inspiring those around them to take action.',
+                career: 'Well-suited for leadership roles, entrepreneurship, sports, military, and any field requiring quick decision-making and initiative.',
+                finance: 'Tends to be bold with financial decisions. May benefit from developing a more patient approach to investments.',
+                relationships: 'Passionate and direct in relationships. Values honesty but may need to work on patience and listening skills.',
+                lucky: { numbers: [1, 8, 17], colors: ['Red', 'Orange'], days: 'Tuesday, Sunday' },
+            },
+            Taurus: {
+                strengths: ['Reliable and dependable nature', 'Strong practical wisdom', 'Patient and persistent approach', 'Appreciation for beauty and comfort', 'Excellent financial management'],
+                challenges: ['Resistance to change', 'Stubbornness in opinions', 'May overindulge in comforts', 'Slow to adapt to new situations'],
+                personality: 'Taureans are grounded individuals who value stability and comfort. Their practical approach to life, combined with their appreciation for beauty, makes them excellent at creating harmonious environments. They are known for their unwavering loyalty and determination.',
+                career: 'Excell in finance, agriculture, real estate, art, music, and any field requiring patience and consistency.',
+                finance: 'Naturally skilled at building wealth. Strong saving habits, but may need to avoid excessive spending on luxuries.',
+                relationships: 'Loyal and committed partners. Value stability in relationships but may need to express emotions more openly.',
+                lucky: { numbers: [2, 6, 15], colors: ['Green', 'Pink'], days: 'Friday, Monday' },
+            },
+            Gemini: {
+                strengths: ['Excellent communication skills', 'Versatile and adaptable nature', 'Quick learning ability', 'Social and outgoing personality', 'Intellectual curiosity'],
+                challenges: ['Inconsistency in commitments', 'Tendency to overthink', 'May appear superficial to some', 'Difficulty with deep focus on one thing'],
+                personality: 'Geminis are intellectually vibrant individuals who thrive on variety and communication. Their dual nature allows them to see multiple perspectives, making them excellent mediators and communicators. They are naturally curious and always seeking new knowledge.',
+                career: 'Ideal for journalism, teaching, writing, sales, media, technology, and any field involving communication.',
+                finance: 'May have multiple income streams. Should focus on consolidating financial strategies rather than spreading too thin.',
+                relationships: 'Engaging and stimulating partners. Value mental connection but may need to work on emotional depth and consistency.',
+                lucky: { numbers: [3, 5, 12], colors: ['Yellow', 'Light Green'], days: 'Wednesday, Thursday' },
+            },
+            Cancer: {
+                strengths: ['Deep emotional intelligence', 'Strong protective instincts', 'Excellent intuition', 'Nurturing and caring nature', 'Strong imaginative ability'],
+                challenges: ['Over-sensitivity to criticism', 'Mood fluctuations', 'Difficulty letting go of past hurts', 'Tendency to be overly cautious'],
+                personality: 'Cancerians are deeply intuitive and emotionally aware individuals. Their strong connection to family and home makes them natural caregivers. They possess a rich inner world and often have artistic or creative talents that stem from their emotional depth.',
+                career: 'Well-suited for healthcare, education, hospitality, culinary arts, psychology, and any nurturing profession.',
+                finance: 'Security-oriented with money. Good at saving but may be overly conservative. Should balance caution with calculated risks.',
+                relationships: 'Deeply caring and loyal partners. Create strong emotional bonds but may need to avoid being overly protective or clingy.',
+                lucky: { numbers: [2, 7, 11], colors: ['White', 'Silver'], days: 'Monday, Thursday' },
+            },
+            Leo: {
+                strengths: ['Natural charisma and presence', 'Generous and warm-hearted nature', 'Strong creative expression', 'Confident and optimistic outlook', 'Natural leadership qualities'],
+                challenges: ['Need for recognition and attention', 'May appear arrogant to some', 'Difficulty accepting criticism', 'Can be overly dramatic at times'],
+                personality: 'Leos radiate warmth and confidence that naturally draws others to them. Their creative spirit and generous nature make them excellent leaders and performers. They have a strong sense of self and are not afraid to shine in any situation.',
+                career: 'Ideal for entertainment, management, politics, fashion, design, and any field allowing creative expression and leadership.',
+                finance: 'Generous but can be extravagant. Should create structured financial plans to balance generosity with savings.',
+                relationships: 'Passionate and generous partners. Bring excitement to relationships but may need to share the spotlight more.',
+                lucky: { numbers: [1, 4, 19], colors: ['Gold', 'Orange'], days: 'Sunday, Tuesday' },
+            },
+            Virgo: {
+                strengths: ['Exceptional attention to detail', 'Strong analytical thinking', 'Reliable and hardworking', 'Practical problem-solving ability', 'Service-oriented mindset'],
+                challenges: ['Perfectionism leading to stress', 'Over-critical of self and others', 'Tendency to worry excessively', 'May struggle with delegating tasks'],
+                personality: 'Virgos are meticulous individuals with a keen eye for detail. Their analytical minds allow them to break down complex problems into manageable parts. They are naturally service-oriented and find fulfillment in helping others improve their lives.',
+                career: 'Excell in healthcare, research, accounting, editing, data analysis, and any field requiring precision and analysis.',
+                finance: 'Prudent and well-organized with finances. Excellent at budgeting but may need to allow some flexibility for enjoyment.',
+                relationships: 'Devoted and helpful partners. Show love through service but may need to express feelings more verbally.',
+                lucky: { numbers: [5, 14, 23], colors: ['Navy Blue', 'Grey'], days: 'Wednesday, Friday' },
+            },
+            Libra: {
+                strengths: ['Natural sense of balance and harmony', 'Excellent diplomatic skills', 'Strong aesthetic sense', 'Fair and just perspective', 'Charming social personality'],
+                challenges: ['Indecisiveness in important matters', 'May avoid confrontation excessively', 'Tendency to people-please', 'Can be dependent on others for decisions'],
+                personality: 'Librans are harmony-seeking individuals who value balance in all aspects of life. Their natural charm and diplomatic nature make them excellent peacemakers. They have a refined aesthetic sense and appreciate beauty in all its forms.',
+                career: 'Well-suited for law, diplomacy, design, art curation, counseling, and any field requiring balance and fairness.',
+                finance: 'May spend on aesthetics and experiences. Should develop decisive financial strategies and stick to budgets.',
+                relationships: 'Romantic and harmonious partners. Seek balance but may need to be more assertive about personal needs.',
+                lucky: { numbers: [6, 15, 24], colors: ['Light Blue', 'Pink'], days: 'Friday, Sunday' },
+            },
+            Scorpio: {
+                strengths: ['Intense focus and determination', 'Deep emotional insight', 'Strong investigative ability', 'Resilient and transformative nature', 'Loyal and protective'],
+                challenges: ['Tendency to hold grudges', 'May be overly secretive', 'Intensity can overwhelm others', 'Difficulty trusting easily'],
+                personality: 'Scorpios are powerful individuals with an intensity that sets them apart. Their deep emotional understanding and investigative nature allow them to see beneath the surface of any situation. They are natural transformers who can reinvent themselves through life\'s challenges.',
+                career: 'Ideal for research, psychology, investigation, surgery, finance, and any field requiring depth and intensity.',
+                finance: 'Strategic and focused with finances. Good at long-term planning but should avoid obsessive financial control.',
+                relationships: 'Deeply passionate and loyal partners. Value emotional intensity but may need to practice vulnerability and forgiveness.',
+                lucky: { numbers: [8, 11, 18], colors: ['Maroon', 'Black'], days: 'Tuesday, Thursday' },
+            },
+            Sagittarius: {
+                strengths: ['Optimistic and adventurous spirit', 'Love for learning and philosophy', 'Honest and straightforward nature', 'Excellent sense of humor', 'Open-minded and expansive thinking'],
+                challenges: ['Restlessness and impatience', 'Tendency to be tactlessly blunt', 'Difficulty with commitment to details', 'May overpromise and underdeliver'],
+                personality: 'Sagittarians are free-spirited individuals driven by a desire for knowledge and adventure. Their optimistic nature and philosophical outlook make them natural teachers and explorers. They have an infectious enthusiasm that inspires others to broaden their horizons.',
+                career: 'Well-suited for travel, education, publishing, philosophy, sports, and any field involving exploration and teaching.',
+                finance: 'May be careless with money due to optimism. Should develop structured financial habits while allowing for adventure budgets.',
+                relationships: 'Fun-loving and honest partners. Value freedom but may need to balance independence with commitment.',
+                lucky: { numbers: [3, 9, 21], colors: ['Purple', 'Blue'], days: 'Thursday, Sunday' },
+            },
+            Capricorn: {
+                strengths: ['Strong discipline and focus', 'Excellent organizational skills', 'Patient and strategic thinking', 'Responsible and reliable nature', 'Ambitious and goal-oriented'],
+                challenges: ['May become too work-focused', 'Difficulty expressing emotions', 'Tendency toward pessimism', 'Can be overly rigid in thinking'],
+                personality: 'Capricorns are disciplined individuals who understand the value of hard work and patience. Their strategic approach to life allows them to achieve significant goals over time. They combine practical wisdom with ambition, creating a powerful foundation for success.',
+                career: 'Excell in business, administration, engineering, architecture, government, and any field requiring structure and long-term planning.',
+                finance: 'Excellent at long-term financial planning. Natural savers and investors. Should remember to enjoy the fruits of their labor.',
+                relationships: 'Loyal and committed partners. Show love through providing stability but may need to express emotions more openly.',
+                lucky: { numbers: [4, 8, 22], colors: ['Brown', 'Black'], days: 'Saturday, Friday' },
+            },
+            Aquarius: {
+                strengths: ['Innovative and forward-thinking mind', 'Strong humanitarian values', 'Independent and original nature', 'Excellent at problem-solving', 'Friendly and accepting personality'],
+                challenges: ['Emotional detachment at times', 'Stubbornness about ideas', 'May rebel without cause', 'Difficulty with intimate emotional connections'],
+                personality: 'Aquarians are visionary individuals who think beyond conventional boundaries. Their humanitarian spirit drives them to create positive change in the world. They combine intellectual brilliance with a genuine concern for humanity, making them natural reformers and innovators.',
+                career: 'Ideal for technology, science, social work, activism, invention, aviation, and any field involving innovation.',
+                finance: 'May have unconventional approaches to money. Should balance innovative ideas with practical financial management.',
+                relationships: 'Intellectually stimulating partners. Value friendship in relationships but may need to develop deeper emotional intimacy.',
+                lucky: { numbers: [4, 7, 11], colors: ['Electric Blue', 'Turquoise'], days: 'Saturday, Sunday' },
+            },
+            Pisces: {
+                strengths: ['Deep empathy and compassion', 'Rich creative imagination', 'Strong intuitive abilities', 'Adaptable and flexible nature', 'Spiritual awareness'],
+                challenges: ['Tendency to escape reality', 'May be overly trusting', 'Difficulty setting boundaries', 'Can be indecisive and vague'],
+                personality: 'Pisceans are deeply sensitive individuals with a rich inner world. Their empathetic nature allows them to understand others at a profound level. They possess creative and spiritual gifts that enable them to express life\'s mysteries through art, music, or other creative mediums.',
+                career: 'Well-suited for arts, music, healing professions, spirituality, social work, and any field involving creativity and compassion.',
+                finance: 'May be impractical with money. Should seek trusted financial advice and create clear boundaries around spending.',
+                relationships: 'Romantic and empathetic partners. Deeply intuitive about partner\'s needs but may need stronger personal boundaries.',
+                lucky: { numbers: [3, 7, 12], colors: ['Sea Green', 'Lavender'], days: 'Thursday, Monday' },
+            },
+        };
+
+        // ===== TRANSLATIONS =====
+        const T = {
+            en: {
+                reportTitle: 'Astrology Report',
+                birthDetails: 'Birth Details',
+                name: 'Name',
+                dateOfBirth: 'Date of Birth',
+                timeOfBirth: 'Time of Birth',
+                placeOfBirth: 'Place of Birth',
+                zodiacSign: 'Zodiac Sign',
+                moonSign: 'Moon Sign',
+                ascendant: 'Ascendant (Lagna)',
+                nakshatra: 'Nakshatra',
+                birthChart: 'Birth Chart (Kundli)',
+                planetaryPositions: 'Planetary Positions',
+                planet: 'Planet',
+                sign: 'Sign',
+                house: 'House',
+                personality: 'Personality Analysis',
+                educationCareer: 'Education & Career',
+                finance: 'Finance',
+                relationships: 'Relationships & Marriage',
+                familyLifestyle: 'Family & Lifestyle',
+                healthLifestyle: 'Health & Lifestyle',
+                strengths: 'Your Strengths',
+                challenges: 'Areas That May Need Attention',
+                opportunities: 'Opportunities',
+                guidance: 'Recommended Guidance',
+                luckyInfo: 'Lucky Information',
+                luckyNumbers: 'Lucky Numbers',
+                luckyColors: 'Lucky Colors',
+                helpfulDays: 'Helpful Days',
+                importantPeriods: 'Important Periods',
+                futureGuidance: 'General Future Guidance',
+                disclaimer: 'Astrology reports are intended for general guidance and entertainment purposes. They should not be considered a substitute for professional medical, financial, legal, educational, or other expert advice.',
+                generatedWith: 'Generated with Tools24',
+                page: 'Page',
+                of: 'of',
+                house: 'House',
+                whatIsGoingWell: 'What Is Going Well',
+                areasForAttention: 'Areas That May Need Attention',
+                practicalGuidance: 'Practical Guidance',
+                introTemplate: (name, sign) => `This comprehensive astrology report has been prepared for ${name}. Based on your birth details, your Sun sign is ${sign}. This report provides general astrological insights and tendencies that may resonate with your life experiences. Please read this as gentle guidance rather than absolute prediction.`,
+                personalityIntro: (sign) => `As a ${sign} native, your core personality is shaped by the qualities associated with this zodiac sign. The following analysis highlights your natural tendencies, strengths, and areas where growth may be beneficial.`,
+                careerIntro: 'Your astrological profile suggests certain tendencies related to education and professional life. These insights may help you identify suitable career paths and work environments.',
+                financeIntro: 'Your financial tendencies, as indicated by your birth chart, suggest a particular approach to money management. Understanding these patterns can help you make more informed financial decisions.',
+                relationshipIntro: 'Your astrological profile offers insights into your relationship tendencies. These general patterns may help you understand your approach to partnerships and areas where conscious effort can enhance your connections.',
+                familyIntro: 'Your birth chart suggests certain tendencies regarding family dynamics and lifestyle preferences. These general insights may help you create a more harmonious home environment.',
+                healthIntro: 'While astrology should never replace professional medical advice, your chart may suggest certain areas of health that could benefit from extra attention through lifestyle choices.',
+                strengthIntro: 'Your astrological profile reveals several notable strengths. These are areas where you naturally excel and can leverage for personal and professional growth.',
+                challengeIntro: 'Every individual has areas that may benefit from conscious attention and development. The following are areas where your chart suggests potential challenges — not as limitations, but as opportunities for growth.',
+                opportunityIntro: 'Your chart indicates several areas of potential opportunity. Being aware of these can help you make the most of favorable periods and circumstances.',
+                guidanceIntro: 'Based on the overall analysis, the following practical guidance may support your personal development journey.',
+                futureIntro: 'The following general guidance is based on broad astrological patterns. Specific timing would require a more detailed analysis with precise planetary calculations.',
+            },
+            hi: {
+                reportTitle: 'ज्योतिष रिपोर्ट',
+                birthDetails: 'जन्म विवरण',
+                name: 'नाम',
+                dateOfBirth: 'जन्म तिथि',
+                timeOfBirth: 'जन्म समय',
+                placeOfBirth: 'जन्म स्थान',
+                zodiacSign: 'राशि चिह्न',
+                moonSign: 'चंद्र राशि',
+                ascendant: 'लग्न (Ascendant)',
+                nakshatra: 'नक्षत्र',
+                birthChart: 'जन्म कुंडली',
+                planetaryPositions: 'ग्रह स्थिति',
+                planet: 'ग्रह',
+                sign: 'राशि',
+                house: 'भाव',
+                personality: 'व्यक्तित्व विश्लेषण',
+                educationCareer: 'शिक्षा और करियर',
+                finance: 'वित्त',
+                relationships: 'संबंध और विवाह',
+                familyLifestyle: 'परिवार और जीवनशैली',
+                healthLifestyle: 'स्वास्थ्य और जीवनशैली',
+                strengths: 'आपकी ताकत',
+                challenges: 'ध्यान देने योग्य क्षेत्र',
+                opportunities: 'अवसर',
+                guidance: 'अनुशंसित मार्गदर्शन',
+                luckyInfo: 'भाग्यशाली जानकारी',
+                luckyNumbers: 'भाग्यशाली अंक',
+                luckyColors: 'भाग्यशाली रंग',
+                helpfulDays: 'अनुकूल दिन',
+                importantPeriods: 'महत्वपूर्ण समय',
+                futureGuidance: 'सामान्य भविष्य मार्गदर्शन',
+                disclaimer: 'ज्योतिष रिपोर्ट सामान्य मार्गदर्शन और मनोरंजन उद्देश्यों के लिए हैं। इन्हें पेशेवर चिकित्सा, वित्तीय, कानूनी, शैक्षिक या अन्य विशेषज्ञ सलाह का विकल्प नहीं माना जाना चाहिए।',
+                generatedWith: 'Tools24 द्वारा निर्मित',
+                page: 'पृष्ठ',
+                of: 'का',
+                house: 'भाव',
+                whatIsGoingWell: 'क्या अच्छा चल रहा है',
+                areasForAttention: 'ध्यान देने योग्य क्षेत्र',
+                practicalGuidance: 'व्यावहारिक मार्गदर्शन',
+                introTemplate: (name, sign) => `यह व्यापक ज्योतिष रिपोर्ट ${name} के लिए तैयार की गई है। आपके जन्म विवरण के आधार पर, आपकी सूर्य राशि ${sign} है। यह रिपोर्ट सामान्य ज्योतिष अंतर्दृष्टि और प्रवृत्तियां प्रदान करती है जो आपके जीवन अनुभवों से मेल खा सकती हैं।`,
+                personalityIntro: (sign) => `${sign} राशि के जातक के रूप में, आपका मूल व्यक्तित्व इस राशि से जुड़े गुणों द्वारा आकार लेता है। निम्नलिखित विश्लेषण आपकी प्राकृतिक प्रवृत्तियों, ताकत और उन क्षेत्रों को उजागर करता है जहां विकास लाभदायक हो सकता है।`,
+                careerIntro: 'आपके ज्योतिष प्रोफाइल शिक्षा और पेशेवर जीवन से संबंधित कुछ प्रवृत्तियों का संकेत देता है।',
+                financeIntro: 'आपकी जन्म कुंडली के अनुसार आपकी वित्तीय प्रवृत्तियां धन प्रबंधन में एक विशेष दृष्टिकोण का संकेत देती हैं।',
+                relationshipIntro: 'आपके ज्योतिष प्रोफाइल आपके रिश्ते की प्रवृत्तियों में अंतर्दृष्टि प्रदान करता है।',
+                familyIntro: 'आपकी जन्म कुंडली पारिवारिक गतिशीलता और जीवनशैली वरीयताओं के संबंध में कुछ प्रवृत्तियों का संकेत देती है।',
+                healthIntro: 'जबकि ज्योतिष को कभी भी पेशेवर चिकित्सा सलाह का विकल्प नहीं माना जाना चाहिए, आपकी कुंडली स्वास्थ्य के कुछ क्षेत्रों का संकेत दे सकती है।',
+                strengthIntro: 'आपके ज्योतिष प्रोफाइल कई उल्लेखनीय ताकतें प्रकट करता है। ये वे क्षेत्र हैं जहां आप स्वाभाविक रूप से उत्कृष्टता प्राप्त करते हैं।',
+                challengeIntro: 'हर व्यक्ति में कुछ ऐसे क्षेत्र होते हैं जिन पर सचेत ध्यान और विकास लाभदायक हो सकता है।',
+                opportunityIntro: 'आपकी कुंडली संभावित अवसरों के कई क्षेत्र इंगित करती है।',
+                guidanceIntro: 'समग्र विश्लेषण के आधार पर, निम्नलिखित व्यावहारिक मार्गदर्शन आपकी व्यक्तिगत विकास यात्रा का समर्थन कर सकता है।',
+                futureIntro: 'निम्नलिखित सामान्य मार्गदर्शन व्यापक ज्योतिष पैटर्न पर आधारित है।',
+            },
+            hinglish: {
+                reportTitle: 'Astrology Report / ज्योतिष रिपोर्ट',
+                birthDetails: 'Birth Details / जन्म विवरण',
+                name: 'Name / नाम',
+                dateOfBirth: 'Date of Birth / जन्म तिथि',
+                timeOfBirth: 'Time of Birth / जन्म समय',
+                placeOfBirth: 'Place of Birth / जन्म स्थान',
+                zodiacSign: 'Zodiac Sign / राशि',
+                moonSign: 'Moon Sign / चंद्र राशि',
+                ascendant: 'Ascendant (Lagna)',
+                nakshatra: 'Nakshatra / नक्षत्र',
+                birthChart: 'Birth Chart / जन्म कुंडली',
+                planetaryPositions: 'Planetary Positions / ग्रह स्थिति',
+                planet: 'Planet / ग्रह',
+                sign: 'Sign / राशि',
+                house: 'House / भाव',
+                personality: 'Personality Analysis / व्यक्तित्व विश्लेषण',
+                educationCareer: 'Education & Career / शिक्षा और करियर',
+                finance: 'Finance / वित्त',
+                relationships: 'Relationships & Marriage / संबंध और विवाह',
+                familyLifestyle: 'Family & Lifestyle / परिवार और जीवनशैली',
+                healthLifestyle: 'Health & Lifestyle / स्वास्थ्य और जीवनशैली',
+                strengths: 'Aapki Taakat / आपकी ताकत',
+                challenges: 'Dhyan Dene Wale Kshetra / ध्यान देने योग्य क्षेत्र',
+                opportunities: 'Opportunities / अवसर',
+                guidance: 'Recommended Guidance / अनुशंसित मार्गदर्शन',
+                luckyInfo: 'Lucky Information / भाग्यशाली जानकारी',
+                luckyNumbers: 'Lucky Numbers / भाग्यशाली अंक',
+                luckyColors: 'Lucky Colors / भाग्यशाली रंग',
+                helpfulDays: 'Helpful Days / अनुकूल दिन',
+                importantPeriods: 'Important Periods / महत्वपूर्ण समय',
+                futureGuidance: 'General Future Guidance / सामान्य भविष्य मार्गदर्शन',
+                disclaimer: 'Astrology reports sirf general guidance aur entertainment ke liye hain. Inhe professional medical, financial, legal, ya kisi expert advice ka substitute nahi maana jaana chahiye.',
+                generatedWith: 'Tools24 dwara nirmit / Tools24 से बनाई गई',
+                page: 'Page',
+                of: 'of',
+                house: 'House',
+                whatIsGoingWell: 'Kya Achha Chal Raha Hai / क्या अच्छा चल रहा है',
+                areasForAttention: 'Dhyan Dene Wale Kshetra / ध्यान देने योग्य क्षेत्र',
+                practicalGuidance: 'Practical Guidance / व्यावहारिक मार्गदर्शन',
+                introTemplate: (name, sign) => `Ye comprehensive astrology report ${name} ke liye prepare ki gayi hai. Aapke birth details ke basis pe, aapki Sun sign ${sign} hai. Ye report general astrological insights deti hai jo aapke life experiences se match ho sakti hain.`,
+                personalityIntro: (sign) => `Ek ${sign} native ke roop mein, aapka core personality is zodiac sign se judi qualities se shape hota hai. Niche ka analysis aapki natural tendencies aur strengths ko highlight karta hai.`,
+                careerIntro: 'Aapke astrological profile education aur professional life se related kuch tendencies indicate karta hai.',
+                financeIntro: 'Aapki birth chart ke mutabiq aapki financial tendencies ek particular approach indicate karti hain.',
+                relationshipIntro: 'Aapke astrological profile aapke relationship tendencies mein insights provide karta hai.',
+                familyIntro: 'Aapki birth chart family dynamics aur lifestyle preferences ke baare mein kuch tendencies indicate karti hai.',
+                healthIntro: 'Jabki astrology kabhi bhi professional medical advice ka substitute nahi hai, aapki chart se health ke kuch areas indicate ho sakte hain.',
+                strengthIntro: 'Aapke astrological profile mein kaafi notable strengths hain. Ye wo areas hain jahan aap naturally excel karte hain.',
+                challengeIntro: 'Har individual mein kuch aise areas hote hain jahan conscious attention beneficial ho sakti hai.',
+                opportunityIntro: 'Aapki chart potential opportunities ke several areas indicate karti hai.',
+                guidanceIntro: 'Overall analysis ke basis pe, niche di gayi practical guidance aapki personal development journey ko support kar sakti hai.',
+                futureIntro: 'Niche di gayi general guidance broad astrological patterns par based hai.',
+            },
+        };
+
+        // ===== ASTROLOGY ENGINE (Mock/ Demo Layer) =====
+        // This module is structured for easy replacement with a real astrology API/library.
+        function generateAstrologyData(formData) {
+            const { dob, tob, gender } = formData;
+            const date = new Date(dob);
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const year = date.getFullYear();
+
+            // Calculate zodiac sign
+            let zodiacIndex = -1;
+            for (let i = 0; i < ZODIAC.length; i++) {
+                const z = ZODIAC[i];
+                if (z.startMonth === z.endMonth) {
+                    if (month === z.startMonth && day >= z.startDay && day <= z.endDay) { zodiacIndex = i; break; }
+                } else if (z.startMonth > z.endMonth) {
+                    // Capricorn wraps around year
+                    if ((month === z.startMonth && day >= z.startDay) || (month === z.endMonth && day <= z.endDay)) { zodiacIndex = i; break; }
+                } else {
+                    if ((month === z.startMonth && day >= z.startDay) || (month === z.endMonth && day <= z.endDay)) { zodiacIndex = i; break; }
+                }
+            }
+            if (zodiacIndex === -1) zodiacIndex = 0;
+            const zodiac = ZODIAC[zodiacIndex];
+
+            // Moon sign (simplified: offset from sun sign)
+            const moonOffset = (day + month * 3 + year % 12) % 12;
+            const moonSign = ZODIAC[(zodiacIndex + moonOffset + 3) % 12];
+
+            // Nakshatra (simplified calculation)
+            const nakshatraIndex = (day + month * 2 + year % 27) % 27;
+            const nakshatra = NAKSHATRAS[nakshatraIndex];
+
+            // Ascendant based on birth time (simplified)
+            const [hours, minutes] = (tob || '12:00').split(':').map(Number);
+            const timeDecimal = hours + minutes / 60;
+            const ascendantIndex = Math.floor((timeDecimal / 24) * 12);
+            const ascendant = ZODIAC[ascendantIndex];
+
+            // Planetary positions (mock data — structured for API replacement)
+            const planetSigns = PLANETS.map((p, i) => {
+                const offset = (i * 3 + day + month) % 12;
+                return {
+                    planet: p,
+                    planetHi: PLANETS_HI[i],
+                    sign: ZODIAC[(zodiacIndex + offset) % 12],
+                    house: (offset + 1),
+                    retrograde: [2, 5, 8].includes(i) && (day % 5 === 0),
+                };
+            });
+
+            // House signs for kundli chart
+            const houseSigns = Array.from({ length: 12 }, (_, i) => {
+                return ZODIAC[(ascendantIndex + i) % 12];
+            });
+
+            return {
+                zodiac, moonSign, nakshatra, ascendant,
+                planetPositions: planetSigns,
+                houseSigns,
+                signData: SIGN_DATA[zodiac.name],
+                dateStr: date.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }),
+                timeStr: tob || '12:00',
+            };
+        }
+
+        // ===== REPORT HTML GENERATOR =====
+        function generateReportHTML(formData, astroData, lang, selectedSections) {
+            const t = T[lang] || T.en;
+            const sd = astroData.signData;
+            const useHindi = lang === 'hi';
+            const useHinglish = lang === 'hinglish';
+            const fontFamily = useHindi ? "'Noto Sans Devanagari', 'Poppins', sans-serif" : "'Poppins', sans-serif";
+
+            const zName = useHindi ? astroData.zodiac.hi : astroData.zodiac.name;
+            const moonName = useHindi ? astroData.moonSign.hi : astroData.moonSign.name;
+            const ascName = useHindi ? astroData.ascendant.hi : astroData.ascendant.name;
+            const nakName = useHindi ? astroData.nakshatra.hi : astroData.nakshatra.name;
+
+            function signName(z) { return useHindi ? z.hi : z.name; }
+
+            let pages = [];
+
+            // ===== PAGE 1: COVER + BIRTH SUMMARY =====
+            let page1 = `<div class="rpt-header"><span class="rpt-brand">Tools24</span><span class="rpt-page-num">${t.page} 1 ${t.of} 5</span></div>`;
+            page1 += `<div class="rpt-cover">`;
+            page1 += `<div class="rpt-cover-ornament">&#9788;</div>`;
+            page1 += `<h1>${t.reportTitle}</h1>`;
+            page1 += `<h2>Tools24</h2>`;
+            page1 += `<div class="rpt-cover-info">`;
+            page1 += `<div class="rpt-cover-row"><span class="label">${t.name}</span><span class="value">${formData.fullName}</span></div>`;
+            page1 += `<div class="rpt-cover-row"><span class="label">${t.dateOfBirth}</span><span class="value">${astroData.dateStr}</span></div>`;
+            page1 += `<div class="rpt-cover-row"><span class="label">${t.timeOfBirth}</span><span class="value">${astroData.timeStr}</span></div>`;
+            page1 += `<div class="rpt-cover-row"><span class="label">${t.placeOfBirth}</span><span class="value">${formData.pob}</span></div>`;
+            page1 += `<div class="rpt-cover-row"><span class="label">${t.zodiacSign}</span><span class="value">${zName} ${astroData.zodiac.symbol}</span></div>`;
+            page1 += `<div class="rpt-cover-row"><span class="label">${t.moonSign}</span><span class="value">${moonName}</span></div>`;
+            page1 += `<div class="rpt-cover-row"><span class="label">${t.ascendant}</span><span class="value">${ascName}</span></div>`;
+            page1 += `<div class="rpt-cover-row"><span class="label">${t.nakshatra}</span><span class="value">${nakName}</span></div>`;
+            page1 += `</div>`;
+            page1 += `<p class="rpt-cover-intro">${t.introTemplate(formData.fullName, zName)}</p>`;
+            page1 += `</div>`;
+            page1 += `<div class="rpt-footer"><span>${t.generatedWith}</span><span>${t.page} 1 ${t.of} 5</span></div>`;
+            pages.push(page1);
+
+            // ===== PAGE 2: BIRTH CHART & PLANETARY OVERVIEW =====
+            let page2 = `<div class="rpt-header"><span class="rpt-brand">Tools24</span><span class="rpt-page-num">${t.page} 2 ${t.of} 5</span></div>`;
+
+            if (selectedSections.has('birthChart')) {
+                page2 += `<div class="rpt-section"><div class="rpt-section-title">${t.birthChart}</div>`;
+                page2 += `<div class="kundli-chart">`;
+                // Row 1: houses 12, 1, 2, 3
+                const houseOrder = [12, 1, 2, 3, 11, 0, 0, 4, 10, 0, 0, 5, 9, 8, 7, 6];
+                // Center is cells 5,6,9,10 (0-indexed in the 4x4 grid = indices 5,6,9,10)
+                for (let i = 0; i < 16; i++) {
+                    if (i === 5) {
+                        page2 += `<div class="kundli-cell center-cell"><div class="kundli-center-label">${ascName}<br>${t.ascendant}</div></div>`;
+                    } else if (i === 6 || i === 9 || i === 10) {
+                        continue; // Skip merged center cells
+                    } else {
+                        const hIdx = houseOrder[i];
+                        const hs = astroData.houseSigns[hIdx - 1];
+                        const planetInHouse = astroData.planetPositions.find(p => p.house === hIdx);
+                        page2 += `<div class="kundli-cell">`;
+                        page2 += `<span class="house-num">${t.house} ${hIdx}</span>`;
+                        page2 += `<span class="house-sign">${signName(hs)} ${hs.symbol}</span>`;
+                        if (planetInHouse) page2 += `<span class="house-planet">${useHindi ? planetInHouse.planetHi : planetInHouse.planet}</span>`;
+                        page2 += `</div>`;
+                    }
+                }
+                page2 += `</div></div>`;
+            }
+
+            if (selectedSections.has('planetaryPositions')) {
+                page2 += `<div class="rpt-section"><div class="rpt-section-title">${t.planetaryPositions}</div>`;
+                page2 += `<table class="planet-table"><thead><tr><th>${t.planet}</th><th>${t.sign}</th><th>${t.house}</th></tr></thead><tbody>`;
+                astroData.planetPositions.forEach(p => {
+                    const pName = useHindi ? p.planetHi : p.planet;
+                    const retro = p.retrograde ? ' (R)' : '';
+                    page2 += `<tr><td>${pName}${retro}</td><td>${signName(p.sign)} ${p.sign.symbol}</td><td>${p.house}</td></tr>`;
+                });
+                page2 += `</tbody></table></div>`;
+            }
+
+            if (selectedSections.has('zodiacInfo') || selectedSections.has('ascendantNakshatra')) {
+                page2 += `<div class="rpt-section"><div class="rpt-section-title">${t.zodiacSign} & ${t.nakshatra}</div>`;
+                if (selectedSections.has('zodiacInfo')) {
+                    page2 += `<p class="rpt-text"><strong>${t.zodiacSign}:</strong> ${zName} ${astroData.zodiac.symbol} — ${useHindi ? 'तत्व' : 'Element'}: ${astroData.zodiac.element}, ${useHindi ? 'स्वामी' : 'Ruler'}: ${astroData.zodiac.ruler}</p>`;
+                    page2 += `<p class="rpt-text"><strong>${t.moonSign}:</strong> ${moonName}</p>`;
+                }
+                if (selectedSections.has('ascendantNakshatra')) {
+                    page2 += `<p class="rpt-text"><strong>${t.ascendant}:</strong> ${ascName}</p>`;
+                    page2 += `<p class="rpt-text"><strong>${t.nakshatra}:</strong> ${nakName}</p>`;
+                }
+                page2 += `</div>`;
+            }
+
+            page2 += `<div class="rpt-footer"><span>${t.generatedWith}</span><span>${t.page} 2 ${t.of} 5</span></div>`;
+            pages.push(page2);
+
+            // ===== PAGE 3: PERSONALITY, EDUCATION & CAREER =====
+            let page3 = `<div class="rpt-header"><span class="rpt-brand">Tools24</span><span class="rpt-page-num">${t.page} 3 ${t.of} 5</span></div>`;
+
+            if (selectedSections.has('personality')) {
+                page3 += `<div class="rpt-section"><div class="rpt-section-title">${t.personality}</div>`;
+                page3 += `<p class="rpt-text">${t.personalityIntro(zName)}</p>`;
+                page3 += `<p class="rpt-text">${sd.personality}</p>`;
+                page3 += `<div class="rpt-subsection-title">${t.strengths}</div>`;
+                sd.strengths.forEach(s => { page3 += `<div class="rpt-bullet">${s}</div>`; });
+                page3 += `</div>`;
+            }
+
+            if (selectedSections.has('career')) {
+                page3 += `<div class="rpt-section"><div class="rpt-section-title">${t.educationCareer}</div>`;
+                page3 += `<p class="rpt-text">${t.careerIntro}</p>`;
+                page3 += `<p class="rpt-text">${sd.career}</p>`;
+                page3 += `<div class="rpt-subsection-title">${t.whatIsGoingWell}</div>`;
+                page3 += `<div class="rpt-bullet">${useHindi ? 'प्राकृतिक नेतृत्व क्षमता और आत्मविश्वास' : 'Natural leadership ability and self-confidence in professional settings'}</div>`;
+                page3 += `<div class="rpt-bullet">${useHindi ? 'त्वरित निर्णय लेने की क्षमता' : 'Strong capacity for quick decision-making'}</div>`;
+                page3 += `<div class="rpt-subsection-title">${t.areasForAttention}</div>`;
+                page3 += `<div class="rpt-bullet">${useHindi ? 'धैर्य और दीर्घकालिक योजना विकसित करें' : 'Develop patience and long-term planning skills'}</div>`;
+                page3 += `<div class="rpt-bullet">${useHindi ? 'विस्तृत कार्यों पर ध्यान केंद्रित करने का अभ्यास करें' : 'Practice focusing on detailed tasks for extended periods'}</div>`;
+                page3 += `</div>`;
+            }
+
+            page3 += `<div class="rpt-footer"><span>${t.generatedWith}</span><span>${t.page} 3 ${t.of} 5</span></div>`;
+            pages.push(page3);
+
+            // ===== PAGE 4: FINANCE, RELATIONSHIPS & LIFESTYLE =====
+            let page4 = `<div class="rpt-header"><span class="rpt-brand">Tools24</span><span class="rpt-page-num">${t.page} 4 ${t.of} 5</span></div>`;
+
+            if (selectedSections.has('finance')) {
+                page4 += `<div class="rpt-section"><div class="rpt-section-title">${t.finance}</div>`;
+                page4 += `<p class="rpt-text">${t.financeIntro}</p>`;
+                page4 += `<p class="rpt-text">${sd.finance}</p>`;
+                page4 += `<div class="rpt-subsection-title">${t.practicalGuidance}</div>`;
+                page4 += `<div class="rpt-bullet">${useHindi ? 'एक स्पष्ट बजट बनाएं और उसका पालन करें' : 'Create a clear budget and follow it consistently'}</div>`;
+                page4 += `<div class="rpt-bullet">${useHindi ? 'आपातकालीन फंड बनाने पर ध्यान दें' : 'Focus on building an emergency fund'}</div>`;
+                page4 += `<div class="rpt-bullet">${useHindi ? 'बड़े वित्तीय निर्णय लेने से पहले विचार-विमर्श करें' : 'Consult a financial advisor before making major decisions'}</div>`;
+                page4 += `</div>`;
+            }
+
+            if (selectedSections.has('relationships')) {
+                page4 += `<div class="rpt-section"><div class="rpt-section-title">${t.relationships}</div>`;
+                page4 += `<p class="rpt-text">${t.relationshipIntro}</p>`;
+                page4 += `<p class="rpt-text">${sd.relationships}</p>`;
+                page4 += `<div class="rpt-subsection-title">${t.practicalGuidance}</div>`;
+                page4 += `<div class="rpt-bullet">${useHindi ? 'खुले और ईमानदार संचार का अभ्यास करें' : 'Practice open and honest communication'}</div>`;
+                page4 += `<div class="rpt-bullet">${useHindi ? 'अपने साथी की जरूरतों को समझने का प्रयास करें' : 'Make an effort to understand your partner\'s needs'}</div>`;
+                page4 += `</div>`;
+            }
+
+            if (selectedSections.has('family') || selectedSections.has('health')) {
+                page4 += `<div class="rpt-section">`;
+                if (selectedSections.has('family')) {
+                    page4 += `<div class="rpt-subsection-title">${t.familyLifestyle}</div>`;
+                    page4 += `<p class="rpt-text">${t.familyIntro}</p>`;
+                    page4 += `<div class="rpt-bullet">${useHindi ? 'पारिवारिक बंधन मजबूत करने के लिए गुणवत्तापूर्ण समय बिताएं' : 'Spend quality time to strengthen family bonds'}</div>`;
+                }
+                if (selectedSections.has('health')) {
+                    page4 += `<div class="rpt-subsection-title">${t.healthLifestyle}</div>`;
+                    page4 += `<p class="rpt-text">${t.healthIntro}</p>`;
+                    page4 += `<div class="rpt-bullet">${useHindi ? 'नियमित व्यायाम और संतुलित आहार अपनाएं' : 'Adopt regular exercise and a balanced diet'}</div>`;
+                    page4 += `<div class="rpt-bullet">${useHindi ? 'तनाव प्रबंधन तकनीकों का अभ्यास करें' : 'Practice stress management techniques'}</div>`;
+                }
+                page4 += `</div>`;
+            }
+
+            page4 += `<div class="rpt-footer"><span>${t.generatedWith}</span><span>${t.page} 4 ${t.of} 5</span></div>`;
+            pages.push(page4);
+
+            // ===== PAGE 5: STRENGTHS, CHALLENGES, GUIDANCE, LUCKY, DISCLAIMER =====
+            let page5 = `<div class="rpt-header"><span class="rpt-brand">Tools24</span><span class="rpt-page-num">${t.page} 5 ${t.of} 5</span></div>`;
+
+            if (selectedSections.has('strengths') || selectedSections.has('challenges')) {
+                page5 += `<div class="rpt-section"><div class="rpt-section-title">${t.strengths} & ${t.challenges}</div>`;
+                page5 += `<div class="rpt-card-grid">`;
+                page5 += `<div class="rpt-card rpt-card-strength"><h4>${t.whatIsGoingWell}</h4><p>`;
+                sd.strengths.slice(0, 3).forEach(s => { page5 += `${s}. `; });
+                page5 += `</p></div>`;
+                page5 += `<div class="rpt-card rpt-card-challenge"><h4>${t.areasForAttention}</h4><p>`;
+                sd.challenges.slice(0, 3).forEach(c => { page5 += `${c}. `; });
+                page5 += `</p></div>`;
+                if (selectedSections.has('opportunities')) {
+                    page5 += `<div class="rpt-card rpt-card-opportunity"><h4>${t.opportunities}</h4><p>${useHindi ? 'आपकी राशि कई अवसरों का संकेत देती है। नए कौशल सीखना, नेटवर्किंग और सकारात्मक वातावरण में रहना लाभदायक हो सकता है।' : 'Your sign indicates several opportunities. Learning new skills, networking, and putting yourself in positive environments can be beneficial.'}</p></div>`;
+                }
+                if (selectedSections.has('guidance')) {
+                    page5 += `<div class="rpt-card rpt-card-guidance"><h4>${t.practicalGuidance}</h4><p>${useHindi ? 'अपनी ताकतों पर ध्यान केंद्रित करें, चुनौतियों को विकास के अवसर के रूप में देखें, और नियमित आत्म-चिंतन का अभ्यास करें।' : 'Focus on your strengths, view challenges as growth opportunities, and practice regular self-reflection.'}</p></div>`;
+                }
+                page5 += `</div></div>`;
+            }
+
+            if (selectedSections.has('luckyInfo')) {
+                page5 += `<div class="rpt-section"><div class="rpt-section-title">${t.luckyInfo}</div>`;
+                page5 += `<div class="lucky-grid">`;
+                page5 += `<div class="lucky-item"><div class="lucky-label">${t.luckyNumbers}</div><div class="lucky-value">${sd.lucky.numbers.join(', ')}</div></div>`;
+                page5 += `<div class="lucky-item"><div class="lucky-label">${t.luckyColors}</div><div class="lucky-value">${sd.lucky.colors.join(', ')}</div></div>`;
+                page5 += `<div class="lucky-item"><div class="lucky-label">${t.helpfulDays}</div><div class="lucky-value">${sd.lucky.days}</div></div>`;
+                page5 += `</div></div>`;
+            }
+
+            if (selectedSections.has('importantPeriods') || selectedSections.has('futureGuidance')) {
+                page5 += `<div class="rpt-section">`;
+                if (selectedSections.has('importantPeriods')) {
+                    page5 += `<div class="rpt-subsection-title">${t.importantPeriods}</div>`;
+                    page5 += `<p class="rpt-text-sm">${useHindi ? 'विस्तृत ग्रह गति विश्लेषण के बिना सटीक समय निर्धारित करना संभव नहीं है। हालांकि, सामान्य रूप से, जब भी आपकी राशि के स्वामी ग्रह की दशा या अन्तर्दशा चल रही हो, तो महत्वपूर्ण परिवर्तनों की संभावना रहती है।' : 'Without detailed planetary motion analysis, precise timing is not possible. Generally, when the dasha or antardasha of your sign\'s ruling planet is active, significant changes are more likely.'}</p>`;
+                }
+                if (selectedSections.has('futureGuidance')) {
+                    page5 += `<div class="rpt-subsection-title">${t.futureGuidance}</div>`;
+                    page5 += `<p class="rpt-text-sm">${t.futureIntro}</p>`;
+                    page5 += `<div class="rpt-bullet">${useHindi ? 'अपनी शिक्षा और कौशल विकास पर ध्यान दें' : 'Focus on education and skill development'}</div>`;
+                    page5 += `<div class="rpt-bullet">${useHindi ? 'सकारात्मक लोगों के साथ संबंध बनाएं' : 'Build relationships with positive and supportive people'}</div>`;
+                    page5 += `<div class="rpt-bullet">${useHindi ? 'धैर्य और लगन से अपने लक्ष्यों पर काम करें' : 'Work towards your goals with patience and dedication'}</div>`;
+                }
+                page5 += `</div>`;
+            }
+
+            // Disclaimer
+            page5 += `<div class="rpt-disclaimer"><strong>${useHindi ? 'अस्वीकरण: ' : 'Disclaimer: '}</strong>${t.disclaimer}</div>`;
+            page5 += `<div class="rpt-footer"><span>${t.generatedWith}</span><span>${t.page} 5 ${t.of} 5</span></div>`;
+            pages.push(page5);
+
+            // Wrap in page divs
+            return pages.map(p => `<div class="report-page" style="font-family: ${fontFamily};">${p}</div>`).join('');
+        }
+
+        // ===== APP STATE =====
+        const AppState = {
+            currentView: 'form',
+            currentLang: 'en',
+            currentReportHTML: '',
+            currentFormData: null,
+            currentAstroData: null,
+            selectedSections: new Set(),
+            zoom: 0.8,
+            savedReports: JSON.parse(localStorage.getItem('t24_astro_saved') || '[]'),
+            confirmCallback: null,
+        };
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initToggles();
+            initLangSelector();
+            initCollapsibles();
+            initForm();
+            initTabs();
+            initToolbar();
+            initMobileMenu();
+            loadSavedReports();
+            restoreFormValues();
+        });
+
+        // ===== THEME =====
+        function initTheme() {
+            const saved = localStorage.getItem('t24_astro_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', saved);
+            updateThemeIcon(saved);
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('t24_astro_theme', next);
+            updateThemeIcon(next);
+            closeMobileMenu();
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = theme === 'dark' ? 'fa-sun' : 'fa-moon';
+            document.querySelectorAll('#themeToggle i, #themeToggleMobile i').forEach(el => {
+                el.className = `fas ${icon}`;
+            });
+        }
+
+        // ===== MOBILE MENU =====
+        function initMobileMenu() {
+            document.getElementById('hamburgerBtn').addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.add('active');
+            });
+            document.getElementById('mobileMenuClose').addEventListener('click', closeMobileMenu);
+            document.getElementById('mobileMenu').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('mobileMenu')) closeMobileMenu();
+            });
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobileMenu').classList.remove('active');
+        }
+
+        // ===== TOGGLES =====
+        function initToggles() {
+            const grid = document.getElementById('toggleGrid');
+            SECTION_TOGGLES.forEach(s => {
+                if (s.default) AppState.selectedSections.add(s.id);
+                const el = document.createElement('div');
+                el.className = `toggle-item${s.default ? ' active' : ''}`;
+                el.dataset.id = s.id;
+                el.setAttribute('role', 'checkbox');
+                el.setAttribute('aria-checked', s.default);
+                el.setAttribute('tabindex', '0');
+                el.innerHTML = `<div class="toggle-switch"></div><span class="toggle-label">${s.label}</span>`;
+                el.addEventListener('click', () => {
+                    el.classList.toggle('active');
+                    const isActive = el.classList.contains('active');
+                    el.setAttribute('aria-checked', isActive);
+                    if (isActive) AppState.selectedSections.add(s.id);
+                    else AppState.selectedSections.delete(s.id);
+                });
+                el.addEventListener('keydown', (e) => {
+                    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); el.click(); }
+                });
+                grid.appendChild(el);
+            });
+        }
+
+        // ===== LANGUAGE SELECTOR =====
+        function initLangSelector() {
+            document.querySelectorAll('.lang-option').forEach(opt => {
+                opt.addEventListener('click', () => {
+                    document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('active'));
+                    opt.classList.add('active');
+                    AppState.currentLang = opt.dataset.lang;
+                    document.getElementById('selectedLang').value = opt.dataset.lang;
+                });
+            });
+        }
+
+        // ===== COLLAPSIBLES =====
+        function initCollapsibles() {
+            document.querySelectorAll('.collapsible-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const targetId = header.dataset.collapsible;
+                    const body = document.getElementById(targetId + 'Body');
+                    header.classList.toggle('open');
+                    body.classList.toggle('open');
+                });
+            });
+        }
+
+        // ===== FORM =====
+        function initForm() {
+            document.getElementById('astrologyForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (validateForm()) {
+                    generateReport();
+                }
+            });
+        }
+
+        function validateForm() {
+            let valid = true;
+            const fields = [
+                { id: 'fullName', errorId: 'fullNameError', msg: 'Please enter your name.' },
+                { id: 'dob', errorId: 'dobError', msg: 'Please select your date of birth.' },
+                { id: 'tob', errorId: 'tobError', msg: 'Please enter your birth time.' },
+                { id: 'pob', errorId: 'pobError', msg: 'Please enter your place of birth.' },
+            ];
+            fields.forEach(f => {
+                const input = document.getElementById(f.id);
+                const error = document.getElementById(f.errorId);
+                if (!input.value.trim()) {
+                    input.classList.add('error');
+                    if (error) error.textContent = f.msg;
+                    valid = false;
+                } else {
+                    input.classList.remove('error');
+                    if (error) error.textContent = '';
+                }
+            });
+            // Validate date is not in future
+            const dob = document.getElementById('dob').value;
+            if (dob) {
+                const d = new Date(dob);
+                if (d > new Date()) {
+                    document.getElementById('dob').classList.add('error');
+                    document.getElementById('dobError').textContent = 'Date of birth cannot be in the future.';
+                    valid = false;
+                }
+            }
+            return valid;
+        }
+
+        function getFormData() {
+            return {
+                fullName: document.getElementById('fullName').value.trim(),
+                gender: document.getElementById('gender').value,
+                dob: document.getElementById('dob').value,
+                tob: document.getElementById('tob').value,
+                pob: document.getElementById('pob').value.trim(),
+                lang: AppState.currentLang,
+                sections: new Set(AppState.selectedSections),
+            };
+        }
+
+        function saveFormValues() {
+            const data = getFormData();
+            localStorage.setItem('t24_astro_form', JSON.stringify({
+                fullName: data.fullName,
+                gender: data.gender,
+                dob: data.dob,
+                tob: data.tob,
+                pob: data.pob,
+                lang: data.lang,
+            }));
+        }
+
+        function restoreFormValues() {
+            try {
+                const saved = JSON.parse(localStorage.getItem('t24_astro_form'));
+                if (!saved) return;
+                if (saved.fullName) document.getElementById('fullName').value = saved.fullName;
+                if (saved.gender) document.getElementById('gender').value = saved.gender;
+                if (saved.dob) document.getElementById('dob').value = saved.dob;
+                if (saved.tob) document.getElementById('tob').value = saved.tob;
+                if (saved.pob) document.getElementById('pob').value = saved.pob;
+                if (saved.lang) {
+                    AppState.currentLang = saved.lang;
+                    document.getElementById('selectedLang').value = saved.lang;
+                    document.querySelectorAll('.lang-option').forEach(o => {
+                        o.classList.toggle('active', o.dataset.lang === saved.lang);
+                    });
+                }
+            } catch (e) { }
+        }
+
+        // ===== REPORT GENERATION =====
+        async function generateReport() {
+            const formData = getFormData();
+            saveFormValues();
+
+            // Show loading
+            showLoading();
+
+            try {
+                // Step 0: Processing birth details
+                await updateLoadingStep(0);
+                await delay(600);
+
+                // Step 1: Astrology analysis
+                await updateLoadingStep(1);
+                const astroData = generateAstrologyData(formData);
+                AppState.currentFormData = formData;
+                AppState.currentAstroData = astroData;
+                await delay(600);
+
+                // Step 2: Creating report sections
+                await updateLoadingStep(2);
+                const reportHTML = generateReportHTML(formData, astroData, formData.lang, formData.sections);
+                AppState.currentReportHTML = reportHTML;
+                await delay(600);
+
+                // Step 3: Formatting
+                await updateLoadingStep(3);
+                document.getElementById('previewWrapper').innerHTML = reportHTML;
+                await delay(400);
+
+                // Step 4: Preparing preview
+                await updateLoadingStep(4);
+                setZoom(0.8);
+                await delay(300);
+
+                hideLoading();
+                switchView('preview');
+                showToast('Your astrology report is ready.', 'success');
+            } catch (err) {
+                hideLoading();
+                showToast('Something went wrong while generating the report. Please try again.', 'error');
+                console.error('Report generation error:', err);
+            }
+        }
+
+        function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        // ===== LOADING =====
+        function showLoading() {
+            document.getElementById('loadingOverlay').classList.add('active');
+            document.querySelectorAll('.loading-step').forEach(s => {
+                s.classList.remove('active', 'done');
+                s.querySelector('i').className = 'fas fa-circle';
+            });
+            document.querySelector('.loading-step[data-step="0"]').classList.add('active');
+            document.querySelector('.loading-step[data-step="0"]').querySelector('i').className = 'fas fa-circle-notch fa-spin';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('active');
+        }
+
+        async function updateLoadingStep(index) {
+            document.querySelectorAll('.loading-step').forEach((s, i) => {
+                if (i < index) {
+                    s.classList.remove('active');
+                    s.classList.add('done');
+                    s.querySelector('i').className = 'fas fa-check-circle';
+                } else if (i === index) {
+                    s.classList.add('active');
+                    s.classList.remove('done');
+                    s.querySelector('i').className = 'fas fa-circle-notch fa-spin';
+                }
+            });
+        }
+
+        // ===== VIEW SWITCHING =====
+        function switchView(view) {
+            AppState.currentView = view;
+            document.querySelectorAll('.view-form, .view-preview, .view-saved').forEach(v => v.classList.remove('active'));
+            document.getElementById('view' + view.charAt(0).toUpperCase() + view.slice(1)).classList.add('active');
+            document.querySelectorAll('.tab-btn').forEach(t => {
+                t.classList.toggle('active', t.dataset.tab === (view === 'preview' ? 'form' : view));
+                t.setAttribute('aria-selected', t.classList.contains('active'));
+            });
+            if (view === 'saved') loadSavedReports();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ===== TABS =====
+        function initTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tab = btn.dataset.tab;
+                    if (tab === 'form' && AppState.currentView === 'preview') {
+                        switchView('form');
+                    } else if (tab === 'saved') {
+                        switchView('saved');
+                    } else {
+                        switchView('form');
+                    }
+                });
+            });
+        }
+
+        // ===== TOOLBAR =====
+        function initToolbar() {
+            document.getElementById('backToForm').addEventListener('click', () => switchView('form'));
+
+            document.getElementById('zoomIn').addEventListener('click', () => setZoom(AppState.zoom + 0.1));
+            document.getElementById('zoomOut').addEventListener('click', () => setZoom(AppState.zoom - 0.1));
+            document.getElementById('zoomFit').addEventListener('click', () => {
+                const viewport = document.getElementById('previewViewport');
+                const availW = viewport.clientWidth - 64;
+                const pageW = 793; // 210mm in px approx
+                setZoom(Math.min(availW / pageW, 1));
+            });
+
+            document.getElementById('downloadPdf').addEventListener('click', downloadPDF);
+            document.getElementById('saveReport').addEventListener('click', saveReport);
+            document.getElementById('printReport').addEventListener('click', printReport);
+            document.getElementById('shareReport').addEventListener('click', shareReport);
+            document.getElementById('regenerateReport').addEventListener('click', () => {
+                if (AppState.currentFormData) {
+                    switchView('form');
+                }
+            });
+            document.getElementById('newReport').addEventListener('click', () => {
+                document.getElementById('astrologyForm').reset();
+                AppState.selectedSections.clear();
+                document.querySelectorAll('.toggle-item').forEach(t => {
+                    const id = t.dataset.id;
+                    const def = SECTION_TOGGLES.find(s => s.id === id);
+                    t.classList.toggle('active', def && def.default);
+                    if (def && def.default) AppState.selectedSections.add(id);
+                });
+                switchView('form');
+            });
+        }
+
+        // ===== ZOOM =====
+        function setZoom(level) {
+            AppState.zoom = Math.max(0.3, Math.min(1.5, level));
+            document.getElementById('previewWrapper').style.transform = `scale(${AppState.zoom})`;
+            document.getElementById('zoomLevel').textContent = Math.round(AppState.zoom * 100) + '%';
+            updatePageCounter();
+        }
+
+        function updatePageCounter() {
+            const pages = document.querySelectorAll('#previewWrapper .report-page');
+            if (pages.length === 0) return;
+            document.getElementById('pageCounter').textContent = `Page 1 of ${pages.length}`;
+        }
+
+        // ===== PDF DOWNLOAD =====
+        async function downloadPDF() {
+            const btn = document.getElementById('downloadPdf');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pages = document.querySelectorAll('#previewWrapper .report-page');
+
+                for (let i = 0; i < pages.length; i++) {
+                    if (i > 0) pdf.addPage();
+
+                    // Temporarily reset transform for accurate capture
+                    const wrapper = document.getElementById('previewWrapper');
+                    const origTransform = wrapper.style.transform;
+                    wrapper.style.transform = 'scale(1)';
+
+                    const canvas = await html2canvas(pages[i], {
+                        scale: 2,
+                        useCORS: true,
+                        backgroundColor: '#FFFFFF',
+                        width: pages[i].offsetWidth,
+                        height: pages[i].offsetHeight,
+                        logging: false,
+                    });
+
+                    wrapper.style.transform = origTransform;
+
+                    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                    pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+                }
+
+                const name = AppState.currentFormData?.fullName || 'Report';
+                const safeName = name.replace(/[^a-zA-Z0-9\u0900-\u097F\s]/g, '').replace(/\s+/g, '_');
+                pdf.save(`${safeName}_Astrology_Report.pdf`);
+
+                showToast('PDF downloaded successfully.', 'success');
+            } catch (err) {
+                console.error('PDF generation error:', err);
+                showToast('PDF generation failed. Try using Print > Save as PDF instead.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-file-pdf"></i> Download PDF';
+            }
+        }
+
+        // ===== SAVE REPORT =====
+        function saveReport() {
+            if (!AppState.currentFormData) return;
+            const report = {
+                id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+                formData: { ...AppState.currentFormData, sections: [...AppState.currentFormData.sections] },
+                generatedAt: new Date().toISOString(),
+            };
+            AppState.savedReports.unshift(report);
+            if (AppState.savedReports.length > 20) AppState.savedReports.pop();
+            localStorage.setItem('t24_astro_saved', JSON.stringify(AppState.savedReports));
+            showToast('Report saved successfully.', 'success');
+        }
+
+        function loadSavedReports() {
+            const container = document.getElementById('savedReportsContent');
+            const reports = AppState.savedReports;
+
+            if (reports.length === 0) {
+                container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon"><i class="fas fa-bookmark"></i></div>
+        <h3>No Saved Reports</h3>
+        <p>Reports you save will appear here for easy access.</p>
+        <button class="btn btn-primary" onclick="switchView('form')"><i class="fas fa-plus"></i> Create Report</button>
+      </div>`;
+                return;
+            }
+
+            let html = `<div class="saved-grid">`;
+            reports.forEach(r => {
+                const d = new Date(r.generatedAt);
+                const dateStr = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+                const timeStr = d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+                const langLabels = { en: 'English', hi: 'Hindi', hinglish: 'Hinglish' };
+                html += `
+      <div class="saved-card">
+        <div class="saved-card-header">
+          <span class="saved-card-name">${r.formData.fullName}</span>
+          <span class="saved-card-lang">${langLabels[r.formData.lang] || r.formData.lang}</span>
+        </div>
+        <div class="saved-card-meta"><i class="fas fa-calendar"></i> ${dateStr} at ${timeStr}</div>
+        <div class="saved-card-actions">
+          <button class="btn btn-primary btn-sm" onclick="openSavedReport('${r.id}')"><i class="fas fa-eye"></i> Open</button>
+          <button class="btn btn-secondary btn-sm" onclick="downloadSavedReport('${r.id}')"><i class="fas fa-download"></i> Download</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteSavedReport('${r.id}')"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>`;
+            });
+            html += `</div>`;
+            html += `<div style="margin-top: 20px; text-align: center;">
+    <button class="btn btn-danger btn-sm" onclick="clearAllSaved()"><i class="fas fa-trash"></i> Clear All Saved Reports</button>
+  </div>`;
+            container.innerHTML = html;
+        }
+
+        function openSavedReport(id) {
+            const report = AppState.savedReports.find(r => r.id === id);
+            if (!report) return;
+
+            // Restore form values
+            const fd = report.formData;
+            document.getElementById('fullName').value = fd.fullName || '';
+            document.getElementById('gender').value = fd.gender || '';
+            document.getElementById('dob').value = fd.dob || '';
+            document.getElementById('tob').value = fd.tob || '';
+            document.getElementById('pob').value = fd.pob || '';
+
+            // Restore language
+            AppState.currentLang = fd.lang || 'en';
+            document.querySelectorAll('.lang-option').forEach(o => o.classList.toggle('active', o.dataset.lang === AppState.currentLang));
+
+            // Restore sections
+            AppState.selectedSections = new Set(fd.sections || []);
+            document.querySelectorAll('.toggle-item').forEach(t => {
+                t.classList.toggle('active', AppState.selectedSections.has(t.dataset.id));
+            });
+
+            generateReport();
+        }
+
+        async function downloadSavedReport(id) {
+            const report = AppState.savedReports.find(r => r.id === id);
+            if (!report) return;
+
+            // Restore state and regenerate
+            const fd = report.formData;
+            document.getElementById('fullName').value = fd.fullName || '';
+            document.getElementById('gender').value = fd.gender || '';
+            document.getElementById('dob').value = fd.dob || '';
+            document.getElementById('tob').value = fd.tob || '';
+            document.getElementById('pob').value = fd.pob || '';
+            AppState.currentLang = fd.lang || 'en';
+            AppState.selectedSections = new Set(fd.sections || []);
+
+            showLoading();
+            try {
+                await updateLoadingStep(0); await delay(400);
+                await updateLoadingStep(1);
+                const astroData = generateAstrologyData(fd);
+                AppState.currentFormData = fd;
+                AppState.currentAstroData = astroData;
+                await delay(400);
+                await updateLoadingStep(2);
+                const reportHTML = generateReportHTML(fd, astroData, fd.lang, new Set(fd.sections));
+                AppState.currentReportHTML = reportHTML;
+                await delay(400);
+                await updateLoadingStep(3);
+                document.getElementById('previewWrapper').innerHTML = reportHTML;
+                await delay(300);
+                await updateLoadingStep(4);
+                setZoom(0.8);
+                await delay(200);
+                hideLoading();
+                switchView('preview');
+                // Auto download after short delay
+                setTimeout(() => downloadPDF(), 800);
+            } catch (e) {
+                hideLoading();
+                showToast('Failed to generate report for download.', 'error');
+            }
+        }
+
+        function deleteSavedReport(id) {
+            showConfirm('Delete Report', 'Are you sure you want to delete this saved report?', () => {
+                AppState.savedReports = AppState.savedReports.filter(r => r.id !== id);
+                localStorage.setItem('t24_astro_saved', JSON.stringify(AppState.savedReports));
+                loadSavedReports();
+                showToast('Report deleted.', 'info');
+            });
+        }
+
+        function clearAllSaved() {
+            showConfirm('Clear All Reports', 'Are you sure you want to delete all saved reports? This cannot be undone.', () => {
+                AppState.savedReports = [];
+                localStorage.removeItem('t24_astro_saved');
+                loadSavedReports();
+                showToast('All saved reports cleared.', 'info');
+            });
+        }
+
+        // ===== PRINT =====
+        function printReport() {
+            window.print();
+        }
+
+        // ===== SHARE =====
+        function shareReport() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Astrology Report - Tools24',
+                    text: `Check out the astrology report generated for ${AppState.currentFormData?.fullName || 'me'} on Tools24.`,
+                    url: window.location.href,
+                }).catch(() => { });
+            } else {
+                // Fallback: copy URL
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    showToast('Link copied to clipboard.', 'info');
+                }).catch(() => {
+                    showToast('Sharing is not supported on this browser.', 'info');
+                });
+            }
+        }
+
+        // ===== TOAST =====
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i> ${message}`;
+            container.appendChild(toast);
+            requestAnimationFrame(() => toast.classList.add('show'));
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // ===== CONFIRM MODAL =====
+        function showConfirm(title, msg, callback) {
+            document.getElementById('confirmTitle').textContent = title;
+            document.getElementById('confirmMsg').textContent = msg;
+            AppState.confirmCallback = callback;
+            document.getElementById('confirmOverlay').classList.add('active');
+        }
+
+        document.getElementById('confirmCancel').addEventListener('click', () => {
+            document.getElementById('confirmOverlay').classList.remove('active');
+            AppState.confirmCallback = null;
+        });
+
+        document.getElementById('confirmOk').addEventListener('click', () => {
+            document.getElementById('confirmOverlay').classList.remove('active');
+            if (AppState.confirmCallback) AppState.confirmCallback();
+            AppState.confirmCallback = null;
+        });
+
+        document.getElementById('confirmOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('confirmOverlay')) {
+                document.getElementById('confirmOverlay').classList.remove('active');
+                AppState.confirmCallback = null;
+            }
+        });
+    </script>
+</body>
+
+</html>
